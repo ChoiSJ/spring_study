@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<f:food xmlns:f="http://www.example.org/food"
+	xmlns:r="http://www.example.org/recipe"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.example.org/food food.xsd 
+						http://www.example.org/recipe recipe.xsd">
+  <f:name>라멘</f:name>
+  <f:type>일식</f:type>
+  <f:price>8000</f:price>
+</f:food>

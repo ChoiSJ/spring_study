@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
+	<!-- 
+		@Autowired, @Required 등의 어느테이션 정보를 감지하고 처리하는 기능을 수행하는
+		스프링의 빈을 스프링 컨테이너에 추가한다.
+		<context:component-scan/> 태그가 사용될 때는 추가하지 않아도 된다.
+	 -->
+	<context:annotation-config/>
+	
+	<bean id="service" class="com.example.sample4.DocumentService"></bean>
+	
+	<!-- BlackPrinter 를 폐기한다. -->
+	<!-- <bean id="blackPrinter" class="com.example.sample4.BlackPrinter"></bean> -->
+	
+	<!-- BlackPrinter 를 폐기하고 ColorPrinter 를 스프링의 빈으로 등록한다. -->
+	<bean id="colorPrinter" class="com.example.sample4.ColorPrinter"></bean>
+</beans>

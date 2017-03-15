@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 
+		<constructor-arg
+		new EmailService("stmp.gmail.com", 500, "hong", "zxcv1234")
+	 -->
+	<bean id="emailService" class="com.example.sample6.EmailService">
+		<constructor-arg name="host" value="stmp.gmail.com"></constructor-arg>
+		<constructor-arg name="port" value="500"></constructor-arg>
+		<constructor-arg name="username" value="hong"></constructor-arg>
+		<constructor-arg name="password" value="zxcv1234"></constructor-arg>
+	</bean>
+	
+	<bean id="emailService2" class="com.example.sample6.EmailService" 
+		c:host="stmp.gmail.com"
+		c:port="500"
+		c:username="hong"
+		c:password="zxcv1234"></bean>
+</beans>

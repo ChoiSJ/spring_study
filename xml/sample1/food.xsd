@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	targetNamespace="http://www.example.org/food" 
+	elementFormDefault="qualified">
+	
+	<!-- 
+		<food>
+			<name>된장찌개</name>
+			<type>한식</type>
+			<price>5000</price>
+		</food>
+	 -->
+	<xsd:element name="food">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="name" type="xsd:string"></xsd:element>
+				<xsd:element name="type" type="xsd:string"></xsd:element>
+				<xsd:element name="price" type="priceType">
+					
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<!-- price 에 음수는 입력되지 않도록 제한을 건다.(작동되지 않음) -->
+	<xsd:simpleType name="priceType">
+		<xsd:restriction base="xsd:integer">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="99999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

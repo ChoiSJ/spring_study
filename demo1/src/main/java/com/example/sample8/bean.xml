@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+	<bean id="sms" class="com.example.sample8.SMSSender"></bean>
+	<bean id="kakaotalk" class="com.example.sample8.KakaoTalkSender"></bean>
+	<bean id="line" class="com.example.sample8.LineSender"></bean>
+	<bean id="facebook" class="com.example.sample8.FacebookSender"></bean>
+	
+	<bean id="messageSender" class="com.example.sample8.MessageSenderList">
+		<property name="senders">
+			<!-- 
+				<list> 태그는 List 객체를 생성하는 태그다.
+				<ref bean="빈의 이름"/> 은 생성된 List 객체에 빈의 이름에 해당하는 객체를 저장한다.
+			 -->
+			<list>
+				<ref bean="sms"/>
+				<ref bean="kakaotalk"/>
+				<ref bean="line"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="messageSender2" class="com.example.sample8.MessageSenderList">
+		<property name="senders">
+			<list>
+				<!-- Sender 타입의 객체를 생성해 List 객체에 바로 답는다. -->
+				<bean class="com.example.sample8.SMSSender"></bean>
+				<bean class="com.example.sample8.KakaoTalkSender"></bean>
+				<bean class="com.example.sample8.LineSender"></bean>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 
+		<util:list> 태그는 List 객체를 생성한다.
+	 -->
+	<util:list id="sendList">
+		<ref bean="sms"/>
+		<ref bean="kakaotalk"/>
+		<ref bean="line"/>
+	</util:list>
+	
+	<bean id="messageSender3" class="com.example.sample8.MessageSenderList">
+		<property name="senders" ref="sendList"></property>
+	</bean>
+	
+	<bean id="messageSender4" class="com.example.sample8.MessageSenderMap">
+		<property name="senderMap">
+			<map>
+				<entry key="S" value-ref="sms"></entry>
+				<entry key="T" value-ref="kakaotalk"></entry>
+				<entry key="L" value-ref="line"></entry>
+				<entry key="F" value-ref="facebook"></entry>
+			</map>
+		</property>
+	</bean>
+</beans>

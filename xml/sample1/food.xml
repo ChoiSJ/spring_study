@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE foods SYSTEM "food.dtd" >
+<foods>
+	<food>
+		<name>&lt;된장&gt;찌개</name>
+		<type>한식</type>
+		<price>4000원</price>
+		<desc>한국 전통 음식, 냄새가 심하다.</desc>
+	</food>
+	<food>
+		<name><![CDATA[일본정통<초밥>]]></name>
+		<type>일식</type>
+		<price>10000원</price>
+	</food>
+</foods>

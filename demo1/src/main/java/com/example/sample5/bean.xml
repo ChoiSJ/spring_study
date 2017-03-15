@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- 
+		1. Reporting 클래스로 객체 만들어서 "reporter" 라는 이름으로 가지고 있어라.
+		2. LineChart 클래스로 객체 만들어서 "lineChart" 라는 이름으로 가지고 있어라.
+		3. 1번에서 생성한 객체의 chart 라는 멤버변수에 "lineChart" 라는 이름으로
+		참조할 수 있는(찾아지는) 객체를 Setter 를 이용해서 주입까지 해라.
+		
+		<property name="chart" ref="lineChart"/> 은
+			setChart(lineChart) 이런 코드 실행해라...
+			
+			chart 변수에 lineChart 객체를 주입해라.
+			스프링은 lineChart 를 주입하기 위해서 setChart() 를 실행하고,
+			setChart() 의 매개변수에 lineChart 를 전달한다.
+	 -->
+	<!-- 1 -->
+	<!--  
+	<bean id="reporter" class="com.example.sample5.Reporting">
+		<property name="chart" ref="lineChart"/>
+		<property name="width" value="200"/>
+		<property name="height" value="150"/>
+	</bean>
+	-->
+	<bean id="reporter" class="com.example.sample5.Reporting"
+		p:chart-ref="lineChart"
+		p:width="200"
+		p:height="150"/>
+	
+	<!-- 2 -->
+	<bean id="lineChart" class="com.example.sample5.LineChart"></bean>
+	<bean id="barChart" class="com.example.sample5.BarChart">
+		<property name="color" value="red"/>
+		<property name="gap" value="5"/>
+	</bean>
+</beans>

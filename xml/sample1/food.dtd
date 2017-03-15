@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT foods (food*)>
+<!ELEMENT food (name, type, price, desc?)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT type (#PCDATA)>
+<!ELEMENT price (#PCDATA)>
+<!ELEMENT desc (#PCDATA)>
+
+<!--
+<!ELEMENT E (A)>	: E 는 반드시 A 하나를 가진다.
+<!ELEMENT E (A?)>	: E 는 A 를 가지지 않을 수도 있고, 가진다면 하나만 가질 수 있다. 
+<!ELEMENT E (A+)>	: E 는 A 를 반드시 하나 이상 가진다.
+<!ELEMENT E (A*)>	: E 는 A 를 가지지 않을 수도 있고, 여러 개 가질 수도 있다.
+<!ELEMENT E (A,B)>	: E 는 A 와 B 를 가진다. 단, A 다음에 B 가 위치해야 한다.
+<!ELEMENT E (A|B)>	: E 는 A 와 B 중에서 하나를 가진다.
+ -->

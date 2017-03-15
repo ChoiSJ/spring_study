@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<context:property-placeholder location="classpath:/com/example/sample10/config.properties"/>
+	
+	<!-- 
+		스캔으로 클래스를 스프링의 빈으로 등록하기
+	 -->
+	<context:component-scan base-package="com.example.sample10"></context:component-scan>
+	
+	<!-- 
+		FileUploadService 객체를 수동으로 스프링의 빈으로 등록하는 경우
+		config.properties 에 설정된 갑을 ${...} 표기법을 사용해서 설정하기
+	 -->
+	<!-- 
+	<bean id="service1" class="com.example.sample10.FileUploadService">
+		<property name="maxSize" ref="${upload.maxSize}"/>
+		<property name="maxAmount" ref="${upload.maxFileAmount}"/>
+		<property name="directory" ref="${upload.directory}"/>
+	</bean>
+	 -->
+</beans>
