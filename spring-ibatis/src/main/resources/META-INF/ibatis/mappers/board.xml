@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Board">
+
+	<typeAlias alias="Board" type="kr.co.jhta.vo.Board"/>
+
+	<insert id="addBoard" parameterClass="Board">
+		insert into tb_board (title, writer, contents, regdate)
+		values (#title#, #writer#, #contents#, now())
+	</insert>
+	
+	<select id="getAllBoards" resultClass="Board">
+		select id, title, writer, contents, regdate
+		from tb_board
+		order by id desc
+	</select>
+</sqlMap>
