@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+		
+	<bean id="cp" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+    	<property name="url" value="jdbc:mysql://localhost:3306/my_db"></property>
+    	<property name="username" value="myuser"></property>
+    	<property name="password" value="zxcv1234"></property>
+	</bean>
+	
+	<!-- <jee:jndi-lookup jndi-name="jdbc/TestDB" resource-ref="true" id="cp"></jee:jndi-lookup> -->
+	
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="dataSource" ref="cp"/>
+		<property name="configLocation" value="classpath:/META-INF/ibatis/SqlMapConfig.xml"/>
+	</bean>
+	
+	<bean id="sqlMapClientTemplate" class="org.springframework.orm.ibatis.SqlMapClientTemplate">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+	</bean>
+	
+	<bean id="bookDaoImpl" class="kr.co.jhta.dao.BookDaoImpl">
+		<property name="template" ref="sqlMapClientTemplate"/>
+	</bean>
+	
+	<bean id="bookServiceImpl" class="kr.co.jhta.service.BookServiceImpl">
+		<property name="bookDao" ref="bookDaoImpl"/>
+	</bean>
+	
+	<bean name="/home.hta" class="kr.co.jhta.controller.HomeController">
+		<property name="bookService" ref="bookServiceImpl"/>
+	</bean>
+	<bean name="/list.hta" class="kr.co.jhta.controller.ListController">
+		<property name="bookService" ref="bookServiceImpl"/>
+	</bean>
+	<bean name="/add.hta" class="kr.co.jhta.controller.AddController">
+		<property name="bookService" ref="bookServiceImpl"/>
+	</bean>
+	<bean name="/addform.hta" class="kr.co.jhta.controller.AddFormController"></bean>
+	<bean name="/searchform.hta" class="kr.co.jhta.controller.SearchFormController"></bean>
+	<bean name="/serach.hta" class="kr.co.jhta.controller.SearchController">
+		<property name="bookService" ref="bookServiceImpl"/>
+	</bean>
+</beans>

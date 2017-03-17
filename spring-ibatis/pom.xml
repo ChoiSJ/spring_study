@@ -37,6 +37,7 @@
     		<artifactId>ibatis-sqlmap</artifactId>
     		<version>2.3.4.726</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
