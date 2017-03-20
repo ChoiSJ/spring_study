@@ -21,7 +21,7 @@ public class BookDaoImpl implements BookDao {
 	
 	@Override
 	public void addBook(Book book) {
-		template.insert("addbook", book);
+		template.insert("addBook", book);
 	}
 	
 	@SuppressWarnings("unchecked")

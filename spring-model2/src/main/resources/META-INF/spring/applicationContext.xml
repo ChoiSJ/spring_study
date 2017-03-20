@@ -40,7 +40,7 @@
 	</bean>
 	<bean name="/addform.hta" class="kr.co.jhta.controller.AddFormController"></bean>
 	<bean name="/searchform.hta" class="kr.co.jhta.controller.SearchFormController"></bean>
-	<bean name="/serach.hta" class="kr.co.jhta.controller.SearchController">
+	<bean name="/search.hta" class="kr.co.jhta.controller.SearchController">
 		<property name="bookService" ref="bookServiceImpl"/>
 	</bean>
 </beans>

@@ -29,10 +29,10 @@
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach var="book" items="${bookList} }">
+		<c:forEach var="book" items="${bookList }">
 			<tr>
 				<td>${book.id }</td>
-				<td>${book.title} }</td>
+				<td>${book.title }</td>
 				<td>${book.author }</td>
 				<td>${book.publisher }</td>
 			</tr>

@@ -9,6 +9,6 @@ public class SearchFormController implements Controller {
 	@Override
 	public String exec(HttpServletRequest req) throws Exception {
 		
-		return null;
+		return "searchform.jsp";
 	}
 }

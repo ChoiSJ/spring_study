@@ -44,7 +44,7 @@ public class FrontControllerServlet extends HttpServlet {
 				path = path.replaceAll("redirect:", "");
 				res.sendRedirect(path);
 			} else {
-				req.getRequestDispatcher("WEB-INF/view/" + path).forward(req, res);
+				req.getRequestDispatcher("WEB-INF/views/" + path).forward(req, res);
 			}
 			
 			logger.debug("["+url+"]요청에 대한 요청 처리 완료");

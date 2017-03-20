@@ -31,7 +31,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
 			<version>${org.springframework-version}</version>
-			<scope>test</scope>
 		</dependency>
 		
 		<!-- Spring -->
