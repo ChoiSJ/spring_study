@@ -9,7 +9,7 @@ public class DocumentService {
 	Printer printer;
 	
 	public void PrintContent(String content) {
-		// Printer 인터페잇를 구현한 객체에 재정의된 print() 를 실행하는 코드
+		// Printer 인터페이스를 구현한 객체에 재정의된 print() 를 실행하는 코드
 		printer.print(content);
-	} 
+	}
 }
