@@ -9,6 +9,18 @@
 
 	<mvc:annotation-driven/>
 	
+	<mvc:interceptors>
+		<bean class="kr.co.jhta.todo.controller.interceptor.LoginCheckInterceptor">
+			<property name="paths">
+				<list>
+					<value>/addtodo.do</value>
+					<value>/todo.do</value>
+					<value>/complete.do</value>
+				</list>
+			</property>
+		</bean>
+	</mvc:interceptors>
+	
 	<context:component-scan base-package="kr.co.jhta.todo.controller"></context:component-scan>
 	
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">

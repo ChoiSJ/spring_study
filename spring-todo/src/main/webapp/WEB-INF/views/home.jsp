@@ -26,8 +26,8 @@
 			</c:when>
 			<c:otherwise>
 				<p class="text-right">
-					<a href="" class="btn btn-info">일정보기</a>
-					<a href="" class="btn btn-default">일정등록</a>
+					<a href="todo.do" class="btn btn-info">일정보기</a>
+					<a href="addtodo.do" class="btn btn-default">일정등록</a>
 					<a href="logout.do" class="btn btn-default">로그아웃</a>
 				</p>
 			</c:otherwise>

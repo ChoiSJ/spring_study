@@ -20,6 +20,11 @@
 		<strong>오류!</strong> 아이디 혹은 비밀번호가 유효한 값이 아닙니다.
 	</div>
 	</c:if>
+	<c:if test="${param.error eq 'deny' }">
+		<div class="alert alert-danger">
+		<strong>오류!</strong> 로그인이 필요한 서비스를 요청하였습니다.
+	</div>
+	</c:if>
 	
 	<div class="row well">
 		<form method="post" action="login.do">

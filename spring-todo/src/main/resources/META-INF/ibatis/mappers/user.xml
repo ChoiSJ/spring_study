@@ -17,4 +17,26 @@
 		from tb_user
 		where id = #value#
 	</select>
+	
+	<update id="increaseUncompletedTodoAmount" parameterClass="int">
+		update tb_user
+		set uncompleted_todo = uncompleted_todo + 1
+		where no = #value#
+	</update>
+	<update id="decreaseUncompletedTodoAmount" parameterClass="int">
+		update tb_user
+		set uncompleted_todo = uncompleted_todo - 1
+		where no = #value#
+	</update>
+	
+	<update id="increaseCompletedTodoAmount" parameterClass="int">
+		update tb_user
+		set completed_todo = completed_todo + 1
+		where no = #value#
+	</update>
+	<update id="decreaseCompletedTodoAmount" parameterClass="int">
+		update tb_user
+		set completed_todo = completed_todo - 1
+		where no = #value#
+	</update>
 </sqlMap>

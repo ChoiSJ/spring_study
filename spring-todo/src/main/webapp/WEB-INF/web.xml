@@ -5,15 +5,17 @@
 	
 	<!-- 
 		Root WebApplicationContext 설정
-		- <context-param/> 태그를 사용해서 Root WebApplicationContext(컨테이너) 가 로드할
-		스프링빈 설정파일을 지정한다.
+		- <context-param/> 태그를 사용해서 Root WebApplicationContext(컨테이너) 가 로드할 스프링빈 설정파일을 지정한다.
 		- <listener/> 태그를 사용해서 Root WebApplicationContext 를 생성하는
 		ContextLoaderListener 를 지정한다.
 		- WebServer 가 켜질 때 Root WebApplicationContext 가 생성된다.
 	 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>WEB-INF/spring/root-context.xml</param-value>
+		<param-value>
+			WEB-INF/spring/root-context.xml,
+			WEB-INF/spring/database-context.xml
+		</param-value>
 	</context-param>
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
