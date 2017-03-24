@@ -2,7 +2,6 @@ package kr.co.jhta.todo.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
@@ -34,14 +33,13 @@ public class TodoController {
    
 	@RequestMapping(value="/addtodo.do", method=RequestMethod.POST)
 	public String register(@Valid @ModelAttribute("todoForm") TodoForm todoform, Errors errors,
-			HttpSession session){
+			User user){
 		if(errors.hasErrors()){
 			return "registertodo";
 		}
 		
 		Todo todo = new Todo();
 		BeanUtils.copyProperties(todoform, todo);
-		User user = (User) session.getAttribute("LOGIN_USER");
 		todo.setUser(user);
 		todoService.registerTodo(todo);
 		
@@ -49,8 +47,7 @@ public class TodoController {
 	}
 	
 	@RequestMapping("/todo.do")
-	public String todos(Model model, HttpSession session) {
-		User user = (User) session.getAttribute("LOGIN_USER");
+	public String todos(Model model, User user) {
 		List<Todo> todoList = todoService.getTodoList(user.getNo());
 		model.addAttribute("todoList", todoList);
 		
@@ -58,8 +55,7 @@ public class TodoController {
 	}
 	
 	@RequestMapping("/complete.do")
-	public String complete(@RequestParam("no") int no, HttpSession session) {
-		User user = (User) session.getAttribute("LOGIN_USER");
+	public String complete(@RequestParam("no") int no, User user) {
 		todoService.completeTodo(no, user.getNo());
 		
 		return "redirect:/todo.do";

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-
 <!DOCTYPE sqlMapConfig      
     PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"      
     "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
-
 <sqlMapConfig>
+	<!-- ibatis 에서 namespace 를 사용하겠다는 선언문 -->
+	<settings useStatementNamespaces="true"/>
+
 	<sqlMap resource="META-INF/ibatis/mappers/user.xml"/>
 	<sqlMap resource="META-INF/ibatis/mappers/todo.xml"/>
 </sqlMapConfig>

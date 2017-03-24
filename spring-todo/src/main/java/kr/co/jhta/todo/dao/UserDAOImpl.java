@@ -15,27 +15,27 @@ public class UserDAOImpl implements UserDAO {
 	
 	@Override
 	public void addUser(User user) {
-		template.insert("addUser", user);
+		template.insert("user.addUser", user);
 	}
 	
 	@Override
 	public User getUserById(String id) {
-		return (User) template.queryForObject("getUserById", id);
+		return (User) template.queryForObject("user.getUserById", id);
 	}
 
 	@Override
 	public void increaseUncompletedTodoAmount(int userno) {
-		template.update("increaseUncompletedTodoAmount", userno);
+		template.update("user.increaseUncompletedTodoAmount", userno);
 	}
 
 	@Override
 	public void decreaseUncompletedTodoAmount(int userno) {
-		template.update("decreaseUncompletedTodoAmount", userno);
+		template.update("user.decreaseUncompletedTodoAmount", userno);
 	}
 
 	@Override
 	public void increaseCompletedTodoAmount(int userno) {
-		template.update("increaseCompletedTodoAmount", userno);
+		template.update("user.increaseCompletedTodoAmount", userno);
 	}
 
 	@Override

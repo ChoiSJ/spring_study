@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="example.mybatis.UserMapper">
+	<insert id="addUser" parameterType="User">
+		insert into tb_user (id, pwd, name, phone, email, regdate, completed_todo, uncompleted_todo)
+		values (#{id}, #{pwd}, #{name}, #{phone}, #{email}, now(), 0, 0)
+	</insert>
+	
+	<select id="getAllUsers" resultType="User">
+		select no, id, pwd, name, phone, email, regdate, 
+			completed_todo as completedTodo, uncompleted_todo as uncompletedTodo
+		from tb_user
+	</select>
+	
+	<select id="getUserById" parameterType="string" resultType="User">
+		select no, id, pwd, name, phone, email, regdate, 
+			completed_todo as completedTodo, uncompleted_todo as uncompletedTodo
+		from tb_user
+		where id = #{value}
+	</select>
+</mapper>

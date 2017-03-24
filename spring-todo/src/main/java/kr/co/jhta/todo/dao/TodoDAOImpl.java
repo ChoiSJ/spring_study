@@ -17,22 +17,22 @@ public class TodoDAOImpl implements TodoDAO {
 	
 	@Override
 	public void addTodo(Todo todo) {
-		template.insert("addTodo", todo);
+		template.insert("todo.addTodo", todo);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Todo> getTodoListByUserNo(int userNo) {
-		return template.queryForList("getTodoListByUserNo", userNo);
+		return template.queryForList("todo.getTodoListByUserNo", userNo);
 	}
 
 	@Override
 	public Todo getTodoByNo(int no) {
-		return (Todo) template.queryForObject("getTodoByNo", no);
+		return (Todo) template.queryForObject("todo.getTodoByNo", no);
 	}
 
 	@Override
 	public void completeTodoByNo(int no) {
-		template.update("completeTodoByNo", no);
+		template.update("todo.completeTodoByNo", no);
 	}
 }

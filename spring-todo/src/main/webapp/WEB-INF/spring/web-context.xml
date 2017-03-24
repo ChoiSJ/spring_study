@@ -7,7 +7,11 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
-	<mvc:annotation-driven/>
+	<mvc:annotation-driven>
+		<mvc:argument-resolvers>
+			<bean class="kr.co.jhta.todo.controller.argumentResolver.LoginUserArgumentResolver"></bean>
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
 	
 	<mvc:interceptors>
 		<bean class="kr.co.jhta.todo.controller.interceptor.LoginCheckInterceptor">
