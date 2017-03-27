@@ -16,7 +16,7 @@
 	<h1>새 일정 등록하기</h1>
      
 	<div class="row well">
-		<form:form method="post" action="addtodo.do" modelAttribute="todoForm">
+		<form:form method="post" action="addtodo.do" modelAttribute="todoForm" enctype="multipart/form-data">
 			<div class="form-group">
            		<label>제목</label>
            		<form:input path="title" cssClass="form-control"/>
@@ -31,6 +31,14 @@
 				<label>내용</label>
 				<form:textarea path="description" cssClass="form-control"/>
 				<form:errors path="description" cssClass="text-danger"/>
+			</div>
+			<div class="form-group">
+				<label>약도</label>
+				<form:input path="uploadFile" type="file" cssClass="form-control"/>
+			</div>
+			<div class="form-group">
+				<label>첨부파일</label>
+				<form:input path="attachFile" type="file" cssClass="form-control"/>
 			</div>
 			<div class="form-group text-right">
 				<button type="submit" class="btn btn-primary">등록</button>

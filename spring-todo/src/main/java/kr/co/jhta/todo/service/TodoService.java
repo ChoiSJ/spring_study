@@ -8,5 +8,6 @@ public interface TodoService {
 	
 	void registerTodo(Todo todo);
 	List<Todo> getTodoList(int no);
-	void completeTodo(int no, int userNo); 
+	void completeTodo(int no, int userNo);
+	String getAttachFilename(int no, int userNo); 
 }

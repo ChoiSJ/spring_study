@@ -8,19 +8,21 @@
 	<typeAlias alias="Todo" type="kr.co.jhta.todo.vo.Todo"/>
 	
 	<insert id="addTodo" parameterClass="Todo">
-		insert into tb_todo (title, event_date, description, completed, regdate, user_no)
-		values (#title#, #eventDate#, #description#, 'N', now(), #user.no#)
+		insert into tb_todo (title, event_date, description, completed, regdate, user_no, map_filename, attach_filename)
+		values (#title#, #eventDate#, #description#, 'N', now(), #user.no#, #mapFilename#, #attachFilename#)
 	</insert>
 	
 	<select id="getTodoListByUserNo" parameterClass="int" resultClass="Todo">
-		select A.no, A.title, A.event_date as eventDate, A.description, A.completed, A.regdate, A.user_no as "user.no", B.name as "user.name"
+		select A.no, A.title, A.event_date as eventDate, A.description, A.completed, A.regdate, 
+			A.user_no as "user.no", B.name as "user.name", A.map_filename as mapFilename, A.attach_filename as attachFilename
 		from tb_todo A, tb_user B
 		where A.user_no = #value# and A.user_no = B.no and A.completed = 'N'
 		order by A.event_date asc
 	</select>
 	
 	<select id="getTodoByNo" parameterClass="int" resultClass="Todo">
-		select A.no, A.title, A.event_date as eventDate, A.description, A.completed, A.regdate, A.user_no as "user.no"
+		select A.no, A.title, A.event_date as eventDate, A.description, A.completed, A.regdate, 
+			A.user_no as "user.no", A.map_filename as mapFilename, A.attach_filename as attachFilename
 		from tb_todo A, tb_user B
 		where A.user_no = B.no and A.no = #value#
 	</select>

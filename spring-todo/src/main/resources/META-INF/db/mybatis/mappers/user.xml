@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.jhta.todo.dao.UserDAO">
+	<insert id="addUser" parameterType="User">
+		insert into tb_user (id, pwd, name, phone, email, regdate, completed_todo, uncompleted_todo)
+		values (#{id}, #{pwd}, #{name}, #{phone}, #{email}, now(), 0, 0)
+	</insert>
+	
+	<select id="getUserById" parameterType="string" resultType="User">
+		select no, id, pwd, name, phone, email, regdate, completed_todo, uncompleted_todo
+		from tb_user
+		where id = #{value}
+	</select>
+	
+	<update id="increaseUncompletedTodoAmount" parameterType="int">
+		update tb_user
+		set uncompleted_todo = uncompleted_todo + 1
+		where no = #{value}
+	</update>
+	<update id="decreaseUncompletedTodoAmount" parameterType="int">
+		update tb_user
+		set uncompleted_todo = uncompleted_todo - 1
+		where no = #{value}
+	</update>
+	
+	<update id="increaseCompletedTodoAmount" parameterType="int">
+		update tb_user
+		set completed_todo = completed_todo + 1
+		where no = #{value}
+	</update>
+	<update id="decreaseCompletedTodoAmount" parameterType="int">
+		update tb_user
+		set completed_todo = completed_todo - 1
+		where no = #{value}
+	</update>
+</mapper>

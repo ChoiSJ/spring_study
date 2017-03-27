@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.jhta.todo.dao.TodoDAO">
+	<insert id="addTodo" parameterType="Todo">
+		insert into tb_todo (title, event_date, description, completed, regdate, user_no, map_filename, attach_filename)
+		values (#{title}, #{eventDate}, #{description}, 'N', now(), #{user.no}, #{mapFilename}, #{attachFilename})
+	</insert>
+	
+	<select id="getTodoListByUserNo" parameterType="int" resultType="Todo">
+		select A.no, A.title, A.event_date as eventDate, A.description, A.completed, A.regdate, 
+			A.user_no as "user.no", B.name as "user.name", A.map_filename as mapFilename, A.attach_filename as attachFilename
+		from tb_todo A, tb_user B
+		where A.user_no = #{value} and A.user_no = B.no and A.completed = 'N'
+		order by A.event_date asc
+	</select>
+	
+	<select id="getTodoByNo" parameterType="int" resultType="Todo">
+		select A.no, A.title, A.event_date as eventDate, A.description, A.completed, A.regdate, 
+			A.user_no as "user.no", A.map_filename as mapFilename, A.attach_filename as attachFilename
+		from tb_todo A, tb_user B
+		where A.user_no = B.no and A.no = #{value}
+	</select>
+	
+	<update id="completeTodoByNo" parameterType="int">
+		update tb_todo
+		set completed = 'Y'
+		where no = #{value}
+	</update>
+</mapper>

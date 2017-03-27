@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 
+		mybatis 의 핵심관계 SqlSessionFactory 를 spring 의 빈으로 등록한다.
+	 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" value="classpath:/META-INF/db/mybatis/mybatis-config.xml"/>
+	</bean>
+	
+	<!-- 
+		MapperFactoryBean 은 지정된 맵퍼인터페이스를 구현한 맵퍼객체를 생성한다.
+		생성된 맵퍼객체를 스프링의 빈으로 등록한다.
+		
+		아래와 같은 서비스 객체가 스프링의 빈으로 등록되어 있다면
+		MapperFactoryBean 이 동적으로 생성해서 스프링에 등록한 UserDAO 인터페이스의 구현객체가 userDAO 에 주입된다.
+		
+		Class xxxServiceImpl implement xxxService {
+			@Autowired
+			private UserDAO userDAO; <- UserDAO 인터페이스를 구현한 맵퍼객체가 주입된다.
+		}
+	 -->
+	
+	<!-- 
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="kr.co.jhta.todo.dao.UserDAO"/>
+		<property name="sqlSessionFactory" value="sqlSessionFactory"/>
+	</bean>
+	 -->
+	
+	<!-- 
+		MapperScannerConfigurer 은 지정된 패키지에서 모든 맵퍼인터페이스를 검색해서
+		맵퍼객체를 생성하고 스프링의 빈으로 등록한다.
+	 -->
+	 
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+		<property name="basePackage" value="kr.co.jhta.todo.dao"/>
+	</bean>
+</beans>

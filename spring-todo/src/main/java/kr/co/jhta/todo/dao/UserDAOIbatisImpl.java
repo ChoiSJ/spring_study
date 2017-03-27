@@ -8,7 +8,7 @@ import kr.co.jhta.todo.vo.User;
 
 @SuppressWarnings("deprecation")
 @Repository
-public class UserDAOImpl implements UserDAO {
+public class UserDAOIbatisImpl implements UserDAO {
 	
 	@Autowired
 	private SqlMapClientTemplate template;

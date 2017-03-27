@@ -6,6 +6,6 @@
 	<!-- ibatis 에서 namespace 를 사용하겠다는 선언문 -->
 	<settings useStatementNamespaces="true"/>
 
-	<sqlMap resource="META-INF/ibatis/mappers/user.xml"/>
-	<sqlMap resource="META-INF/ibatis/mappers/todo.xml"/>
+	<sqlMap resource="META-INF/db/ibatis/mappers/user.xml"/>
+	<sqlMap resource="META-INF/db/ibatis/mappers/todo.xml"/>
 </sqlMapConfig>

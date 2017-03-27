@@ -1,4 +1,4 @@
-package kr.co.jhta.todo.vo;
+package kr.co.jhta.rest.vo;
 
 import java.util.Date;
 

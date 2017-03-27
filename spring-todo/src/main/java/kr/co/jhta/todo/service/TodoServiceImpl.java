@@ -42,4 +42,23 @@ public class TodoServiceImpl implements TodoService {
 			userDao.decreaseUncompletedTodoAmount(userNo);
 		}
 	}
+
+	@Override
+	public String getAttachFilename(int no, int userNo) {
+		Todo todo = todoDao.getTodoByNo(no);
+		
+		if (todo != null) {
+			if (todo.getAttachFilename() == null) {
+				throw new RuntimeException("해당 일정에는 등록된 첨부파일이 없습니다.");
+			}
+			
+			if (todo.getUser().getNo() != userNo) {
+				throw new RuntimeException("본인이 등록한 첨부파일만 다운로드 할 수 있습니다.");
+			}
+			
+			return todo.getAttachFilename();
+		}
+		
+		return null;
+	}
 }
