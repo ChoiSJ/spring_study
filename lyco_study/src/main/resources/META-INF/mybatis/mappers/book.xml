@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.jhta.dao.BookDAO">
+	<insert id="addbook" parameterType="Book">
+		insert into table_books
+		(book_title, book_author, book_publisher, book_price, book_description, book_regdate)
+		values (#{title}, #{author}, #{publisher}, #{price}, #{description}, now())
+	</insert>
+	
+	<select id="listbook" resultType="Book">
+		select
+		book_no as no, book_title as title, book_author as author, 
+		book_publisher as publisher, book_price as price, 
+		book_description as description, book_regdate as regdate
+		from table_books
+	</select>
+</mapper>
