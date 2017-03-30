@@ -17,7 +17,7 @@
 <body>
 <div class="container">
 	<div class="row">
-		<div class="col-sm-6 col-sm-offset-3 well">
+		<div class="col-sm-8 col-sm-offset-2 well">
 			<form:form method="post" action="addbook.hta" commandName="book">
 				<div class="form-group">
 					<form:label path="title">제목</form:label>

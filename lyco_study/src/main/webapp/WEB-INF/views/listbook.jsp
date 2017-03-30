@@ -35,7 +35,7 @@
 				<tbody>
 				<c:forEach items="${bookLists }" var="book">
 					<tr>
-						<td><a href="detail.hta?no=${book.no }">${book.title }</a></td>
+						<td><a href="detailbook.hta?no=${book.no }">${book.title }</a></td>
 						<td>${book.author }</td>
 						<td><fmt:formatDate value="${book.regdate }"/></td>
 					</tr>

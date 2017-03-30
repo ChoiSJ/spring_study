@@ -23,4 +23,14 @@ public class BookServiceImpl implements BookService {
 	public List<Book> listbook() {
 		return bookDao.listbook();
 	}
+	
+	@Override
+	public Book detailbook(int no) {
+		return bookDao.detailbook(no);
+	}
+	
+	@Override
+	public void updatebook(Book book) {
+		bookDao.updatebook(book);
+	}
 }
