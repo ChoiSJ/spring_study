@@ -1,6 +1,7 @@
 package kr.co.jhta.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,5 +33,10 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public void updatebook(Book book) {
 		bookDao.updatebook(book);
+	}
+	
+	@Override
+	public List<Book> searchbook(Map<String, String> searchForm) {
+		return bookDao.searchbook(searchForm);
 	}
 }

@@ -33,4 +33,13 @@
 			book_description = #{description}, book_price = #{price}, book_regdate = #{regdate}
 		where book_no = #{no}
 	</update>
+	
+	<select id="searchbook" parameterType="map" resultType="Book">
+		select
+			book_no as no, book_title as title, book_author as author, 
+			book_publisher as publisher, book_price as price, 
+			book_description as description, book_regdate as regdate
+		from table_books
+		where book_title like concat('%', #{bookword},'%')
+	</select>
 </mapper>

@@ -1,7 +1,5 @@
 package kr.co.jhta.controller;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,31 +17,31 @@ public class BookController {
 	@Autowired
 	private BookService bookService;
 	
-	@RequestMapping(value="addbook.hta", method=RequestMethod.GET)
+	@RequestMapping(value="/addbook.hta", method=RequestMethod.GET)
 	public String addBookGet(Model model) {
 		model.addAttribute("book", new Book());
 		return "addbook";
 	}
 	
-	@RequestMapping(value="addbook.hta", method=RequestMethod.POST)
+	@RequestMapping(value="/addbook.hta", method=RequestMethod.POST)
 	public String addBookPost(@ModelAttribute("book") Book book) {
 		bookService.addbook(book);
 		return "redirect:list.hta";
 	}
 	
-	@RequestMapping("listbook.hta")
+	@RequestMapping("/listbook.hta")
 	public String listbook(Model model) {
 		model.addAttribute("bookLists", bookService.listbook());
 		return "listbook";
 	}
 	
-	@RequestMapping("detailbook.hta")
+	@RequestMapping("/detailbook.hta")
 	public String detailbook(@RequestParam int no, Model model) {
 		model.addAttribute("book", bookService.detailbook(no));
 		return "detailbook";
 	}
 	
-	@RequestMapping("updatebook.hta")
+	@RequestMapping("/updatebook.hta")
 	public String updatebook(Book book) {
 		bookService.updatebook(book);
 		return "redirect:listbook.hta";
