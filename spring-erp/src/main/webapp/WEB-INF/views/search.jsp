@@ -12,6 +12,13 @@
 <script type="text/javascript" src="resources/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 $(function() {
+	
+	$("button:has('.glyphicon')").removeClass("btn-success").addClass("btn-default");
+	var sort = $("#search-form :input[name='sort']").val();
+	var orderby = $("#search-form :input[name='orderby']").val();
+	var $orderedButton = $("#" + sort + "-" + orderby);
+	$orderedButton.removeClass("btn-default").addClass("btn-success");
+	
 	function setSearchFormField(pageNo) {
 		pageNo = pageNo || 1;
 		$("#search-form :input[name='pageNo']").val(pageNo);
@@ -63,9 +70,11 @@ $(function() {
 	});
 	
 	$("button:has('.glyphicon')").click(function() {
+		// 기존의 선택되어 있던 버튼을 버튼을 해제
 		$("button:has('.glyphicon')").removeClass("btn-success").addClass("btn-default");
+		// 지금 클릭한 버튼을 하이라이트 처리
 		$(this).addClass("btn-success").removeClass("btn-default");
-		
+		// 
 		setSearchFormField(1);
 		$("#search-form").submit();
 	});
@@ -164,8 +173,8 @@ $(function() {
 		<input type="hidden" name="opt" value="">
 		<input type="hidden" name="keyword" value="">
 		<input type="hidden" name="display" value="10">
-		<input type="hidden" name="sort" value="employee_id">
-		<input type="hidden" name="orderby" value="asc">
+		<input type="hidden" name="sort" value="${search.sort }">
+		<input type="hidden" name="orderby" value="${search.orderby }">
 	</form>
 </div>
 </body>

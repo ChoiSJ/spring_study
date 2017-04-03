@@ -6,12 +6,88 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 @Controller
 public class EmployeeController {
 	
 	@Autowired
+	MappingJackson2JsonView jsonView;
+	
+	@Autowired
 	EmployeeDAO employeeDao;
+	
+	@RequestMapping("/search.json")
+	public @ResponseBody Result<Employee> search(SearchForm searchForm) {
+		int rows = employeeDao.getRowCount(searchForm);
+		Pagination pagination = null;
+		
+		if (searchForm.getDisplay() != 0) {
+			pagination = new Pagination(searchForm.getDisplay(), searchForm.getPageNo(), rows);
+		} else {
+			pagination = new Pagination(searchForm.getPageNo(), rows);
+		}
+			
+		searchForm.setBeginIndex(pagination.getBeginIndex());
+		searchForm.setEndIndex(pagination.getEndIndex());
+		
+		List<Employee> employees = employeeDao.getEmployees(searchForm);
+		
+		Result<Employee> result = new Result<Employee>();
+		result.setData(employees);
+		result.setRows(rows);
+		result.setMessage("데이터 조회 완료");
+		result.setCode(1);
+		
+		return result;
+	}
+	
+	/*
+	@RequestMapping("/search.json")
+	public ModelAndView search(SearchForm searchForm) {
+		int rows = employeeDao.getRowCount(searchForm);
+		Pagination pagination = null;
+		
+		if (searchForm.getDisplay() != 0) {
+			pagination = new Pagination(searchForm.getDisplay(), searchForm.getPageNo(), rows);
+		} else {
+			pagination = new Pagination(searchForm.getPageNo(), rows);
+		}
+			
+		searchForm.setBeginIndex(pagination.getBeginIndex());
+		searchForm.setEndIndex(pagination.getEndIndex());
+		
+		List<Employee> employees = employeeDao.getEmployees(searchForm);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setView(jsonView);
+		mav.addObject("data", employees);
+		
+		return mav;
+	}
+	*/
+	
+	/*
+	@RequestMapping("/search.json")
+	public @ResponseBody List<Employee> search(SearchForm searchForm) {
+		int rows = employeeDao.getRowCount(searchForm);
+		Pagination pagination = null;
+		
+		if (searchForm.getDisplay() != 0) {
+			pagination = new Pagination(searchForm.getDisplay(), searchForm.getPageNo(), rows);
+		} else {
+			pagination = new Pagination(searchForm.getPageNo(), rows);
+		}
+			
+		searchForm.setBeginIndex(pagination.getBeginIndex());
+		searchForm.setEndIndex(pagination.getEndIndex());
+		
+		List<Employee> employees = employeeDao.getEmployees(searchForm);
+		
+		return employees;
+	}
+	*/
 	
 	@RequestMapping("/search.do")
 	public String search(SearchForm searchForm, Model model) {
