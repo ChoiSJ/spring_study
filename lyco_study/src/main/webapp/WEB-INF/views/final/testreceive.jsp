@@ -28,7 +28,7 @@
 
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-sm-3">
+		<div class="col-sm-2">
 			<ul class="nav">
 				<li><a href="#">기초정보관리</a></li>
 				<li><a href="#">사용자관리</a></li>
@@ -40,17 +40,41 @@
 				<li><a href="#">통계관리</a></li>
 			</ul>
 		</div>
-		<div class="col-sm-9">
+		<div class="col-sm-10">
 			<h4>쪽지관리</h4><hr>
-			<div class="button-group">
-				<
+			<div class="btn-group">
+				<button type="button" class="btn btn-info" onclick="location.href='testreceive.hta'">받은쪽지</button>
+				<button type="button" class="btn btn-info">보낸쪽지</button>
+				<button type="button" class="btn btn-info" onclick="location.href='testwrite.hta'">쪽지쓰기</button>
 			</div>
+			<div class="well">
+				<p>읽지 않은 쪽지가 0통이 있습니다. (전체 받은 쪽지 : 0 통)</p>
+			</div>
+			<table class="table table-bordered well">
+				<colgroup>
+					<col width="10%">
+					<col width="20%">
+					<col width="40%">
+					<col width="10%">
+					<col width="20%">
+				</colgroup>
+				<thead>
+					<tr>
+						<th><input type="checkbox" value=""></th>
+						<th>보낸사람</th>
+						<th>제목</th>
+						<th>첨부</th>
+						<th>보낸날짜</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>
-
-
-		
-	
 </body>
 </html>

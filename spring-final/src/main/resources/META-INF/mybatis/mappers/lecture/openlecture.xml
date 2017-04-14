@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.jhta.dao.openlecture.OpenLectureDao">
+<select id="getInformationOfProfessorList" resultType="kr.co.jhta.vo.Professor">
+	select 
+		U_PROF_NO 			AS no,
+		U_PROF_ID 			AS id,
+		U_PROF_NAME 		AS name,
+		U_PROF_GENDER 		AS gender,
+		U_PROF_CODE 		AS code,
+		U_PROF_DIVISION 	AS division,
+		U_PROF_PWD 			AS pwd,
+		U_PROF_REGISTER 	AS register,
+		U_PROF_PHONE 		AS phone,
+		U_PROF_ADDR 		AS addr,
+		U_PROF_EMAIL 		AS email,
+		U_PROF_GRADE 		AS grade,
+		U_PROF_SSN 			AS ssn,
+		U_PROF_FOREI 		AS forei,
+		U_PROF_ENTRYDATE 	AS entrydate,
+		U_PROF_LEAVEDATE 	AS leavedate
+	from
+		U_PROFESSOR	
+</select>
+</mapper>

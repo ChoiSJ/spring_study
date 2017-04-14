@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.jhta.dao.major.SubjectDao">
+	<insert id="addSubject" parameterType="Subject">
+		insert into j_subject
+		(j_no, j_subject_name, j_sub_prof, j_semester, j_grade,
+		j_is_passed, j_t_code, j_score, j_outline, j_reference, j_progress)
+		values
+		(j_subject_seq.nextval, #{subjectName}, #{professor}, #{Semester.semeSelect}, 
+		#{grade}, #{inPassed}, #{SiteMap.code}, #{score}, #{outline}, 
+		#{reference},#{progress})
+	</insert>
+	
+	<select id="getAllList" resultType="Subject">
+		select
+			j_no as no,
+			j_subject_name as subjectName,
+			j_sub_prof as professor,
+			j_semester as selectNo,
+			j_grade as grade,
+			j_is_passed as isPassed,
+			j_t_code as siteCode,
+			j_score as score,
+			j_outline as outline,
+			j_reference as "reference",
+			j_progress as progress
+		from
+			j_subject
+	</select>
+</mapper>

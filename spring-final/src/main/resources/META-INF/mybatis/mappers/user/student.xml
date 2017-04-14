@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.jhta.dao.user.StudentDao">
+
+	<select id="getAllStudent" resultType="Student">
+		select U_STU_NO as no, U_STU_ADDR1 as addr1, U_STU_ADDR2 as addr2,
+				U_STU_DIVISION as division, U_STU_EMAIL as email, 
+				U_STU_ENTERDATE as enterDate, U_STU_GENDER as gender, 
+				U_STU_GRADE as grade,U_STU_ID as id, 
+				U_STU_LEAVEDATE as leaveDate, U_STU_NAME as name, 
+				U_STU_NO as no, U_STU_PARENTNAME as parentName, 
+				U_STU_PARENTPHON as parentPhone, U_STU_PHONE as phone, 
+				U_STU_PROFESSOR as professor, U_STU_PWD as pwd, 
+				U_STU_REGISTER as register, U_STU_SCORE as score, 
+				U_STU_SSN as ssn
+		from U_STUDENT;
+	</select>
+	
+	<insert id="addNewStudent">
+		insert INTO U_STUDENT (U_STU_NO, U_STU_ID, U_STU_NAME, U_STU_GENDER, U_STU_DIVISION, U_STU_PWD, U_STU_REGISTER, U_STU_SCORE, U_STU_PHONE, U_STU_ADDR1, U_STU_ADDR2, U_STU_EMAIL, U_STU_GRADE, U_STU_SSN, U_STU_ENTERDATE, U_STU_LEAVEDATE, U_STU_PARENTNAME, U_STU_PROFESSOR, U_STU_PARENTPHON) 
+						VALUES(U_STUDENT_SEQ, #{id}, #{name}, #{gender}, #{division}, #{pwd}, #{register}, #{score}, #{phone}, #{addr1}, #{addr2}, #{email}, #{grade}, #{ssn}, sysdate, #{leaveDate}, #{parentName}, #{professor}, #{parentPhon})
+	</insert>
+	
+	<select id="getStudentById" parameterType="String" resultType="Student">
+		select U_STU_NO as no, U_STU_ADDR1 as addr1, U_STU_ADDR2 as addr2,
+				U_STU_DIVISION as division, U_STU_EMAIL as email, 
+				U_STU_ENTERDATE as enterDate, U_STU_GENDER as gender, 
+				U_STU_GRADE as grade,U_STU_ID as id, 
+				U_STU_LEAVEDATE as leaveDate, U_STU_NAME as name, 
+				U_STU_NO as no, U_STU_PARENTNAME as parentName, 
+				U_STU_PARENTPHON as parentPhone, U_STU_PHONE as phone, 
+				U_STU_PROFESSOR as professor, U_STU_PWD as pwd, 
+				U_STU_REGISTER as register, U_STU_SCORE as score, 
+				U_STU_SSN as ssn
+		from U_STUDENT
+		where U_STU_ID = #{id}
+	</select>
+	
+	<update id="updateStudentPhoneNumber" parameterType="Student">
+		update U_STUDENT SET U_STU_PHONE = #{phone}
+		where U_STU_NO = #{no};
+	</update>
+	
+	<update id="updateStudentProfessor" parameterType="Student">
+		update U_STUDENT SET U_STU_PROFESSOR = #{professor}
+		where U_STU_NO = #{no};
+	</update>
+	
+	
+	
+</mapper>

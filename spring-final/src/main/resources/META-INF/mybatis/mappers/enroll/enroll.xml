@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.jhta.dao.user.EnrollDao">
+
+	<select id="getAllEnroll" resultType="Enroll">
+		select e.E_NO as no, 
+			   e.E_ENROLLTIME as enrollTime, 
+			   e.E_ENROLLDAY as enrollDay,
+			   e.E_ENROLLNUM as enrollNum,
+			   	s.J_NO as "subject.no",
+			   	s.J_T_CODE as "subject.siteCode.code",
+			    s.J_IS_PASSED as "subject.isPassed", 
+			    s.J_GRADE as "subject.grade", 
+			    s.J_SUBJECT_NAME as "subject.subjectName", 
+			    s.J_SCORE as "subject.score",
+				s.J_OUTLINE as "subject.outline",
+				s.J_PROGRESS as "subject.progress",
+				s.J_REFERENCE as "subject.reference",
+				s.J_SUB_PROF as "subject.professor",
+			     j.J_DIV_NUM as "division.divisionNo", 
+			     j.J_DIV_PROF as "division.divisionProfessor",
+			     j.J_LIMIT_NUM as "division.limitNumber",
+				 j.J_DIV_NO as "division.no",
+				  t.T_NO as "subject.siteCode.no",
+				  t.T_CODE as "subject.siteCode.code",
+				  t.T_NAME as "subject.siteCode.name"
+		from E_ENROLLMENT e, 
+			 J_DIVISION j,
+			 J_SUBJECT s,
+			 T_SITEMAP t
+		where e.E_J_DIV_NO = j.J_DIV_NO
+		and e.E_J_SUBJECT_NO = s.J_NO
+		and t.T_CODE = s.J_T_CODE
+	</select>
+	
+	<select id="getEnrollByENo" parameterType="int" resultType="Enroll">
+		select e.E_NO as no, 
+			   e.E_ENROLLTIME as enrollTime, 
+			   e.E_ENROLLDAY as enrollDay,
+			   e.E_ENROLLNUM as enrollNum,
+			   	s.J_NO as "subject.no",
+			   	s.J_T_CODE as "subject.siteCode.code",
+			    s.J_IS_PASSED as "subject.isPassed", 
+			    s.J_GRADE as "subject.grade", 
+			    s.J_SUBJECT_NAME as "subject.subjectName", 
+			    s.J_SCORE as "subject.score",
+				s.J_OUTLINE as "subject.outline",
+				s.J_PROGRESS as "subject.progress",
+				s.J_REFERENCE as "subject.reference",
+				s.J_SUB_PROF as "subject.professor",
+			     j.J_DIV_NUM as "division.divisionNo", 
+			     j.J_DIV_PROF as "division.divisionProfessor",
+			     j.J_LIMIT_NUM as "division.limitNumber",
+				 j.J_DIV_NO as "division.no",
+				  t.T_NO as "subject.siteCode.no",
+				  t.T_CODE as "subject.siteCode.code",
+				  t.T_NAME as "subject.siteCode.name"
+		from E_ENROLLMENT e, 
+			 J_DIVISION j,
+			 J_SUBJECT s,
+			 T_SITEMAP t
+		where e.E_J_DIV_NO = j.J_DIV_NO
+		and e.E_J_SUBJECT_NO = s.J_NO
+		and t.T_CODE = s.J_T_CODE
+		and e.E_NO = #{Eno}
+	</select>
+	
+	<insert id="addRegisub" parameterType="Enroll">
+		INSERT INTO R_REGISUBJECT 
+				(R_REGI_NO, <!-- 1 -->
+				 R_GRADE, 	<!-- 2 -->
+				 R_MAXGRADE, <!-- 3 -->
+				 J_NO, 		<!-- 4 -->
+				 U_STU_NO, 	<!-- 5 -->
+				 E_NO, 		<!-- 6 -->
+				 J_DIV_NO) 	<!-- 7 -->
+		VALUES(
+				R_REGISUBJECT_SEQ.nextval, 
+				#{subject.score}, 
+				20, 
+				#{subject.no},
+				#{stuNo},
+				#{no}, 
+				#{division.no})	
+	</insert>
+	
+	<update id="updatePlusNowNum" parameterType="int">
+		update E_ENROLLMENT 
+		SET E_ENROLLNUM = E_ENROLLNUM + 1
+		where E_NO = #{enrollNo}
+	</update>
+	
+	<update id="updateMinusNowNum" parameterType="int">
+		update E_ENROLLMENT 
+		SET E_ENROLLNUM = E_ENROLLNUM - 1
+		where E_NO = #{enrollNo}		
+	</update>
+	
+	<select id="getEnrollCheckNum" parameterType="int" resultType="Enroll">
+		select e.E_ENROLLNUM as enrollNum,
+	   		   j.J_LIMIT_NUM as "division.limitNumber"
+ 		from E_ENROLLMENT e, J_DIVISION j 
+ 		where e.E_J_DIV_NO = j.J_DIV_NO
+ 		and E_NO = #{enrollNo}
+	</select>	
+	
+</mapper>

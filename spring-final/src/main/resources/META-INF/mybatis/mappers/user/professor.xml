@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.jhta.dao.professor.ProfessorDao">
+	<select id="proAllList" resultType="kr.co.jhta.vo.Professor">
+		select 
+			u_prof_no as no,
+			u_prof_id as id,
+			u_prof_name as name,
+			u_prof_gender as gender,
+			u_prof_code as code,
+			u_prof_division as division,
+			u_prof_pwd as pwd,
+			u_prof_register as register,
+			u_prof_phone as phone,
+			u_prof_addr as addr,
+			u_prof_email as email,
+			u_prof_grade as grade,
+			u_prof_ssn as ssn,
+			u_prof_forei as forei,
+			u_prof_entrydate as entrydate,
+			u_prof_leavedate as leavedate
+		from
+			u_professor
+	</select>
+	<select id="getProfessorById" parameterType="string" resultType="kr.co.jhta.vo.Professor">
+		select 
+			u_prof_no as no,
+			u_prof_id as id,
+			u_prof_name as name,
+			u_prof_gender as gender,
+			u_prof_code as code,
+			u_prof_division as division,
+			u_prof_pwd as pwd,
+			u_prof_register as register,
+			u_prof_phone as phone,
+			u_prof_addr as addr,
+			u_prof_email as email,
+			u_prof_grade as grade,
+			u_prof_ssn as ssn,
+			u_prof_forei as forei,
+			u_prof_entrydate as entrydate,
+			u_prof_leavedate as leavedate
+		from
+			u_professor
+		where u_prof_id = #{id}
+	</select>
+	
+	<select id="getProListByTCode" parameterType="string" resultType="kr.co.jhta.vo.Professor">
+		select
+			u_prof_no as no,
+			u_prof_id as id,
+			u_prof_name as name
+		from
+			u_professor
+		where u_prof_code = #{code}
+	</select>
+	
+	
+
+</mapper>

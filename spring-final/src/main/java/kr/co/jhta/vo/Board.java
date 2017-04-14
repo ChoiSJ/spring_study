@@ -1,0 +1,76 @@
+package kr.co.jhta.vo;
+
+import java.util.Date;
+
+public class Board {
+	private int no;
+	private String title;
+	private String contents;
+	private String writer;
+	private Date regdate;
+	private int count;
+	private String category;
+	private String fileName;
+	private String department;
+	
+	public int getNo() {
+		return no;
+	}
+	public void setNo(int no) {
+		this.no = no;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getContents() {
+		return contents;
+	}
+	public void setContents(String contents) {
+		this.contents = contents;
+	}
+	public String getWriter() {
+		return writer;
+	}
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
+	public Date getRegdate() {
+		return regdate;
+	}
+	public void setRegdate(Date regdate) {
+		this.regdate = regdate;
+	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	public String getDepartment() {
+		return department;
+	}
+	public void setDepartment(String department) {
+		this.department = department;
+	}
+	@Override
+	public String toString() {
+		return "Board [no=" + no + ", title=" + title + ", contents=" + contents + ", writer=" + writer + ", regdate="
+				+ regdate + ", count=" + count + ", category=" + category + ", fileName=" + fileName + ", department="
+				+ department + "]";
+	}
+}

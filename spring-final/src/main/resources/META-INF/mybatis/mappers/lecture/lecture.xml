@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.jhta.dao.lecture.LectureDao">
+
+	<select id="getMajorList" parameterType="string" resultType="subject">
+		select
+			s.j_no as no,
+			s.j_reference as reference,
+			s.j_progress as progress,
+			s.j_subject_name as subjectName,
+			s.j_semester as semester,
+			s.j_grade as grade,
+			s.j_is_passed as isPassed,
+			s.j_score as score,
+			s.j_outline as outline,
+			s.J_t_code as "siteCode.code",
+			s.j_sub_prof as professor
+		from
+			j_subject s
+		where
+			s.J_t_code = #{majorCode}
+	</select>
+	
+	<select id="getDetpList" parameterType="string" resultType="sitemap">
+		select
+			t_no as no,
+			t_code as code,
+			t_name as name,
+			t_precode as preCode
+		from
+			t_sitemap
+		where
+			t_code = #{majorCode}
+	</select>
+	
+	<select id="getSubjectList" parameterType="String" resultType="hashmap">
+		select
+			s.j_no as no,
+			s.j_reference as reference,
+			s.j_progress as progress,
+			s.j_subject_name as subjectName,
+			s.j_semester as semester,
+			s.j_grade as grade,
+			s.j_is_passed as isPassed,
+			s.j_score as score,
+			s.j_outline as outline,
+			s.J_t_code as "siteCode.code",
+			s.j_sub_prof as professor,
+			d.j_div_no as divNo,
+			d.j_div_num as divisionNo,
+			d.j_limit_num as limitNumber,
+			d.j_div_prof as divisionProfessor,
+			e.e_no as no,
+			e.e_enrollday	as enrollDay,
+			e.e_j_div_no as "division.no",
+			e.e_j_subject_no as "subject.no",
+			e.e_enrolltime as enrollTime,
+			e.e_enrollnum as	enrollNum
+		from
+			j_subject s,
+			j_division d,
+			e_enrollment e
+		where
+			s.J_t_code = #{majorCode}
+			and s.j_no = d.j_subject_no
+			and s.j_no = e.e_j_subject_no
+	</select>
+	
+	<select id="getAllSemesterList" resultType="semester">
+		select
+			s_no as no,
+			s_seme_select as semeSelect,
+			s_term_st as termStart,
+			s_term_end as termEnd,
+			s_enrollterm_end as enrollTermEnd,
+			s_enrolleditterm_st as enrollEditTermStart,
+			s_enrolleditterm_end as enrollEditTermEnd,
+			s_applyterm_st as applyTermStart,
+			s_applyterm_end as applyTermEnd,
+			s_evalterm_st as evalTermStart,
+			s_evalterm_end as evalTermEnd,
+			s_gradeterm_st as gradeTermStart,
+			s_gradeterm_end as gradeTermEnd,
+			s_gradeeditterm_st as gradeEditTermStart,
+			s_gradeeditterm_end as gradeEditTermEnd,
+			s_appealterm_st as appealTermStart,
+			s_appealterm_end as appealTermEnd,
+			s_courseterm_st as courseTermStart,
+			s_courseterm_end as courseTermEnd
+		from
+			s_semester
+	</select>
+	
+	<select id="getSemesterList" parameterType="int" resultType="semester">
+		select
+			s_no as no,
+			s_seme_select as semeSelect,
+			s_term_st as termStart,
+			s_term_end as termEnd,
+			s_enrollterm_st as enrollTermStart,
+			s_enrollterm_end as enrollTermEnd,
+			s_enrolleditterm_st as enrollEditTermStart,
+			s_enrolleditterm_end as enrollEditTermEnd,
+			s_applyterm_st as applyTermStart,
+			s_applyterm_end as applyTermEnd,
+			s_evalterm_st as evalTermStart,
+			s_evalterm_end as evalTermEnd,
+			s_gradeterm_st as gradeTermStart,
+			s_gradeterm_end as gradeTermEnd,
+			s_gradeeditterm_st as gradeEditTermStart,
+			s_gradeeditterm_end as gradeEditTermEnd,
+			s_appealterm_st as appealTermStart,
+			s_appealterm_end as appealTermEnd,
+			s_courseterm_st as courseTermStart,
+			s_courseterm_end as courseTermEnd
+		from
+			s_semester
+		where
+			s_no = #{semesterNo}
+	</select>
+	
+	<select id="getAllSubjectList" resultType="hashmap">
+		select
+			s.j_no as no,
+			s.j_reference as reference,
+			s.j_progress as progress,
+			s.j_subject_name as subjectName,
+			s.j_semester as semester,
+			s.j_grade as grade,
+			s.j_is_passed as isPassed,
+			s.j_score as score,
+			s.j_outline as outline,
+			s.J_t_code as "siteCode.code",
+			s.j_sub_prof as professor,
+			d.j_div_no as divNo,
+			d.j_div_num as divisionNo,
+			d.j_limit_num as limitNumber,
+			d.j_div_prof as divisionProfessor,
+			e.e_no as no,
+			e.e_enrollday	as enrollDay,
+			e.e_j_div_no as "division.no",
+			e.e_j_subject_no as "subject.no",
+			e.e_enrolltime as enrollTime,
+			e.e_enrollnum as	enrollNum
+		from
+			j_subject s,
+			j_division d,
+			e_enrollment e
+		where
+			s.j_no = d.j_subject_no
+			and s.j_no = e.e_j_subject_no
+	</select>
+	
+</mapper>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.jhta.dao.syllabus.SyllabusDao">
+	<insert id="addNewSyll">
+		insert into s_syllabus
+			(s_no, s_courseno, s_subname, s_midtrum, s_final, s_atlen, s_project,
+			s_distri, s_outline, s_goals, s_method, s_profid, s_profname, s_profemail,
+			s_profphone, s_book, s_midturmst, s_midturmend, s_finalst, s_finalend,
+			s_projectst, s_projectend, s_projectcontent, s_week1, s_week2, s_week3,
+			s_week4, s_week5, s_week6, s_week7, s_week8, s_week9, s_week10, s_week11,
+			s_week12, s_week13, s_week14, s_week15)
+		values
+			(s_syllabus_seq.nextval, #{subject.no, jdbcType=INTEGER}, #{subname, jdbcType=VARCHAR}, #{midtrum}, #{final1}, #{atlen}, #{project},
+			#{distri, jdbcType=VARCHAR}, #{outline, jdbcType=VARCHAR}, #{goals, jdbcType=VARCHAR}, #{method, jdbcType=VARCHAR}, #{professor.id, jdbcType=VARCHAR},
+			#{name, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}, #{phone, jdbcType=VARCHAR}, #{book, jdbcType=VARCHAR},#{midst, jdbcType=DATE}, #{midend, jdbcType=DATE}, #{finalst, jdbcType=DATE}, #{finalend, jdbcType=DATE},
+			#{prost, jdbcType=DATE}, #{proend, jdbcType=DATE}, #{procontent, jdbcType=VARCHAR},#{week1, jdbcType=VARCHAR}, #{week2, jdbcType=VARCHAR}, #{week3, jdbcType=VARCHAR}, #{week4, jdbcType=VARCHAR}, #{week5, jdbcType=VARCHAR},
+			#{week6, jdbcType=VARCHAR}, #{week7, jdbcType=VARCHAR}, #{week8, jdbcType=VARCHAR},#{week9, jdbcType=VARCHAR}, #{week10, jdbcType=VARCHAR}, #{week11, jdbcType=VARCHAR}, #{week12, jdbcType=VARCHAR}, #{week13, jdbcType=VARCHAR},
+			#{week14, jdbcType=VARCHAR}, #{week15, jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="getAllList" resultType="Syllabus">
+		select
+			s_no as no,
+			s_subname as subname,
+			s_midtrum as midtrum,
+			s_final as final1,
+			s_atlen as atlen,
+			s_project as project,
+			s_distri as distri,
+			s_outline as outline,
+			s_goals as goals,
+			s_method as method,
+			s_profname as name,
+			s_profemail as email,
+			s_profphone as phone,
+			s_book as book,
+			S_MIDTURMST as midst,
+			S_MIDTURMEND as midend,
+			s_finalst as finalst,
+			s_finalend as finalend,
+			s_projectst as prost,
+			s_projectend as proend,
+			s_projectcontent as procontent,
+			s_week1 as week1,
+			s_week2 as week2,
+			s_week3 as week3,
+			s_week4 as week4,
+			s_week5 as week5,
+			s_week6 as week6,
+			s_week7 as week7,
+			s_week8 as week8,
+			s_week9 as week9,
+			s_week10 as week10,
+			s_week11 as week11,
+			s_week12 as week12,
+			s_week13 as week13,
+			s_week14 as week14,
+			s_week15 as week15
+		from
+			s_syllabus
+	</select>
+	<select id="getByNoList" resultType="Syllabus" parameterType="int">
+		select
+			s_no as no,
+			s_subname as subname,
+			s_midtrum as midtrum,
+			s_final as final1,
+			s_atlen as atlen,
+			s_project as project,
+			s_distri as distri,
+			s_outline as outline,
+			s_goals as goals,
+			s_method as method,
+			s_profname as name,
+			s_profemail as email,
+			s_profphone as phone,
+			s_book as book,
+			S_MIDTURMST as midst,
+			S_MIDTURMEND as midend,
+			s_finalst as finalst,
+			s_finalend as finalend,
+			s_projectst as prost,
+			s_projectend as proend,
+			s_projectcontent as procontent,
+			s_week1 as week1,
+			s_week2 as week2,
+			s_week3 as week3,
+			s_week4 as week4,
+			s_week5 as week5,
+			s_week6 as week6,
+			s_week7 as week7,
+			s_week8 as week8,
+			s_week9 as week9,
+			s_week10 as week10,
+			s_week11 as week11,
+			s_week12 as week12,
+			s_week13 as week13,
+			s_week14 as week14,
+			s_week15 as week15
+		from
+			s_syllabus
+		where
+			s_no = #{no}
+	</select>
+</mapper>

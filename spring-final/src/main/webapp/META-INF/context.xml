@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<context>
+	<!-- 반드시 context.xml 파일 이름으로 사용하여야 한다. -->
+	<Resource 	name="jdbc/myoracle"
+				auth="Container"
+				type="javax.sql.DataSource"
+				driverClassName="oracle.jdbc.OracleDriver"
+				url="jdbc:oracle:thin:@192.168.10.115:1521:xe"
+				maxActive="20"
+				maxIdle="10"
+				maxWait="10000"
+				username="hr"
+				password="zxcv1234"
+	/>
+</context>
