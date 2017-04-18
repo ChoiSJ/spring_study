@@ -151,7 +151,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="stuMain" style="color: white;"><span class="glyphicon glyphicon-education"></span> JHTA 학사 관리 시스템</a>
+                        <a class="navbar-brand" href="home" style="color: white;"><span class="glyphicon glyphicon-education"></span> JHTA 학사 관리 시스템</a>
                             <ul class="nav navbar-nav">
 						      <li><a href="stuInfo" style="color: white;">학생 정보</a></li>
 						      <li><a href="#" style="color: white;">성적 조회</a></li>
@@ -166,7 +166,7 @@
                         <ul class="nav navbar-nav navbar-right">
                         	<li><a id="user-profile" href="#"style="color: white;"><img src="" class="img-responsive img-thumbnail img-circle"> ${LOGIN_USER.name }님 환영합니다.</a></li>
                             <li><a href="#" style="color: white;">내 정보 수정</a></li>
-                            <li><a href="logout" style="color: white;">로그아웃</a></li>
+                            <li><a href="/jhta/logout" style="color: white;">로그아웃</a></li>
                         </ul>
                     </div>
                 </div>

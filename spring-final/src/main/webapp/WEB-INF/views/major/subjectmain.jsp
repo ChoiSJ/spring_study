@@ -22,8 +22,82 @@
     	<h4><span class="glyphicon glyphicon-th-list"></span> 과목검색</h4>
         <hr style="border:solid 0.5px #2C7BB5;">
     	</div>
-    	<div class="row" style="margin-bottom: 20px">
-      	<a href="addsubject" class="btn btn-primary btn-sm pull-right">교과등록</a>
+      	
+      	<div class="panel panel-default panel-body">
+      		<form method="post" action="searchsubject" id="subject-search-form" class="form-inline">
+      			<table class="table table-condensed">
+      				<tr>
+      					<td><label>검색옵션</label></td>
+      					<td>
+      						<select name="selectSeme"  id="selectseme" >
+      							<option value="">학기선택</option>
+      							<c:forEach var="seme" items="${semeList }">  
+      								<option value="${seme.no }">
+      									<c:forTokens items="${seme.semeSelect }" delims="-" begin="0" end="0" var="a" >${a }</c:forTokens>년도  							
+      									<c:forTokens items="${seme.semeSelect }" delims="-" begin="1" end="1" var="b" >${b }</c:forTokens>학기
+      								</option>	
+      							</c:forEach>
+      						</select>
+      					</td>
+      				</tr>
+      				<tr>
+      					<td></td>
+      					<td>
+      						<div class="form-group">
+	      						<select name="opt" class="form-controll" id="selectopt2">
+	      							<option>세부항목</option>
+	      							<option value="subjectname">과목명</option>
+	      							<option value="profname">교수명</option>
+	      						</select>
+      						</div>
+      						<div class="form-group">
+      							<label>검색어</label>
+      							<input type="text" name="keyword" value="${searchsubject.keyword }">
+      						</div>
+      						<button type="submit" class="btn btn-default">검색</button>
+      					</td>
+      				</tr>
+      			</table>
+      		</form>
+    	
+    		<div class="row text-left pull-left">
+    			<select name="rows" >
+    				<option value="10" ${searchsubject eq 10? 'selected=selected' : '' }>10건씩 정렬</option>
+    				<option value="50" ${searchsubject eq 50? 'selected=selected' : '' }>50건씩 정렬</option>
+    				<option value="100" ${searchsubject eq 100? 'selected=selected' : '' }>100건씩 정렬</option>
+    			</select>
+    		</div>
+      		<a href="addsubject" class="btn btn-primary btn-sm pull-right">교과등록</a>
+      	
+      	</div>
+      	<div class="panel panel-body">
+      		<table class="table table-condensed">
+      			<thead>
+      				<tr>
+      					<th>년도학기</th>
+      					<th>시행학과</th>
+      					<th>과목명</th>
+      					<th>분반수</th>
+      					<th>이수구분</th>
+      					<th>학점</th>
+      					<th>학년</th>
+      				</tr>
+      			</thead>
+      			<tbody>
+      			<c:forEach var="subject" items="${subjectlist }">
+      				<tr>
+      					<td>${subject.selectNo.semeSelect }</td>
+      					<td><a href="detailsubject?sno=${subject.no }">${subject.siteCode.name }</a></td>
+      					<td>${subject.subjectName }</td>
+      					<td>${subject.division }</td>
+      					 
+      					<td>${subject.isPassed.isPassedName }</td>
+      					<td>${subject.score }</td>
+      					<td>${subject.grade }</td>
+      				</tr>
+      			</c:forEach>	
+      			</tbody>
+      		</table>
       	</div>
     
     </div>

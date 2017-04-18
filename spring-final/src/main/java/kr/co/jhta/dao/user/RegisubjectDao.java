@@ -10,6 +10,6 @@ import kr.co.jhta.vo.stu.Regisubject;
 public interface RegisubjectDao {
 
 	List<Regisubject> getAllRegisInfo();
-	Regisubject getRegisById(String id);	
+	List<Regisubject> getRegisByUserNo(int userNo);	
 	void deleteRegisubByENo(int enrollNo);
 }

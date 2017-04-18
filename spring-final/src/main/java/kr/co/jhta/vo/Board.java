@@ -8,7 +8,7 @@ public class Board {
 	private String contents;
 	private String writer;
 	private Date regdate;
-	private int count;
+	private int countView;
 	private String category;
 	private String fileName;
 	private String department;
@@ -43,11 +43,12 @@ public class Board {
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
-	public int getCount() {
-		return count;
+	
+	public int getCountView() {
+		return countView;
 	}
-	public void setCount(int count) {
-		this.count = count;
+	public void setCountView(int countView) {
+		this.countView = countView;
 	}
 	public String getCategory() {
 		return category;
@@ -70,7 +71,7 @@ public class Board {
 	@Override
 	public String toString() {
 		return "Board [no=" + no + ", title=" + title + ", contents=" + contents + ", writer=" + writer + ", regdate="
-				+ regdate + ", count=" + count + ", category=" + category + ", fileName=" + fileName + ", department="
-				+ department + "]";
+				+ regdate + ", countView=" + countView + ", category=" + category + ", fileName=" + fileName
+				+ ", department=" + department + "]";
 	}
 }

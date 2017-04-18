@@ -11,6 +11,7 @@ import kr.co.jhta.service.professor.ProfessorService;
 import kr.co.jhta.service.user.StudentService;
 import kr.co.jhta.vo.LoginForm;
 import kr.co.jhta.vo.Professor;
+import kr.co.jhta.vo.Sessioncheck;
 import kr.co.jhta.vo.stu.Student;
 
 
@@ -31,24 +32,31 @@ public class LoginController {
 	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public String loginprocess(LoginForm loginForm,HttpSession session){
+		Sessioncheck sessioncheck = new Sessioncheck();				
 		if(loginForm.getLoginType().equals("stud")){
 			Student stud = studentService.loginByStudent(loginForm);
 			if(stud == null){
 				return "redirect:/login?err=fail";
 			}
+			sessioncheck.setCheck("stud");
+			session.setAttribute("SESSION_CHECK", sessioncheck);
 			session.setAttribute("LOGIN_USER", stud);
-			return "redirect:/stuMain";
+			return "redirect:/stud/home";
 		}else{
 			Professor prof = professorService.loginByProfessor(loginForm);
 			if(prof == null){
 				return "redirect:/login?err=fail";
 			}
 			if(prof.getId().equals("admin")){
+				sessioncheck.setCheck("admin");
+				session.setAttribute("SESSION_CHECK", sessioncheck);
 				session.setAttribute("LOGIN_USER", prof);
-				return "redirect:/home";	
+				return "redirect:/admin/home";	
 			}
+			sessioncheck.setCheck("prof");
+			session.setAttribute("SESSION_CHECK", sessioncheck);
 			session.setAttribute("LOGIN_USER", prof);
-			return "redirect:/profMain";
+			return "redirect:/prof/home";
 		}
 	}
 	

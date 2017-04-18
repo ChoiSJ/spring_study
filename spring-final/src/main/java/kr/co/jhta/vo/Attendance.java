@@ -29,5 +29,12 @@ public class Attendance {
 	}
 	public void setAttScore(int attScore) {
 		this.attScore = attScore;
+	}
+	
+	@Override
+	public String toString() {
+		return "Attendance [attNo=" + attNo + ", scoreNo=" + scoreNo + ", count=" + count + ", attScore=" + attScore
+				+ "]";
 	}	
+	
 }

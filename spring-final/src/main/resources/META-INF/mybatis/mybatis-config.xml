@@ -13,27 +13,35 @@
 		<typeAlias alias="sitemap" type="kr.co.jhta.vo.SiteMap"/>
 		<typeAlias alias="Enroll" type="kr.co.jhta.vo.stu.Enroll"/>
 		<typeAlias alias="Regisubject" type="kr.co.jhta.vo.stu.Regisubject"/>
+		<typeAlias alias="Professor" type="kr.co.jhta.vo.Professor"/>
 		<typeAlias alias="Syllabus" type="kr.co.jhta.vo.Syllabus"/>
 		<typeAlias alias="opensearch" type="kr.co.jhta.vo.OpenSearch"/>
+		<typeAlias alias="Board" type="kr.co.jhta.vo.Board"/>
+		<typeAlias alias="SearchForm" type="kr.co.jhta.vo.SearchForm"/>
+		<typeAlias alias="SubjectIsPassed" type="kr.co.jhta.vo.SubjectIsPassed"/>
+		<typeAlias alias="ScheduleEvent" type="kr.co.jhta.vo.ScheduleEvent"/>
+		<typeAlias alias="BoardView" type="kr.co.jhta.vo.BoardView"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="META-INF/mybatis/mappers/lecture/lecture.xml"/>		
 		<mapper resource="META-INF/mybatis/mappers/lecture/openlecture.xml"/>	
+		<mapper resource="META-INF/mybatis/mappers/major/ispassed.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/major/subject.xml"/>			<!-- subject -->
 		<mapper resource="META-INF/mybatis/mappers/major/semester.xml"/>		<!-- semester -->
 		<mapper resource="META-INF/mybatis/mappers/major/division.xml"/>		<!-- division -->
-		<!-- <mapper resource="META-INF/mybatis/mappers/board/board.xml"/> -->
+		<mapper resource="META-INF/mybatis/mappers/board/board.xml"/>
 		<!-- <mapper resource="META-INF/mybatis/mappers/board/review.xml"/> -->
-		<!-- <mapper resource="META-INF/mybatis/mappers/score/attendance.xml"/> -->
+		<mapper resource="META-INF/mybatis/mappers/score/attendance.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/score/score.xml"/>
-		<!-- <mapper resource="META-INF/mybatis/mappers/score/report.xml"/> -->
+		<mapper resource="META-INF/mybatis/mappers/score/report.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/enroll/enroll.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/enroll/regisubject.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/user/student.xml"/>			<!-- student -->
 		<mapper resource="META-INF/mybatis/mappers/user/professor.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/user/syllabus.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/sitemap.xml"/>
+		<mapper resource="META-INF/mybatis/mappers/schedule/scheduleEvent.xml"/>
 		<!-- <mapper resource="META-INF/mybatis/mappers/messege.xml"/> -->
 	</mappers>
 </configuration>

@@ -4,15 +4,17 @@ public class Subject {
 
 	private int no;
 	private String subjectName;
-	private String professor;
+	private Professor professor;
 	private Semester selectNo;
 	private int grade;
-	private String isPassed;
+	private SubjectIsPassed isPassed;
 	private SiteMap siteCode;
 	private int score;
+	private int division;
 	private String outline;
 	private String reference;
 	private String progress;
+	
 	
 	public Subject() {
 		// TODO Auto-generated constructor stub
@@ -34,15 +36,21 @@ public class Subject {
 		this.subjectName = subjectName;
 	}
 
-	public String getProfessor() {
+	public int getDivision() {
+		return division;
+	}
+
+	public void setDivision(int division) {
+		this.division = division;
+	}
+
+	public Professor getProfessor() {
 		return professor;
 	}
 
-	public void setProfessor(String professor) {
+	public void setProfessor(Professor professor) {
 		this.professor = professor;
 	}
-
-	
 
 	public Semester getSelectNo() {
 		return selectNo;
@@ -60,11 +68,11 @@ public class Subject {
 		this.grade = grade;
 	}
 
-	public String getIsPassed() {
+	public SubjectIsPassed getIsPassed() {
 		return isPassed;
 	}
 
-	public void setIsPassed(String isPassed) {
+	public void setIsPassed(SubjectIsPassed isPassed) {
 		this.isPassed = isPassed;
 	}
 
@@ -112,7 +120,10 @@ public class Subject {
 	public String toString() {
 		return "Subject [no=" + no + ", subjectName=" + subjectName + ", professor=" + professor + ", selectNo="
 				+ selectNo + ", grade=" + grade + ", isPassed=" + isPassed + ", siteCode=" + siteCode + ", score="
-				+ score + ", outline=" + outline + ", reference=" + reference + ", progress=" + progress + "]";
+				+ score + ", division=" + division + ", outline=" + outline + ", reference=" + reference + ", progress="
+				+ progress + "]";
 	}
+
+	
 	
 }

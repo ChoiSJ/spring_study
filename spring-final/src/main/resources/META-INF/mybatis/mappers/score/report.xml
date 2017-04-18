@@ -2,6 +2,32 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.jhta.dao.">
-
+<mapper namespace="kr.co.jhta.dao.score.ReportDao">
+	<insert id="addReport">
+		insert into R_REPORT
+		(
+			S_SCORE_NO,
+			R_REPORT_NO 
+		)
+		values
+		(
+			S_SCORE_SEQ.currval,
+			R_REPORT_SEQ.nextval
+		)
+	</insert>
+	
+	<select id="getReportByScoreNo" parameterType="int" resultType="report">
+		select
+			R_TITLE as reportTitle,
+   			R_DEADLINE as reportDeadline,
+   			R_REGDATE as reportDate,
+   			R_PUBLIC as reportPublic,
+  			R_SCORE as reportScore,
+   			S_SCORE_NO as scoreNo,
+   			R_REPORT_NO as reportNo
+   		from
+   			R_REPORT
+   		where
+   			S_SCORE_NO = #{sno}
+	</select>
 </mapper>

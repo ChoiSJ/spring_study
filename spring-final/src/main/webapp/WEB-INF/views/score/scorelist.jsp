@@ -12,8 +12,101 @@
 <script type="text/javascript">
 	$(function() {
 		$("#att_Btn").click(function() {
+			var attper = $("#att_Btn").val();
+			alert(attper);
 			$('#attDataBox').empty();
-			$('#attDataBox').append('<label>홍길동 디지털코드 출석정보</label><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;" id="attDataBar">60%</div></div>');			
+			$('#attDataBox').append('<label>홍길동 디지털코드 출석정보</label><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="'+attper+'" aria-valuemin="0" aria-valuemax="15" style="width: 60%;" id="attDataBar">'+attper+'</div></div>');			
+		});
+		
+		$("#score_box1").change(function() {
+			var score = $(this).val();
+			if(score=="") {
+				$("#score_box2").empty();
+				return false;
+			}
+			
+			$.ajax({
+				url: "scoreSearch.do?score="+score,
+				dataType: "json",
+				type: "POST",
+				success: function(data) {
+					$("#score_box2").empty();
+					
+					for (var i=0; i<data.length; i++) {
+						$("#score_box2").append("<option value="+data[i].code+">"+data[i].name+"</option>");
+					}
+				}
+			});
+		});
+		
+		$("#att_box1").change(function() {
+			var score = $(this).val();
+			
+			if(score=="") {
+				$("#att_box2").empty();
+				return false;
+			}
+			
+			$.ajax({
+				url: "scoreSearch.do?score="+score,
+				dataType: "json",
+				type: "POST",
+				success: function(data) {
+					$("#att_box2").empty();
+					
+					for (var i=0; i<data.length; i++) {
+						$("#att_box2").append("<option value="+data[i].code+">"+data[i].name+"</option>");
+					}
+				}
+			});
+		});
+		
+		$("#rep_box1").change(function() {
+			var score = $(this).val();
+			
+			if(score=="") {
+				$("#rep_box2").empty();
+				return false;
+			}
+			
+			$.ajax({
+				url: "scoreSearch.do?score="+score,
+				dataType: "json",
+				type: "POST",
+				success: function(data) {
+					$("#rep_box2").empty();
+					
+					for (var i=0; i<data.length; i++) {
+						$("#rep_box2").append("<option value="+data[i].code+">"+data[i].name+"</option>");
+					}
+				}
+			});
+		});
+		
+		$("#scoreprint").click(function (e) {
+			var scoreno = $(this).val();
+			window.open('data:application/vnd.ms-excel,filename="test.xls",' + encodeURIComponent($('#score_table').html()), '_blank');
+			e.preventDefault(); 
+		});
+		
+		$("#score_search_btn").click(function() {
+			var code1 = $("#score_box1").val();
+			var code2 = $("#score_box2").val();
+			var stucode = $("#score_box3").val();
+	
+			$.ajax({
+				url: "scoreSearchInfo?code="+code1+"&codes="+code2+"&stucode="+stucode,
+				dataType: "json",
+				type: "POST",
+				success: function(data) {
+					$("#score_td_box").empty();
+					
+					for (var i=0; i<data.length; i++) {
+						$("#score_td_box").append("<tr style='text-align: left;'>");
+						$("#score_td_box").append("</tr>");
+					}
+				}
+			});
 		});
 	});
 </script>
@@ -26,8 +119,6 @@
 		<div class="panel panel-heading">
 		<h3>성적관리</h3>
 		<hr style="border:solid 0.5px #2C7BB5;">		                            	   
-
-		<form class="form-group" method="post" action="">
 			<ul class="nav nav-tabs" role="tablist">
 					<li role="presentation" class="active"><a href="#score" aria-controls="score" role="tab" data-toggle="tab" aria-expanded="true">성적</a></li>
 					<li role="presentation"><a href="#attendance" aria-controls="attendance" role="tab" data-toggle="tab" aria-expanded="false">출결</a></li>
@@ -37,34 +128,33 @@
 				<div role="tabpanel" class="tab-pane active" id="score">
 					<table class="table table-condensed">
 						<tbody>
+							<tbody>
 							<tr>
 								<td bgcolor="#dceef3" style="color: #333; width: 10%; vertical-align: middle; height: 30px;"><strong>조회</strong></td>
 								<td bgcolor="#f0fcff">
-									과정구분: 
-									<select>
-										<option value="">재학생</option>
-										<option value="">계절학기</option>
-									</select>
-								</td>
-								<td bgcolor="#f0fcff">
-									이름:
-									<input type="text"/>
-								</td>
-								<td bgcolor="#f0fcff">
-									학기:
-									<select>
-										<c:forEach var="semesterlist" items="${semesterlist }">
-											<option value="${semesterlist.no }">${semesterlist.semeSelect }</option>
+									<select class="form-control" id="score_box1">
+											<option value="all">전체</option>
+										<c:forEach var="sitemaplist" items="${sitemaplist }">
+											<option value="${sitemaplist.code }">${sitemaplist.name }</option>
 										</c:forEach>
 									</select>
 								</td>
 								<td bgcolor="#f0fcff">
-									<button class="btn btn-default btn-xs" type="submit">조회하기</button>
+									<select class="form-control" id="score_box2">
+										<option value="siteAll">전공</option>
+									</select>
+								</td>
+								<td bgcolor="#f0fcff">
+									<input class="form-control" type="text" placeholder="이름 또는 학번" id="score_box3"/>
+								</td>
+								<td bgcolor="#f0fcff">
+									<button class="btn btn-primary" type="button" id="score_search_btn">조회하기</button>
 								</td>
 							</tr>
 						</tbody>
+						</tbody>
 					</table>
-					<div class="panel panel-body">
+					<div class="panel panel-body" id="score_table">
 						<table class="table table-condensed">
 							<thead>
 								<tr bgcolor="#f0fcff">
@@ -80,11 +170,12 @@
 									<th>중간</th>
 									<th>기말</th>
 									<th>수정</th>
+									<th>출력</th>
 								</tr>
 							</thead>
-							<tbody>
-								<tr style="text-align: left;">
+							<tbody id="score_td_box">
 								<c:forEach var="scorelist2" items="${scorelist2 }">
+								<tr style="text-align: left;">
 									<td>${scorelist2.no}</td>
 									<td>${scorelist2.student.name}</td>
 									<td>${scorelist2.student.id}</td>
@@ -96,9 +187,10 @@
 									<td>${scorelist2.score.attScore}</td>
 									<td>${scorelist2.score.midtermScore}</td>
 									<td>${scorelist2.score.endtermScore}</td>
-									<td><a href="scoreform.do?sno=${scorelist2.score.no }" class="btn btn-default btn-xs">수정</a></td>
-								</c:forEach>
+									<td><a href="scoreform.do?sno=${scorelist2.score.no }" class="btn btn-primary btn-xs">수정</a></td>
+									<td><button class="btn btn-primary btn-xs" type="button" id="scoreprint" value="${scorelist2.score.no }">출력</button></td>
 								</tr>
+								</c:forEach>	
 							</tbody>
 						</table>
 					</div>
@@ -110,24 +202,23 @@
 							<tr>
 								<td bgcolor="#dceef3" style="color: #333; width: 10%; vertical-align: middle; height: 30px;"><strong>조회</strong></td>
 								<td bgcolor="#f0fcff">
-									학기선택:
-									<select>
-										<c:forEach var="semesterlist" items="${semesterlist }">
-											<option value="${semesterlist.no }">${semesterlist.semeSelect }</option>
+									<select class="form-control" id="att_box1">
+											<option value="">전체</option>
+										<c:forEach var="sitemaplist" items="${sitemaplist }">
+											<option value="${sitemaplist.code }">${sitemaplist.name }</option>
 										</c:forEach>
 									</select>
 								</td>
 								<td bgcolor="#f0fcff">
-									과목선택:
-									<select>
-										<option value="">디지털코드</option>
-										<option value="">회로이론</option>
-										<option value="">공업수학</option>
-										<option value="">C언어 프로그래밍</option>
+									<select class="form-control" id="att_box2">
+										<option value="siteAll">전공</option>
 									</select>
 								</td>
 								<td bgcolor="#f0fcff">
-									<button class="btn btn-default btn-xs" type="submit">조회하기</button>
+									<input class="form-control" type="text" placeholder="이름 또는 학번"/>
+								</td>
+								<td bgcolor="#f0fcff">
+									<button class="btn btn-primary" type="submit">조회하기</button>
 								</td>
 							</tr>
 						</tbody>
@@ -137,7 +228,7 @@
 						<table class="table table-condensed">
 							<thead>
 								<tr bgcolor="#f0fcff">
-									<th>성적번호</th>
+									<th>수강번호</th>
 									<th>학번</th>
 									<th>이름</th>
 									<th>학년</th>
@@ -147,14 +238,17 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr style="text-align: left;">
-									<td>0</td>
-									<td>0</td>
-									<td>0</td>
-									<td>0</td>
-									<td>0</td>
-									<td>0</td>
-								</tr>
+								<c:forEach var="scorelist2" items="${scorelist2 }">
+									<tr style="text-align: left;">
+										<td>${scorelist2.no}</td>
+										<td>${scorelist2.student.id}</td>
+										<td>${scorelist2.student.name}</td>
+										<td>${scorelist2.subject.grade}</td>
+										<td>${scorelist2.subject.subjectName}</td>
+										<td>${scorelist2.att.count}</td>
+										<td><button type="button" class="btn btn-primary btn-xs" id="att_Btn" value="${scorelist2.att.count}">상세정보</button></td>
+									</tr>
+								</c:forEach>
 							</tbody>
 						</table>
 					</div>
@@ -163,68 +257,68 @@
 				<div role="tabpanel" class="tab-pane" id="report">
 					<table class="table table-condensed">
 						<tbody>
+							<tbody>
 							<tr>
 								<td bgcolor="#dceef3" style="color: #333; width: 10%; vertical-align: middle; height: 30px;"><strong>조회</strong></td>
 								<td bgcolor="#f0fcff">
-									과정구분: 
-									<select>
-										<option>재학생</option>
-										<option>계절학기</option>
-										<option>재학생</option>
-									</select>
-								</td>
-								<td bgcolor="#f0fcff">
-									학기선택:
-									<select>
-										<c:forEach var="semesterlist" items="${semesterlist }">
-											<option value="${semesterlist.no }">${semesterlist.semeSelect }</option>
+									<select class="form-control" id="rep_box1">
+											<option value="">전체</option>
+										<c:forEach var="sitemaplist" items="${sitemaplist }">
+											<option value="${sitemaplist.code }">${sitemaplist.name }</option>
 										</c:forEach>
 									</select>
 								</td>
 								<td bgcolor="#f0fcff">
-									과목선택:
-									<select>
-										<option value="">디지털코드</option>
-										<option value="">회로이론</option>
-										<option value="">공업수학</option>
-										<option value="">C언어 프로그래밍</option>
+									<select class="form-control" id="rep_box2">
+										<option value="siteAll">전공</option>
 									</select>
 								</td>
 								<td bgcolor="#f0fcff">
-									<button class="btn btn-sm-default" type="submit">조회하기</button>
+									<input class="form-control" type="text" placeholder="이름 또는 학번"/>
+								</td>
+								<td bgcolor="#f0fcff">
+									<button class="btn btn-primary" type="submit">조회하기</button>
 								</td>
 							</tr>
+						</tbody>
 						</tbody>
 					</table>
 					<div class="panel panel-body">
 						<table class="table table-condensed">
 							<thead>
 								<tr bgcolor="#f0fcff">
+									<th>수강번호</th>
 									<th>학번</th>
+									<th>이름</th>
 									<th>학기</th>
 									<th>교과목명</th>
 									<th>제출기한</th>
 									<th>제출일</th>
 									<th>과제명</th>
 									<th>점수</th>
+									<th>수정</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>testid</td>
-									<td>2015년 1학년 1학기</td>
-									<td>디지털회로</td>
-									<td>2015.07.21</td>
-									<td>2015.07.16</td>
-									<td>코드별 정리</td>
-									<td>7 / 10</td>
-								</tr>
+								<c:forEach var="scorelist2" items="${scorelist2 }">
+									<tr style="text-align: left;">
+										<td>${scorelist2.no}</td>
+										<td>${scorelist2.student.id}</td>
+										<td>${scorelist2.student.name}</td>
+										<td>${scorelist2.subject.selectNo.semeSelect}</td>
+										<td>${scorelist2.subject.subjectName}</td>
+										<td>${scorelist2.report.reportDeadline}</td>
+										<td>${scorelist2.report.reportDate}</td>
+										<td>${scorelist2.report.reportTitle}</td>
+										<td>${scorelist2.report.reportScore}</td>
+										<td><button type="button" class="btn btn-primary btn-xs" id="" value="">수정</button></td>
+									</tr>
+								</c:forEach>
 							</tbody>
 						</table>
 					</div>
 				</div>
 			</div>
-		</form>
 		</div>
 	</div>
 </body>

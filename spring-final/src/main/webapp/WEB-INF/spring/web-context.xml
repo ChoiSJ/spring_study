@@ -7,20 +7,31 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
-	<mvc:annotation-driven/>
+	<mvc:annotation-driven>
+		<mvc:argument-resolvers>
+			<bean class="kr.co.jhta.controller.argumentResolver.LoginStudArgumentResolver"></bean>
+			<bean class="kr.co.jhta.controller.argumentResolver.LoginProfArgumentResolver"></bean>
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
 	<mvc:interceptors>
-		<bean class="kr.co.jhta.controller.interceptor.LoginCheckInterceptor" >
-			<property name="paths">
-				<list>
-					<value>/home</value>
-				</list>
-			</property>
-		</bean>
+		<mvc:interceptor>
+			<mvc:mapping path="/admin/**"/>
+			<mvc:mapping path="/stud/**"/>
+			<mvc:mapping path="/prof/**"/>
+			<bean class="kr.co.jhta.controller.interceptor.LoginCheckInterceptor" />			
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/admin/**"/>
+			<mvc:mapping path="/stud/**"/>
+			<mvc:mapping path="/prof/**"/>
+			<bean class="kr.co.jhta.controller.interceptor.RoleCheckInterceptor"></bean>
+		</mvc:interceptor>
 	</mvc:interceptors>
 	
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	
 	<context:component-scan base-package="kr.co.jhta.controller"/>
+
 
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/" />

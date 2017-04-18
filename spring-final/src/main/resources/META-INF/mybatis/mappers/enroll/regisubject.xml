@@ -15,7 +15,7 @@
 	    e.E_ENROLLNUM as "enroll.enrollNum",
 		 s.J_NO as "subject.no",
 		 s.J_T_CODE as "subject.siteCode.code",
-		 s.J_IS_PASSED as "subject.isPassed", 
+		 s.J_IS_PASSED as "subject.isPassed.isPassed", 
 		 s.J_GRADE as "subject.grade", 
 		 s.J_SUBJECT_NAME as "subject.subjectName", 
 		 s.J_SCORE as "subject.score",
@@ -41,7 +41,7 @@
 		and	r.E_NO = e.E_NO
 	</select>
 	
-	<select id="getRegisById" parameterType="String" resultType="Regisubject">
+	<select id="getRegisByUserNo" parameterType="int" resultType="Regisubject">
 select r.R_REGI_NO as "no",
 	   r.U_STU_NO as "student.no",
 	   r.R_GRADE as "grade",
@@ -52,7 +52,7 @@ select r.R_REGI_NO as "no",
 	    e.E_ENROLLNUM as "enroll.enrollNum",
 		 s.J_NO as "subject.no",
 		 s.J_T_CODE as "subject.siteCode.code",
-		 s.J_IS_PASSED as "subject.isPassed", 
+		 s.J_IS_PASSED as "subject.isPassed.isPassed", 
 		 s.J_GRADE as "subject.grade", 
 		 s.J_SUBJECT_NAME as "subject.subjectName", 
 		 s.J_SCORE as "subject.score",
@@ -76,7 +76,7 @@ select r.R_REGI_NO as "no",
 		and e.E_J_SUBJECT_NO = s.J_NO
 		and t.T_CODE = s.J_T_CODE
 		and	r.E_NO = e.E_NO
-		and r.U_STU_NO = #{id}
+		and r.U_STU_NO = #{no}
 	</select>
 	
 	<delete id="deleteRegisubByENo" parameterType="int">

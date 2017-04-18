@@ -12,4 +12,5 @@ public interface EnrollService {
 	void updatePlusNowNumService(int enrollNo);
 	void updateMinusNowNumService(int enrollNo);
 	Enroll getEnrollCheckNumService(int enrollNo);
+	List<Enroll> getAllEnrollByTnameService(String siteName);
 }

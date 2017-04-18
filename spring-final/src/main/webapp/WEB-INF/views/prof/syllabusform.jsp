@@ -44,6 +44,7 @@
 			$("#prof1").text($(this).find('option:selected').text());
 			console.log($("#prof1").text());
 		})
+		$("#subname1").val($("[name='subno']").find('option:selected').text());
 	
 	})
 </script>
@@ -55,7 +56,7 @@
 		<h1>새 강의계획서 등록하기</h1>
 		<hr class="one">
 		<div class="row well">
-			<form:form method="post" action="/jhta/syllform" modelAttribute="syllabusform">
+			<form:form method="post" action="/jhta/prof/syllform" modelAttribute="syllabusform">
 				<div class="form-group">
 					<label>과목명</label>
 					<form:select path="subno" cssClass="form-control">
@@ -109,22 +110,18 @@
 				<div class="second">
 				<div class="form-group">
 					<label>담당 교수</label>
-					<form:select path="id" cssClass="form-control">
-						<c:forEach var="professor" items="${proList }" varStatus="status">
-							<form:option id="prof-${status.count }" value="${professor.id }">${professor.name }</form:option>	
-						</c:forEach>
-					</form:select>
-					<form:input type="hidden" path="name" id="prof1" value=""/>
+					<form:input type="hidden" path="name" cssClass="form-control" value="${prof.name }"/>
+					<form:input type="hidden" path="id" id="prof1" value="${prof.id }"/>
 				</div>
 				<div class="form-group">
 					<label>이메일주소</label>
-					<form:input path="email" cssClass="form-control"/>
+					<form:input path="email" cssClass="form-control" value="${prof.email }"/>
 					<form:errors path="email" cssClass="text-danger"></form:errors>
 					
 				</div>
 				<div class="form-group">
 					<label>전화번호</label>
-					<form:input path="phone" cssClass="form-control"/>
+					<form:input path="phone" cssClass="form-control" value="${prof.phone }"/>
 					<form:errors path="phone" cssClass="text-danger"></form:errors>
 				</div>
 				<div class="form-group">
@@ -233,7 +230,7 @@
 				
 				<div class="form-group text-right">
 					<button type="submit" class="btn btn-primary">등록</button>
-					<a href="/jhta/profMain" class="btn btn-warning">취소</a>
+					<a href="/jhta/prof/main" class="btn btn-warning">취소</a>
 				</div>
 			</form:form>
 		</div>

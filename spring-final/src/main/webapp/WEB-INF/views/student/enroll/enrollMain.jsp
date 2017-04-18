@@ -15,6 +15,11 @@ $(function() {
 	$("#select-dept").change(function() {
 		var dept = $(this).val();
 		
+		if(dept=="") {
+			$("#select-major").empty();
+			return false;
+		}
+		
 		$.ajax({
 			url: "enrollSubjectSearch?dept=" + dept,
 			dataType: "json",
@@ -54,7 +59,7 @@ $(function() {
 					<option value="grade4">4 학년</option>
 				</select>
 				<select class="w3-select w3-border" name="dept" id="select-dept" style="width: 16%; height: 37px;">
-					<option value="siteAll">학부</option>
+					<option value="">학부</option>
 					<c:forEach items="${deptList }" var="dept">
 						<option value="${dept.code }">${dept.name }</option>
 					</c:forEach>
@@ -70,7 +75,7 @@ $(function() {
       <hr />
       <div class="row">
       	신청 목록
-      	<form action="enrollSend" method="POST">
+      	<!-- <form action="enrollSend" method="POST"> -->
 	      	<table class="table table-bordered">
 	      		<colgroup>
 	      			<col width="10%" />
@@ -104,7 +109,7 @@ $(function() {
 	      			<c:forEach var="enroll" items="${enrollList}">
 	      				<tr>
 	      					<th>${enroll.subject.siteCode.code}</th>
-	      					<th>${enroll.subject.isPassed }</th>
+	      					<th>${enroll.subject.isPassed.isPassed }</th>
 	      					<th>${enroll.subject.grade }</th>	<!-- 학년 -->
 	      					<th>${enroll.subject.subjectName }</th>	<!-- 과목명 -->
 	      					<th>${enroll.division.divisionProfessor }</th>	<!-- 담당교수 -->
@@ -124,32 +129,37 @@ $(function() {
 	      						</c:choose>	  
 	      					</th>    					
 	      					<th>
-   								<input type="hidden" value="${enroll.no}" name="enrollNo"/>
-   								<c:choose>
-   									<c:when test="${regisubList == null}">
-   										<button type="submit" class="btn btn-default" id="enroll_${enroll.no}" >신청</button>
-   									</c:when>
-   									<c:when test="${regisubList != null}">
-   										<c:forEach var="regisub" items="${regisubList }">
-	   										<c:if test="${(regisub.subject.siteCode.code eq enroll.subject.siteCode.code) || (regisub.enroll.enrollNum >= regisub.division.limitNumber)}">
-	   											<strong><font color="blue">신청 완료</font></strong>
-	   										</c:if>
-   										</c:forEach>
-   									</c:when>
-   									
-   									<c:otherwise></c:otherwise>
-   								</c:choose>   								
+	      						<c:choose>
+	      							<c:when test="${regisubList == null }">
+	      								<a href="enrollSend?enrollNo=${enroll.no }" class="btn btn-default">신청</a>	
+	      							</c:when>
+	      							<c:otherwise>
+	      								<c:forEach var="regisub" items="${regisubList }">
+	      									<c:choose>
+		      									<c:when test="${regisub.subject.siteCode.code eq enroll.subject.siteCode.code}">
+												<strong><font color="blue">신청 완료</font></strong>
+												</c:when>
+												<c:when test="${enroll.enrollNum eq enroll.division.limitNumber}">
+													<strong><font color="red">마감</font></strong>
+												</c:when>
+												<c:otherwise>
+													<a href="enrollSend?enrollNo=${enroll.no }" class="btn btn-default">신청</a>							
+												</c:otherwise>
+											</c:choose>
+		      							</c:forEach>
+	      							</c:otherwise>
+	      						</c:choose>														
 	      					</th>
 	      				</tr>
 	      			</c:forEach>
 	      		</tbody>
 	      	</table>
-	     </form>
+	     <!-- </form> -->
 	      </div>
 	      <div>
 	      <hr />
 	      <div class="row">
-	      <form action="enrollCancle" method="POST">
+	      <!-- <form action="enrollCancle" method="POST"> -->
 	      	신청 현황
 	      	<table class="table table-bordered">
 	      		<colgroup>
@@ -184,7 +194,7 @@ $(function() {
 	      			<c:forEach var="regisub" items="${regisubList }">
 	      				<tr>
 	      					<th>${regisub.subject.siteCode.code}</th>
-	      					<th>${regisub.subject.isPassed }</th>
+	      					<th>${regisub.subject.isPassed.isPassed }</th>
 	      					<th>${regisub.subject.grade }</th>	<!-- 학년 -->
 	      					<th>${regisub.subject.subjectName }</th>	<!-- 과목명 -->
 	      					<th>${regisub.division.divisionProfessor }</th>	<!-- 담당교수 -->
@@ -204,14 +214,13 @@ $(function() {
 	      						</c:choose>	  
 	      					</th>
 	      					<th>
-	      						<input type="hidden" value="${regisub.enroll.no}" name="cancleNo" />
-	      						<button type="submit" class="btn btn-default" id="regisub_${enroll.no}">취소</button>
+	      						<a href="enrollCancle?cancleNo=${regisub.enroll.no }" class="btn btn-default">취소</a>
 	      					</th>
 	      				</tr>
 	      			</c:forEach>
 	      		</tbody>
 	      	</table>
-	    </form>
+	    <!-- </form> -->
       	<div class="row text-center">
       		신청 학점 / 최대 신청학점
       	</div>

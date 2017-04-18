@@ -104,4 +104,96 @@
 		where
 			s_no = #{no}
 	</select>
+	<select id="getByProNoList" resultType="Syllabus" parameterType="string">
+		select
+			s_no as no,
+			s_subname as subname,
+			s_midtrum as midtrum,
+			s_final as final1,
+			s_atlen as atlen,
+			s_project as project,
+			s_distri as distri,
+			s_outline as outline,
+			s_goals as goals,
+			s_method as method,
+			s_profid,
+			s_profname as name,
+			s_profemail as email,
+			s_profphone as phone,
+			s_book as book,
+			S_MIDTURMST as midst,
+			S_MIDTURMEND as midend,
+			s_finalst as finalst,
+			s_finalend as finalend,
+			s_projectst as prost,
+			s_projectend as proend,
+			s_projectcontent as procontent,
+			s_week1 as week1,
+			s_week2 as week2,
+			s_week3 as week3,
+			s_week4 as week4,
+			s_week5 as week5,
+			s_week6 as week6,
+			s_week7 as week7,
+			s_week8 as week8,
+			s_week9 as week9,
+			s_week10 as week10,
+			s_week11 as week11,
+			s_week12 as week12,
+			s_week13 as week13,
+			s_week14 as week14,
+			s_week15 as week15
+		from
+			s_syllabus
+		where
+			s_profid = #{professor.id}
+	</select>
+	
+	<update id="updateSyll" parameterType="Syllabus">
+		update s_syllabus
+		set
+			s_midtrum = #{midtrum},
+			s_final = #{final1},
+			s_atlen = #{atlen},
+			s_project = #{project},
+			s_distri = #{distri},
+			s_outline = #{outline},
+			s_goals = #{goals},
+			s_method = #{method},
+			s_profemail = #{email},
+			s_profphone = #{phone},
+			s_book = #{book},
+			S_MIDTURMST = #{midst},
+			S_MIDTURMEND = #{midend},
+			s_finalst = #{finalst},
+			s_finalend = #{finalend},
+			s_projectst = #{prost},
+			s_projectend = #{proend},
+			s_projectcontent = #{procontent},
+			s_week1 = #{week1},
+			s_week2 = #{week2},
+			s_week3 = #{week3},
+			s_week4 = #{week4},
+			s_week5 = #{week5},
+			s_week6 = #{week6},
+			s_week7 = #{week7},
+			s_week8 = #{week8},
+			s_week9 = #{week9},
+			s_week10 = #{week10},
+			s_week11 = #{week11},
+			s_week12 = #{week12},
+			s_week13 = #{week13},
+			s_week14 = #{week14},
+			s_week15 = #{week15}
+		where
+			s_no = #{no}
+	
+	</update>
+	
+	<delete id="deleteSyll" parameterType="int">
+  		delete 
+  			from s_syllabus
+  		where
+  			 s_no = #{no}
+	</delete>
 </mapper>

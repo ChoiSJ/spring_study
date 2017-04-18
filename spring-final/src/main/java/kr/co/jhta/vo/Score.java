@@ -1,20 +1,13 @@
 package kr.co.jhta.vo;
 
-import javax.validation.constraints.NotNull;
-
 public class Score {
 	private SubjectRegister registerinfo;
 	private int no;
 	private int credit;
-	
 	private String grade;
-	
 	private int reportScore;
-	
 	private int attScore;
-	
 	private int midtermScore;
-	
 	private int endtermScore;
 	
 	public Score() {

@@ -9,5 +9,7 @@ public interface OpenLectureService {
 	
 
 	List<Professor> getInformationOfProfessorList();
+	
+	Professor getInformationProfessor(String id);
 
 }

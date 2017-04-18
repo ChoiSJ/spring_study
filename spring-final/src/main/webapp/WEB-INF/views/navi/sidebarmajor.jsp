@@ -17,12 +17,12 @@
                     </li>
                     <li>
                         <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-3">
-                            <span class="sidebar-icon"></span><span class="sidebar-title">입학관리</span>
+                            <span class="sidebar-icon"></span><span class="sidebar-title">과목관리</span>
                             <b class="caret"></b>
                         </a>
                         <ul id="submenu-3" class="panel-collapse collapse panel-switch" role="menu">
-                            <li><a href="#"><i class="fa fa-caret-right"></i>신입학 등록</a></li>
-                            <li><a href="#"><i class="fa fa-caret-right"></i>신입학 조회</a></li>
+                            <li><a href="subjectmain"><i class="fa fa-caret-right"></i>과목검색</a></li>
+                            <li><a href="addsubject"><i class="fa fa-caret-right"></i>과목등록</a></li>
                             <li><a href="#"><i class="fa fa-caret-right"></i>재입학 등록</a></li>
                             <li><a href="#"><i class="fa fa-caret-right"></i>재입학 조회</a></li>
                         </ul>

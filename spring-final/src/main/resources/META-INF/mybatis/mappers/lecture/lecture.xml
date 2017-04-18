@@ -68,6 +68,15 @@
 			and s.j_no = e.e_j_subject_no
 	</select>
 	
+	<select id="getSubjectRowCount" parameterType="string" resultType="int">
+		select 
+			count(*)
+		from
+			j_subject s, j_division d, e_enrollment e
+		where
+			s.j_t_code = #{majorCode} and s.j_no = d.j_subject_no and s.j_no = e.e_j_subject_no 
+	</select>
+	
 	<select id="getAllSemesterList" resultType="semester">
 		select
 			s_no as no,
@@ -151,6 +160,82 @@
 		where
 			s.j_no = d.j_subject_no
 			and s.j_no = e.e_j_subject_no
+	</select>
+	
+	<select id="getAllMajorList" resultType="sitemap">
+		select
+			t_no as no,
+			t_code as code,
+			t_name as name,
+			t_precode as preCode
+		from
+			t_sitemap
+		where
+			t_precode is not null
+		order by
+			t_name asc
+	</select>
+	
+	<select id="getStudentList" parameterType="hashmap" resultType="hashmap">
+		select 
+			s.u_stu_no as no, 
+			s.u_stu_addr1 as addr1,
+			s.u_stu_addr2 as addr2,
+			s.u_stu_email as email,
+			s.u_stu_grade as grade,
+			s.u_stu_ssn as ssn,
+			s.u_stu_enterdate as enterDate,
+			s.u_stu_leavedate as leaveDate,
+			s.u_stu_parentname as parentName,
+			s.u_stu_parentphone as parentPhone,
+			s.u_stu_id as id,
+			s.u_stu_pwd as pwd,
+			s.u_stu_name as name,
+			s.u_stu_gender as gender,
+			s.u_stu_division as division,
+			s.u_stu_register as register,
+			s.u_stu_score as score,
+			s.u_stu_phone as phone,
+			s.u_stu_professor as professor,
+			r.r_regi_no as no,
+			r.r_maxgrade as maxGrade,
+			r.j_no as "subject.no",
+			r.u_stu_no as "student.no",
+			r.e_no as "enroll.no",
+			r.j_div_no as "division.no",
+			e.e_enrollday as enrollDay,
+			e.e_enrolltime as enrollTime,
+			e.e_enrollnum as emrollNum,
+			u.j_reference as reference,
+			u.j_progress as progress,
+			u.j_subject_name as subjectName,
+			u.j_semester as semester,
+			u.j_grade as subGrade,
+			u.j_is_passed as isPassed,
+			u.j_score as score,
+			u.j_outline as outline,
+			u.J_t_code as "siteCode.code",
+			u.j_sub_prof as professor,
+			m.s_seme_select as semeSelect
+		from 
+			u_student s, r_regisubject r, e_enrollment e, j_subject u, s_semester m
+		where
+			s.u_stu_no = r.u_stu_no
+			and r.j_no = e.e_j_subject_no
+			and r.j_no = u.j_no
+			and u.j_semester = m.s_no
+			and u.J_t_code = #{major}
+			<where>
+				<if test="semester != 0">
+					u.j_semester = #{semester}
+				</if>
+				<if test="student == name">
+					s.u_stu_name like '%' || #{word} || '%'
+				</if>
+				<if test="student == stuNo">
+					s.u_stu_id = #{word}
+				</if>
+			</where>
 	</select>
 	
 </mapper>

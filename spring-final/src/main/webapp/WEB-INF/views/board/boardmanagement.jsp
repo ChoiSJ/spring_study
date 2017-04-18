@@ -11,14 +11,14 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	$(function() {
-		<!-- ajax함수 -->
 		var ajaxFunction = function(universityCode) {
 			$.ajax({
 				type:'post',
-				url : 'boardmanagement',
+				url : '/jhta/admin/boardmanagement',
 				data : universityCode,
 				dataType : 'json',
 				success : function(data){
+					console.log(data);
 					$('#semester-select').empty();
 					$('#lecture-select').empty();
 					$.each(data.siteMapList, function(index, item){
@@ -46,10 +46,11 @@
 		var subjectCode = $(this).val();
 			$.ajax({
 				type:'post',
-				url: 'boardmanagement.json',
+				url: '/jhta/admin/boardmanagement.json',
 				data : subjectCode,
 				dataType : 'json',
 				success : function(data){
+					console.log(data);
 					$('#lecture-select').empty();
 					$.each(data, function(index, item){
 						$('#lecture-select').append("<option value="+item.no+">"+item.subjectName+"</option>");
@@ -64,8 +65,6 @@
 			$('#hidden-div').show();
 			var lectureCode = $('#lecture-select').val();
 			console.log(lectureCode);
-			
-			<!-- ajax통해 게시판 조회 -->
 			
 		});
 		

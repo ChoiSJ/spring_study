@@ -31,9 +31,13 @@
 					<col width="75%">
 				</colgroup>
 						<tr>
+							<th>과목명</th>
+							<td>${syno.subname }</td>
+						</tr>
+						<tr>
 							<th>평가기준</th>
-							<td><span class="btn btn-primary btn-sm">중간</span> 중간점수 : ${syno.midtrum }% <span class="btn btn-warning btn-sm">기말</span> 기말점수 : ${syno.final1 }% 
-							<span class="btn btn-info btn-sm">출석</span> 출석점수 : ${syno.atlen }% <span class="btn btn-danger btn-sm">과제</span> 과제점수 : ${syno.project }%</td>
+							<td><span class="btn btn-primary btn-xs">중간</span> 중간점수 : ${syno.midtrum }% <span class="btn btn-warning btn-xs">기말</span> 기말점수 : ${syno.final1 }% 
+							<span class="btn btn-info btn-xs">출석</span> 출석점수 : ${syno.atlen }% <span class="btn btn-danger btn-xs">과제</span> 과제점수 : ${syno.project }%</td>
 						</tr>
 						<tr>
 							<th>성적분포</th>
@@ -146,8 +150,8 @@
 			</tbody>
 		</table>
 		<div class="pull-right">
-			<a href="#" class="btn btn-primary">수정</a>
-			<a href="#" class="btn btn-warning">뒤로</a>
+			<a href="/jhta/prof/syllupdate?no=${syno.no }" class="btn btn-primary">수정</a>
+			<a href="/jhta/prof/syllinfo" class="btn btn-warning">뒤로</a>
 		</div>
 	</div>
 </body>

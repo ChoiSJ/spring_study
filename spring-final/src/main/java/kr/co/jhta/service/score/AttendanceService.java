@@ -11,4 +11,6 @@ import kr.co.jhta.vo.Attendance;
 public interface AttendanceService {
 	List<Attendance> getAllAttendanceList();
 	Attendance getAttendanceListByScoreNo(int sno);
+	void addAttendance();
+	void delAttendance(int sno);
 }

@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.jhta.vo.stu.Enroll;
-import kr.co.jhta.vo.stu.Regisubject;
 
 @Transactional
 public interface EnrollDao {
@@ -15,4 +14,5 @@ public interface EnrollDao {
 	void updatePlusNowNum(int enrollNo);
 	void updateMinusNowNum(int enrollNo);
 	Enroll getEnrollCheckNum(int enrollNo);
+	List<Enroll> getAllEnrollByTname(String sitename);
 }

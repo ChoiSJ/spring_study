@@ -1,6 +1,5 @@
 package kr.co.jhta.vo.stu;
 
-import kr.co.jhta.vo.Score;
 import kr.co.jhta.vo.Subject;
 import kr.co.jhta.vo.SubjectDivision;
 
@@ -29,7 +28,6 @@ public class Regisubject {
 		this.division = division;
 		this.student = student;
 		this.enroll = enroll;
-
 	}
 
 	public int getNo() {
@@ -87,6 +85,6 @@ public class Regisubject {
 	public void setEnroll(Enroll enroll) {
 		this.enroll = enroll;
 	}
-	
+
 	
 }

@@ -10,6 +10,38 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	$("#score_btn").click(function() {
+		var att = $("#attBox").val() * 0.3;
+		var rep = $("#reportBox").val() * 0.1;
+		var mid = $("#midBox").val() * 0.3;
+		var end = $("#endBox").val() * 0.3;
+		var total  = att+rep+mid+end;
+		alert(total);
+		if(total >= 90){
+			$("#creditBox").val(4);
+			$("#gradeBox").val('A');
+		}
+		if(90>total && total>= 80){
+			$("#creditBox").val(3);
+			$("#gradeBox").val('B');
+		}
+		if(80>total && total>= 70){
+			$("#creditBox").val(2);
+			$("#gradeBox").val('C');
+		}
+		if(70>total && total>= 60){
+			$("#creditBox").val(1);
+			$("#gradeBox").val('D');
+		}
+		if(60 > total){
+			$("#creditBox").val(0);
+			$("#gradeBox").val('F');
+		}
+	});
+});	
+</script>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/navi/adminnavi.jsp" %>
@@ -22,36 +54,37 @@
 				<form:input path="no" cssClass="form-control" value="${score.no }" type="hidden"/>
 				<div class="form-group">
 					<label>학점</label>
-					<form:input path="credit" cssClass="form-control" value="${score.credit }"/>
+					<form:input path="credit" cssClass="form-control" value="${score.credit }" id="creditBox" disabled="disabled"/>
 				</div>
 				
 				<div class="form-group">
 					<label>등급</label>
-					<form:input path="grade" cssClass="form-control" value="${score.grade }"/>
+					<form:input path="grade" cssClass="form-control" value="${score.grade }" id="gradeBox" disabled="disabled"/>
 				</div>	
 				
 				<div class="form-group">
 					<label>과제</label>
-					<form:input path="reportScore" cssClass="form-control" value="${score.reportScore }"/>
+					<form:input path="reportScore" cssClass="form-control" value="${score.reportScore }" id="reportBox"/>
 				</div>
 				
 				<div class="form-group">
 					<label>출석</label>
-					<form:input path="attScore" cssClass="form-control" value="${score.attScore }"/>
+					<form:input path="attScore" cssClass="form-control" value="${score.attScore }" id="attBox"/>
 				</div>	
 				
 				<div class="form-group">
 					<label>중간</label>
-					<form:input path="midtermScore" cssClass="form-control" value="${score.midtermScore }"/>
+					<form:input path="midtermScore" cssClass="form-control" value="${score.midtermScore }" id="midBox"/>
 				</div>	
 				
 				<div class="form-group">
 					<label>기말</label>
-					<form:input path="endtermScore" cssClass="form-control" value="${score.endtermScore }"/>
+					<form:input path="endtermScore" cssClass="form-control" value="${score.endtermScore }" id="endBox"/>
 				</div>
 				<div class="text-right">
-					<button type="submit" class="btn btn-defalut">등록</button>
-					<a href="scorelist.do" class="btn btn-defalut">취소</a>
+					<button type="submit" class="btn btn-primary" id="score_btn">등록</button>
+					<button type="button" class="btn btn-warning" id="score_edit_btn">수정</button>
+					<a href="scorelist.do" class="btn btn-danger">취소</a>
 				</div>
 			</form:form>
 		</div>

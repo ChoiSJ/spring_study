@@ -16,14 +16,77 @@
 <script type="text/javascript" src="resources/bootstrap/js/bootstrap.min.js"></script>
 <title>openlecture register</title>
 <script>
+
+
 	$(function(){
+		
+		
+		$('#search-button').on("click", function(event){
+			
+			//event.preventDefault();
+			
+			
+			var Search = $("#fixed-header-drawer-exp").val();
+
+			$.ajax({
+				type:"GET",
+				url:"search/"+Search,
+				dataType:"json",
+				success: function(data){
+					
+					var $table = $("#professorinformationtbody").empty();
+					
+					var code = data.code;
+					var no = data.no;
+					var name= data.name;
+					var division = data.division;
+					
+					if(code == null){
+						
+						var html = "<tr>";
+							html += "<td colspan='5'><label>요청 하신 정보가 존재하지 않습니다.</label></td>";
+							html +="</tr>";
+						
+						$table.append(html);
+						
+					}else{
+						
+					
+					var html = "<tr>";
+					html += "<td>";
+					html += "<input type='radio' name='options' value='"+code+'-'+no+'-'+name+'-'+division+"' checked='checked'>";
+					html += "</td>";
+					html += "<td>"+data.code+"</td>";
+					html += "<td>"+data.no+"</td>";
+					html += "<td>"+data.name+"</td>";
+					html += "<td>"+data.division+"</td>";
+					html += "<tr>"
+					
+					$table.append(html);
+					}
+					
+					
+				}
+				
+			})
+			
+			
+			
+			
+			
+			
+		});	
+		
+		var searchCount = 2;
+		
 		// 추가하기
 		$("#add-text").on("click",function(){
-
+			
+			
 			var html = "<div class='form-group'>"
 				html +="<div class='col-sm-1'></div>"
 				html +="<div class='col-sm-1'>"
-				html +="<label class='' style='color: black'>조사항목 :</label>"
+				html +="<label style='color: black'>조사항목 :</label>"
 				html +="</div>"
 				html +="<div class='col-sm-7'>"
 				html +="<textarea class='form-control'style='resize: none'></textarea>"
@@ -31,10 +94,9 @@
 				html +="<div class='col-sm-3'>";
 				html +="<button class='mdl-button mdj-js-button mdl-button-fab mdl-button-mini-fab' style='color:black'><i class='material-icons md-48'>delete_forever</i></button>"
 				html +="</div>";
-				html +="</div>"
-		
+				html +="</div>"		
+				
 			$("#content").append(html);
-			
 		
 		});
 		
@@ -48,8 +110,6 @@
 		
 		$("#add-infromation").click(function(){
 			
-			$("[name='information']").empty();
-			
 			if($('[name="options"]').is(':checked')){
 				var text = $('[name="options"]').filter(':checked').val().split("-");
 				
@@ -62,20 +122,13 @@
 			} else{
 				alert("하나를 선택해주세요.");
 			};
-		});
-		
-		$("#demo-menu-button-left").on("change",function(){
-			
-			var value = $('#demo-menu-button-left .mdl-menu__item');
-			console.log(value);
-			
-		});
-		
+		});	
 	});
 
 	
 </script>
 <style>
+
 button.delete{
 	border: 0;
 	outline:0;
@@ -112,9 +165,9 @@ select.menu{
 							<div class="col-sm-10"></div>
 							<div class="col-sm-2">
 								<!-- Button trigger modal -->
-								<button type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" style="color:black" data-toggle="modal" data-target="#myModal"><i class="material-icons md-48">search</i></button>
+								<button id="modal-button" type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" style="color:black" data-toggle="modal" data-target="#myModal"><i class="material-icons md-48">search</i></button>
 								<!-- Modal -->
-								<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+								<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" aria-hidden="true">
 								  <div class="modal-dialog">
 								    <div class="modal-content">
 								      <div class="modal-header">
@@ -124,55 +177,43 @@ select.menu{
 								      <div class="modal-body">
 								      	<div class="row">
 								      		<div class="col-sm-12">
+						      		
 												<div class="mdl-layout__header-row">
-											      <div class="mdl-layout-spacer">
-								      				 <select class="menu"  name="" id="">
-												 		  <option value="affiliation">소속</option>
-														  <option value="professorName">교수이름</option>
-												 		  <option value="professorNumber">교수번호</option>
-												 		  <option value="professorSubject">교수과목</option>
-												    </select>
-												    <form id="search-form" action="">
-														<input type="hidden" name="keyword" value="">
-														<input type="hidden" name="opt" value="">	
-													</form>
-											      </div>
+											      <div id="search-option" class="mdl-layout-spacer"></div>
 											      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
 											        <label class="mdl-button mdl-js-button mdl-button--icon" for="fixed-header-drawer-exp">
 											          <i class="material-icons">search</i>
 											        </label>
-											        <div class="mdl-textfield__expandable-holder">
-											          <input class="mdl-textfield__input" type="text" id="fixed-header-drawer-exp">
+											        <div id="search-text" class="mdl-textfield__expandable-holder">
+											          <input class="mdl-textfield__input" type="text" id="fixed-header-drawer-exp" placeholder="아이디 입력">
 											        </div>
+											   		  <button class="mdl-button mdl-js-button" id="search-button"><i class="material-icons">check</i></button>
 											      </div>
 											    </div>
 								      		</div>
 										</div>
 										<div class="row">
-									      	<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: 100%">
+									      	<table class="mdl-data-table mdl-js-data-table table table-fixed" style="width: 100%;">
 									      		<thead>
 									      			<tr>
 									      				<th></th>
-									      				<th>소       속</th>
+									      				<th>코드 번호</th>
 									      				<th>교수 번호</th>
 									      				<th>교수 이름</th>
 									      				<th>교수 과목</th>
 									      			</tr>
 									      		</thead>
-									      		<tbody>
+									      		<tbody id="professorinformationtbody" >
 									      			<c:forEach var="professorList" items="${openlecturelist }">
 									      				<tr>
 									      					<td>
-										      					<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect">
-																  <input type="radio" id="option-${professorList.no }" class="mdl-radio__button" name="options" 
+																  <input type="radio" id="option-${professorList.no }" name="options" 
 																  value="${professorList.no }-${professorList.code }-${professorList.name }-${professorList.division }">
-																  <span class="mdl-radio__label"></span>
-																</label>
 															</td>
-									      					<td>${professorList.code }</td>
-									      					<td>${professorList.no } </td>
-								      						<td>${professorList.name } </td>
-									      					<td>${professorList.division } </td>
+									      					<td id="code-${professorList.code }">${professorList.code }</td>
+									      					<td id="no-${professorList.no }">${professorList.no } </td>
+								      						<td id="name-${professorList.name }">${professorList.name } </td>
+									      					<td id="division-${professorList.division }">${professorList.division } </td>
 									      				</tr>
 									      			</c:forEach>
 									      		</tbody>
@@ -190,7 +231,7 @@ select.menu{
 							<form class="form-horizontal">
 								<div class="form-group">
 										<div class="col-sm-2">
-											<label class="pull-right" style="color:black">소     속 :</label>
+											<label class="pull-right" style="color:black">코드 번호 :</label>
 										</div>
 										<div class="col-sm-6">
 											<input id="division" class="mdl-textfield__input" type="text" style="width: 100%" name="information" value="" disabled="disabled"/>
@@ -242,30 +283,31 @@ select.menu{
 									<div class="form-group">
 										<div class="col-sm-1"></div>
 										<div class="col-sm-1">
-									    	<label class="" style="color: black">조사항목 :</label>
+									    	<label style="color: black">조사항목 :</label>
 										</div>
 										<div class="col-sm-7">
-									  		<textarea class="form-control" style="resize: none"></textarea>
+									  		<textarea id="assessment-1" class="form-control" style="resize: none"></textarea>
+									  		
 										</div>
 										<div class="col-sm-3"></div>
 									</div>
 									<div class="form-group">
 										<div class="col-sm-1"></div>
 										<div class="col-sm-1">
-									    	<label class="" style="color: black">조사항목 :</label>
+									    	<label style="color: black">조사항목 :</label>
 										</div>
 										<div class="col-sm-7">
-									  		<textarea class="form-control" style="resize: none"></textarea>
+									  		<textarea id="assessment-2" class="form-control" style="resize: none"></textarea>
 										</div>
 										<div class="col-sm-3"></div>
 									</div>
 									<div class="form-group">
 										<div class="col-sm-1"></div>
 										<div class="col-sm-1">
-									    	<label class="" style="color: black">조사항목 :</label>
+									    	<label style="color: black">조사항목 :</label>
 										</div>
 										<div class="col-sm-7">
-									  		<textarea class="form-control" style="resize: none"></textarea>
+									  		<textarea id="assessment-3" class="form-control" style="resize: none" ></textarea>
 										</div>
 										<div class="col-sm-3"></div>
 									</div>
@@ -281,7 +323,8 @@ select.menu{
 					</div>	
 	  		</div>
 			  <div class="mdl-tabs__panel" id="lannisters-panel">
-			   
+			  
+			  
 			  </div>
 	</div>
 </body>

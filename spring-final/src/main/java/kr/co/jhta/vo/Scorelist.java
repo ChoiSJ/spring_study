@@ -9,7 +9,14 @@ public class Scorelist {
 	private Subject subject;
 	private Score score;
 	private Attendance att;
+	private Report report;
 	
+	public void setReport(Report report) {
+		this.report = report;
+	}
+	public Report getReport() {
+		return report;
+	}
 	public void setAtt(Attendance att) {
 		this.att = att;
 	}

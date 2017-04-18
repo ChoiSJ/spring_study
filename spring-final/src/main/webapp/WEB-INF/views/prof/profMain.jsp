@@ -5,7 +5,8 @@
 <head>
 </head>
 <body>
-<%@ include file="/WEB-INF/views/navi/profnavi.jsp" %>
+<%@ include file="/WEB-INF/views/navi/adminnavi.jsp" %>
+<%@ include file="/WEB-INF/views/navi/sidebarprof.jsp" %>
 	
 </body>
 </html>

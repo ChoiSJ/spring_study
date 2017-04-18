@@ -11,8 +11,18 @@ public class BoardForm {
 	
 	private String category;
 	
+	private String fileName;
+	
 	private MultipartFile attachFile;
 	
+	
+	
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -37,10 +47,11 @@ public class BoardForm {
 	public void setAttachFile(MultipartFile attachFile) {
 		this.attachFile = attachFile;
 	}
-	
 	@Override
 	public String toString() {
-		return "BoardForm [title=" + title + ", contents=" + contents + ", category=" + category + ", attachFile="
-				+ attachFile + "]";
+		return "BoardForm [title=" + title + ", contents=" + contents + ", category=" + category + ", fileName="
+				+ fileName + ", attachFile=" + attachFile + "]";
 	}
+	
+	
 }

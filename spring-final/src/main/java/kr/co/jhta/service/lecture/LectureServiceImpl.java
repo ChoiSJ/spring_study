@@ -46,4 +46,19 @@ public class LectureServiceImpl implements LectureService {
 	public List<Map<String, Object>> getAllSubjectList() {
 		return lectureDao.getAllSubjectList();
 	}
+	
+	@Override
+	public int getSubjectRowCount(String majorCode) {
+		return lectureDao.getSubjectRowCount(majorCode);
+	}
+	
+	@Override
+	public List<SiteMap> getAllMajorList() {
+		return lectureDao.getAllMajorList();
+	}
+	
+	@Override
+	public List<Map<String, Object>> getStudentList(Map<?, ?> searchForm) {
+		return lectureDao.getStudentList(searchForm);
+	}
 }

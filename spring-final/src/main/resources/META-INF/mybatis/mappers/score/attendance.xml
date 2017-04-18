@@ -3,12 +3,25 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.jhta.dao.score.AttendanceDao">
+	<insert id="addAttendance">
+		insert into A_ATTENDANCE
+		(
+			A_SCORE_NO,
+			A_ATT_NO
+		)
+		values
+		(
+			S_SCORE_SEQ.currval,
+			A_ATTENDANCE_SEQ.nextval
+		)
+	</insert>
+	
 	<select id="getAllAttendanceList" resultType="attendance">
 		select
 			a_att_no as attNo,
-			a_count as count,
-			a_score as attScore,
-			s_score as scoreNo
+			a_att_count as count,
+			a_att_score as attScore,
+			a_score_no as scoreNo
 		from
 			a_attendance
 	</select>
@@ -16,12 +29,12 @@
 	<select id="getAttendanceListByScoreNo" parameterType="int" resultType="attendance">
 		select
 			a_att_no as attNo,
-			a_count as count,
-			a_score as attScore,
-			s_score as scoreNo
+			a_att_count as count,
+			a_att_score as attScore,
+			a_score_no as scoreNo
 		from
 			a_attendance
 		where
-			s_score = #{sno}
+			a_score_no = #{sno}
 	</select>
 </mapper>

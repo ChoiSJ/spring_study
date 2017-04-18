@@ -269,6 +269,18 @@ public class Syllabus {
 	public void setWeek15(String week15) {
 		this.week15 = week15;
 	}
+	@Override
+	public String toString() {
+		return "Syllabus [no=" + no + ", subject=" + subject + ", subname=" + subname + ", midtrum=" + midtrum
+				+ ", final1=" + final1 + ", atlen=" + atlen + ", project=" + project + ", distri=" + distri
+				+ ", outline=" + outline + ", goals=" + goals + ", method=" + method + ", professor=" + professor
+				+ ", name=" + name + ", email=" + email + ", phone=" + phone + ", book=" + book + ", midst=" + midst
+				+ ", midend=" + midend + ", finalst=" + finalst + ", finalend=" + finalend + ", prost=" + prost
+				+ ", proend=" + proend + ", procontent=" + procontent + ", week1=" + week1 + ", week2=" + week2
+				+ ", week3=" + week3 + ", week4=" + week4 + ", week5=" + week5 + ", week6=" + week6 + ", week7=" + week7
+				+ ", week8=" + week8 + ", week9=" + week9 + ", week10=" + week10 + ", week11=" + week11 + ", week12="
+				+ week12 + ", week13=" + week13 + ", week14=" + week14 + ", week15=" + week15 + "]";
+	}
 	
 	
 }

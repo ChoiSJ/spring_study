@@ -10,7 +10,15 @@ public class Report {
 	private String reportPublic;
 	private int reportScore;
 	private int scoreNo;
+	private int reportNo;
 	
+	
+	public void setReportNo(int reportNo) {
+		this.reportNo = reportNo;
+	}
+	public int getReportNo() {
+		return reportNo;
+	}
 	public String getReportTitle() {
 		return reportTitle;
 	}

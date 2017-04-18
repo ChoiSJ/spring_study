@@ -3,9 +3,67 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.jhta.dao.score.ScoreDao">
-	<resultMap type="kr.co.jhta.vo.SubjectRegister" id="registerinfo">
+	<select id="getScoreNoByRno" parameterType="int" resultType="int">
+		select
+			s_score_no
+		from
+			s_score
+		where
+			register = #{rno}
+	</select>
+	<select id="getRegisInfoByEno" parameterType="int" resultType="Regisubject">
+		select
+	   r.R_REGI_NO as "no",
+	   r.U_STU_NO as "student.no",
+	   r.R_GRADE as "grade",
+	   r.R_MAXGRADE as "maxGrade",
+	    e.E_NO as "enroll.no", 
+	    e.E_ENROLLTIME as "enroll.enrollTime", 
+	    e.E_ENROLLDAY as "enroll.enrollDay",
+	    e.E_ENROLLNUM as "enroll.enrollNum",
+		 s.J_NO as "subject.no",
+		 s.J_T_CODE as "subject.siteCode.code",
+		 s.J_IS_PASSED as "subject.isPassed", 
+		 s.J_GRADE as "subject.grade", 
+		 s.J_SUBJECT_NAME as "subject.subjectName", 
+		 s.J_SCORE as "subject.score",
+		 s.J_OUTLINE as "subject.outline",
+		 s.J_PROGRESS as "subject.progress",
+		 s.J_REFERENCE as "subject.reference",
+		 s.J_SUB_PROF as "subject.professor",
+		  j.J_DIV_NUM as "division.divisionNo", 
+		  j.J_DIV_PROF as "division.divisionProfessor",
+		  j.J_LIMIT_NUM as "division.limitNumber",
+		  j.J_DIV_NO as "division.no",
+		   t.T_NO as "subject.siteCode.no",
+		   t.T_CODE as "subject.siteCode.code",
+		   t.T_NAME as "subject.siteCode.name"
+		from E_ENROLLMENT e, 
+			 J_DIVISION j,
+			 J_SUBJECT s,
+			 T_SITEMAP t,
+			 R_REGISUBJECT r
+		where j.J_DIV_NO = e.E_J_DIV_NO
+		and e.E_J_SUBJECT_NO = s.J_NO
+		and t.T_CODE = s.J_T_CODE
+		and	r.E_NO = e.E_NO
+		and e.E_NO = #{eno}
+	</select>
 	
-	</resultMap>
+	<delete id="delScore" parameterType="int">
+		delete from 
+			s_score
+		WHERE 
+			register = #{rno}
+	</delete>
+	<select id="addScore">
+		insert into s_score(
+			REGISTER,
+			S_SCORE_NO)
+		values(
+			R_REGISUBJECT_SEQ.currval,
+			S_SCORE_SEQ.nextval)
+	</select>
 	<select id="getAllRegiList" resultType="kr.co.jhta.vo.SubjectRegister">
 		select
 			r_regi_no as regiNo,
@@ -52,7 +110,7 @@
 			U_STU_GRADE as grade,U_STU_ID as id, 
 			U_STU_LEAVEDATE as leaveDate, U_STU_NAME as name, 
 			U_STU_NO as no, U_STU_PARENTNAME as parentName, 
-			U_STU_PARENTPHON as parentPhone, U_STU_PHONE as phone, 
+			U_STU_PARENTPHONE as parentPhone, U_STU_PHONE as phone, 
 			U_STU_PROFESSOR as professor, U_STU_PWD as pwd, 
 			U_STU_REGISTER as register, U_STU_SCORE as score, 
 			U_STU_SSN as ssn
@@ -137,4 +195,91 @@
 		where
 			s_score_no = #{no}
 	</update>
+	
+	<select id="getSitemapByCode" parameterType="string" resultType="sitemap">
+		select 
+			T_NO as no, 
+			T_NAME as name, 
+			T_CODE as code, 
+			T_PRECODE as preCode 
+		from 
+			T_SITEMAP	
+		where 
+			T_CODE = #{string}
+	</select>
+	
+	<select id="getRegisInfoByhash" parameterType="hashmap" resultType="Regisubject">
+		select r.R_REGI_NO as "no",
+	   r.U_STU_NO as "student.no",
+	   r.R_GRADE as "grade",
+	   r.R_MAXGRADE as "maxGrade",
+	    e.E_NO as "enroll.no", 
+	    e.E_ENROLLTIME as "enroll.enrollTime", 
+	    e.E_ENROLLDAY as "enroll.enrollDay",
+	    e.E_ENROLLNUM as "enroll.enrollNum",
+		 s.J_NO as "subject.no",
+		 s.J_T_CODE as "subject.siteCode.code",
+		 s.J_IS_PASSED as "subject.isPassed.isPassed", 
+		 s.J_GRADE as "subject.grade", 
+		 s.J_SUBJECT_NAME as "subject.subjectName", 
+		 s.J_SCORE as "subject.score",
+		 s.J_OUTLINE as "subject.outline",
+		 s.J_PROGRESS as "subject.progress",
+		 s.J_REFERENCE as "subject.reference",
+		 s.J_SUB_PROF as "subject.professor",
+		  j.J_DIV_NUM as "division.divisionNo", 
+		  j.J_DIV_PROF as "division.divisionProfessor",
+		  j.J_LIMIT_NUM as "division.limitNumber",
+		  j.J_DIV_NO as "division.no",
+		   t.T_NO as "subject.siteCode.no",
+		   t.T_CODE as "subject.siteCode.code",
+		   t.T_NAME as "subject.siteCode.name"
+		from E_ENROLLMENT e, 
+			 J_DIVISION j,
+			 J_SUBJECT s,
+			 T_SITEMAP t,
+			 R_REGISUBJECT r
+		where j.J_DIV_NO = e.E_J_DIV_NO
+		and e.E_J_SUBJECT_NO = s.J_NO
+		and t.T_CODE = s.J_T_CODE
+		and	r.E_NO = e.E_NO
+		<choose>
+			<when test="all != null">
+				and r.U_STU_NO = #{userno}
+			</when>
+			<otherwise>
+				and t.T_CODE = #{sitecode}
+				and r.U_STU_NO = #{userno}
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="getScoreinfoByRno" parameterType="int" resultType="kr.co.jhta.vo.Score">
+		select
+			register as "registerinfo.regiNo",
+			s_score_no as no,
+			s_credit as credit,
+			s_grade as grade,
+			s_endterm_score as endtermScore,
+			s_midterm_score as midtermScore,
+			s_attendance_score as attScore,
+			s_report_score as reportScore
+		from
+			s_score
+		where
+			register = #{rno}
+	</select>
+	
+	<select id="getRegiListByStuNo" parameterType="int" resultType="kr.co.jhta.vo.SubjectRegister">
+		select
+			r_regi_no as regiNo,
+			r_maxgrade as maxgrade,
+			r_grade as grade,
+			j_no as jNo,
+			u_stu_no as stuNo
+		from
+			r_regisubject
+		where
+			u_stu_no = #{stuNo}
+	</select>
 </mapper>

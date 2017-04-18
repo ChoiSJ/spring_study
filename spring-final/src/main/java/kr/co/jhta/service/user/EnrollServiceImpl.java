@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.jhta.dao.user.EnrollDao;
+import kr.co.jhta.service.score.ScoreService;
 import kr.co.jhta.vo.stu.Enroll;
 
 @Service
@@ -13,6 +14,9 @@ public class EnrollServiceImpl implements EnrollService{
 
 	@Autowired
 	EnrollDao enrollDao;
+	
+	@Autowired
+	ScoreService scoreService;
 
 	@Override
 	public List<Enroll> getAllEnrollService() {
@@ -28,8 +32,8 @@ public class EnrollServiceImpl implements EnrollService{
 
 	@Override
 	public void addRegisubService(Enroll enroll) {
-		enroll.setNo(200);
 		enrollDao.addRegisub(enroll);
+		scoreService.addScore();
 	}
 
 	@Override
@@ -47,4 +51,11 @@ public class EnrollServiceImpl implements EnrollService{
 		Enroll enroll = enrollDao.getEnrollCheckNum(enrollNo);
 		return enroll;
 	}
+
+
+	@Override
+	public List<Enroll> getAllEnrollByTnameService(String siteName) {
+		List<Enroll> enrollList = enrollDao.getAllEnrollByTname(siteName);
+		return enrollList;
+	}		
 }

@@ -27,4 +27,21 @@ public class SyllabusServiceImpl implements SyllabusService {
 	public Syllabus getByNoList(int no) {
 		return syllabusDao.getByNoList(no);
 	}
+
+	@Override
+	public void updateSyll(Syllabus syll) {
+		syllabusDao.updateSyll(syll);
+		
+	}
+
+	@Override
+	public void deleteSyll(int no) {
+		syllabusDao.deleteSyll(no);
+		
+	}
+	@Override
+	public List<Syllabus> getByProNoList(String id) {
+		return syllabusDao.getByProNoList(id);
+	}
+	
 }

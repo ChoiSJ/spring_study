@@ -7,11 +7,16 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.co.jhta.service.board.BoardService;
 import kr.co.jhta.service.lecture.LectureService;
 import kr.co.jhta.service.sitemap.SitemapService;
+import kr.co.jhta.vo.Board;
 import kr.co.jhta.vo.SiteMap;
 import kr.co.jhta.vo.Subject;
 
@@ -19,12 +24,29 @@ import kr.co.jhta.vo.Subject;
 public class BoardAjaxController {
 	
 	@Autowired
+	private BoardService boardService;
+	
+	@Autowired
 	private SitemapService sitemapSerivce;
 	
 	@Autowired
 	private LectureService lectureService;
 	
-	@PostMapping(path="/boardmanagement")
+	@PostMapping(path="/admin/homeboard.json")
+	public @ResponseBody List<Board> serachBoardByType(@RequestParam String boardType){
+		
+		return boardService.serachBoardByType(boardType);
+	}
+	
+	
+	@RequestMapping(value="/admin/board/delete",method=RequestMethod.POST)
+	public Board deleteBoard(@RequestParam int no){
+		Board board = boardService.getBoard(no);
+		boardService.deleteBoardByNo(no);
+		return board;
+	}
+	
+	@PostMapping(path="/admin/boardmanagement")
 	public @ResponseBody Map<String, Object> getDeptByUnibersityCode (@RequestBody String universityCode) {
 		
 		SiteMap siteMap = new SiteMap();
@@ -62,11 +84,12 @@ public class BoardAjaxController {
 		return mapList;
 	}
 	
-	@PostMapping(path="/boardmanagement.json")
+	@PostMapping(path="/admin/boardmanagement.json")
 	public @ResponseBody List<Subject> getSubjectByDeptCode(@RequestBody String subjectCode){
 		
 		return lectureService.getMajorList(subjectCode.replace("=", ""));
 		
 	}
+	
 	
 }

@@ -34,9 +34,8 @@
 				<div class="form-group">
 					<label>내용</label>
 					<form:textarea path="contents" cssClass="form-control"/>
-					<form:errors path="contents" cssClass="text-danger" />
+					<form:errors path="contents" cssClass="text-danger"/>
 				</div>
-				<input name="category" type="hidden" value="notice">
 				<div class="form-inline">
 					<input style="width: 1120px;" type="file" class="form-control" name="attachFile">
 					<button type="submit" class="btn btn-default btn-sm">등록</button>

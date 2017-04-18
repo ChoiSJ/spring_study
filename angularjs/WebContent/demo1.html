@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="resources/bootstrap/bootstrap.min.css">
+<script type="text/javascript" src="resources/angular/angular.min.js"></script>
+</head>
+<body ng-app>
+<div class="container">
+	<p>{{1+2}}</p>
+	
+	<!-- 
+		ng-init 는 angularjs 의 모델을 초기화한다.
+		ng-init 에서 정의한 값이 angular 의 모델에 저장된다.
+	 -->
+	<div ng-init="num1=22; num2=33;">
+		<p>{{num1}} {{num2}}</p>
+	</div>
+	
+	<div ng-init="numbers=[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]">
+		<p>{{numbers[0]}}</p>
+		<p>{{numbers[1]}}</p>
+		<p>{{numbers[2]}}</p>
+		<p>{{numbers[3]}}</p>
+		<p>{{numbers[4]}}</p>
+		<p>{{numbers[5]}}</p>
+		<p>{{numbers[6]}}</p>
+		<p>{{numbers[7]}}</p>
+		<p>{{numbers[8]}}</p>
+		<p>{{numbers[9]}}</p>
+		
+		<p ng-repeat="number in numbers">{{number}}</p>
+	</div>
+</div>
+</body>
+</html>

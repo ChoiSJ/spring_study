@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class StuLookupScoreController {
 
-	@RequestMapping(value="lookupScore", method=RequestMethod.GET)
+	@RequestMapping(value="stud/lookupScore", method=RequestMethod.GET)
 	public String lookupScore() {
-		return "student/lookupScore/lookupScore";
+		return "/student/lookupScore/lookupScore";
 	}
 	
 	@RequestMapping(value="lookupScore", method=RequestMethod.POST)
 	public String lookupScorePost() {
-		return "redirect:/student/lookupScore/lookupScore";
+		return "redirect:/stud/lookupScore";
 	}
 }

@@ -3,7 +3,183 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.jhta.dao.board.BoardDao">
-	<insert id="">
-		
+
+	<select id="serachBoardByType" parameterType="string" resultType="Board">
+		select
+				b_no as no,
+				b_title as title,
+				b_contents as contents,
+				b_writer as writer,
+				b_regdate as regdate,
+				b_count as countView,
+				b_category as category,
+				b_file as fileName,
+				b_department as department
+			from
+				b_board
+		where 
+			b_category = #{category}
+			
+	</select>
+
+	<insert id="addNoticeBoard" parameterType="Board">
+		insert into
+				B_BOARD (
+						B_NO, 
+						B_TITLE, 
+						B_CONTENTS, 
+						B_WRITER,
+						<if test="fileName != null">
+						B_FILE,
+						</if> 
+						B_DEPARTMENT
+						) 
+		values 
+				(
+				B_BOARD_SEQ.NEXTVAL,
+				#{title},
+				#{contents},
+				#{writer},
+				<if test="fileName != null">
+				#{fileName},
+				</if>
+				#{department}
+				)
 	</insert>
+	
+	<select id="searchBoardCount" resultType="int" parameterType="SearchForm">
+		select 
+			count(*)
+		from 
+			B_BOARD
+		<where>
+			<if test="searchType != '' and keyword != ''">
+				<if test="searchType == 'title'">
+					B_TITLE like '%' || #{keyword} || '%'
+				</if>
+				<if test="searchType == 'name'">
+					B_WRITER like '%' || #{keyword} || '%'
+				</if>
+				<if test="searchType == 'contents'">
+					B_CONTENTS like '%' || #{keyword} || '%'
+				</if>
+			</if>
+		</where>
+	</select>
+	
+	<delete id="deleteBoardByNo" parameterType="int">
+		delete 
+			FROM 
+				B_BOARD 
+			WHERE 
+				B_NO = #{no}
+	</delete>
+	<select id="getBoard" parameterType="int" resultType="Board">
+		select
+				b_no as no,
+				b_title as title,
+				b_contents as contents,
+				b_writer as writer,
+				b_regdate as regdate,
+				b_count as countView,
+				b_category as category,
+				b_file as fileName,
+				b_department as department
+			from
+				b_board
+		where 
+			b_no = #{no}
+	</select>
+	
+	<insert id="addBoardView" parameterType="BoardView">
+		insert into 
+				B_VIEWALL (
+							B_VIEW_NO, 
+							B_BOARD_NO, 
+							B_VIEW_USER) 
+		values (
+				b_view_seq.nextval,
+				#{bno},
+				#{userId}
+				)
+	</insert>
+	
+	<select id="getBoardViewUser" parameterType="int" resultType="BoardView">
+		select
+			B_VIEW_NO as no,
+			B_BOARD_NO as bno, 
+			B_VIEW_USER as userId
+		from
+			b_viewall
+		where
+			b_board_no = #{bno}
+	</select>
+	
+	<update id="updateCount" parameterType="int">
+		update
+			b_board
+		set
+			B_COUNT = B_COUNT+1
+		where
+			b_no = #{no}
+	</update>
+	
+	<update id="updateBoard" parameterType="hashmap">
+		update 
+			B_BOARD
+		<set>
+			<if test="title != null">
+				b_title = #{title},
+			</if>
+			<if test="contents != null">
+				b_contents = #{contents},
+			</if>
+			<if test="fileName != null">
+				B_FILE = #{fileName}
+			</if>
+		</set>
+		where 
+			b_no = #{bno}
+	</update>
+	
+	<select id="searchBoard"  parameterType="SearchForm" resultType="Board">
+		select 
+			no, 
+			title, 
+			contents, 
+			writer, 
+			regdate, 
+			countView, 
+			category, 
+			fileName, 
+			department
+		from (
+				select
+					row_number() over(order by b_no desc) rn,
+					b_no as no,
+					b_title as title,
+					b_contents as contents,
+					b_writer as writer,
+					b_regdate as regdate,
+					b_count as countView,
+					b_category as category,
+					b_file as fileName,
+					b_department as department
+				from
+					b_board
+				<where>
+					<if test="keyword != ''">
+						<if test="searchType == 'title'">
+							B_TITLE like '%' || #{keyword} || '%'
+						</if>
+						<if test="searchType == 'name'">
+							B_WRITER like '%' || #{keyword} || '%'
+						</if>
+						<if test="searchType == 'contents'">
+							B_CONTENTS like '%' || #{keyword} || '%'
+						</if>
+					</if>
+				</where>)
+		where rn >= #{beginIndex} and rn &lt;= #{endIndex}
+	</select>
 </mapper>

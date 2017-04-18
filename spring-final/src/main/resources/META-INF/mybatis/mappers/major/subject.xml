@@ -3,30 +3,171 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.jhta.dao.major.SubjectDao">
-	<insert id="addSubject" parameterType="Subject">
+	
+	
+	 <insert id="addSubject" parameterType="subject">
 		insert into j_subject
 		(j_no, j_subject_name, j_sub_prof, j_semester, j_grade,
 		j_is_passed, j_t_code, j_score, j_outline, j_reference, j_progress)
 		values
-		(j_subject_seq.nextval, #{subjectName}, #{professor}, #{Semester.semeSelect}, 
-		#{grade}, #{inPassed}, #{SiteMap.code}, #{score}, #{outline}, 
-		#{reference},#{progress})
+		(j_subject_seq.nextval, #{subjectName}, #{professor.id}, #{selectNo.no}, 
+		#{grade}, #{isPassed.code}, #{siteCode.code}, #{score}, #{outline}, 
+		#{reference}, #{progress})
 	</insert>
 	
-	<select id="getAllList" resultType="Subject">
+	<insert id="addSubject2" parameterType="subject">
+		insert into j_subject
+			(j_no, j_subject_name, j_sub_prof, j_t_code, j_semester, j_grade,
+			j_is_passed,j_score)
+		values
+			(j_subject_seq.nextval, #{subjectName, jdbcType=VARCHAR}, #{professor.id}, #{siteCode.code},
+			#{selectNo.no},#{grade}, #{isPassed.code}, #{score})
+	</insert>	
+	<select id="getAllList" resultType="subject">
+		select
+			A.j_no as no,
+			A.j_subject_name as subjectName,
+			C.u_prof_name as "professor.name",
+			D.s_seme_select as "selectNo.semeSelect",
+			A.j_grade as grade,
+			B.is_passed as "isPassed.isPassedName",
+			E.t_name as "siteCode.name",
+			A.j_score as score,
+			A.j_division as division,
+			A.j_outline as outline,
+			A.j_reference as "reference",
+			A.j_progress as progress
+		from 
+			j_subject A, j_is_passed B, u_professor C, s_semester D, t_sitemap E
+		where 
+			A.j_sub_prof = C.u_prof_id
+		and
+			A.j_semester = D.s_no
+		and
+			A.j_is_passed = B.pass_code
+		and
+			A.j_t_code = E.t_code
+	</select>
+	
+	<select id="getSubjectByOpt" parameterType="kr.co.jhta.vo.SubjectSearchForm" resultType="subject">
+		select
+			A.j_no as no,
+			A.j_subject_name as subjectName,
+			C.u_prof_name as "professor.name",
+			D.s_seme_select as "selectNo.semeSelect",
+			A.j_grade as grade,
+			B.is_passed as "isPassed.isPassedName",
+			E.t_name as "siteCode.name",
+			A.j_score as score,
+			A.j_division as division,
+			A.j_outline as outline,
+			A.j_reference as "reference",
+			A.j_progress as progress
+		from 
+			j_subject A, j_is_passed B, u_professor C, s_semester D, t_sitemap E
+		where 
+			A.j_sub_prof = C.u_prof_id
+		and
+			A.j_semester = D.s_no
+		and
+			A.j_is_passed = B.pass_code
+		and
+			A.j_t_code = E.t_code
+		
+			<if test="selectSeme != '' and opt != '' and keyword != ''">
+				and A.j_semester = #{selectSeme.no}
+				<if test="opt == 'subjectname'">
+					and A.j_subject_name '%'|| #{keyword} || '%'
+				</if>
+				<if test="opt == 'profname'">
+					and C.u_prof_name '%'|| #{keyword} || '%'
+				</if>
+			</if>
+	</select>
+	
+	<!--
+	<select id="getSubjects" parameterType="" resultType="">
 		select
 			j_no as no,
 			j_subject_name as subjectName,
-			j_sub_prof as professor,
-			j_semester as selectNo,
+			j_sub_prof as "professor.id",
+			j_semester as "selectNo.semeSelect",
 			j_grade as grade,
 			j_is_passed as isPassed,
-			j_t_code as siteCode,
+			j_t_code as "siteCode.code",
 			j_score as score,
 			j_outline as outline,
 			j_reference as "reference",
 			j_progress as progress
 		from
 			j_subject
+		
 	</select>
+	 -->
+	<select id="getByProIdList" parameterType="string" resultType="subject">
+		select
+			j_no as no,
+			j_subject_name as subjectName,
+			j_sub_prof as "professor.id",
+			j_semester as "selectNo.no",
+			j_grade as grade,
+			j_is_passed as "isPassed.code",
+			j_t_code as "siteCode.code",
+			j_score as score,
+			j_outline as outline,
+			j_reference as "reference",
+			j_progress as progress
+		from
+			j_subject
+		where
+			j_sub_prof = #{value}
+	</select>
+	<select id="getByNoList" parameterType="int" resultType="subject">
+		select
+			A.j_no as no,
+			A.j_subject_name as subjectName,
+			E.t_code as "siteCode.code",
+			C.u_prof_id as "professor.id",
+			C.u_prof_name as "professor.name",
+			D.s_seme_select as "selectNo.semeSelect",
+			A.j_grade as grade,
+			B.is_passed as "isPassed.isPassedName",
+			E.t_name as "siteCode.name",
+			A.j_score as score,
+			A.j_outline as outline,
+			A.j_reference as "reference",
+			A.j_progress as progress
+		from 
+			j_subject A, j_is_passed B, u_professor C, s_semester D, t_sitemap E
+		where 
+			A.j_sub_prof = C.u_prof_id
+		and
+			A.j_semester = D.s_no
+		and
+			A.j_is_passed = B.pass_code
+		and
+			A.j_t_code = E.t_code
+		and 
+			A.j_no = #{value}
+	</select>
+	<delete id="deleteSub" parameterType="int">
+  		delete 
+  			from J_subject
+  		where
+  			 j_no = #{no}
+	</delete>
+	<update id="subupdate" parameterType="subject">
+		update j_subject
+		set
+			j_subject_name = #{subjectName},
+			j_sub_prof = #{professor.id, jdbcType=VARCHAR},
+			j_semester = #{selectNo.no, jdbcType=INTEGER},
+			j_grade = #{grade},
+			j_is_passed = #{isPassed.code, jdbcType=VARCHAR},
+			j_t_code = #{siteCode.code, jdbcType=VARCHAR},
+			j_score = #{score}
+		where
+			j_no = #{no}
+	
+	</update>
 </mapper>

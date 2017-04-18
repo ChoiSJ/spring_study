@@ -7,6 +7,6 @@ import kr.co.jhta.vo.stu.Regisubject;
 public interface RegisubjectService {
 
 	List<Regisubject> getAllRegisInfoService();
-	Regisubject getRegisByIdService(String id);
+	List<Regisubject> getRegisByUserNoService(int userNo);
 	void deleteRegisubByENoService(int enrollNo);
 }

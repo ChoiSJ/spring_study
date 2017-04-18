@@ -18,6 +18,7 @@ import kr.co.jhta.vo.Semester;
 import kr.co.jhta.vo.SemesterForm;
 
 @Controller
+@RequestMapping("/admin")
 public class SemesterController {
 
 	@Autowired
@@ -51,7 +52,7 @@ public class SemesterController {
 		BeanUtils.copyProperties(semeform, semester);
 		semesterService.addSemester(semester);
 		
-		return "redirect:/semester";
+		return "redirect:/admin/semester";
 	}
 	
 	@RequestMapping(value="/detailSeme")
@@ -79,7 +80,7 @@ public class SemesterController {
 		semesterService.editSemesterByNo(semester);
 		
 		
-		return "redirect:/semester";
+		return "redirect:/admin/semester";
 	}
 	
 	

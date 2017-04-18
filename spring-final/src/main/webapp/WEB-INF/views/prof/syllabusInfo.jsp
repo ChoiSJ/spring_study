@@ -42,13 +42,16 @@
 				<c:forEach var="item" items="${syllList}" varStatus="status">
 					<tr>
 						<td>${status.count } </td>
-						<td><a href="/jhta/syllabus?no=${item.no }">${item.subname }</a></td>
-						<td><a href="/jhta/syllupdate?no=${item.no }" class="btn btn-primary btn-xs">수정</a></td>
-						<td><a href="/jhta/sylldel?no=${item.no }" class="btn btn-danger btn-xs">삭제</a></td>
+						<td><a href="/jhta/prof/syllabus?no=${item.no }">${item.subname }</a></td>
+						<td><a href="/jhta/prof/syllupdate?no=${item.no }" class="btn btn-primary btn-xs">수정</a></td>
+						<td><a href="/jhta/prof/sylldel?no=${item.no }" class="btn btn-danger btn-xs">삭제</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
+		<div class="add text-right">
+			<a href="/jhta/prof/syllform"><button class="btn btn-primary btn-xs">등록</button></a>
+		</div>
 	</div>
 </body>
 </html>

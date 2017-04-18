@@ -7,4 +7,7 @@ import kr.co.jhta.vo.Attendance;
 public interface AttendanceDao {
 	List<Attendance> getAllAttendanceList();
 	Attendance getAttendanceListByScoreNo(int sno);
+	void addAttendance();
+	void delAttendance(int sno);
+	
 }

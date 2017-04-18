@@ -12,7 +12,7 @@
                         </a>
                         <ul id="submenu-2" class="panel-collapse collapse panel-switch" role="menu">
                             <li><a href="stuInfo"><i class="fa fa-caret-right"></i>정보 조회</a></li>
-                            <li><a href="stuEdit"><i class="fa fa-caret-right"></i>비밀번호 변경</a></li>
+                            <li><a href="stuPwdCheck"><i class="fa fa-caret-right"></i>비밀번호 변경</a></li>
                         </ul>
                     </li>
                     <li>

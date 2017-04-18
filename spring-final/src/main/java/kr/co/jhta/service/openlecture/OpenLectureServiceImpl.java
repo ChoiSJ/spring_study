@@ -21,4 +21,10 @@ public class OpenLectureServiceImpl implements OpenLectureService {
 		return openLecturedao.getInformationOfProfessorList();
 	
 	}
+	
+	@Override
+	public Professor getInformationProfessor(String id) {
+		
+		return openLecturedao.getInformationProfessor(id);
+	}
 }

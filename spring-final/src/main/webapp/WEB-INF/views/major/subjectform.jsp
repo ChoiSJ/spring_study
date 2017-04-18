@@ -14,6 +14,11 @@
 $(function() {
 	$("#select-dept").change(function() {
 		var dept = $(this).find("option:selected").val();
+		if(dept == ""){
+			$("#select-major").empty();
+			$("#select-prof").empty();
+			return false;
+		}
 		
 		$.ajax({
 			url: "addmajormenu?dept=" + dept,
@@ -21,9 +26,30 @@ $(function() {
 			type: "POST",
 			success: function(data) {
 				$("#select-major").empty();
+				$("#select-prof").empty();
+				
+				for (var i=0; i<data.sitemapList.length; i++) {
+					$("#select-major").append("<option value="+data.sitemapList[i].code+">"+data.sitemapList[i].name+"</option>");	
+				}
+				for (var i=0; i<data.profList.length; i++) {
+					$("#select-prof").append("<option value="+data.profList[i].id+">"+data.profList[i].name+"</option>");	
+				}
+			}
+		});
+	});
+	
+	$("#select-major").change(function () {
+		var code = $(this).find("option:selected").val();
+		
+		$.ajax({
+			url: "addprofmenu?code=" + code,
+			dataType: "json",
+			type: "POST",
+			success: function(data) {
+				$("#select-prof").empty();
 				
 				for (var i=0; i<data.length; i++) {
-					$("#select-major").append("<option value="+data[i].code+">"+data[i].name+"</option>");	
+					$("#select-prof").append("<option value="+data[i].id+">"+data[i].name+"</option>");	
 				}
 			}
 		});
@@ -44,23 +70,26 @@ $(function() {
       	</div>
       	<div class="row">
          	<div class="panel panel-default panel-body">
-         		<form action="addsubject"  method="post" name="">
+         		<form action="addsubject"  method="post" name="subjectaddform">
          			<table class="table table-condensed">
          				<colgroup>
-         				
+         					<col width="10%">
+         					<col width="40%">
+         					<col width="10%">
+         					<col width="40%">
          				</colgroup>
          				<tr>
          					<td><label>학과선택</label></td>
          					<td colspan="3">
          						<label>대학선택</label>
 	         					<select name="dept" id="select-dept">
-	         						<option>대학</option>
+	         						<option value="">대학</option>
 	         						<c:forEach var="dept" items="${deptList }">
 	         						<option value="${dept.code }">${dept.name }</option>	
 	         						</c:forEach>
 	         					</select>
 	         					<label>전공</label>
-	         					<select name="major" id="select-major"></select>
+	         					<select name="siteCode.code" id="select-major"></select>
 	         					
          					</td>
          				</tr>
@@ -69,7 +98,7 @@ $(function() {
          					<td><input type="text" name="subjectName"></td>
          					<td><label>학기선택</label></td>
          					<td>
-         						<select name="semester">
+         						<select name="selectNo.no">
          							<option>학기</option>
          							<c:forEach var="seme" items="${semeList}">
          							<option value="${seme.no }">${seme.semeSelect }</option>
@@ -80,15 +109,15 @@ $(function() {
          				<tr>
          					<td><label>이수구분</label></td>
          					<td>
-         						<select name="isPassed">
+         						<select name="isPassed.code">
          							<option>이수구분</option>
-         							<option value="">구분없음</option>
-         							<option value="">전공필수</option>
-         							<option value="">전공선택</option>
-         							<option value="">교양필수</option>
-         							<option value="">교양선택</option>
-         							<option value="">일반선택</option>
-         							<option value="">학부기초</option>
+         							<option value="ns">구분없음</option>
+         							<option value="me">전공필수</option>
+         							<option value="ms">전공선택</option>
+         							<option value="ce">교양필수</option>
+         							<option value="cs">교양선택</option>
+         							<option value="gs">일반선택</option>
+         							<option value="db">학부기초</option>
          						</select>
          					</td>
          					<td><label>대상학년</label></td>
@@ -105,9 +134,39 @@ $(function() {
          				</tr>
          				<tr>
          					<td><label>교수명</label></td>
-         					
+         					<td>
+         						<select name="professor.id" id="select-prof">
+         							<option>교수선택</option>
+         							
+         						</select>
+         					</td>
+         					<td><label>학점</label></td>
+         					<td>
+         						<select name="score">
+         							<option>학점선택</option>
+         							<option value="1">1</option>
+         							<option value="2">2</option>
+         							<option value="3">3</option>
+         						</select>
+         					</td>
+         				</tr>
+         				<tr>
+         					<td><label>교과목 개요</label></td>
+         					<td colspan="3"><textarea name="outline" rows="3" cols="100%"></textarea></td>
+         				</tr>
+         				<tr>
+         					<td><label>수업진행방법</label></td>
+         					<td colspan="3"><textarea name="progress" rows="3" cols="100%"></textarea></td>
+         				</tr>
+         				<tr>
+         					<td><label>교재/참고자료</label></td>
+         					<td colspan="3"><textarea name="reference" rows="3" cols="100%"></textarea></td>
          				</tr>
          			</table>
+         			<div>
+         				<button type="submit" class="btn btn-primary pull-right">등록</button>
+         				<a href="subjectmain" class="btn btn-default pull-left">취소</a>
+         			</div>
          		</form>
          	
          	</div>

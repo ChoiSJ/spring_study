@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.jhta.dao.user.ScheduleEventDao">
+	
+	<insert id="addNewSchEvent" parameterType="ScheduleEvent" >
+		INSERT INTO V_EVENT (V_NO, 
+							V_TITLE, 
+							V_START, 
+							V_END, 
+							V_DESCRIPTION, 
+							U_STU_NO) 
+		VALUES(V_EVENT_SEQ.nextval, 
+					#{title, jdbcType=VARCHAR}, 
+					#{start}, 
+					#{end}, 
+					#{description}, 
+					#{student.no})	
+	</insert>
+	
+	<select id="getSchEventByStuNo" parameterType="int" resultType="ScheduleEvent">	
+		select V_EVENT.V_NO as no, 
+			   V_EVENT.V_TITLE as title, 
+			   V_EVENT.V_DESCRIPTION as description, 
+			   V_EVENT.V_START as "start",  
+			   V_EVENT.V_END as "end", 
+			   V_EVENT.V_ISSHOW as isShow 
+		FROM V_EVENT
+		where V_EVENT.U_STU_NO = #{no}
+	</select>
+	
+	<select id="getSchEventBySchNo" parameterType="int" resultType="ScheduleEvent">	
+		select V_EVENT.V_TITLE as title, 
+			   V_EVENT.V_DESCRIPTION as description, 
+			   V_EVENT.V_START as "start",  
+			   V_EVENT.V_END as "end", 
+			   V_EVENT.V_ISSHOW as isShow 
+		FROM V_EVENT
+		where V_EVENT.V_NO = #{no}
+	</select>
+	
+	<delete id="deleteSchEventByStuNo" parameterType="Student">
+		DELETE FROM V_EVENT 
+		WHERE U_STU_NO = #{student.no}
+	</delete>
+	
+	<select id="getSchEventByDate" parameterType="map" resultType="ScheduleEvent">
+		SELECT V_EVENT.V_NO as no,
+			   V_EVENT.V_TITLE as title,
+			   V_EVENT.V_DESCRIPTION as description,
+			   V_EVENT.V_START as "start",
+			   V_EVENT.V_END as "end",
+			   V_EVENT.V_ISSHOW as isShow
+		FROM V_EVENT
+		WHERE V_EVENT.U_STU_NO = #{studNo}
+		AND V_EVENT.V_START &gt;= #{start}
+		AND V_EVENT.V_START &lt;= #{end}
+	</select>
+	
+	<update id="updateSchEvent" parameterType="ScheduleEvent">
+		UPDATE V_EVENT 
+		SET V_TITLE= #{title},
+		V_DESCRIPTION= #{description},
+		V_START = #{start},
+		V_END = #{end}
+		WHERE U_STU_NO = #{student.no}
+	</update>
+	
+	
+	<update id="updateIsShowTrue" parameterType="ScheduleEvent">
+		UPDATE V_EVENT
+		SET V_ISSHOW = "false"
+		WHERE U_STU_NO = #{student.no} 
+		AND V_NO = #{no}
+	</update>
+	
+	<update id="updateIsShowFalse" parameterType="ScheduleEvent">
+		UPDATE V_EVENT
+		SET V_ISSHOW = "true"
+		WHERE U_STU_NO = #{student.no} 
+		AND V_NO = #{no}
+	</update>
+	
+	<select id="getSequence" parameterType="int">
+		SELECT V_EVENT_SEQ.currval FROM dual
+	</select>
+	
+</mapper>

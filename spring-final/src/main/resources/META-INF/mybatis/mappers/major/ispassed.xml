@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.jhta.dao.major.SubjectDao">
+
+	<select id="getPassAllList" resultType="SubjectIsPassed">
+		select
+			pass_no as no,
+			pass_code as code,
+			is_passed as isPassedName
+		from
+			J_is_passed
+	</select>
+	
+	
+</mapper>

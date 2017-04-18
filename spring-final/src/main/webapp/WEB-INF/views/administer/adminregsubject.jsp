@@ -46,6 +46,35 @@ $(function() {
 			return false;
 		}
 	});
+	
+	// 페이지를 검색할 때 li 의 값을 읽어와서 페이지를 바꾸는 코드
+	$("ul.pagination li > a").click(function(event) {
+		event.preventDefault();
+		
+		if ($(this).attr("id")) {
+			var pageNo = $(this).attr("id").replace("pageNo-", "");
+			$(":input:hidden#pageNo").val(pageNo);
+			
+			$("#select-major").append("<option value='${param.major }' selected></option>");
+			$("#select-semester").append("<option value='${param.semesterNo }' selected></option>");
+			$("#select-page").val("${param.pagination }");
+		}
+		
+		$(".form-inline").submit();
+	});
+	
+	// 전체 표시개수를 변경할 때 데이터를 전달하는 코드
+	$("#select-page").change(function(event) {
+		if (!"${param.major }") {
+			alert("검색 값을 입력해주세요.");
+			return false;
+		}
+		
+		$("#select-major").append("<option value='${param.major }' selected></option>");
+		$("#select-semester").append("<option value='${param.semesterNo }' selected></option>");
+		
+		$(".form-inline").submit();
+	});
 })
 </script>
 </head>
@@ -91,7 +120,6 @@ $(function() {
 									</select>	
 								</div>
 								<div class="pull-right">
-									<a href="adminallsubject" class="btn btn-default" id="all-subject">전체조회</a>
 									<button type="submit" class="btn btn-info" id="search-button">조회</button>
 								</div>
 							</th>
@@ -102,10 +130,10 @@ $(function() {
 		</div>
 		<div class="row">
 			<div class="col-sm-2">
-				<select class="form-control" name="">
-					<option value="10">10개씩 조회</option>
-					<option value="20">20개씩 조회</option>
-					<option value="50">50개씩 조회</option>
+				<select class="form-control" name="pagination" id="select-page">
+					<option value="5" ${param.pagination eq 5 ? 'selected=selected' : '' }>5개씩 조회</option>
+					<option value="10" ${param.pagination eq 10 ? 'selected=selected' : '' }>10개씩 조회</option>
+					<option value="20" ${param.pagination eq 20 ? 'selected=selected' : '' }>20개씩 조회</option>
 				</select>
 			</div>
 		</div><br>
@@ -165,15 +193,22 @@ $(function() {
 		<div class="row text-center">
 			<div class="col-sm-12">
 				<ul class="pagination">
-					<li><a href="#"><span aria-hidden="true">&laquo;</span></a></li>
-					<li><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
-					<li><a href="#"><span aria-hidden="true">&raquo;</span></a></li>
+				<c:if test="${paginationList.blockCurrentNo ne paginationList.blockBeginNo }">
+					<li><a href="adminregsubject?pageNo=${paginationList.blockBeginNo-1 }" id="pageNo-${paginationList.blockBeginNo-1 }"><span aria-hidden="true">&laquo;</span></a></li>
+				</c:if>
+				<c:forEach var="pno" begin="${paginationList.blockBeginNo }" end="${paginationList.blockEndNo }">
+					<c:if test="${!empty subList }">
+						<li><a href="adminregsubject?pageNo=${pno }" id="pageNo-${pno }">${pno }</a></li>
+					</c:if>
+				</c:forEach>
+				<c:if test="${paginationList.totalPageNo ne paginationList.blockEndNo }">
+					<li><a href="adminregsubject?pageNo=${paginationList.blockEndNo+1 }" id="pageNo-${paginationList.blockEndNo+1 }"><span aria-hidden="true">&raquo;</span></a></li>
+				</c:if>
 				</ul>
 			</div>
+		</div>
+		<div>
+			<input type="hidden" value="1" name="currentPageNo" id="pageNo">
 		</div>
 	</form>
 </div>
