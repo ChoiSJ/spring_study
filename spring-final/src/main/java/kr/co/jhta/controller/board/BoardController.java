@@ -27,6 +27,7 @@ import kr.co.jhta.vo.BoardView;
 import kr.co.jhta.vo.PageNation;
 import kr.co.jhta.vo.Professor;
 import kr.co.jhta.vo.SearchForm;
+import kr.co.jhta.vo.SiteMap;
 
 @Controller
 public class BoardController {
@@ -40,10 +41,61 @@ public class BoardController {
 	@Autowired
 	private SitemapService sitemapSerivce;
 	
-	@RequestMapping("/admin/homeboard")
-	public String homeboard(){
+	@RequestMapping(value="/admin/homeboard", method=RequestMethod.GET)
+	public String homeboard(SearchForm searchForm, Model model){
+		if (searchForm.getSearchBoardType() == null) {
+			searchForm.setSearchBoardType("N");
+			
+		}
+		
+		if (searchForm.getDisplay() == 0) {
+			searchForm.setDisplay(5);
+		}
+		
+		int rows = boardService.searchBoardCount(searchForm);
+		PageNation pageNation = null;
+		
+		if (searchForm.getDisplay() != 0) {
+			pageNation = new PageNation(searchForm.getDisplay(), searchForm.getPageNo(), rows);
+		}else {
+			pageNation = new PageNation(searchForm.getPageNo(), rows);
+		}
+		
+		searchForm.setBeginIndex(pageNation.getBeginIndex());
+		searchForm.setEndIndex(pageNation.getEndIndex());
+		
+		List<Board> boardList = boardService.searchBoard(searchForm);
+		
+		model.addAttribute("search", searchForm);
+		model.addAttribute("pagination", pageNation);
+		model.addAttribute("boardList", boardList);
+		
 		return "/board/homeboard";
 	}
+	
+	@RequestMapping(value="/admin/homeboard", method=RequestMethod.POST)
+	public String searchHomeBoard (SearchForm searchForm, Model model){
+		
+		int rows = boardService.searchBoardCount(searchForm);
+		PageNation pageNation = null;
+		
+		if (searchForm.getDisplay() != 0) {
+			pageNation = new PageNation(searchForm.getDisplay(), searchForm.getPageNo(), rows);
+		}else {
+			pageNation = new PageNation(searchForm.getPageNo(), rows);
+		}
+		
+		searchForm.setBeginIndex(pageNation.getBeginIndex());
+		searchForm.setEndIndex(pageNation.getEndIndex());
+		List<Board> boardList = boardService.searchBoard(searchForm);
+		
+		model.addAttribute("search", searchForm);
+		model.addAttribute("pagination", pageNation);
+		model.addAttribute("boardList", boardList);
+		
+		return "/board/homeboard";
+	}
+	
 	
 	// 게시판 화면
 	@RequestMapping(value="/admin/boardform", method=RequestMethod.GET)
@@ -76,10 +128,6 @@ public class BoardController {
 		Professor professor = (Professor)session.getAttribute("LOGIN_USER");
 		
 		if (professor == null) {
-			return "redirect:/login?err=deny";
-		}
-		
-		if (!"관리자".equals(professor.getName())) {
 			return "redirect:/login?err=deny";
 		}
 		
@@ -197,6 +245,8 @@ public class BoardController {
 	public String board (SearchForm searchForm, Model model) {
 		int rows = boardService.searchBoardCount(searchForm);
 		
+		searchForm.setSearchBoardType("N");
+		
 		PageNation pageNation = null;
 		
 		if (searchForm.getDisplay() != 0) {
@@ -220,6 +270,7 @@ public class BoardController {
 	// 공지사항 검색
 	@RequestMapping(value="/admin/board", method=RequestMethod.POST)
 	public String search(SearchForm searchForm, Model model){
+		searchForm.setSearchBoardType("N");
 		
 		int rows = boardService.searchBoardCount(searchForm);
 		
@@ -242,5 +293,87 @@ public class BoardController {
 		model.addAttribute("boardList", boardList);
 		
 		return "/board/board";
+	}
+	
+	@RequestMapping(value="/prof/profnoticeboard", method=RequestMethod.GET)
+	public String profNoticeBoard(){
+		
+		return "/profboard/profnoticeboard";
+	}
+	@RequestMapping(value="/prof/profqnaboard", method=RequestMethod.GET)
+	public String profqnaBoard(){
+		return "/profboard/profqnaboard";
+	}
+	@RequestMapping(value="/prof/profdeptboard", method=RequestMethod.GET)
+	public String profdeptBoard(HttpSession session, SearchForm searchForm, Model model){
+		
+		Professor prof = (Professor)session.getAttribute("LOGIN_USER");
+		SiteMap sitemap = sitemapSerivce.getSitemapByCodeService(prof.getDivision());
+		
+		searchForm.setDepartment(sitemap.getName());
+		
+		System.out.println(searchForm);
+		
+		int rows = boardService.searchBoardCount(searchForm);
+		
+		PageNation pageNation = null;
+		
+		if (searchForm.getDisplay() != 0) {
+			pageNation = new PageNation(searchForm.getDisplay(), searchForm.getPageNo(), rows);
+		}else {
+			pageNation = new PageNation(searchForm.getPageNo(), rows);
+		}
+		
+		searchForm.setBeginIndex(pageNation.getBeginIndex());
+		searchForm.setEndIndex(pageNation.getEndIndex());
+		
+		
+		List<Board> boardList = boardService.searchBoard(searchForm);
+		
+		model.addAttribute("search", searchForm);
+		model.addAttribute("pagination", pageNation);
+		model.addAttribute("boardList", boardList);
+		
+		System.out.println(searchForm);
+		System.out.println(pageNation);
+		System.out.println(boardList);
+		
+		return "/profboard/profdeptboard";
+	}
+	@RequestMapping(value="/prof/profboardform", method=RequestMethod.GET)
+	public String profDeptBoardForm(Model model){
+		
+		model.addAttribute("boardForm", new BoardForm());
+		
+		return "/profboard/profdeptboardform";
+	}
+	@RequestMapping(value="/prof/profboardform", method=RequestMethod.POST)
+	public String addProfDeptBoardForm(@Valid BoardForm boardForm, Errors err, Model model, HttpSession session)throws Exception{
+		
+		Professor prof = (Professor)session.getAttribute("LOGIN_USER");
+		SiteMap sitemap = sitemapSerivce.getSitemapByCodeService(prof.getDivision());
+		
+		if (err.hasErrors()) {
+			return "/board/boardform";
+		}
+		
+		MultipartFile upFile = boardForm.getAttachFile();
+		
+		Board board = new Board();
+		
+		BeanUtils.copyProperties(boardForm, board);
+		
+		if (!upFile.isEmpty()) {
+			String filename = upFile.getOriginalFilename();
+			board.setFileName(filename);
+			IOUtils.copy(upFile.getInputStream(), new FileOutputStream(new File(DIRECTORY, filename)));
+		}
+		
+		board.setDepartment(sitemap.getName());
+		board.setWriter(prof.getName());
+		
+		boardService.addProfBoard(board);
+		
+		return "redirect:/prof/profdeptboard";
 	}
 }

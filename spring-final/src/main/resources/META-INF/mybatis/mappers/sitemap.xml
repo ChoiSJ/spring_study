@@ -24,7 +24,7 @@
 		from 
 			T_SITEMAP	
 		where 
-			T_CODE = #{string}
+			T_CODE = #{code}
 	</select>
 	
 	<select id="getAllSitemapPre" resultType="sitemap">
@@ -52,6 +52,4 @@
 		and
 			T_PRECODE = #{preCode}
 	</select>
-	
-	
 </mapper>

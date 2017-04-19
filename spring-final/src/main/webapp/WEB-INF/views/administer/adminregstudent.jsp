@@ -13,8 +13,9 @@
 <script type="text/javascript">
 $(function() {
 	$(".form-inline").submit(function() {
-		if ($("#select-major").val() == 0 || !$(":radio:checked").length) {
+		if ($("#select-major").val() == 0 || !$(":radio:checked").length || !$(":text").text().trim()) {
 			alert("검색 값을 입력하세요.");
+			$(":text").focus();
 			return false;
 		}
 	});
@@ -104,7 +105,7 @@ $(function() {
 						<td>${stu.SUBGRADE }</td>
 						<td>${stu.ISPASSED }</td>
 						<td class="text-center">
-							<a href="" class="btn btn-xs btn-default">삭제</a>
+							<a href="adminstudelete?dno=${stu.enroll.no }" class="btn btn-xs btn-default">삭제</a>
 						</td>
 					</tr>
 				</c:forEach>

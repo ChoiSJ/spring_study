@@ -4,7 +4,7 @@ public class SubjectSearchForm {
 
 	//private int pageNo = 1;
 	private String opt;
-	private Semester selectSeme;
+	private Semester selectNo;
 	private String keyword;
 	/**
 	private int beginIndex;
@@ -23,16 +23,19 @@ public class SubjectSearchForm {
 		return opt;
 	}
 	
-	
-	
-	public Semester getSelectSeme() {
-		return selectSeme;
-	}
-	public void setSelectSeme(Semester selectSeme) {
-		this.selectSeme = selectSeme;
-	}
+
+
 	public void setOpt(String opt) {
 		this.opt = opt;
+	}
+	
+	public Semester getSelectNo() {
+		return selectNo;
+	}
+	
+	
+	public void setSelectNo(Semester selectNo) {
+		this.selectNo = selectNo;
 	}
 	public String getKeyword() {
 		return keyword;

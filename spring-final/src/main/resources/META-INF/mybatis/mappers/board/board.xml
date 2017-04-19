@@ -3,7 +3,15 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.jhta.dao.board.BoardDao">
-
+	
+	<delete id="deleteView" parameterType="int">
+		delete 
+		FROM 
+			B_VIEWALL
+		WHERE 
+			B_BOARD_NO = #{no}
+	</delete>
+	
 	<select id="serachBoardByType" parameterType="string" resultType="Board">
 		select
 				b_no as no,
@@ -21,7 +29,32 @@
 			b_category = #{category}
 			
 	</select>
-
+	
+	<insert id="addProfBoard" parameterType="Board">
+		insert into
+				B_BOARD (
+						B_NO, 
+						B_TITLE, 
+						B_CONTENTS, 
+						B_WRITER,
+						<if test="fileName != null">
+						B_FILE,
+						</if> 
+						B_DEPARTMENT
+						) 
+		values 
+				(
+				B_BOARD_SEQ.NEXTVAL,
+				#{title},
+				#{contents},
+				#{writer},
+				<if test="fileName != null">
+				#{fileName},
+				</if>
+				#{department}
+				)
+	</insert>
+	
 	<insert id="addNoticeBoard" parameterType="Board">
 		insert into
 				B_BOARD (
@@ -63,6 +96,15 @@
 				<if test="searchType == 'contents'">
 					B_CONTENTS like '%' || #{keyword} || '%'
 				</if>
+			</if>
+			<if test="searchBoardType != null">
+				and B_CATEGORY = #{searchBoardType}
+			</if>
+			<if test="department != null">
+				and B_DEPARTMENT = #{department}
+			</if>
+			<if test="subjectNo != null">
+				and B_SUBJECTNO = #{subjectNo}
 			</if>
 		</where>
 	</select>
@@ -152,19 +194,21 @@
 			countView, 
 			category, 
 			fileName, 
-			department
+			department,
+			subjectNo
 		from (
 				select
 					row_number() over(order by b_no desc) rn,
-					b_no as no,
-					b_title as title,
-					b_contents as contents,
-					b_writer as writer,
-					b_regdate as regdate,
-					b_count as countView,
-					b_category as category,
-					b_file as fileName,
-					b_department as department
+					B_NO as no,
+					B_TITLE as title,
+					B_CONTENTS as contents,
+					B_WRITER as writer,
+					B_REGDATE as regdate,
+					B_COUNT as countView,
+					B_CATEGORY as category,
+					B_FILE as fileName,
+					B_DEPARTMENT as department,
+					B_SUBJECTNO as subjectNo
 				from
 					b_board
 				<where>
@@ -178,6 +222,15 @@
 						<if test="searchType == 'contents'">
 							B_CONTENTS like '%' || #{keyword} || '%'
 						</if>
+					</if>
+					<if test="searchBoardType != null">
+						and B_CATEGORY = #{searchBoardType}
+					</if>
+					<if test="department != null">
+						and b_department = #{department}
+					</if>
+					<if test="subjectNo != null">
+						and b_subjectno = #{subjectNo}
 					</if>
 				</where>)
 		where rn >= #{beginIndex} and rn &lt;= #{endIndex}

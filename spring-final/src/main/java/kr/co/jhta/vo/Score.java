@@ -1,13 +1,28 @@
 package kr.co.jhta.vo;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
 public class Score {
 	private SubjectRegister registerinfo;
 	private int no;
 	private int credit;
 	private String grade;
+	
+	@Min(value=0, message="과제점수는 0점 이상 만 가능합니다.")
+	@Max(value=100, message="과제점수는 100점 이하 만 가능합니다.")
 	private int reportScore;
+	
+	@Min(value=0, message="출석점수는 0점 이상 만 가능합니다.")
+	@Max(value=100, message="출석점수는 100점 이하 만 가능합니다.")
 	private int attScore;
+	
+	@Min(value=0, message="중간점수는 0점 이상 만 가능합니다.")
+	@Max(value=100, message="중간점수는 100점 이하 만 가능합니다.")
 	private int midtermScore;
+	
+	@Min(value=0, message="기말점수는 0점 이상 만 가능합니다.")
+	@Max(value=100, message="기말점수는 100점 이하 만 가능합니다.")
 	private int endtermScore;
 	
 	public Score() {

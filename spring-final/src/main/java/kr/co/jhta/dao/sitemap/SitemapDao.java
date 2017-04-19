@@ -10,7 +10,7 @@ import kr.co.jhta.vo.SiteMap;
 public interface SitemapDao {
 	
 	List<SiteMap> getAllSitemap();
-	SiteMap getSitemapByCode();
+	SiteMap getSitemapByCode(String code);
 	List<SiteMap> getAllSitemapPre();
 	List<SiteMap> getAllSitemapSec(SiteMap sitemap);
 }

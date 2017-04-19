@@ -63,7 +63,7 @@
 	        		</tr>
 	        		<tr>
 	        			<th>전공</th>
-	        			<td><c:out value="${student.division }"/></td>
+	        			<td><c:out value="${tName}"/></td>
 	        			<th>학년</th>
 	        			<td><c:out value="${student.grade }"/></td>
 	        		</tr>

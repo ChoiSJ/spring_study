@@ -25,12 +25,12 @@
 				U_STU_REGISTER as register, 
 				U_STU_SCORE as score, 
 				U_STU_SSN as ssn
-		from U_STUDENT;
+		from U_STUDENT
 	</select>
 	
 	<insert id="addNewStudent">
-		insert INTO U_STUDENT (U_STU_NO, U_STU_ID, U_STU_NAME, U_STU_GENDER, U_STU_DIVISION, U_STU_PWD, U_STU_REGISTER, U_STU_SCORE, U_STU_PHONE, U_STU_ADDR1, U_STU_ADDR2, U_STU_EMAIL, U_STU_GRADE, U_STU_SSN, U_STU_ENTERDATE, U_STU_LEAVEDATE, U_STU_PARENTNAME, U_STU_PROFESSOR, U_STU_PARENTPHONE) 
-						VALUES(U_STUDENT_SEQ, #{id}, #{name}, #{gender}, #{division}, #{pwd}, #{register}, #{score}, #{phone}, #{addr1}, #{addr2}, #{email}, #{grade}, #{ssn}, sysdate, #{leaveDate}, #{parentName}, #{professor}, #{parentPhon})
+		insert INTO U_STUDENT (U_STU_NO, U_STU_ID, U_STU_NAME, U_STU_GENDER, U_STU_DIVISION, U_STU_PWD, U_STU_REGISTER, U_STU_SCORE, U_STU_PHONE, U_STU_ADDR1, U_STU_ADDR2, U_STU_EMAIL, U_STU_GRADE, U_STU_SSN, U_STU_ENTERDATE, U_STU_PARENTNAME, U_STU_PROFESSOR, U_STU_PARENTPHONE) 
+		VALUES(U_STUDENT_SEQ.nextval, #{id}, #{name}, #{gender}, #{division}, #{pwd}, #{register}, #{score}, #{phone}, #{addr1}, #{addr2}, #{email}, #{grade}, #{ssn}, sysdate, #{parentName}, #{professor}, #{parentPhone})
 	</insert>
 	
 	<select id="getStudentById" parameterType="String" resultType="Student">
@@ -76,7 +76,14 @@
 	
 	<update id="updateStudentProfessor" parameterType="String">
 		update U_STUDENT SET U_STU_PROFESSOR = #{professor}
-		where U_STU_NO = #{no};
+		where U_STU_NO = #{no}
 	</update>
+	
+	<select id="getTnameByTcode" parameterType="String" resultType="String">
+		select t.T_NAME as tName
+		from U_STUDENT s, T_SITEMAP t
+		where s.U_STU_DIVISION = t.T_CODE
+		and s.U_STU_DIVISION = #{Tcode}
+	</select>
 	
 </mapper>

@@ -38,33 +38,32 @@ public class SubjectController {
 	private SubjectService subjectService;
 	
 	
-	@RequestMapping(value="/subjectmain", method=RequestMethod.GET)
-	public String subjectMain(SubjectSearchForm searchForm, Model model) {
+	@RequestMapping("/subjectmain")
+	public String subjectMain(SubjectSearchForm subjectsearchform, Model model) {
 		List<Semester> semeList = semesterService.getAllSemester();
-		List<Subject> resultList = subjectService.getSubjectByOpt(searchForm);
+		List<Subject> resultList = subjectService.getSubjectByOpt(subjectsearchform);
+//		List<Subject> resultList = subjectService.getAllList();
 		
 		
 		model.addAttribute("semeList", semeList);
-		model.addAttribute("searchsubject", searchForm);
-		System.out.println("여기실행");
-		
+		model.addAttribute("resultList", resultList);
 			
 		return "major/subjectmain";
 	}
 	
-	/*
+	
 	@RequestMapping(value="searchsubject", method=RequestMethod.POST)
-	public String searchSubject(SubjectSearchForm searchForm, Model model) {
+	public String searchSubject(SubjectSearchForm subjectsearchform, Model model) {
 		
 		
-		List<Subject> resultList = subjectService.getSubjectByOpt(searchForm);
-				model.addAttribute("subjectlist" , resultList);
-		model.addAttribute("searchsubject", searchForm);
+		List<Subject> resultList = subjectService.getSubjectByOpt(subjectsearchform);
+				model.addAttribute("resultList" , resultList);
+		//model.addAttribute("searchsubject", subjectsearchform);
 		
 		
 		return "major/subjectmain";
 	}
-	*/
+	
 	
 	@RequestMapping(value="/addsubject", method=RequestMethod.GET)
 	public String subjectform(Model model) {
@@ -107,6 +106,20 @@ public class SubjectController {
 		
 		subjectService.addSubject(subjectaddform);
 		return "redirect:/admin/subjectmain";
+	}
+	
+	@RequestMapping(value="detailsubject", method=RequestMethod.GET)
+	public String detailsubject(@RequestParam("sno") int sno, Model model) {
+		
+		Subject subject = subjectService.getSubByNo(sno);
+		model.addAttribute("subjectbyno", subject);
+		
+		System.out.println(subject);
+		System.out.println(subject.getPassed());
+		System.out.println(subject.getPassed().getCode());
+		System.out.println(subject.getProfessor().getName());
+		
+		return "major/subjectdetail";
 	}
 	
 	

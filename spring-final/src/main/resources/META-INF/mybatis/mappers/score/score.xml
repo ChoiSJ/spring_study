@@ -11,7 +11,7 @@
 		where
 			register = #{rno}
 	</select>
-	<select id="getRegisInfoByEno" parameterType="int" resultType="Regisubject">
+	<select id="getRegisInfoByEno" parameterType="int" resultType="kr.co.jhta.vo.stu.Regisubject">
 		select
 	   r.R_REGI_NO as "no",
 	   r.U_STU_NO as "student.no",
@@ -23,13 +23,10 @@
 	    e.E_ENROLLNUM as "enroll.enrollNum",
 		 s.J_NO as "subject.no",
 		 s.J_T_CODE as "subject.siteCode.code",
-		 s.J_IS_PASSED as "subject.isPassed", 
+		 s.J_IS_PASSED as "subject.passed", 
 		 s.J_GRADE as "subject.grade", 
 		 s.J_SUBJECT_NAME as "subject.subjectName", 
 		 s.J_SCORE as "subject.score",
-		 s.J_OUTLINE as "subject.outline",
-		 s.J_PROGRESS as "subject.progress",
-		 s.J_REFERENCE as "subject.reference",
 		 s.J_SUB_PROF as "subject.professor",
 		  j.J_DIV_NUM as "division.divisionNo", 
 		  j.J_DIV_PROF as "division.divisionProfessor",
@@ -127,12 +124,9 @@
 			j_sub_prof as professor,
 			j_semester as "selectNo.no",
 			j_grade as grade,
-			j_is_passed as isPassed,
 			j_t_code as siteCode,
 			j_score as score,
-			j_outline as outline,
-			j_reference as "reference",
-			j_progress as progress
+			j_is_passed as "passed.passedName"
 		from
 			j_subject
 		where
@@ -208,7 +202,7 @@
 			T_CODE = #{string}
 	</select>
 	
-	<select id="getRegisInfoByhash" parameterType="hashmap" resultType="Regisubject">
+	<select id="getRegisInfoByhash" parameterType="hashmap" resultType="kr.co.jhta.vo.stu.Regisubject">
 		select r.R_REGI_NO as "no",
 	   r.U_STU_NO as "student.no",
 	   r.R_GRADE as "grade",
@@ -219,13 +213,10 @@
 	    e.E_ENROLLNUM as "enroll.enrollNum",
 		 s.J_NO as "subject.no",
 		 s.J_T_CODE as "subject.siteCode.code",
-		 s.J_IS_PASSED as "subject.isPassed.isPassed", 
+		 s.J_IS_PASSED as "subject.passed.passedName", 
 		 s.J_GRADE as "subject.grade", 
 		 s.J_SUBJECT_NAME as "subject.subjectName", 
 		 s.J_SCORE as "subject.score",
-		 s.J_OUTLINE as "subject.outline",
-		 s.J_PROGRESS as "subject.progress",
-		 s.J_REFERENCE as "subject.reference",
 		 s.J_SUB_PROF as "subject.professor",
 		  j.J_DIV_NUM as "division.divisionNo", 
 		  j.J_DIV_PROF as "division.divisionProfessor",
@@ -281,5 +272,56 @@
 			r_regisubject
 		where
 			u_stu_no = #{stuNo}
+	</select>
+	
+	<select id="getSearchInfoByCode" parameterType="hashmap" resultType="kr.co.jhta.vo.stu.Regisubject">
+		select
+	   r.R_REGI_NO as "no",
+	   r.U_STU_NO as "student.no",
+	   r.J_NO as "subject.no",
+	   r.R_GRADE as "grade",
+	   r.R_MAXGRADE as "maxGrade",
+		   u.U_STU_ID as "student.id",
+		   u.U_STU_NAME as "student.name",
+			sc.S_SCORE_NO as "score.no",
+			sc.REGISTER as "score.registerinfo.regiNo",
+			sc.S_GRADE as "score.grade",
+			sc.S_CREDIT as "score.credit",
+			sc.S_REPORT_SCORE as "score.reportScore",
+			sc.S_ATTENDANCE_SCORE as "score.attScore",
+			sc.S_ENDTERM_SCORE as "score.endtermScore",
+			sc.S_MIDTERM_SCORE as "score.midtermScore",
+			  s.J_NO as "subject.no",
+			  s.J_T_CODE as "subject.siteCode.code",
+			  s.J_IS_PASSED as "subject.passed.passedName", 
+			  s.J_GRADE as "subject.grade", 
+			  s.J_SUBJECT_NAME as "subject.subjectName", 
+			  s.J_SCORE as "subject.score",
+			  s.J_SUB_PROF as "subject.professor",
+			  s.J_SEMESTER as "subject.selectNo.no",
+			  	sem.S_SEME_SELECT as "subject.selectNo.semeSelect",
+				 t.T_NO as "subject.siteCode.no",
+				 t.T_CODE as "subject.siteCode.code",
+				 t.T_NAME as "subject.siteCode.name"
+from  
+		J_SUBJECT s,
+		T_SITEMAP t,
+		R_REGISUBJECT r,
+		S_SCORE sc,
+		U_STUDENT u,
+		S_SEMESTER sem
+where 
+	t.T_CODE = s.J_T_CODE
+and r.J_NO = s.J_NO
+and sem.S_NO = s.J_SEMESTER
+and sc.REGISTER = r.R_REGI_NO
+and r.U_STU_NO = u.U_STU_NO
+		<if test="code1 == 'all'">
+			and u.U_STU_ID = #{stucode }
+		</if>
+		<if test="code1 != 'all'">
+			and t.T_CODE = #{code2 }
+			and u.U_STU_ID = #{stucode }
+		</if>
 	</select>
 </mapper>

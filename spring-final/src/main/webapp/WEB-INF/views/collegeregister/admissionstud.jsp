@@ -41,18 +41,21 @@
 				dataType: "json",
 				type: "POST",
 				success: function(data) {
+					console.log(data);
 					$("#professor").empty();
-					for (var i=0; i<data.profList.length; i++) {
-						$("#professor").append("<option value="+data.profList[i].id+">"+data.profList[i].name+"</option>");	
+					for (var i=0; i<data.length; i++) {						
+						$("#professor").append("<option value="+data[i].id+">"+data[i].name+"</option>");	
 					}
 				}
 			});
 		});
 		$("#emailAddr").change(function (event) {
 			if($(this).val() != 'edit'){
-				$("[name='studEmailAddr']").val($(this).val());
+				$("[name='studemailaddr']").val($(this).val());
+				$("[name='studemailaddr']").attr('readonly',true);
 			}else{
-				$("[name='studEmailAddr']").val('');
+				$("[name='studemailaddr']").attr('readonly',false);
+				$("[name='studemailaddr']").val('');
 			}
 		});
 	})
@@ -63,16 +66,16 @@
 <%@ include file="sidebar-hakjuk.jsp" %>
 	<div class="container" style="margin-left: 250px; padding-top:25px; ">
 		<div class="row text-right">
-			홈 > 학적관리 > 입학관리 > <strong>신입학 등록</strong> 
+			홈 > 학적관리 > 입학관리 > <strong>입학생 등록</strong> 
 		</div>
 		<div class="row" style="margin: 0px; padding: 0px;">
-			<h4><span class="glyphicon glyphicon-list-alt"></span> 신입학 등록</h4>
+			<h4><span class="glyphicon glyphicon-list-alt"></span> 입학생 등록</h4>
 			<hr style="border:solid 0.5px #2C7BB5;">
 		</div>
 		<div class="row">
 			<div class="panel panel-default">
 				<div class="panel panel-body" style="margin: 10px; ">
-					<form action="" method="post">
+					<form action="addstud" method="post">
 						<div class="row">
 							<div class="col-xs-2">
 								<img src="/jhta/resources/images/student/PeoPleDefault.png" alt="person" style="width: 150px; height: 180px;" />
@@ -89,22 +92,24 @@
 									<tbody>
 										<tr>
 											<th>학생 성명 : </th>
-											<td><input type="text" name="studname" class="form-control"/></td>
+											<td><input type="text" name="name" class="form-control"/></td>
 											<th>학적 상태 : </th>
 											<td>
-												<select class="form-control" name="studregister">
-													<option value="신입학">신입학</option>
-													<option value="재입학">재입학</option>
+												<select class="form-control" name="register">
+													<option value="AD1000">신입학</option>
+													<option value="AD2000">재입학</option>
 												</select>
 											</td>
 										</tr>
 										<tr>
 											<th>주민등록번호 : </th>
-											<td><input type="text" name="ssn" class="form-control" placeholder="'-' 없이 입력하세요."/></td>
+											<td>
+												<input type="text" name="ssn" class="form-control" placeholder="'-'을 입력하세요.">
+											</td>
 											<th>성별 구분: </th>
 											<td>
-												<label>남 : </label><input type="radio" name="studgender" value="M" checked="checked"/> / 
-												<label>여 : </label><input type="radio" name="studgender" value="Y"/>
+												<label>남 : </label><input type="radio" name="gender" value="M" checked="checked"/> / 
+												<label>여 : </label><input type="radio" name="gender" value="F"/>
 											</td>
 										</tr>
 										<tr>
@@ -112,14 +117,14 @@
 											<td>
 												<select class="form-control" id="college">
 													<c:forEach var = "sitemap" items="${sitemapList }" >
-														<option value="${sitemap.code }">${sitemap.name} </option>
+														<option value="${sitemap.code }">${sitemap.name }</option>
 													</c:forEach>
 												</select>
 											</td>
 											<th>학과 구분: </th>
 											<td>
-												<select class="form-control" name="studdivision" id="major">
-													<c:if test="${majors not empty }">
+												<select class="form-control" name="division" id="major">
+													<c:if test="${not empty majors}">
 														<c:forEach var="major" items="${majors }">
 															<option value="${major.code }">${major.name }</option> 
 														</c:forEach>
@@ -130,7 +135,7 @@
 										<tr>
 											<th>학년</th>
 											<td>
-												<select class="form-control" name="studgrade">
+												<select class="form-control" name="grade">
 													<option>1</option>
 													<option>2</option>
 													<option>3</option>
@@ -140,9 +145,9 @@
 											<th>지도 교수 : </th>
 											<td>
 												<select class="form-control" name="professor" id="professor">
-													<c:if test="${professors not empty }">
+													<c:if test="${not empty professors }">
 														<c:forEach var="professor" items="${professors }">
-															<option value="${professor.no }">${professor.name }</option> 
+															<option value="${professor.id }">${professor.name }</option> 
 														</c:forEach>
 													</c:if>
 												</select>
@@ -164,18 +169,18 @@
 									<tr>
 										<th>개인</th>
 										<th>휴대폰</th>
-										<td><input type="text" name="studPhone" class="form-control" placeholder="'-' 없이 입력하세요."/></td>
+										<td><input type="text" name="phone" class="form-control" placeholder="'-'을 입력하세요."/></td>
 										<th>이메일</th>
 										<td>
 											<div class=row>
 												<div class="col-xs-4">
-													<input type="text" name="studEmail" class="form-control" />
+													<input type="text" name="studemail" class="form-control" />
 												</div>
 												<div class="col-xs-1">
 													<p>@</p>
 												</div>
 												<div class="col-xs-4">
-													<input type="text" name="studEmailAddr" class="form-control" />
+													<input type="text" name="studemailaddr" class="form-control" />
 												</div>
 												<div class="col-xs-3">
 													<select class="form-control" id="emailAddr">
@@ -196,16 +201,16 @@
 										<td colspan="3">
 											<div class="row">
 												<div class="col-md-10">
-													<input type="text" name="preAddr" class="form-control" /> 
+													<input type="text" name="addr1" class="form-control" /> 
 												</div>
 												<div class="col-md-2">
-													<a href="" class="btn btn-success">우편번호 검색</a>
+													<a href="#" class="btn btn-success">우편번호 검색</a>
 												</div>
 											</div>
 										</td>
 									</tr>
 									<tr>
-										<td colspan="3"><input type="text" name="postAddr" class="form-control" /></td>
+										<td colspan="3"><input type="text" name="addr2" class="form-control" /></td>
 									</tr>
 									<tr>
 										<th>보호자 성함</th>
@@ -215,6 +220,9 @@
 									</tr>
 								</tbody>
 							</table>
+							<div class="text-right">
+								<button class="btn btn-primary btn-sm" type="submit"><span class="glyphicon glyphicon-pencil"></span> 등록</button>
+							</div>
 						</div>
 					</form>
 				</div>

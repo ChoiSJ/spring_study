@@ -14,5 +14,6 @@ public interface EnrollDao {
 	void updatePlusNowNum(int enrollNo);
 	void updateMinusNowNum(int enrollNo);
 	Enroll getEnrollCheckNum(int enrollNo);
-	List<Enroll> getAllEnrollByTname(String sitename);
+	List<Enroll> getAllEnrollByTcode(String siteCode);
+	void addEnroll(Enroll enroll);
 }

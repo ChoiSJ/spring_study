@@ -7,15 +7,12 @@ public class Subject {
 	private Professor professor;
 	private Semester selectNo;
 	private int grade;
-	private SubjectIsPassed isPassed;
+	private SubjectIsPassed passed;
 	private SiteMap siteCode;
 	private int score;
 	private int division;
-	private String outline;
-	private String reference;
-	private String progress;
-	
-	
+	private int limitStu;
+
 	public Subject() {
 		// TODO Auto-generated constructor stub
 	}
@@ -34,14 +31,6 @@ public class Subject {
 
 	public void setSubjectName(String subjectName) {
 		this.subjectName = subjectName;
-	}
-
-	public int getDivision() {
-		return division;
-	}
-
-	public void setDivision(int division) {
-		this.division = division;
 	}
 
 	public Professor getProfessor() {
@@ -68,12 +57,12 @@ public class Subject {
 		this.grade = grade;
 	}
 
-	public SubjectIsPassed getIsPassed() {
-		return isPassed;
+	public SubjectIsPassed getPassed() {
+		return passed;
 	}
 
-	public void setIsPassed(SubjectIsPassed isPassed) {
-		this.isPassed = isPassed;
+	public void setPassed(SubjectIsPassed passed) {
+		this.passed = passed;
 	}
 
 	public SiteMap getSiteCode() {
@@ -92,38 +81,42 @@ public class Subject {
 		this.score = score;
 	}
 
-	public String getOutline() {
-		return outline;
+	public int getDivision() {
+		return division;
 	}
 
-	public void setOutline(String outline) {
-		this.outline = outline;
+	public void setDivision(int division) {
+		this.division = division;
 	}
 
-	public String getReference() {
-		return reference;
+	public int getLimitStu() {
+		return limitStu;
 	}
 
-	public void setReference(String reference) {
-		this.reference = reference;
+	public void setLimitStu(int limitStu) {
+		this.limitStu = limitStu;
 	}
 
-	public String getProgress() {
-		return progress;
-	}
-
-	public void setProgress(String progress) {
-		this.progress = progress;
+	public Subject(int no, String subjectName, Professor professor, Semester selectNo, int grade,
+			SubjectIsPassed passed, SiteMap siteCode, int score, int division, int limitStu) {
+		super();
+		this.no = no;
+		this.subjectName = subjectName;
+		this.professor = professor;
+		this.selectNo = selectNo;
+		this.grade = grade;
+		this.passed = passed;
+		this.siteCode = siteCode;
+		this.score = score;
+		this.division = division;
+		this.limitStu = limitStu;
 	}
 
 	@Override
 	public String toString() {
 		return "Subject [no=" + no + ", subjectName=" + subjectName + ", professor=" + professor + ", selectNo="
-				+ selectNo + ", grade=" + grade + ", isPassed=" + isPassed + ", siteCode=" + siteCode + ", score="
-				+ score + ", division=" + division + ", outline=" + outline + ", reference=" + reference + ", progress="
-				+ progress + "]";
+				+ selectNo + ", grade=" + grade + ", passed=" + passed + ", siteCode=" + siteCode + ", score=" + score
+				+ ", division=" + division + ", limitStu=" + limitStu + "]";
 	}
 
-	
-	
 }

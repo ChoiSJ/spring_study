@@ -64,7 +64,7 @@
 		$('#search-btn').click(function(){
 			$('#hidden-div').show();
 			var lectureCode = $('#lecture-select').val();
-			console.log(lectureCode);
+			
 			
 		});
 		
@@ -121,7 +121,7 @@
 				</div>
 			</div>
 		</div>
-		<div id="hidden-div" hidden="true">
+		<div id="hidden-div" hidden="">
 			<div class="row well">
 				<strong>사본_NIE를 활용한 글쓰기 과정 /자유게시판: <span id="freeBoardCount">0</span>건 /강의Q&amp;A: <span id="qnaBoardCount">0</span>건 </strong>
 			</div>

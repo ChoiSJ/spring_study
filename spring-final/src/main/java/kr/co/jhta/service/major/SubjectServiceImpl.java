@@ -59,4 +59,10 @@ public class SubjectServiceImpl implements SubjectService{
 		subjectDao.subupdate(subject);
 		
 	}
+	
+	@Override
+	public Subject getSubByNo(int sno) {
+		return subjectDao.getByNoList(sno);
+	}
+	
 }

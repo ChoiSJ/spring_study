@@ -28,6 +28,7 @@ public class LoginStudArgumentResolver implements HandlerMethodArgumentResolver 
 		HttpSession session = request.getSession(true);
 		
 		Student student = (Student) session.getAttribute("LOGIN_USER");
+		
 		if(student == null) {
 			return null;
 		}

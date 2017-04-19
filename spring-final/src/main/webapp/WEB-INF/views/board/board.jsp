@@ -90,7 +90,7 @@
 					<option value="contents" ${search.searchType eq 'contents' ? 'selected=selected' : '' }>내용</option>
 				</select>
 				<input value="${param.keyword }" style="width: 400px;" type="text" name="keyword" class="form-control input-sm" />
-				<a id="search-btn" href="javascript:;" type="submit" class="btn btn-default btn-sm">검색</a>
+				<a id="search-btn" href="javascript:;" type="submit" class="btn btn-primary btn-sm">검색</a>
 			</form>
 		</div>
 		<div class="row">
@@ -101,8 +101,8 @@
 					<option value="30" ${search.display eq 30 ? 'selected=selected' : '' }>30개씩 보기</option>
 					<option value="50" ${search.display eq 50 ? 'selected=selected' : '' }>50개씩 보기</option>
 				</select>
-				<a href="javascript:;" id="delete-btn" class="btn btn-default btn-sm">선택삭제</a>
-				<a href="boardform" class="btn btn-default btn-sm pull-right">공지사항 작성</a>
+				<a href="javascript:;" id="delete-btn" class="btn btn-danger btn-sm">선택삭제</a>
+				<a href="boardform" class="btn btn-primary btn-sm pull-right">공지사항 작성</a>
 			</div>
 		</div>
 		<div class="row">

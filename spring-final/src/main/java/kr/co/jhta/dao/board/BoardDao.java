@@ -32,4 +32,8 @@ public interface BoardDao {
 
 	List<Board> serachBoardByType(String boardType);
 
+	void deleteView(int no);
+
+	void addProfBoard(Board board);
+
 }

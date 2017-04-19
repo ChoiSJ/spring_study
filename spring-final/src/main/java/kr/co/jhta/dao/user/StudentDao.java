@@ -8,10 +8,13 @@ import kr.co.jhta.vo.stu.Student;
 
 @Transactional
 public interface StudentDao {
-	void addNewStudent();
+	void addNewStudent(Student stud);
 	List<Student> getAllStudent();
-	Student getStudentById(String id);	
+	Student getStudentById(String id);
+	
 	void updateStudentPwd(Student student);
 	void updateStudentInfo(Student student);
 	void updateStudentProfessor(String profName);
+	
+	String getTnameByTcode(String tCode);
 }

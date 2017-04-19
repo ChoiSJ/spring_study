@@ -6,7 +6,7 @@
 				type="javax.sql.DataSource"
 				driverClassName="oracle.jdbc.OracleDriver"
 				url="jdbc:oracle:thin:@192.168.10.115:1521:xe"
-				maxActive="20"
+				maxActive="100"
 				maxIdle="10"
 				maxWait="10000"
 				username="hr"

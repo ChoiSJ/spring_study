@@ -96,6 +96,10 @@ $(function() {
          				<tr>
          					<td><label>과목명</label></td>
          					<td><input type="text" name="subjectName"></td>
+         					
+         					
+         				</tr>
+         				<tr>
          					<td><label>학기선택</label></td>
          					<td>
          						<select name="selectNo.no">
@@ -105,11 +109,9 @@ $(function() {
          							</c:forEach>
          						</select>
          					</td>
-         				</tr>
-         				<tr>
          					<td><label>이수구분</label></td>
          					<td>
-         						<select name="isPassed.code">
+         						<select name="passed.code">
          							<option>이수구분</option>
          							<option value="ns">구분없음</option>
          							<option value="me">전공필수</option>
@@ -120,6 +122,9 @@ $(function() {
          							<option value="db">학부기초</option>
          						</select>
          					</td>
+         					
+         				</tr>
+         				<tr>
          					<td><label>대상학년</label></td>
          					<td>
          						<select name="grade">
@@ -131,8 +136,6 @@ $(function() {
          							<option value="4">4학년</option>
          						</select>
          					</td>
-         				</tr>
-         				<tr>
          					<td><label>교수명</label></td>
          					<td>
          						<select name="professor.id" id="select-prof">
@@ -140,6 +143,10 @@ $(function() {
          							
          						</select>
          					</td>
+         					
+         					
+         				</tr>
+         				<tr>
          					<td><label>학점</label></td>
          					<td>
          						<select name="score">
@@ -149,19 +156,13 @@ $(function() {
          							<option value="3">3</option>
          						</select>
          					</td>
+         					<td><label>정원</label></td>
+         					<td>
+         						<input type="number" name="limitStu">
+         					</td>
          				</tr>
-         				<tr>
-         					<td><label>교과목 개요</label></td>
-         					<td colspan="3"><textarea name="outline" rows="3" cols="100%"></textarea></td>
-         				</tr>
-         				<tr>
-         					<td><label>수업진행방법</label></td>
-         					<td colspan="3"><textarea name="progress" rows="3" cols="100%"></textarea></td>
-         				</tr>
-         				<tr>
-         					<td><label>교재/참고자료</label></td>
-         					<td colspan="3"><textarea name="reference" rows="3" cols="100%"></textarea></td>
-         				</tr>
+         				
+         				
          			</table>
          			<div>
          				<button type="submit" class="btn btn-primary pull-right">등록</button>

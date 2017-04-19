@@ -2,6 +2,8 @@ package kr.co.jhta.vo.stu;
 
 import java.util.Date;
 
+import kr.co.jhta.vo.SiteMap;
+
 public class Student {
 	
 	private int no;

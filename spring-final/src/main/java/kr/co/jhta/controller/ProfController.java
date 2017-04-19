@@ -19,6 +19,7 @@ import kr.co.jhta.service.major.SemesterService;
 import kr.co.jhta.service.major.SubjectService;
 import kr.co.jhta.service.professor.ProfessorService;
 import kr.co.jhta.service.professor.SyllabusService;
+import kr.co.jhta.service.user.EnrollService;
 import kr.co.jhta.vo.Professor;
 import kr.co.jhta.vo.Semester;
 import kr.co.jhta.vo.SiteMap;
@@ -27,6 +28,8 @@ import kr.co.jhta.vo.SubjectAddForm;
 import kr.co.jhta.vo.SubjectIsPassed;
 import kr.co.jhta.vo.Syllabus;
 import kr.co.jhta.vo.Syllabusform;
+import kr.co.jhta.vo.stu.Enroll;
+import kr.co.jhta.vo.stu.EnrollForm;
 
 @Controller
 @RequestMapping("/prof")
@@ -43,6 +46,9 @@ public class ProfController {
 	
 	@Autowired
 	private SemesterService semesterService;
+	
+	@Autowired
+	private EnrollService enrollService;
 	
 	@RequestMapping("/home")
 	public String testMain() {
@@ -137,7 +143,7 @@ public class ProfController {
 		subject.setSelectNo(seme);
 		SubjectIsPassed pass = new SubjectIsPassed();
 		pass.setCode(subjackform.getIsPassed());
-		subject.setIsPassed(pass);
+		subject.setPassed(pass);
 		
 		BeanUtils.copyProperties(subjackform, subject);
 		subjectService.addSubject2(subject);
@@ -168,6 +174,29 @@ public class ProfController {
 		List<Semester> semeList = semesterService.getAllSemester();
 		model.addAttribute("semeList", semeList);
 		return "/prof/addsubjectform";
+	}
+	
+	@RequestMapping(value="/addenrollform", method=RequestMethod.GET)
+	public String addenrollform(@Valid @ModelAttribute("enrollform")EnrollForm enrollform, Model model, HttpSession session){
+		Professor prof = (Professor) session.getAttribute("LOGIN_USER");
+		List<Subject> subList = subjectService.getByProIdList(prof.getId());
+		model.addAttribute("subList", subList);
+		return "/prof/addenrollform2";
+	}
+	@RequestMapping(value="/addenrollform", method=RequestMethod.POST)
+	public String addenroll(@Valid @ModelAttribute("enrollform")EnrollForm enrollform,Errors errors){
+		System.out.println(enrollform);
+		if(errors.hasErrors()){
+			System.out.println(errors.getAllErrors());
+			return "/prof/addsubjectform";
+		}
+		Enroll enroll = new Enroll();
+		Subject subject = new Subject();
+		subject.setNo(enrollform.getSubjectNo());
+		
+		
+		
+		return "redirect:/prof/subinfo";
 	}
 	
 	
@@ -221,7 +250,7 @@ public class ProfController {
 		subject.setSelectNo(seme);
 		SubjectIsPassed pass = new SubjectIsPassed();
 		pass.setCode(subjackform.getIsPassed());
-		subject.setIsPassed(pass);
+		subject.setPassed(pass);
 		SiteMap site = new SiteMap();
 		site.setCode(subjackform.getCode());
 		subject.setSiteCode(site);

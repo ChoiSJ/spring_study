@@ -27,7 +27,7 @@ public class LoginProfArgumentResolver implements HandlerMethodArgumentResolver{
 		session.setMaxInactiveInterval(60*60*24);
 		Professor prof = (Professor) session.getAttribute("LOGIN_USER");
 		if(prof == null) {
-			return null;
+			return new Professor();
 		}
 		return prof;		
 	}

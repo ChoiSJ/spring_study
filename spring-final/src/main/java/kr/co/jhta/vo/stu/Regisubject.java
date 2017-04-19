@@ -1,5 +1,6 @@
 package kr.co.jhta.vo.stu;
 
+import kr.co.jhta.vo.Score;
 import kr.co.jhta.vo.Subject;
 import kr.co.jhta.vo.SubjectDivision;
 
@@ -11,6 +12,7 @@ public class Regisubject {
 	private Subject subject;
 	private SubjectDivision division;
 	private Student student;
+	private Score score;
 	private Enroll enroll;
 	
 	public Regisubject() {
@@ -19,7 +21,7 @@ public class Regisubject {
 	}
 
 	public Regisubject(int no, int grade, int maxGrade, Subject subject, SubjectDivision division, Student student,
-			Enroll enroll) {
+			Enroll enroll, Score score) {
 		super();
 		this.no = no;
 		this.grade = grade;
@@ -28,6 +30,15 @@ public class Regisubject {
 		this.division = division;
 		this.student = student;
 		this.enroll = enroll;
+		this.score = score;
+	}
+	
+	public void setScore(Score score) {
+		this.score = score;
+	}
+
+	public Score getScore() {
+		return score;
 	}
 
 	public int getNo() {
@@ -86,5 +97,10 @@ public class Regisubject {
 		this.enroll = enroll;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Regisubject [no=" + no + ", grade=" + grade + ", maxGrade=" + maxGrade + ", subject=" + subject
+				+ ", division=" + division + ", student=" + student + ", score=" + score + ", enroll=" + enroll + "]";
+	}
+
 }

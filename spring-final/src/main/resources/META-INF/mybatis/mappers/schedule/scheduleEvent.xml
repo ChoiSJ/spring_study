@@ -31,7 +31,8 @@
 	</select>
 	
 	<select id="getSchEventBySchNo" parameterType="int" resultType="ScheduleEvent">	
-		select V_EVENT.V_TITLE as title, 
+		select V_EVENT.V_NO as no,
+			   V_EVENT.V_TITLE as title, 
 			   V_EVENT.V_DESCRIPTION as description, 
 			   V_EVENT.V_START as "start",  
 			   V_EVENT.V_END as "end", 
@@ -40,9 +41,10 @@
 		where V_EVENT.V_NO = #{no}
 	</select>
 	
-	<delete id="deleteSchEventByStuNo" parameterType="Student">
+	<delete id="deleteSchEvent" parameterType="hashmap">
 		DELETE FROM V_EVENT 
-		WHERE U_STU_NO = #{student.no}
+		WHERE U_STU_NO = #{studNo}
+		AND V_NO = #{schNo}
 	</delete>
 	
 	<select id="getSchEventByDate" parameterType="map" resultType="ScheduleEvent">
@@ -82,8 +84,13 @@
 		AND V_NO = #{no}
 	</update>
 	
-	<select id="getSequence" parameterType="int">
+	<!-- <select id="getSequence" resultType="int">
 		SELECT V_EVENT_SEQ.currval FROM dual
+	</select> -->
+	<select id="getSequence" resultType="int">
+		SELECT LAST_NUMBER
+  		FROM USER_SEQUENCES
+		WHERE SEQUENCE_NAME = 'V_EVENT_SEQ'
 	</select>
 	
 </mapper>

@@ -31,7 +31,7 @@
 				type: "POST",
 				success: function(data) {
 					$("#score_box2").empty();
-					
+					$("#score_box2").append('<option value="siteall">전공</option>');
 					for (var i=0; i<data.length; i++) {
 						$("#score_box2").append("<option value="+data[i].code+">"+data[i].name+"</option>");
 					}
@@ -93,20 +93,36 @@
 			var code1 = $("#score_box1").val();
 			var code2 = $("#score_box2").val();
 			var stucode = $("#score_box3").val();
-	
-			$.ajax({
-				url: "scoreSearchInfo?code="+code1+"&codes="+code2+"&stucode="+stucode,
-				dataType: "json",
-				type: "POST",
-				success: function(data) {
+			console.log(code1);
+			console.log(code2);
+			console.log(stucode);
+				$.ajax({
+					url: "scoreSearchInfo?code="+code1+"&codes="+code2+"&stucode="+stucode,
+					dataType: "json",
+					type: "POST",
+					success: function(data) {
 					$("#score_td_box").empty();
-					
+						
 					for (var i=0; i<data.length; i++) {
-						$("#score_td_box").append("<tr style='text-align: left;'>");
-						$("#score_td_box").append("</tr>");
+						$("#score_td_box").append('<tr style="text-align: left;" id=tr_'+data[i].no+'></tr>');
+						$("#tr_"+data[i].no).append('<td>'+data[i].no+'</td>');
+						$("#tr_"+data[i].no).append('<td>'+data[i].student.name+'</td>');
+						$("#tr_"+data[i].no).append('<td>'+data[i].student.id+'</td>');
+						$("#tr_"+data[i].no).append('<td>'+data[i].subject.selectNo.semeSelect+'</td>');
+						$("#tr_"+data[i].no).append('<td>'+data[i].subject.subjectName+'</td>');
+						$("#tr_"+data[i].no).append('<td>'+data[i].subject.passed.passedName+'</td>');
+						$("#tr_"+data[i].no).append('<td>'+data[i].score.credit+'</td>');
+						$("#tr_"+data[i].no).append('<td>'+data[i].score.grade+'</td>');
+						$("#tr_"+data[i].no).append('<td>'+data[i].score.reportScore+'</td>');
+						$("#tr_"+data[i].no).append('<td>'+data[i].score.attScore+'</td>');
+						$("#tr_"+data[i].no).append('<td>'+data[i].score.midtermScore+'</td>');
+						$("#tr_"+data[i].no).append('<td>'+data[i].score.endtermScore+'</td>');			
+						$("#tr_"+data[i].no).append('<td><a href="scoreform.do?sno='+data[i].score.no+'" class="btn btn-primary btn-xs">수정</a></td>');			
+						$("#tr_"+data[i].no).append('<td><button class="btn btn-primary btn-xs" type="button" id="scoreprint" value='+data[i].score.no+'>출력</button></td>');	
+
 					}
 				}
-			});
+			});	
 		});
 	});
 </script>
@@ -141,7 +157,7 @@
 								</td>
 								<td bgcolor="#f0fcff">
 									<select class="form-control" id="score_box2">
-										<option value="siteAll">전공</option>
+										<option value="siteall">전공</option>
 									</select>
 								</td>
 								<td bgcolor="#f0fcff">
@@ -163,6 +179,7 @@
 									<th>학번</th>
 									<th>학기</th>
 									<th>과목명</th>
+									<th>이수구분</th>
 									<th>학점</th>
 									<th>등급</th>
 									<th>과제</th>
@@ -181,6 +198,7 @@
 									<td>${scorelist2.student.id}</td>
 									<td>${scorelist2.subject.selectNo.semeSelect}</td>
 									<td>${scorelist2.subject.subjectName}</td>
+									<td>${scorelist2.subject.passed.passedName}</td>
 									<td>${scorelist2.score.credit}</td>
 									<td>${scorelist2.score.grade}</td>
 									<td>${scorelist2.score.reportScore}</td>

@@ -37,4 +37,5 @@ public interface ScoreService {
 	
 	Score getScoreinfoByRno(int rno);
 	SubjectRegister getRegiListByStuNo(int stuno);
+	List<Regisubject> getSearchInfoByCode(HashMap<String, Object> searchcode);
 }

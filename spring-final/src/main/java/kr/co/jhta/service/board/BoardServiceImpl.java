@@ -80,5 +80,17 @@ public class BoardServiceImpl implements BoardService{
 		return boardDao.serachBoardByType(boardType);
 	}
 
+	@Override
+	public void deleteView(int no) {
+		boardDao.deleteView(no);
+		
+	}
+
+	@Override
+	public void addProfBoard(Board board) {
+		boardDao.addProfBoard(board);
+		
+	}
+
 	
 }

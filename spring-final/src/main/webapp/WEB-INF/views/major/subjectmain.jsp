@@ -10,6 +10,15 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script   src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script   src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$(function () {
+	$("#search-btn").click(function () {
+		
+	});
+});
+</script>
+
+
 </head>
 <body>
 <%@ include file="/WEB-INF/views/navi/adminnavi.jsp" %>
@@ -24,12 +33,12 @@
     	</div>
       	
       	<div class="panel panel-default panel-body">
-      		<form method="post" action="searchsubject" id="subject-search-form" class="form-inline">
+      		<form method="post" action="subjectmain" name="subjectsearchform" id="subject-search-form" class="form-inline">
       			<table class="table table-condensed">
       				<tr>
       					<td><label>검색옵션</label></td>
       					<td>
-      						<select name="selectSeme"  id="selectseme" >
+      						<select name="selectNo.no" >
       							<option value="">학기선택</option>
       							<c:forEach var="seme" items="${semeList }">  
       								<option value="${seme.no }">
@@ -52,9 +61,9 @@
       						</div>
       						<div class="form-group">
       							<label>검색어</label>
-      							<input type="text" name="keyword" value="${searchsubject.keyword }">
+      							<input type="text" name="keyword" value="${searchsubject.keyword }" required="required">
       						</div>
-      						<button type="submit" class="btn btn-default">검색</button>
+      						<button type="submit" class="btn btn-default" id="search-btn">검색</button>
       					</td>
       				</tr>
       			</table>
@@ -77,6 +86,7 @@
       					<th>년도학기</th>
       					<th>시행학과</th>
       					<th>과목명</th>
+      					<th>교수명</th>
       					<th>분반수</th>
       					<th>이수구분</th>
       					<th>학점</th>
@@ -84,14 +94,14 @@
       				</tr>
       			</thead>
       			<tbody>
-      			<c:forEach var="subject" items="${subjectlist }">
+      			<c:forEach var="subject" items="${resultList }">
       				<tr>
       					<td>${subject.selectNo.semeSelect }</td>
       					<td><a href="detailsubject?sno=${subject.no }">${subject.siteCode.name }</a></td>
       					<td>${subject.subjectName }</td>
+      					<td>${subject.professor.name }</td>
       					<td>${subject.division }</td>
-      					 
-      					<td>${subject.isPassed.isPassedName }</td>
+      					<td>${subject.passed.passedName }</td>
       					<td>${subject.score }</td>
       					<td>${subject.grade }</td>
       				</tr>

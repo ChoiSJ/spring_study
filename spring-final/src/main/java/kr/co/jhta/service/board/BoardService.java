@@ -32,4 +32,8 @@ public interface BoardService {
 
 	List<Board> serachBoardByType(String boardType);
 
+	void deleteView(int no);
+
+	void addProfBoard(Board board);
+
 }

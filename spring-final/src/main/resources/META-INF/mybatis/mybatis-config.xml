@@ -21,7 +21,10 @@
 		<typeAlias alias="SubjectIsPassed" type="kr.co.jhta.vo.SubjectIsPassed"/>
 		<typeAlias alias="ScheduleEvent" type="kr.co.jhta.vo.ScheduleEvent"/>
 		<typeAlias alias="BoardView" type="kr.co.jhta.vo.BoardView"/>
+		<typeAlias alias="Application" type="kr.co.jhta.vo.stu.ApplicationVO"/>
+		<typeAlias alias="professorsubjectlist" type="kr.co.jhta.vo.ProfessorSubject"/>
 	</typeAliases>
+	
 	
 	<mappers>
 		<mapper resource="META-INF/mybatis/mappers/lecture/lecture.xml"/>		
@@ -40,6 +43,7 @@
 		<mapper resource="META-INF/mybatis/mappers/user/student.xml"/>			<!-- student -->
 		<mapper resource="META-INF/mybatis/mappers/user/professor.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/user/syllabus.xml"/>
+		<mapper resource="META-INF/mybatis/mappers/hakjuk/hakjuk.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/sitemap.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/schedule/scheduleEvent.xml"/>
 		<!-- <mapper resource="META-INF/mybatis/mappers/messege.xml"/> -->

@@ -57,7 +57,7 @@ public class StuEnrollController {
 				
 		// 수강신청 목록 뿌려주기
 		
-		List<Enroll> enrollList = enrollService.getAllEnrollByTnameService(student.getDivision());
+		List<Enroll> enrollList = enrollService.getAllEnrollByTcodeService(student.getDivision());
 		if(!enrollList.isEmpty()) {			
 			model.addAttribute("enrollList", enrollList);
 		}
@@ -94,11 +94,6 @@ public class StuEnrollController {
 		return true;
 	}
 	
-	// 이전에 신청한 과목인지 비교하기
-	private boolean checkBeforeEnroll() {
-		
-		return true;
-	}
 	
 	@RequestMapping(value="/enrollCancle", method=RequestMethod.GET)
 	public String stuEnrollCancel(@RequestParam int cancleNo) {

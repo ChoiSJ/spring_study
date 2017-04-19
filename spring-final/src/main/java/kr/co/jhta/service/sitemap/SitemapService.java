@@ -7,7 +7,7 @@ import kr.co.jhta.vo.SiteMap;
 public interface SitemapService{
 
 	List<SiteMap> getAllSitemapService();
-	SiteMap getSitemapByCodeService();
+	SiteMap getSitemapByCodeService(String code);
 	List<SiteMap> getAllSitemapPreService();
 	List<SiteMap> getAllSitemapSecService(SiteMap sitemap);
 }

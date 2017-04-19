@@ -2,17 +2,29 @@ package kr.co.jhta.vo;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Board {
 	private int no;
 	private String title;
 	private String contents;
 	private String writer;
+	@JsonFormat(pattern="yyyy/MM/dd")
 	private Date regdate;
 	private int countView;
 	private String category;
 	private String fileName;
 	private String department;
+	private String subjectNo;
 	
+	
+	
+	public String getSubjectNo() {
+		return subjectNo;
+	}
+	public void setSubjectNo(String subjectNo) {
+		this.subjectNo = subjectNo;
+	}
 	public int getNo() {
 		return no;
 	}
@@ -72,6 +84,8 @@ public class Board {
 	public String toString() {
 		return "Board [no=" + no + ", title=" + title + ", contents=" + contents + ", writer=" + writer + ", regdate="
 				+ regdate + ", countView=" + countView + ", category=" + category + ", fileName=" + fileName
-				+ ", department=" + department + "]";
+				+ ", department=" + department + ", subjectNo=" + subjectNo + "]";
 	}
+
+
 }

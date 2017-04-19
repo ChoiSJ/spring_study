@@ -15,9 +15,6 @@
 			    s.J_GRADE as "subject.grade", 
 			    s.J_SUBJECT_NAME as "subject.subjectName", 
 			    s.J_SCORE as "subject.score",
-				s.J_OUTLINE as "subject.outline",
-				s.J_PROGRESS as "subject.progress",
-				s.J_REFERENCE as "subject.reference",
 				s.J_SUB_PROF as "subject.professor",
 			     j.J_DIV_NUM as "division.divisionNo", 
 			     j.J_DIV_PROF as "division.divisionProfessor",
@@ -35,7 +32,7 @@
 		and t.T_CODE = s.J_T_CODE
 	</select>
 	
-	<select id="getAllEnrollByTname" parameterType="String" resultType="Enroll">
+	<select id="getAllEnrollByTcode" parameterType="String" resultType="Enroll">
 		select e.E_NO as no, 
 			   e.E_ENROLLTIME as enrollTime, 
 			   e.E_ENROLLDAY as enrollDay,
@@ -46,9 +43,6 @@
 			    s.J_GRADE as "subject.grade", 
 			    s.J_SUBJECT_NAME as "subject.subjectName", 
 			    s.J_SCORE as "subject.score",
-				s.J_OUTLINE as "subject.outline",
-				s.J_PROGRESS as "subject.progress",
-				s.J_REFERENCE as "subject.reference",
 				s.J_SUB_PROF as "subject.professor",
 			     j.J_DIV_NUM as "division.divisionNo", 
 			     j.J_DIV_PROF as "division.divisionProfessor",
@@ -64,7 +58,7 @@
 		where e.E_J_DIV_NO = j.J_DIV_NO
 		and e.E_J_SUBJECT_NO = s.J_NO
 		and t.T_CODE = s.J_T_CODE
-		and s.J_SUBJECT_NAME = #{value}
+		and s.J_T_CODE = #{value}
 	</select>
 	
 	<select id="getEnrollByENo" parameterType="int" resultType="Enroll">
@@ -78,9 +72,6 @@
 			    s.J_GRADE as "subject.grade", 
 			    s.J_SUBJECT_NAME as "subject.subjectName", 
 			    s.J_SCORE as "subject.score",
-				s.J_OUTLINE as "subject.outline",
-				s.J_PROGRESS as "subject.progress",
-				s.J_REFERENCE as "subject.reference",
 				s.J_SUB_PROF as "subject.professor",
 			     j.J_DIV_NUM as "division.divisionNo", 
 			     j.J_DIV_PROF as "division.divisionProfessor",
@@ -99,6 +90,21 @@
 		and e.E_NO = #{Eno}
 	</select>
 	
+	<insert id="addEnroll" parameterType="Enroll">
+		insert into E_Enrollment
+			(E_NO,
+			E_ENROLLDAY,
+			E_J_SUBJECT_NO,
+			E_ENROLLTIME,
+			E_ENROLLNUM)
+		values
+			(enrollment_seq.nextval,
+			#{day},
+			#{subject.no},
+			#{time},
+			0)
+	</insert>
+	
 	<insert id="addRegisub" parameterType="Enroll">
 		INSERT INTO R_REGISUBJECT 
 				(R_REGI_NO, <!-- 1 -->
@@ -108,7 +114,8 @@
 				 U_STU_NO, 	<!-- 5 -->
 				 E_NO, 		<!-- 6 -->
 				 J_DIV_NO) 	<!-- 7 -->
-		VALUES(	R_REGISUBJECT_SEQ.nextval, 
+		VALUES(	
+				R_REGISUBJECT_SEQ.nextval, 
 				#{subject.score}, 
 				20,
 				#{subject.no},

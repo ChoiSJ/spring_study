@@ -13,4 +13,5 @@ public interface SchduleEventService {
 	void updateSchEventService(ScheduleEvent scheduleEvent);
 	void updateIsShowTrueService(ScheduleEvent schedule);
 	void updateIsShowFalseService(ScheduleEvent schedule);
+	void deleteSchEvent(Integer studNo, Integer schNo);
 }

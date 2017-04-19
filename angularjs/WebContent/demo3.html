@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+<meta charset="UTF-8">
+<title>Todo Application</title>
+<link rel="stylesheet" href="resources/bootstrap/bootstrap.min.css">
+<script type="text/javascript" src="resources/angular/angular.min.js"></script>
+<script type="text/javascript">
+	var myApp = angular.module("myApp", []);
+	
+	myApp.controller("todoCtrl", function($scope) {
+		$scope.todos = [{title: "수업하기", writer: "홍진호", day:"2017-4-20", completed: "미처리"},
+			{title: "영화보기", writer: "임요환", day:"2017-4-29", completed: "미처리"}];
+		
+		// $scope.t = "",
+		$scope.addTodo = function(newTitle, newWriter, newDay) {
+			var todo = {title: newTitle, writer: newWriter, day: newDay, completed: "미처리"};
+			$scope.todos.push(todo);
+		};
+	})
+</script>
+</head>
+<body>
+<div class="container" ng-controller="todoCtrl">
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>제목</th>
+				<th>작성자</th>
+				<th>날짜</th>
+				<th>완료여부</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="todo in todos">
+				<td>{{todo.title}}</td>
+				<td>{{todo.writer}}</td>
+				<td>{{todo.day}}</td>
+				<td>{{todo.completed}}</td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<form class="well" ng-submit="addTodo(t, w, d)">
+		<div class="form-group">
+			<label>제목</label>
+			<input type="text" class="form-control" ng-model="t">
+		</div>
+		<div class="form-group">
+			<label>작성자</label>
+			<input type="text" class="form-control" ng-model="w">
+		</div>
+		<div class="form-group">
+			<label>날짜</label>
+			<input type="text" class="form-control" ng-model="d">
+		</div>
+		<div class="form-group text-right">
+			<button type="submit" class="btn btn-success">등록</button>
+		</div>
+	</form>
+</div>
+</body>
+</html>

@@ -23,10 +23,10 @@ public class ScoreServiceImpl implements ScoreService{
 	private ScoreDao scoreDao;
 	
 	@Autowired
-	private AttendanceService attService;
+	private AttendanceDao attDao;
 	
 	@Autowired
-	private ReportService repService;
+	private ReportDao repDao;
 
 	@Override
 	public List<SubjectRegister> getAllRegiList() {
@@ -71,8 +71,8 @@ public class ScoreServiceImpl implements ScoreService{
 	@Override
 	public void addScore() {
 		scoreDao.addScore();
-		attService.addAttendance();
-		repService.addReport();
+		attDao.addAttendance();
+		repDao.addReport();
 		
 	}
 	
@@ -84,8 +84,8 @@ public class ScoreServiceImpl implements ScoreService{
 	@Override
 	public void delScore(int rno) {
 		int sno = scoreDao.getScoreNoByRno(rno);
-		attService.delAttendance(sno);
-		repService.delReport(sno);
+		attDao.delAttendance(sno);
+		repDao.delReport(sno);
 		scoreDao.delScore(rno);
 	}
 
@@ -101,7 +101,6 @@ public class ScoreServiceImpl implements ScoreService{
 
 	@Override
 	public List<Regisubject> getRegisInfoByhash(HashMap<String, Object> list) {
-
 		return scoreDao.getRegisInfoByhash(list);
 	}
 
@@ -114,6 +113,11 @@ public class ScoreServiceImpl implements ScoreService{
 	public SubjectRegister getRegiListByStuNo(int stuno) {
 		return scoreDao.getRegiListByStuNo(stuno);
 	}
-	
+
+	@Override
+	public List<Regisubject> getSearchInfoByCode(HashMap<String, Object> searchcode) {		
+		return scoreDao.getSearchInfoByCode(searchcode);
+	}
+
 	
 }

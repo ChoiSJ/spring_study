@@ -3,25 +3,22 @@ package kr.co.jhta.controller.score;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import kr.co.jhta.service.major.SemesterService;
 import kr.co.jhta.service.major.SubjectService;
 import kr.co.jhta.service.score.AttendanceService;
 import kr.co.jhta.service.score.ReportService;
 import kr.co.jhta.service.score.ScoreService;
 import kr.co.jhta.service.sitemap.SitemapService;
-import kr.co.jhta.service.user.StudentService;
 import kr.co.jhta.vo.Attendance;
 import kr.co.jhta.vo.Report;
 import kr.co.jhta.vo.Score;
@@ -29,10 +26,8 @@ import kr.co.jhta.vo.Scorelist;
 import kr.co.jhta.vo.Semester;
 import kr.co.jhta.vo.SiteMap;
 import kr.co.jhta.vo.Subject;
-import kr.co.jhta.vo.SubjectRegister;
 import kr.co.jhta.vo.stu.Regisubject;
 import kr.co.jhta.vo.stu.Student;
-
 
 @Controller
 public class ScoreListController {
@@ -54,10 +49,7 @@ public class ScoreListController {
 	
 	@Autowired
 	private SitemapService sitemapService;
-	
-	@Autowired
-	private StudentService stuService;
-			
+				
 	@RequestMapping("/scorelist.do")
 	public String scorelist(Model model){
 		
@@ -76,6 +68,7 @@ public class ScoreListController {
 			Attendance att = attendanceService.getAttendanceListByScoreNo(score.getNo());
 			Report report = reportService.getReportByScoreNo(score.getNo());
 			sub.setSelectNo(scoreService.getSemesterByNo(sub.getSelectNo().getNo()));
+			System.out.println(sub);
 			
 			list.setStudent(stu);
 			list.setSubject(sub);
@@ -103,7 +96,10 @@ public class ScoreListController {
 	}
 	
 	@RequestMapping(value="/scoreform.do", method=RequestMethod.POST)
-	public String scoreupdate(@Valid @ModelAttribute("scoreupdate") Score scores){
+	public String scoreupdate(@Valid @ModelAttribute("scoreupdate") Score scores, Errors errors){
+		if(errors.hasErrors()){
+			return "score/scoreform";
+		}
 		scoreService.updateScoreByNo(scores);
 		return "redirect:/scorelist.do";
 	}
@@ -117,21 +113,14 @@ public class ScoreListController {
 	}
 	
 	@RequestMapping(value="/scoreSearchInfo", method=RequestMethod.POST)
-	public @ResponseBody List<Scorelist> searchScoreList(@RequestParam(value="code") String code1, @RequestParam(value="codes") String code2, @RequestParam(value="stucode") String stucode){
+	public @ResponseBody List<Regisubject> searchScoreList(@RequestParam(value="code") String code1, @RequestParam(value="codes") String code2, @RequestParam(value="stucode") String stucode){
 		
-		List<Scorelist> scorelist2 = new ArrayList<Scorelist>();
-		
-		if(code1.equals("all")){
-			int stuno = stuService.getStudentById(stucode).getNo();
-			SubjectRegister regi= scoreService.getRegiListByStuNo(stuno);
-			Scorelist list = new Scorelist();
-			list.setNo(regi.getRegiNo());
-			list.setScore(scoreService.getScoreByNo(regi.getRegiNo()));
-			list.setSubject(scoreService.getSubjectInfoByNo(regi.getjNo()));
-			list.setStudent(scoreService.getStudentInfoByNo(regi.getStuNo()));
-			scorelist2.add(list);
-		}
-		
-		return scorelist2;
+		HashMap<String, Object> searchcode = new HashMap<String, Object>();
+		searchcode.put("code1", code1);
+		searchcode.put("code2", code2);
+		searchcode.put("stucode", stucode);
+		List<Regisubject> scorelist = (List<Regisubject>) scoreService.getSearchInfoByCode(searchcode);
+		System.out.println(scorelist);
+		return scorelist;
 	}
 }

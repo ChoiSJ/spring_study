@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.jhta.dao.hakjuk.HakjukDAO">
+
+	<select id="getStudentListBySearchStud" parameterType="kr.co.jhta.vo.hakjuk.StudentSearchForm" resultType="Student">
+		select
+			U_STU_NO as no, 
+				U_STU_ADDR1 as addr1, 
+				U_STU_ADDR2 as addr2,
+				U_STU_DIVISION,
+				t_name as division, 
+				U_STU_EMAIL as email, 
+				U_STU_ENTERDATE as enterDate, 
+				U_STU_GENDER as gender, 
+				U_STU_GRADE as grade,
+				U_STU_ID as id, 
+				U_STU_LEAVEDATE as leaveDate,
+				U_STU_NAME as name, 
+				U_STU_NO as no, 
+				U_STU_PARENTNAME as parentName, 
+				U_STU_PARENTPHONE as parentPhone, 
+				U_STU_PHONE as phone, 
+				U_STU_PROFESSOR as professor, 
+				U_STU_PWD as pwd, 
+				c_name as register, 
+				U_STU_SCORE as score, 
+				U_STU_SSN as ssn
+		from U_STUDENT a, t_sitemap b,C_CODEREGISTER C
+		where a.u_stu_division = b.t_code
+		and a.u_stu_register = c.c_code
+		<if test="register != 'all'">
+			and c_code LIKE '%' || #{register} || '%'
+		</if>
+		<if test="q != '' ">
+			and  ${sort} = #{q}
+		</if>
+		<if test="grade != 0">
+			and U_STU_GRADE = #{grade}
+		</if>
+		<if test="division != '' ">
+			and U_STU_DIVISION = #{division}
+		</if>
+	</select>
+	
+	<select id="getAllStudent" resultType="Student">
+		select U_STU_NO as no, 
+				U_STU_ADDR1 as addr1, 
+				U_STU_ADDR2 as addr2,
+				U_STU_DIVISION,
+				t_name as division, 
+				U_STU_EMAIL as email, 
+				U_STU_ENTERDATE as enterDate, 
+				U_STU_GENDER as gender, 
+				U_STU_GRADE as grade,
+				U_STU_ID as id, 
+				U_STU_LEAVEDATE as leaveDate, 
+				U_STU_NAME as name, 
+				U_STU_NO as no, 
+				U_STU_PARENTNAME as parentName, 
+				U_STU_PARENTPHONE as parentPhone, 
+				U_STU_PHONE as phone, 
+				U_STU_PROFESSOR as professor, 
+				U_STU_PWD as pwd, 
+				c_name as register, 
+				U_STU_SCORE as score, 
+				U_STU_SSN as ssn
+		from U_STUDENT a, t_sitemap b, C_CODEREGISTER C 
+		where a.u_stu_division = b.t_code
+		and a.u_stu_register = c.c_code
+	</select>
+	
+	<select id="getStudentById" resultType="Student" parameterType="string">
+		select U_STU_NO as no, 
+				U_STU_ADDR1 as addr1, 
+				U_STU_ADDR2 as addr2,
+				U_STU_DIVISION,
+				t_name as division, 
+				U_STU_EMAIL as email, 
+				U_STU_ENTERDATE as enterDate, 
+				U_STU_GENDER as gender, 
+				U_STU_GRADE as grade,
+				U_STU_ID as id, 
+				U_STU_LEAVEDATE as leaveDate, 
+				U_STU_NAME as name, 
+				U_STU_NO as no, 
+				U_STU_PARENTNAME as parentName, 
+				U_STU_PARENTPHONE as parentPhone, 
+				U_STU_PHONE as phone, 
+				U_STU_PROFESSOR as professor, 
+				U_STU_PWD as pwd, 
+				C_NAME as register, 
+				U_STU_SCORE as score, 
+				U_STU_SSN as ssn
+		from U_STUDENT a, t_sitemap b, C_CODEREGISTER C
+		where a.u_stu_division = b.t_code
+		and a.u_stu_register = c.c_code
+		and u_stu_id = #{id}
+	</select>
+	
+	<select id="getAllAdmissionStud" resultType="Student">
+		select U_STU_NO as no, 
+				U_STU_ADDR1 as addr1, 
+				U_STU_ADDR2 as addr2,
+				U_STU_DIVISION,
+				t_name as division, 
+				U_STU_EMAIL as email, 
+				U_STU_ENTERDATE as enterDate, 
+				U_STU_GENDER as gender, 
+				U_STU_GRADE as grade,
+				U_STU_ID as id, 
+				U_STU_LEAVEDATE as leaveDate, 
+				U_STU_NAME as name, 
+				U_STU_NO as no, 
+				U_STU_PARENTNAME as parentName, 
+				U_STU_PARENTPHONE as parentPhone, 
+				U_STU_PHONE as phone, 
+				U_STU_PROFESSOR as professor, 
+				U_STU_PWD as pwd, 
+				c_name as register, 
+				U_STU_SCORE as score, 
+				U_STU_SSN as ssn
+		from U_STUDENT a, t_sitemap b, C_CODEREGISTER C
+		where a.u_stu_division = b.t_code
+		and a.u_stu_register = c.c_code
+		and u_stu_register in ('AD1000', 'AD2000')
+	</select>
+</mapper>

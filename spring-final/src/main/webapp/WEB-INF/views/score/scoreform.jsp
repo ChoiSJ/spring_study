@@ -54,36 +54,39 @@ $(function() {
 				<form:input path="no" cssClass="form-control" value="${score.no }" type="hidden"/>
 				<div class="form-group">
 					<label>학점</label>
-					<form:input path="credit" cssClass="form-control" value="${score.credit }" id="creditBox" disabled="disabled"/>
+					<form:input path="credit" cssClass="form-control" value="${score.credit }" id="creditBox" readonly="true"/>
 				</div>
 				
 				<div class="form-group">
 					<label>등급</label>
-					<form:input path="grade" cssClass="form-control" value="${score.grade }" id="gradeBox" disabled="disabled"/>
+					<form:input path="grade" cssClass="form-control" value="${score.grade }" id="gradeBox" readonly="true"/>
 				</div>	
 				
 				<div class="form-group">
 					<label>과제</label>
-					<form:input path="reportScore" cssClass="form-control" value="${score.reportScore }" id="reportBox"/>
+					<form:input path="reportScore" cssClass="form-control" value="${score.reportScore }" id="reportBox"/><br/>
+					<form:errors path="reportScore" cssClass="text-danger"></form:errors><br/>
 				</div>
 				
 				<div class="form-group">
 					<label>출석</label>
-					<form:input path="attScore" cssClass="form-control" value="${score.attScore }" id="attBox"/>
+					<form:input path="attScore" cssClass="form-control" value="${score.attScore }" id="attBox"/><br/>
+					<form:errors path="attScore" cssClass="text-danger"></form:errors><br/>
 				</div>	
 				
 				<div class="form-group">
 					<label>중간</label>
-					<form:input path="midtermScore" cssClass="form-control" value="${score.midtermScore }" id="midBox"/>
+					<form:input path="midtermScore" cssClass="form-control" value="${score.midtermScore }" id="midBox"/><br/>
+					<form:errors path="midtermScore" cssClass="text-danger"></form:errors><br/>
 				</div>	
 				
 				<div class="form-group">
 					<label>기말</label>
-					<form:input path="endtermScore" cssClass="form-control" value="${score.endtermScore }" id="endBox"/>
+					<form:input path="endtermScore" cssClass="form-control" value="${score.endtermScore }" id="endBox"/><br/>
+					<form:errors path="midtermScore" cssClass="text-danger"></form:errors><br/>
 				</div>
 				<div class="text-right">
 					<button type="submit" class="btn btn-primary" id="score_btn">등록</button>
-					<button type="button" class="btn btn-warning" id="score_edit_btn">수정</button>
 					<a href="scorelist.do" class="btn btn-danger">취소</a>
 				</div>
 			</form:form>

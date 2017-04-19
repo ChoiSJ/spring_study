@@ -13,7 +13,9 @@ public interface ScheduleEventDao {
 	void addNewSchEvent(ScheduleEvent schedule);
 	ScheduleEvent getSchEventBySchNo(int schNo);
 	List<ScheduleEvent> getSchEventByDate(Map<String, Object> map);
+	
 	void updateSchEvent(ScheduleEvent schedule);
 	void updateIsShowTrue(ScheduleEvent schedule);
 	void updateIsShowFalse(ScheduleEvent schedule);
+	void deleteSchEvent(Map<String, Integer> map);
 }

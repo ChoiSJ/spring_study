@@ -21,8 +21,8 @@ public class SitemapServiceImpl implements SitemapService{
 	}
 
 	@Override
-	public SiteMap getSitemapByCodeService() {
-		SiteMap siteMap = sitemapDao.getSitemapByCode();
+	public SiteMap getSitemapByCodeService(String code) {
+		SiteMap siteMap = sitemapDao.getSitemapByCode(code);
 		return siteMap;
 	}
 

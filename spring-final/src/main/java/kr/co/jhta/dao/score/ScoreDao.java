@@ -29,4 +29,6 @@ public interface ScoreDao {
 	List<Regisubject> getRegisInfoByhash(HashMap<String, Object> list);
 	Score getScoreinfoByRno(int rno);
 	SubjectRegister getRegiListByStuNo(int stuno);
+	
+	List<Regisubject> getSearchInfoByCode(HashMap<String, Object> searchcode);
 }

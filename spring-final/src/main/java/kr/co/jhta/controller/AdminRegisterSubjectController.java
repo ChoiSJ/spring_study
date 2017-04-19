@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.co.jhta.dao.user.EnrollDao;
+import kr.co.jhta.dao.user.RegisubjectDao;
 import kr.co.jhta.service.lecture.LectureService;
 import kr.co.jhta.service.sitemap.SitemapService;
 import kr.co.jhta.vo.Semester;
@@ -25,6 +27,12 @@ public class AdminRegisterSubjectController {
 	
 	@Autowired
 	private LectureService lectureService;
+	
+	@Autowired
+	private RegisubjectDao regiSubjectDao;
+	
+	@Autowired
+	private EnrollDao enrollDao;
 	
 	@RequestMapping(value="/adminregsubject", method=RequestMethod.GET)
 	public String adminRegSubject(Model model) {
@@ -60,7 +68,7 @@ public class AdminRegisterSubjectController {
 		// 검색했을 때 과목 정보를 가져오는 코드
 		List<Map<String, Object>> subTempList = lectureService.getSubjectList(major);
 		
-		// 검색했을 때 과목 이름을 가져오는 코드
+		// 검색했을 때 전공 이름을 가져오는 코드
 		SiteMap searchDept = lectureService.getDetpList(major);
 		
 		// 검색했을 때 수강신청기간 정보를 가져오는 코드
@@ -152,9 +160,12 @@ public class AdminRegisterSubjectController {
 		return "administer/adminregstudent";
 	}
 	
-	@RequestMapping("/adminsendemail")
-	public String adminSendEmail() {
-		return "administer/adminsendemail";
+	@RequestMapping("/adminstudelete")
+	public String adminStuDelete(int dno) {
+		regiSubjectDao.deleteRegisubByENo(dno);
+		enrollDao.updateMinusNowNum(dno);
+		
+		return "redirect:adminregstudent";
 	}
 	
 	@RequestMapping("/adminsendemailbox")

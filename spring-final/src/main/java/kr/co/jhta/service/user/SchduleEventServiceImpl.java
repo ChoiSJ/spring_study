@@ -20,9 +20,7 @@ public class SchduleEventServiceImpl implements SchduleEventService{
 	@Override
 	public ScheduleEvent addNewSchEventService(ScheduleEvent schedule) {
 		schDao.addNewSchEvent(schedule);
-		ScheduleEvent schEvent = schDao.getSchEventBySchNo(schDao.getSequence());
-		System.out.println(schDao.getSequence() + " 1111111111111111111111111");
-		System.out.println(schedule.getNo() + " 1111111111111111111111111");
+		ScheduleEvent schEvent = schDao.getSchEventBySchNo(schDao.getSequence()-1);
 		return schEvent;
 	}
 
@@ -55,6 +53,14 @@ public class SchduleEventServiceImpl implements SchduleEventService{
 	@Override // 숨기기
 	public void updateIsShowFalseService(ScheduleEvent schedule) {
 		schDao.updateIsShowFalse(schedule);
+	}
+
+	@Override
+	public void deleteSchEvent(Integer studNo, Integer schNo) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("studNo", studNo);
+		map.put("schNo", schNo);
+		schDao.deleteSchEvent(map);
 	}
 	
 }

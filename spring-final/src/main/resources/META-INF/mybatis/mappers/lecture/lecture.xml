@@ -7,16 +7,14 @@
 	<select id="getMajorList" parameterType="string" resultType="subject">
 		select
 			s.j_no as no,
-			s.j_reference as reference,
-			s.j_progress as progress,
 			s.j_subject_name as subjectName,
 			s.j_semester as semester,
 			s.j_grade as grade,
 			s.j_is_passed as isPassed,
 			s.j_score as score,
-			s.j_outline as outline,
 			s.J_t_code as "siteCode.code",
-			s.j_sub_prof as professor
+			s.j_sub_prof as professor,
+			s.j_division as division
 		from
 			j_subject s
 		where
@@ -224,18 +222,16 @@
 			and r.j_no = e.e_j_subject_no
 			and r.j_no = u.j_no
 			and u.j_semester = m.s_no
-			and u.J_t_code = #{major}
-			<where>
-				<if test="semester != 0">
-					u.j_semester = #{semester}
-				</if>
-				<if test="student == name">
-					s.u_stu_name like '%' || #{word} || '%'
-				</if>
-				<if test="student == stuNo">
-					s.u_stu_id = #{word}
-				</if>
-			</where>
+			and u.J_t_code = #{major}	
+			<if test="semester != 0">
+				and u.j_semester = #{semester}
+			</if>
+			<if test="student == name">
+				and s.u_stu_name like '%' || #{word} || '%'
+			</if>
+			<if test="student == stuNo">
+				and s.u_stu_id = #{word}
+			</if>	
 	</select>
 	
 </mapper>

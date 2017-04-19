@@ -1,13 +1,37 @@
 package kr.co.jhta.vo;
 
 public class SearchForm {
+	
 	private int pageNo = 1;
 	private String searchType;
 	private String keyword;
+	private String searchBoardType;
+	private String department;
+	private String subjectNo;
 	private int beginIndex;
 	private int endIndex;
 	private int display;
 	
+	
+	
+	public String getDepartment() {
+		return department;
+	}
+	public void setDepartment(String department) {
+		this.department = department;
+	}
+	public String getSubjectNo() {
+		return subjectNo;
+	}
+	public void setSubjectNo(String subjectNo) {
+		this.subjectNo = subjectNo;
+	}
+	public String getSearchBoardType() {
+		return searchBoardType;
+	}
+	public void setSearchBoardType(String searchBoardType) {
+		this.searchBoardType = searchBoardType;
+	}
 	public int getPageNo() {
 		return pageNo;
 	}
@@ -47,9 +71,9 @@ public class SearchForm {
 	}
 	@Override
 	public String toString() {
-		return "SearchForm [pageNo=" + pageNo + ", searchType=" + searchType + ", keyword=" + keyword + ", beginIndex="
-				+ beginIndex + ", endIndex=" + endIndex + ", display=" + display + "]";
+		return "SearchForm [pageNo=" + pageNo + ", searchType=" + searchType + ", keyword=" + keyword
+				+ ", searchBoardType=" + searchBoardType + ", department=" + department + ", subjectNo=" + subjectNo
+				+ ", beginIndex=" + beginIndex + ", endIndex=" + endIndex + ", display=" + display + "]";
 	}
-	
 	
 }

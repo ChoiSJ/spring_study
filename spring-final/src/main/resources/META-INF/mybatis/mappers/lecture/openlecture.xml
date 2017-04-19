@@ -48,4 +48,33 @@
 	where
 		U_PROF_ID = #{id}	
 </select>
+
+<insert id="addInvestgation" parameterType="kr.co.jhta.vo.InvestGationAttribute">
+	insert into L_OPENLECTUREREGISTER(
+		L_ASSESSMENTNUMBER,
+		L_INVESTIGATING_CONTENTS,
+		L_PROFESSOR_ID
+	)
+	values(
+		investgation_seq.nextval,
+		#{contents},
+		#{professorId}
+		)
+</insert>
+<select id="subjectInquiries" parameterType="string" resultType="kr.co.jhta.vo.ProfessorSubject">
+	select 
+		J.J_SUB_PROF				AS subjectId,
+		U.U_PROF_NAME		     	AS subjectPorfessor,
+		J.J_IS_PASSED				AS subjectPassd,
+		J.J_SUBJECT_NAME			AS subjectName,
+		J.J_T_CODE					AS subjectCode,
+		J.J_NO						AS subjectNo
+	from
+		J_SUBJECT J,
+		U_PROFESSOR U
+	where
+		U.U_PROF_ID = J.J_SUB_PROF
+	and
+	   U.U_PROF_ID = #{subjectProfeesorId}	 	
+</select>		
 </mapper>

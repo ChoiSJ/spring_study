@@ -60,18 +60,59 @@ $(function() {
 	
 	// 새로운 일정정보를 등록하는 버튼을 클릭했을 때 실행된다.
 	$("#add-event-btn").click(function() {
+		var startDateBefore = new Date($('#event-start-date').val());
+		var endDateBefore = new Date($('#event-end-date').val());
+		var startDateAfter = startDateBefore.getTime() + $('#event-start-hour').val() + $('#event-start-minute').val() ;
+		var endDateAfter = endDateBefore.getTime() + $('#event-end-hour').val() + $('#event-end-minute').val();
+		
+		if($("#event-title").val()== "") {
+			alert("제목을 입력하세요");
+			$("#event-title").focus();
+			return false;
+		}
+
+		if($("#event-description").val()== "") {
+			alert("내용을 입력하세요");
+			$("#event-description").focus();
+			return false;
+		}
+
+		
+		if(startDateAfter >= endDateAfter) {
+			alert("종료 날짜가 시작 날짜 보다 먼저 일 수 없습니다.");
+			return false;
+		} else {
+			$.ajax({
+				type:'post',
+				url:'addevent.do',
+				dataType:'json',
+				data:createEventData(),	
+				success:function(data) {
+					$("#event-form-modal").modal("hide");
+					// 캘린더를 갱신한다.
+					$("#calendar-box").fullCalendar( 'refetchEvents' );
+				}
+			});		
+		}
+	});
+	
+	$("#delete-event-btn").click(function() {
+		var schNo = $("#event-no-detail").val();
 		$.ajax({
-			type:'post',
-			url:'addevent.do',
+			url:'deleteEvent.do',
 			dataType:'json',
-			data:createEventData(),	
+			data:'schNo=' + schNo,
 			success:function(data) {
-				$("#event-form-modal").modal("hide");
+				$("#event-form-modal-detail").modal("hide");
 				// 캘린더를 갱신한다.
 				$("#calendar-box").fullCalendar( 'refetchEvents' );
 			}
 		});
 	});
+	
+/* 	$("#edit-event-btn").click(function() {
+		
+	}); */
 	
 	// 캘린더를 초기화한다.
 	$("#calendar-box").fullCalendar({
@@ -105,6 +146,28 @@ $(function() {
 				}
 			});
 			
+		},
+		// [eventClick : 캘린더에 표시된 일정 중 하나를 클릭했을 때 실행되는 콜백함수다.]
+		eventClick: function(event, jsEvent, view) {
+			var schNo = event["no"]; 
+			$.ajax({
+				url:"eventDetail.do",
+				data:'schNo=' + schNo,
+				dataType:"json",
+				success:function(data) {
+					$("#event-title-detail").val(data.title);
+					$("#event-description-detail").val(data.description);
+					$("#event-no-detail").val(data.no);
+					$("#event-start-date-detail").val(timeToString(data.start).substring(0, 10));
+					$("#event-start-hour-detail").val(timeToString(data.start).substring(11, 13));
+					$("#event-start-minute-detail").val(timeToString(data.start).substring(14, 16));
+					$("#event-end-date-detail").val(timeToString(data.end).substring(0, 10));
+					$("#event-end-hour-detail").val(timeToString(data.end).substring(11, 13));
+					$("#event-end-minute-detail").val(timeToString(data.end).substring(14, 16));
+					$("#event-form-modal-detail").modal("show");
+				}
+				
+			});
 		},	
 		// [dayClick : 캘린더의 날짜를 클릭했을 때 실행되는 콜백함수다.]
 		dayClick: function(date, jsEvent, view) {
@@ -112,11 +175,6 @@ $(function() {
 			initializeForm(date);
 			// 모달창을 표시한다.
 			$("#event-form-modal").modal("show");
-
-		},
-		// [eventClick : 캘린더에 표시된 일정 중 하나를 클릭했을 때 실행되는 콜백함수다.]
-		eventClick: function(event, jsEvent, view) {
-			console.log(event);
 		}
 	});
 	
@@ -270,6 +328,74 @@ $(function() {
       			<div class="modal-footer">
         			<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
         			<button type="button" class="btn btn-primary" id="add-event-btn">등록</button>
+      			</div>
+    		</div>
+  		</div>
+	</div>
+	
+	
+   <div class="modal fade" id="event-form-modal-detail" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+  		<div class="modal-dialog" role="document">
+    		<div class="modal-content">
+      			<div class="modal-header">
+        			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        			<h4 class="modal-title" id="gridSystemModalLabel">일정 조회</h4>
+        			<input type="hidden" id="event-no-detail" value=""/>
+      			</div>
+      			<div class="modal-body">
+      				<form class="form-horizontal well">
+  						<div class="form-group">
+    						<label for="title" class="col-sm-2 control-label">제목</label>
+    						<div class="col-sm-10">
+      							<input type="text" class="form-control" id="event-title-detail" name="title" placeholder="제목을 입력하세요">
+    						</div>
+  						</div>
+  						<div class="form-group">
+    						<label for="description" class="col-sm-2 control-label">내용</label>
+    						<div class="col-sm-10">
+      							<textarea rows="3" class="form-control" id="event-description-detail" name="description" placeholder="내용을 입력하세요" ></textarea>
+    						</div>
+  						</div>
+  						<div class="form-group">
+    						<label for="start-date" class="col-sm-2 control-label">시작 일시</label>
+    						<div class="col-sm-4">
+      							<input type="date" class="form-control" id="event-start-date-detail" name="startDate" >
+    						</div>
+    						<div class="col-sm-2">
+      							<input type="number" class="form-control" id="event-start-hour-detail" name="startHour"  min="0" max="23" step="1">
+    						</div>
+    						<label for="start-hour" class="col-sm-1 control-label">시</label>
+    						<div class="col-sm-2">
+      							<input type="number" class="form-control" id="event-start-minute-detail" name="startMinute"  min="00" max="50" step="10">
+    						</div>
+    						<label for="start-minute" class="col-sm-1 control-label">분</label>
+  						</div>
+  						<div class="form-group">
+    						<label for="end-date" class="col-sm-2 control-label">종료 일시</label>
+    						<div class="col-sm-4">
+      							<input type="date" class="form-control" id="event-end-date-detail" name="endDate" >
+    						</div>
+    						<div class="col-sm-2">
+      							<input type="number" class="form-control" id="event-end-hour-detail" name="endHour" min="0" max="23" step="1">
+    						</div>
+    						<label for="end-hour" class="col-sm-1 control-label">시</label>
+    						<div class="col-sm-2">
+      							<input type="number" class="form-control" id="event-end-minute-detail" name="endMinute" min="00" max="50" step="10" >
+    						</div>
+    						<label for="end-minute" class="col-sm-1 control-label">분</label>
+  						</div>
+  						<div class="form-group">
+    						<label for="title" class="col-sm-2 control-label">하루 종일</label>
+    						<div class="col-sm-1">
+    							<input type="checkbox" class="form-control" id="event-all-day-detail" name="allDay">
+    						</div>
+  						</div>
+					</form>
+      			</div>
+      			<div class="modal-footer">
+        			<button type="button" class="btn btn-primary" id="edit-event-btn">수정</button>
+        			<button type="button" class="btn btn-danger" id="delete-event-btn">삭제</button>
+        			<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
       			</div>
     		</div>
   		</div>

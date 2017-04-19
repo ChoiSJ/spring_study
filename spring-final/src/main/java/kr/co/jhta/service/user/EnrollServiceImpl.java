@@ -54,8 +54,13 @@ public class EnrollServiceImpl implements EnrollService{
 
 
 	@Override
-	public List<Enroll> getAllEnrollByTnameService(String siteName) {
-		List<Enroll> enrollList = enrollDao.getAllEnrollByTname(siteName);
+	public List<Enroll> getAllEnrollByTcodeService(String siteCode) {
+		List<Enroll> enrollList = enrollDao.getAllEnrollByTcode(siteCode);
 		return enrollList;
 	}		
+	@Override
+	public void addEnroll(Enroll enroll) {
+		enrollDao.addEnroll(enroll);
+		
+	}
 }
