@@ -98,6 +98,10 @@
 		where S_NO = #{value}
 			
 	</select>
+	<delete id="delSemesterByNo" parameterType="int">
+		delete from s_semester
+		where s_no = #{value}
+	</delete>
 	
 	
 </mapper>

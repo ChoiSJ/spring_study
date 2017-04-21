@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.jhta.dao.appli.LeaveDao">
+
+	<insert id="addNewLeave" parameterType="Leave">
+		INSERT INTO L_LEAVE 
+			(L_NO, 
+			STU_NO, 
+			C_CODE, 
+			L_REINDATE,
+			L_SCOREPASS) 
+		VALUES
+			(L_LEAVE_SEQ.nextval, 
+			#{stuNo}, 
+			#{code}, 
+			#{reinDate},
+			#{scorePass})
+	</insert>
+
+	<select id="getAllEnrolledLeaveByStuNo" parameterType="int" resultType="Leave">
+		SELECT L_LEAVE.L_NO as no,
+				L_LEAVE.STU_NO as stuNo, 
+				L_LEAVE.C_CODE as code,
+				L_LEAVE.L_ENROLLDATE as enrollDate,
+				L_LEAVE.L_PASS as pass,
+				L_LEAVE.L_OKAYDATE as okayDate,
+				L_LEAVE.L_REINDATE as reinDate
+		FROM L_LEAVE WHERE STU_NO = #{stuNo}
+	</select>
+
+	<delete id="deleteEnrollByNo" parameterType="map">
+		DELETE FROM L_LEAVE 
+		WHERE L_NO = #{lNo}
+		AND STU_NO = #{stuNo}
+	</delete>
+	
+	<select id="getCnameByCcode" parameterType="string" resultType="string">
+		SELECT c.C_NAME 
+		FROM C_CODEREGISTER c,L_LEAVE l
+		WHERE c.C_CODE = l.C_CODE
+		AND c.C_CODE = #{cCode}
+	</select>
+	
+	<update id="updateLeave" parameterType="map">
+		UPDATE L_LEAVE 
+		SET C_CODE = #{cCode}, L_ENROLLDATE = sysdate
+		WHERE L_NO = #{lNo}
+		AND STU_NO = #{stuNo}
+	</update>
+	
+</mapper>

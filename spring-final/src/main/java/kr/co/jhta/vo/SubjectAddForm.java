@@ -6,7 +6,7 @@ public class SubjectAddForm {
 	private String code;
 	private int selectNo;
 	private int grade;
-	private String isPassed;
+	private String passed;
 	private int score;
 	public String getSubjectName() {
 		return subjectName;
@@ -38,11 +38,12 @@ public class SubjectAddForm {
 	public void setGrade(int grade) {
 		this.grade = grade;
 	}
-	public String getIsPassed() {
-		return isPassed;
+	
+	public String getPassed() {
+		return passed;
 	}
-	public void setIsPassed(String isPassed) {
-		this.isPassed = isPassed;
+	public void setPassed(String passed) {
+		this.passed = passed;
 	}
 	public int getScore() {
 		return score;
@@ -50,10 +51,6 @@ public class SubjectAddForm {
 	public void setScore(int score) {
 		this.score = score;
 	}
-	@Override
-	public String toString() {
-		return "SubjectAddForm [subjectName=" + subjectName + ", professor=" + professor + ", code=" + code
-				+ ", selectNo=" + selectNo + ", grade=" + grade + ", isPassed=" + isPassed + ", score=" + score + "]";
-	}
+	
 	
 }

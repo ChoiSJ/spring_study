@@ -10,6 +10,7 @@ import kr.co.jhta.dao.score.ReportDao;
 import kr.co.jhta.dao.score.ScoreDao;
 import kr.co.jhta.vo.Score;
 import kr.co.jhta.vo.Semester;
+import kr.co.jhta.vo.SemesterAvg;
 import kr.co.jhta.vo.SiteMap;
 import kr.co.jhta.vo.Subject;
 import kr.co.jhta.vo.SubjectRegister;
@@ -27,21 +28,6 @@ public class ScoreServiceImpl implements ScoreService{
 	
 	@Autowired
 	private ReportDao repDao;
-
-	@Override
-	public List<SubjectRegister> getAllRegiList() {
-		return scoreDao.getAllRegiList();
-	}
-
-	@Override
-	public List<Score> getAllScoreList() {
-		return scoreDao.getAllScoreList();
-	}
-
-	@Override
-	public SubjectRegister getRegiListByNo(int regiNo) {
-		return scoreDao.getRegiListByNo(regiNo);
-	}
 
 	@Override
 	public Student getStudentInfoByNo(int stuNo) {
@@ -119,5 +105,30 @@ public class ScoreServiceImpl implements ScoreService{
 		return scoreDao.getSearchInfoByCode(searchcode);
 	}
 
+	@Override
+	public List<Regisubject> getSearchInfoBySno(int sno) {
+		return scoreDao.getSearchInfoBySno(sno);
+	}
+
+	@Override
+	public List<SemesterAvg> getSemesterAvgBySno(int sno) {
+		return scoreDao.getSemesterAvgBySno(sno);
+	}
+
+	@Override
+	public SemesterAvg getSemesterAvgTotalBySno(int sno) {
+		return scoreDao.getSemesterAvgTotalBySno(sno);
+	}
+
+	@Override
+	public List<Regisubject> getAllSearchInfo() {
+		return scoreDao.getAllSearchInfo();
+	}
+
+	@Override
+	public int getScoreCount() {
+		return scoreDao.getScoreCount();
+	}
+	
 	
 }

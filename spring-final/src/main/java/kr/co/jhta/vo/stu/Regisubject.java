@@ -10,7 +10,6 @@ public class Regisubject {
 	private int grade;
 	private int maxGrade;
 	private Subject subject;
-	private SubjectDivision division;
 	private Student student;
 	private Score score;
 	private Enroll enroll;
@@ -20,14 +19,13 @@ public class Regisubject {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Regisubject(int no, int grade, int maxGrade, Subject subject, SubjectDivision division, Student student,
+	public Regisubject(int no, int grade, int maxGrade, Subject subject, Student student,
 			Enroll enroll, Score score) {
 		super();
 		this.no = no;
 		this.grade = grade;
 		this.maxGrade = maxGrade;
 		this.subject = subject;
-		this.division = division;
 		this.student = student;
 		this.enroll = enroll;
 		this.score = score;
@@ -73,13 +71,6 @@ public class Regisubject {
 		this.subject = subject;
 	}
 
-	public SubjectDivision getDivision() {
-		return division;
-	}
-
-	public void setDivision(SubjectDivision division) {
-		this.division = division;
-	}
 
 	public Student getStudent() {
 		return student;
@@ -100,7 +91,9 @@ public class Regisubject {
 	@Override
 	public String toString() {
 		return "Regisubject [no=" + no + ", grade=" + grade + ", maxGrade=" + maxGrade + ", subject=" + subject
-				+ ", division=" + division + ", student=" + student + ", score=" + score + ", enroll=" + enroll + "]";
+				+ ", student=" + student + ", score=" + score + ", enroll=" + enroll + "]";
 	}
+
+	
 
 }

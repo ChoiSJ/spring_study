@@ -5,7 +5,7 @@ public class StudentSearchForm {
 	
 	private String register;
 	private String division;
-	private int grade;
+	private String grade;
 	private String sort;
 	private String q;
 	
@@ -21,10 +21,10 @@ public class StudentSearchForm {
 	public void setDivision(String division) {
 		this.division = division;
 	}
-	public int getGrade() {
+	public String getGrade() {
 		return grade;
 	}
-	public void setGrade(int grade) {
+	public void setGrade(String grade) {
 		this.grade = grade;
 	}
 	public String getSort() {

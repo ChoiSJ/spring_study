@@ -8,7 +8,7 @@
 		select
 			pass_no as no,
 			pass_code as code,
-			is_passed as isPassedName
+			is_passed as PassedName
 		from
 			J_is_passed
 	</select>

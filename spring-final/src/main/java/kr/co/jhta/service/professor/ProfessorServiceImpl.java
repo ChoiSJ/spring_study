@@ -23,7 +23,7 @@ public class ProfessorServiceImpl implements ProfessorService {
 	public Professor loginByProfessor(LoginForm loginForm) {
 
 		Professor prof = professordao.getProfessorById(loginForm.getUserId());
-				
+		System.out.println(prof);
 		if(prof == null){
 			return null;
 		}
@@ -37,5 +37,20 @@ public class ProfessorServiceImpl implements ProfessorService {
 	public List<Professor> getProListByTCode(String code) {
 		
 		return professordao.getProListByTCode(code);
+	}
+	
+	@Override
+	public Professor getProfessorById(String id) {
+		return professordao.getProfessorById(id);
+	}
+	@Override
+	public void updateProfessorInfo(Professor professor) {
+		professordao.updateProfessorInfo(professor);
+		
+	}
+	@Override
+	public void updateProfessorPwd(Professor professor) {
+		professordao.updateProfessorPwd(professor);
+		
 	}
 }

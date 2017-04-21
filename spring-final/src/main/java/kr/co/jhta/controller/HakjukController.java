@@ -1,6 +1,5 @@
 package kr.co.jhta.controller;
 
-import java.lang.ProcessBuilder.Redirect;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -17,6 +16,9 @@ import kr.co.jhta.service.sitemap.SitemapService;
 import kr.co.jhta.service.user.StudentService;
 import kr.co.jhta.vo.Professor;
 import kr.co.jhta.vo.SiteMap;
+import kr.co.jhta.vo.hakjuk.LeaveSearchForm;
+import kr.co.jhta.vo.hakjuk.ProfessorSearchForm;
+import kr.co.jhta.vo.hakjuk.SearchForm;
 import kr.co.jhta.vo.hakjuk.StudentSearchForm;
 import kr.co.jhta.vo.stu.AddStudentForm;
 import kr.co.jhta.vo.stu.Student;
@@ -30,10 +32,7 @@ public class HakjukController {
 
 	@Autowired
 	private ProfessorService professorService;
-	
-	@Autowired
-	private StudentService studService;
-	
+		
 	@Autowired
 	private HakjukService hakjukService;
 	
@@ -44,10 +43,8 @@ public class HakjukController {
 	 */
 	@RequestMapping(value = "/searchstud",method=RequestMethod.GET)
 	public String searchstudGET(Model model){
-		List<Student> studList = hakjukService.getAllStudentService();
-		List<SiteMap> sitemapList = sitemapService.getAllSitemapPreService();
-		model.addAttribute("studList",studList);
-		model.addAttribute("sitemapList",sitemapList);
+		model.addAttribute("studList",hakjukService.getAllStudentService());
+		model.addAttribute("sitemapList",sitemapService.getAllSitemapPreService());
 		return "collegeregister/searchstud";
 	}
 	
@@ -56,12 +53,9 @@ public class HakjukController {
 	 */
 	@RequestMapping(value = "/searchstud",method=RequestMethod.POST)
 	public String searchstudPOST(StudentSearchForm ssf, Model model){
-		
 		System.out.println(ssf);
-		List<SiteMap> sitemapList = sitemapService.getAllSitemapPreService();
-		List<Student> studList = hakjukService.searchStudent(ssf);
-		model.addAttribute("studList",studList);
-		model.addAttribute("sitemapList",sitemapList);
+		model.addAttribute("sitemapList",sitemapService.getAllSitemapPreService());
+		model.addAttribute("studList",hakjukService.searchStudent(ssf));
 		return "collegeregister/searchstud";
 	}
 	
@@ -73,7 +67,6 @@ public class HakjukController {
 	
 	@RequestMapping("/studinfo")
 	public String studinfo(@RequestParam("id") String id,Model model){
-		System.out.println("id = "+id);
 		Student stud = hakjukService.getStudentByIdService(id);
 		if(stud == null){
 			return "redirect:/admin/searchstud";
@@ -88,16 +81,39 @@ public class HakjukController {
 	 */
 	
 	@RequestMapping("/searchprof")
-	public String searchprof(){
+	public String searchprof(Model model){
+		model.addAttribute("profList",hakjukService.getAllProfessorService()); // 모든 교수를 조회하여 jsp에 전달
+		model.addAttribute("sitemapList",sitemapService.getAllSitemapPreService()); // 대학 정보 전달
 		return "collegeregister/searchprof";
-	}	
+	}
+	/**
+	 * 조건이 있는 학생 정보 조회
+	 * @param ssf
+	 * @param model
+	 * @return
+	 */
+	
+	@RequestMapping(value = "/searchprofcon",method=RequestMethod.POST)
+	public String searchprofPOST(ProfessorSearchForm ssf, Model model){
+		System.out.println(ssf);
+		model.addAttribute("sitemapList",sitemapService.getAllSitemapPreService());
+		model.addAttribute("profList",hakjukService.searchProfessor(ssf));
+		return "collegeregister/searchprof";
+	}
+	
+	
 	/**
 	 * 교수 id를 받아서 교수 하면 조회하여 상세정보 보여주는 페이지
 	 * @param id
 	 * @return
 	 */
 	@RequestMapping("/profinfo")
-	public String profinfo(@RequestParam("id") String id){
+	public String profinfo(@RequestParam("id") String id,Model model){
+		Professor prof = hakjukService.getProfessorByIdService(id);
+		if(prof == null){
+			return "redirect:/admin/searchprof";
+		}
+		model.addAttribute("prof",prof);
 		return "collegeregister/profinfo";
 	}
 	 
@@ -130,6 +146,15 @@ public class HakjukController {
 		model.addAttribute("professors",profList);
 		return "collegeregister/admissionstud";
 	}
+	
+	@RequestMapping(value="/searchadmission", method=RequestMethod.POST)
+	public String searchadmission(SearchForm ssf, Model model){
+		model.addAttribute("sitemapList",sitemapService.getAllSitemapPreService());
+		model.addAttribute("studList",hakjukService.searchAdmissionStudent(ssf));
+		return "collegeregister/admissions";
+	}
+	
+	
 	/**
 	 * 
 	 * 입학생 등록화면에서 submit시 학생 등록하고 입학생 조회목록으로 보는 메소드
@@ -150,14 +175,58 @@ public class HakjukController {
 	}
 	
 	/**
-	 * 휴학 목록 화면
+	 * 미승인 된 휴학 목록을 표시하는 화면
 	 * @return
 	 */
-	
 	@RequestMapping("/leave")
-	public String leavesearch(){
+	public String leavesearchGET(Model model){
+		model.addAttribute("leaveList",hakjukService.getAllLeaveByFalseService());
+		model.addAttribute("sitemapList",sitemapService.getAllSitemapPreService());
 		return "collegeregister/leave";
 	}
+	/**
+	 * 조건에 맞춰서 휴학 신청 목록을 조회하는 화면
+	 * @param lsf
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/leave",method=RequestMethod.POST)
+	public String leavesearchPOST(LeaveSearchForm lsf ,Model model){
+		model.addAttribute("leaveList",hakjukService.getAllLeaveByFalseForm(lsf));
+		model.addAttribute("sitemapList",sitemapService.getAllSitemapPreService());
+		return "collegeregister/leave";
+	}
+	/**
+	 * 처리 된 휴학 목록 표시
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/enterleave")
+	public String enterleaveGET(Model model){
+		model.addAttribute("leaveList",hakjukService.getAllLeaveByTrueService());
+		model.addAttribute("sitemapList",sitemapService.getAllSitemapPreService());
+		return "collegeregister/enterleave";
+	}
+	/**
+	 * 조건에 맞춰서 휴학 처리된 목록 표시
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/enterleave", method=RequestMethod.POST)
+	public String enterleaveGET(LeaveSearchForm lsf ,Model model){
+		model.addAttribute("leaveList",hakjukService.getAllLeaveByTrueForm(lsf));
+		model.addAttribute("sitemapList",sitemapService.getAllSitemapPreService());
+		return "collegeregister/enterleave";
+	}
+	@RequestMapping(value = "/leaveinfo", method=RequestMethod.GET)
+	public String enterleaveGET(String id,Model model){
+		System.out.println(id);
+		model.addAttribute("sitemapList",sitemapService.getAllSitemapPreService());
+		return "collegeregister/leaveinfo";
+	}
+	
+	
+	
 	/**
 	 * 복학 목록 화면
 	 * @return

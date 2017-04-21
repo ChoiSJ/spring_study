@@ -32,7 +32,7 @@ public class LoginController {
 	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public String loginprocess(LoginForm loginForm,HttpSession session){
-		Sessioncheck sessioncheck = new Sessioncheck();				
+		Sessioncheck sessioncheck = new Sessioncheck();
 		if(loginForm.getLoginType().equals("stud")){
 			Student stud = studentService.loginByStudent(loginForm);
 			if(stud == null){
@@ -65,7 +65,4 @@ public class LoginController {
 		session.invalidate();
 		return "redirect:/login?message=logout";
 	}
-	
-	
-
 }

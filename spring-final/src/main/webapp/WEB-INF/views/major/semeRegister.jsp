@@ -16,7 +16,7 @@
 <%@ include file="/WEB-INF/views/navi/sidebarmajor.jsp" %>
    <div class="container" style="margin-left: 250px; padding-top:25px; ">
     <div class="row text-right">
-         홈
+         홈 > 학기관리 > <strong>학기등록</strong>
     </div>
     <div class="row">
        <h4><span class="glyphicon glyphicon-th-list"></span> 학기등록</h4>

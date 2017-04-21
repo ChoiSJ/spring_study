@@ -41,10 +41,6 @@
 			$("[name='grade']").val($("#grade").find("option:selected").val());
 			$("[name='sort']").val($("#sort").find("option:selected").val());
 			$("[name='q']").val($("#q").val());
-			console.log($("[name='register']").val());
-			console.log($("[name='sort']").val());
-			console.log($("[name='q']").val());
-			console.log($("[name='grade']").val());
 			$("#search-form").submit();
 		});
 	});

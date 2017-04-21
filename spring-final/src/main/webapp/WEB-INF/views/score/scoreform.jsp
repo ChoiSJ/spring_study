@@ -20,15 +20,15 @@ $(function() {
 		var total  = att+rep+mid+end;
 		alert(total);
 		if(total >= 90){
-			$("#creditBox").val(4);
+			$("#creditBox").val(3);
 			$("#gradeBox").val('A');
 		}
 		if(90>total && total>= 80){
-			$("#creditBox").val(3);
+			$("#creditBox").val(2);
 			$("#gradeBox").val('B');
 		}
 		if(80>total && total>= 70){
-			$("#creditBox").val(2);
+			$("#creditBox").val(1);
 			$("#gradeBox").val('C');
 		}
 		if(70>total && total>= 60){

@@ -1,8 +1,8 @@
 package kr.co.jhta.service.user;
 
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,13 +16,6 @@ public class StudentServiceImpl implements StudentService{
 	
 	@Autowired
 	StudentDao stuDao;
-	
-	
-	@Override
-	public void addNewStudentService(Student stud) {
-		
-	}
-
 	
 	@Override
 	public List<Student> getAllStudentService() {
@@ -68,9 +61,23 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 
+	
+	
+
+
 	@Override
-	public String getTnameByTcodeService(String tCode) {
-		String tName = stuDao.getTnameByTcode(tCode);
+	public String getCnameByRegisterService(String register) {
+		String cName = stuDao.getCnameByRegister(register);
+		return cName;
+	}
+
+
+	@Override
+	public String getTnameByTcodeService(int stuNo, String tCode) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("stuNo", stuNo);
+		map.put("tCode", tCode);
+		String tName = stuDao.getTnameByTcode(map);
 		return tName;
 	}
 	

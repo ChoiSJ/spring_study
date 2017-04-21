@@ -1,13 +1,24 @@
 package kr.co.jhta.vo;
 
+import kr.co.jhta.vo.stu.Enroll;
+
 public class SubjectRegister {
 	
+	private Enroll enroll;
 	private int regiNo;
 	private int stuNo;
 	private int jNo;
 	private int grade;
 	private int maxgrade;
 	
+	
+	
+	public Enroll getEnroll() {
+		return enroll;
+	}
+	public void setEnroll(Enroll enroll) {
+		this.enroll = enroll;
+	}
 	public int getRegiNo() {
 		return regiNo;
 	}

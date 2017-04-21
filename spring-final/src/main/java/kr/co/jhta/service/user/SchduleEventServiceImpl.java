@@ -20,14 +20,12 @@ public class SchduleEventServiceImpl implements SchduleEventService{
 	@Override
 	public ScheduleEvent addNewSchEventService(ScheduleEvent schedule) {
 		schDao.addNewSchEvent(schedule);
-		ScheduleEvent schEvent = schDao.getSchEventBySchNo(schDao.getSequence()-1);
-		return schEvent;
+		return schDao.getSchEventBySchNo(schDao.getSequence()-1);
 	}
 
 	@Override
 	public ScheduleEvent getSchEventBySchNoService(int schNo) {
-		ScheduleEvent schEvent = schDao.getSchEventBySchNo(schNo);
-		return schEvent;
+		return schDao.getSchEventBySchNo(schNo);
 	}
 
 	@Override
@@ -36,8 +34,7 @@ public class SchduleEventServiceImpl implements SchduleEventService{
 		map.put("studNo", studNo);
 		map.put("start", start);
 		map.put("end", end);
-		List<ScheduleEvent> schEventList = schDao.getSchEventByDate(map);
-		return schEventList;
+		return schDao.getSchEventByDate(map);
 	}
 
 	@Override

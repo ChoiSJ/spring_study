@@ -32,7 +32,7 @@
                         </a>
                         <ul id="submenu-4" class="panel-collapse collapse panel-switch" role="menu">
                             <li><a href="leave"><i class="fa fa-caret-right"></i>휴학 신청 목록</a></li>
-                            <li><a href=""><i class="fa fa-caret-right"></i>휴학 승인 목록</a></li>
+                            <li><a href="enterleave"><i class="fa fa-caret-right"></i>휴학 승인 목록</a></li>
                         </ul>
                     </li>
                     <li>

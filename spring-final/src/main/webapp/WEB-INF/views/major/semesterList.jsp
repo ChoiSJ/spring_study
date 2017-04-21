@@ -16,7 +16,7 @@
 <%@ include file="/WEB-INF/views/navi/sidebarmajor.jsp" %>
    <div class="container" style="margin-left: 250px; padding-top:25px; ">
     <div class="row text-right">
-         홈
+         홈 > <strong>학기관리</strong>
       </div>
       <div class="row">
          <h4><span class="glyphicon glyphicon-th-list"></span> 학기관리</h4>
@@ -37,6 +37,7 @@
 						<th>성적열람기간</th>
 						<th>성적이의기간</th>
 						<th>성적정정기간</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody style="font-size: 9pt">
@@ -75,6 +76,9 @@
 						<td>
 							<fmt:formatDate value="${semester.gradeEditTermStart }" pattern="yyyy-MM-dd"/> ~
 							<fmt:formatDate value="${semester.gradeEditTermEnd }" pattern="yyyy-MM-dd"/>
+						</td>
+						<td>
+							<a href="deleteSeme?no=${semester.no }" class="btn btn-danger btn-xs">삭제</a>
 						</td>
 					</tr>
 					

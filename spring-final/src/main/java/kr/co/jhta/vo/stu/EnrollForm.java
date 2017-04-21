@@ -1,7 +1,5 @@
 package kr.co.jhta.vo.stu;
 
-import kr.co.jhta.vo.Subject;
-
 public class EnrollForm {
 	private int no;
 	private int subjectNo;
@@ -32,6 +30,11 @@ public class EnrollForm {
 	}
 	public void setEnrollTime(String enrollTime) {
 		this.enrollTime = enrollTime;
+	}
+	@Override
+	public String toString() {
+		return "EnrollForm [no=" + no + ", subjectNo=" + subjectNo + ", enrollDay=" + enrollDay + ", enrollTime="
+				+ enrollTime + "]";
 	}
 
 	

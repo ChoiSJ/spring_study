@@ -33,7 +33,7 @@
 				</div>
 				<div class="form-group">
 					<label>내용</label>
-					<form:textarea path="contents" cssClass="form-control"/>
+					<form:textarea cols="20" path="contents" cssClass="form-control"/>
 					<form:errors path="contents" cssClass="text-danger"/>
 				</div>
 				<div class="form-inline">

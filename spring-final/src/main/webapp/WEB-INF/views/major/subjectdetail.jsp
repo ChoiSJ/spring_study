@@ -18,7 +18,7 @@
 <%@ include file="/WEB-INF/views/navi/sidebarmajor.jsp" %>
 	<div class="container" style="margin-left: 250px; padding-top:25px; ">
     	<div class="row text-right">
-			홈
+			홈 > 과목관리 > <strong>교과상세/수정</strong>
     	</div>
     	<div class="row">
     		<h4><span class="glyphicon glyphicon-th-list"></span> 과목상세</h4>
@@ -27,7 +27,7 @@
     	
     	<div class="panel panel-default panel-body">
     		<div class="row well">
-    			<form action="" method="post" name="subjectbyno">
+    			<form action="editsubject" method="post" name="subjectbyno">
     				<input type="hidden" name="no" value="${subjectbyno.no }">
     				<table class="table table-condensed">
     					<tr>
@@ -39,25 +39,24 @@
          				<tr>
          					<td><label>이수구분</label></td>
          					<td>
-         						<h1>${subjectbyno.passed.code }</h1>
          						<select name="passed.code">
-         							<option value="ns" ${subjectbyno.passed.code eq 'ns' ? 'selected:selected' : ''}>구분없음</option>
-         							<option value="me" ${subjectbyno.passed.code eq 'me' ? 'selected:selected' : ''}>전공필수</option>
-         							<option value="ms" ${subjectbyno.passed.code eq 'ms' ? 'selected:selected' : ''}>전공선택</option>
-         							<option value="ce" ${subjectbyno.passed.code eq 'ce' ? 'selected:selected' : ''}>교양필수</option>
-         							<option value="cs" ${subjectbyno.passed.code eq 'cs' ? 'selected:selected' : ''}>교양선택</option>
-         							<option value="gs" ${subjectbyno.passed.code eq 'gs' ? 'selected:selected' : ''}>일반선택</option>
-         							<option value="db" ${subjectbyno.passed.code eq 'db' ? 'selected:selected' : ''}>학부기초</option>
+         							<option value="ns" ${subjectbyno.passed.code eq 'ns' ? 'selected=selected' : ''}>구분없음</option>
+         							<option value="me" ${subjectbyno.passed.code eq 'me' ? 'selected=selected' : ''}>전공필수</option>
+         							<option value="ms" ${subjectbyno.passed.code eq 'ms' ? 'selected=selected' : ''}>전공선택</option>
+         							<option value="ce" ${subjectbyno.passed.code eq 'ce' ? 'selected=selected' : ''}>교양필수</option>
+         							<option value="cs" ${subjectbyno.passed.code eq 'cs' ? 'selected=selected' : ''}>교양선택</option>
+         							<option value="gs" ${subjectbyno.passed.code eq 'gs' ? 'selected=selected' : ''}>일반선택</option>
+         							<option value="db" ${subjectbyno.passed.code eq 'db' ? 'selected=selected' : ''}>학부기초</option>
          						</select>
          					</td>
          					<td><label>대상학년</label></td>
          					<td>
          						<select name="grade">
-         							<option value="0">전체</option>
-         							<option value="1">1학년</option>
-         							<option value="2">2학년</option>
-         							<option value="3">3학년</option>
-         							<option value="4">4학년</option>
+         							<option value="0" ${subjectbyno.grade eq '0' ? 'selected=selected' : '' }>전체</option>
+         							<option value="1" ${subjectbyno.grade eq '1' ? 'selected=selected' : '' }>1학년</option>
+         							<option value="2" ${subjectbyno.grade eq '2' ? 'selected=selected' : '' }>2학년</option>
+         							<option value="3" ${subjectbyno.grade eq '3' ? 'selected=selected' : '' }>3학년</option>
+         							<option value="4" ${subjectbyno.grade eq '4' ? 'selected=selected' : '' }>4학년</option>
          						</select>
          					</td>
          				</tr>
@@ -65,21 +64,25 @@
          					<td><label>교수명</label></td>
          					<td>
          						<select name="professor.id" id="select-prof">
-         							<option>교수선택</option>
-         							
+         							<c:forEach var="prof" items="${prolistbytcode }">
+         							<option value="${prof.id }" ${subjectbyno.professor.id eq prof.id ? 'selected=selected' : '' }>${prof.name }</option>
+         							</c:forEach>
          						</select>
          					</td>
          					<td><label>학점</label></td>
          					<td>
          						<select name="score">
-         							<option>학점선택</option>
-         							<option value="1">1</option>
-         							<option value="2">2</option>
-         							<option value="3">3</option>
+         							<option value="1" ${subjectbyno.score eq '1' ? 'selected=selected' : '' }>1</option>
+         							<option value="2" ${subjectbyno.score eq '2' ? 'selected=selected' : '' }>2</option>
+         							<option value="3" ${subjectbyno.score eq '3' ? 'selected=selected' : '' }>3</option>
          						</select>
          					</td>
          				</tr>
     				</table>
+    				<div>
+    					<button type="submit" class="btn btn-primary pull-right">수정</button>
+    					<a href="subjectmain" class="btn btn-default pull-right">취소</a>
+    				</div>
     			</form>
     		</div>
     	</div>

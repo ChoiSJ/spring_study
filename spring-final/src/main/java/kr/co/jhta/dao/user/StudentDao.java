@@ -1,6 +1,7 @@
 package kr.co.jhta.dao.user;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,5 +17,6 @@ public interface StudentDao {
 	void updateStudentInfo(Student student);
 	void updateStudentProfessor(String profName);
 	
-	String getTnameByTcode(String tCode);
+	String getTnameByTcode(Map<String, Object> map);
+	String getCnameByRegister(String register);
 }

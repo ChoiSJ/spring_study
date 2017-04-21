@@ -8,23 +8,57 @@
 <script type="text/javascript">
 	var myApp = angular.module("myApp", []);
 	
+	myApp.filter("secretName", function() {
+		// {{todo.writer | secretName: '+'}}
+		//	표현식의값					첫번째 파라미터
+		// function(필터가 붙여진 표현식의 값, 필터의 첫번째 파라미터값, 필터의 두번째 파라미터값, ...)
+		return function(value, c) {
+			var firstName = value.substring(0, 1);
+			
+			return firstName + c + c;
+		}
+	});
+	
 	myApp.controller("todoCtrl", function($scope) {
 		$scope.todos = [{title: "수업하기", writer: "홍진호", day:"2017-4-20", completed: "미처리"},
 			{title: "영화보기", writer: "임요환", day:"2017-4-29", completed: "미처리"}];
 		
-		// $scope.t = "",
+		$scope.completeTodoQty = function() {
+			var qty = 0;
+			
+			for (var i=0; i<$scope.todos.length; i++) {
+				var todo = $scope.todos[i];
+				
+				if (todo['completed'] == '처리완료') {
+					qty++;
+				}
+			}
+			
+			return qty;
+		};
+		
 		$scope.addTodo = function(newTitle, newWriter, newDay) {
 			var todo = {title: newTitle, writer: newWriter, day: newDay, completed: "미처리"};
 			$scope.todos.push(todo);
 		};
-	})
+		
+		$scope.removeTodo = function(delIndex) {
+			$scope.todos.splice(delIndex, 1);
+		};
+		
+		$scope.completedTodo = function(completedIndex) {
+			$scope.todos[completedIndex]['completed'] = "처리완료";
+		};
+	});
 </script>
 </head>
 <body>
 <div class="container" ng-controller="todoCtrl">
+	<h3>Todo 리스트 <small>처리완료 건수</small>:<span class="label label-success">{{completeTodoQty()}}</span></h3>
 	<table class="table table-bordered">
 		<thead>
 			<tr>
+				<th>번호</th>
 				<th>제목</th>
 				<th>작성자</th>
 				<th>날짜</th>
@@ -34,11 +68,15 @@
 		</thead>
 		<tbody>
 			<tr ng-repeat="todo in todos">
+				<td>{{$index+1}}</td>
 				<td>{{todo.title}}</td>
-				<td>{{todo.writer}}</td>
+				<td>{{todo.writer | secretName:'+'}}</td>
 				<td>{{todo.day}}</td>
 				<td>{{todo.completed}}</td>
-				<td></td>
+				<td>
+					<button class="btn btn-info btn-xs" ng-click="completedTodo($index)">처리완료</button>
+					<button class="btn btn-danger btn-xs" ng-click="removeTodo($index)">삭제</button>
+				</td>
 			</tr>
 		</tbody>
 	</table>

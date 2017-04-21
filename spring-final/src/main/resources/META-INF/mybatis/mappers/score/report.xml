@@ -7,7 +7,7 @@
 		insert into R_REPORT
 		(
 			S_SCORE_NO,
-			R_REPORT_NO 
+			R_REPORT_NO
 		)
 		values
 		(
@@ -30,4 +30,12 @@
    		where
    			S_SCORE_NO = #{sno}
 	</select>
+	<delete id="delReport" parameterType="int">
+		delete
+			*
+		from
+			r_report
+		where
+			s_score_no = #{sno}
+	</delete>
 </mapper>

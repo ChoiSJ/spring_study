@@ -36,4 +36,6 @@ public interface BoardDao {
 
 	void addProfBoard(Board board);
 
+	void addStuQnaBoard(Board board);
+
 }

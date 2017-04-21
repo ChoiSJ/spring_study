@@ -54,6 +54,30 @@
 				#{department}
 				)
 	</insert>
+	<insert id="addStuQnaBoard" parameterType="Board">
+	insert into
+			B_BOARD (
+					B_NO,
+					B_TITLE,
+					B_CONTENTS,
+					B_WRITER,
+					B_DEPARTMENT,
+					B_CATEGORY,
+					B_SUBJECTNO
+					)
+			values 
+				(
+				B_BOARD_SEQ.NEXTVAL,
+				#{title},
+				#{contents},
+				#{writer},
+				#{department},
+				#{category},
+				#{subjectNo}
+				)
+	
+	</insert>
+	
 	
 	<insert id="addNoticeBoard" parameterType="Board">
 		insert into

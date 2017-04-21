@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="resources/bootstrap/bootstrap.min.css">
+<script type="text/javascript" src="resources/angular/angular.min.js"></script>
+<script type="text/javascript">
+	var myApp = angular.module("myApp", []);
+	
+	myApp.filter("myFilter", function() {
+		return function(items, loc) {
+			var filteredItems = [];
+			
+			if (loc) {
+				items.forEach(function(item, index) {
+					if (item.addr == loc) {
+						filteredItems.push(item);
+					}
+				});
+			} else {
+				return items;
+			}
+			
+			return filteredItems;
+		};
+	});
+	
+	myApp.controller("empCtrl", function($scope) {
+		$scope.employees = [
+			{id: 100, firstName: '홍', lastName: "진호", email: "hongjh@gmail.com", addr: "서울"},
+			{id: 101, firstName: '임', lastName: "요환", email: "imyh@gmail.com", addr: "전라"},
+			{id: 102, firstName: '강', lastName: "민", email: "gangm@gmail.com", addr: "경상"},
+			{id: 103, firstName: '이', lastName: "윤열", email: "leeyy@gmail.com", addr: "충청"},
+			{id: 104, firstName: '이', lastName: "제동", email: "leejd@gmail.com", addr: "강원"},
+			{id: 105, firstName: '최', lastName: "연성", email: "choiys@gmail.com", addr: "전라"},
+			{id: 106, firstName: '박', lastName: "정석", email: "packjs@gmail.com", addr: "강원"},
+			{id: 107, firstName: '서', lastName: "지훈", email: "sujh@gmail.com", addr: "경기"},
+			{id: 108, firstName: '도', lastName: "진광", email: "dojg@gmail.com", addr: "서울"},
+			{id: 109, firstName: '이', lastName: "기석", email: "leegs@gmail.com", addr: "충청"},
+			{id: 110, firstName: '기욤', lastName: "패트리", email: "giyom@gmail.com", addr: "경상"},
+			{id: 111, firstName: '박', lastName: "성준", email: "packsj@gmail.com", addr: "경상"},
+			{id: 112, firstName: '김', lastName: "택용", email: "kimty@gmail.com", addr: "경기"},
+			{id: 113, firstName: '조', lastName: "용호", email: "joyh@gmail.com", addr: "서울"},
+			{id: 114, firstName: '허', lastName: "영무", email: "herym@gmail.com", addr: "제주"}
+		];
+		
+		$scope.sort = "addr";
+		$scope.location = "서울";
+	})
+</script>
+</head>
+<body>
+<div class="container">
+	<div class="row" ng-controller="empCtrl">
+		<h3>직원 리스트</h3>
+		
+		<div class="row">
+			<div class="form-group">
+				<label class="radio-inline"><input type="radio" ng-model="location" value=""> 전체</label>
+				<label class="radio-inline"><input type="radio" ng-model="location" value="서울"> 서울</label>
+				<label class="radio-inline"><input type="radio" ng-model="location" value="경기"> 경기</label>
+				<label class="radio-inline"><input type="radio" ng-model="location" value="충청"> 충청</label>
+				<label class="radio-inline"><input type="radio" ng-model="location" value="전라"> 전라</label>
+				<label class="radio-inline"><input type="radio" ng-model="location" value="강원"> 강원</label>
+				<label class="radio-inline"><input type="radio" ng-model="location" value="경상"> 경상</label>
+				<label class="radio-inline"><input type="radio" ng-model="location" value="제주"> 제주</label>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="form-inline form-group">
+				<label>정렬기준: </label>
+				<select class="form-control" ng-model="sort">
+					<option value="id"> Employee ID</option>
+					<option value="firstName"> Employee First Name</option>
+					<option value="lastName"> Employee Last Name</option>
+					<option value="email"> Employee Email</option>
+					<option value="addr"> Employee Address</option>
+				</select>
+			</div>
+		</div>
+		
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>id</th>
+					<th>first name</th>
+					<th>last name</th>
+					<th>email</th>
+					<th>address</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="emp in employees | myFilter: location | orderBy: sort">
+					<td>{{emp.id}}</td>
+					<td>{{emp.firstName}}</td>
+					<td>{{emp.lastName}}</td>
+					<td>{{emp.email}}</td>
+					<td>{{emp.addr}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+</body>
+</html>

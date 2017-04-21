@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<script type="text/javascript">
+$(function() {
+	$("a.accordion-toggle").click(function() {	
+	$(".panel-collapse").not($(this)).attr("class","panel-collapse panel-switch collapse");
+	});
+})
+</script>
 	<div id="wrapper">
         <div id="sidebar-wrapper">
             <aside id="sidebar">
@@ -43,7 +49,7 @@
                             <span class="sidebar-icon"></span><span class="sidebar-title">재학 관리</span>                            <b class="caret"></b>
                         </a>
                         <ul id="submenu-5" class="panel-collapse collapse panel-switch" role="menu">
-                            <li><a href="#"><i class="fa fa-caret-right"></i>과제 관리</a></li>
+                            <li><a href="stuReport"><i class="fa fa-caret-right"></i>과제 관리</a></li>
                             <li><a href="#"><i class="fa fa-caret-right"></i>출결 관리</a></li>
                             <li><a href="#"><i class="fa fa-caret-right"></i>시간표</a></li>
                         </ul>
@@ -64,9 +70,9 @@
                             <b class="caret"></b>
                         </a>
                         <ul id="submenu-7" class="panel-collapse collapse panel-switch" role="menu">
-                            <li><a href="#"><i class="fa fa-caret-right"></i>학과 게시판</a></li>
-                            <li><a href="#"><i class="fa fa-caret-right"></i>자유 게시판</a></li>
-                            <li><a href="#"><i class="fa fa-caret-right"></i>수강 이의 신청</a></li>
+                            <li><a href="studeptboard"><i class="fa fa-caret-right"></i>학과 게시판</a></li>
+                            <li><a href="stufreeboard"><i class="fa fa-caret-right"></i>자유 게시판</a></li>
+                            <li><a href="stuqnaboard"><i class="fa fa-caret-right"></i>Q&amp;A 게시판</a></li>
                         </ul>
                     </li>
                     <li>

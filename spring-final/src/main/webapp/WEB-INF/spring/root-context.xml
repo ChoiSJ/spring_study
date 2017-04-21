@@ -42,7 +42,7 @@
 	<!-- MapperFactoryBean을 사용해 자동으로 인터페이스 Mapping을  지원 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
-		<property name="basePackage" value="kr.co.jhta.dao.*" />
+		<property name="basePackage" value="kr.co.jhta.dao.**" />
 	</bean>
 	
 	<!-- email 설정 -->

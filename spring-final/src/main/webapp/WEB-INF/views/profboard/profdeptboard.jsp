@@ -53,7 +53,7 @@
 							<input type="checkbox" id="deleteCheck-${board.no }">
 						</td>
 						<td>${board.no }</td>
-						<td><a href="detail?bno=${board.no }">${board.title }</a></td>
+						<td><a href="profdetail?bno=${board.no }">${board.title }</a></td>
 						<td>${board.writer }</td>
 						<td><fmt:formatDate value="${board.regdate }"/> </td>
 						<td>${board.countView }</td>

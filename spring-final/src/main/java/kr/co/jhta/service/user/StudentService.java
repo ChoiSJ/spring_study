@@ -9,11 +9,12 @@ public interface StudentService {
 	// login UserCheck
 	Student loginByStudent(LoginForm loginForm);
 	
-	void addNewStudentService(Student stud);
 	List<Student> getAllStudentService();
 	Student getStudentById(String id);
 	void updateStudentPwdService(Student student);
 	void updateStudentInfoService(Student student);
 	void updateStudentProfessorService(String profName);
-	String getTnameByTcodeService(String tCode);
+	
+	String getTnameByTcodeService(int stuNo, String tCode);
+	String getCnameByRegisterService(String register);
 }

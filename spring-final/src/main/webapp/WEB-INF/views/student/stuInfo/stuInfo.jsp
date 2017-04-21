@@ -41,7 +41,7 @@
 	        		<tr>
 	        			<th>구분</th>
 	        			<td colspan="3">
-	        				<c:out value="${student.register }" />
+	        				<c:out value="${student.cName }" />
 	        			</td>
 	        		</tr>
 	        		<tr>
@@ -63,7 +63,7 @@
 	        		</tr>
 	        		<tr>
 	        			<th>전공</th>
-	        			<td><c:out value="${tName}"/></td>
+	        			<td><c:out value="${student.tName}"/></td>
 	        			<th>학년</th>
 	        			<td><c:out value="${student.grade }"/></td>
 	        		</tr>

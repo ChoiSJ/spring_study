@@ -19,6 +19,7 @@ import kr.co.jhta.vo.Professor;
 import kr.co.jhta.vo.Semester;
 import kr.co.jhta.vo.SiteMap;
 import kr.co.jhta.vo.Subject;
+import kr.co.jhta.vo.SubjectEditForm;
 import kr.co.jhta.vo.SubjectSearchForm;
 
 @Controller
@@ -112,15 +113,29 @@ public class SubjectController {
 	public String detailsubject(@RequestParam("sno") int sno, Model model) {
 		
 		Subject subject = subjectService.getSubByNo(sno);
-		model.addAttribute("subjectbyno", subject);
 		
-		System.out.println(subject);
-		System.out.println(subject.getPassed());
-		System.out.println(subject.getPassed().getCode());
-		System.out.println(subject.getProfessor().getName());
+		String code = subjectService.getPassCodeByNo(sno);
+		String tcode = subject.getSiteCode().getCode();
+		
+		subject.getPassed().setCode(code);
+		List<Professor> proListByTcode = professorService.getProListByTCode(tcode);
+		
+		
+		model.addAttribute("subjectbyno", subject);
+		model.addAttribute("prolistbytcode", proListByTcode);
+		
+		System.out.println(proListByTcode);
 		
 		return "major/subjectdetail";
 	}
 	
+	
+	@RequestMapping(value="editsubject", method=RequestMethod.POST)
+	public String editSubject(SubjectEditForm editform) {
+		
+		
+		subjectService.editSubjectByNo(editform);
+		return "redirect:/admin/subjectmain";
+	}
 	
 }

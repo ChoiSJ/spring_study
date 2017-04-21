@@ -1,19 +1,18 @@
 package kr.co.jhta.controller.open;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import kr.co.jhta.service.openlecture.OpenLectureService;
 import kr.co.jhta.vo.InvestGationAttribute;
 import kr.co.jhta.vo.InvestgationItems;
-import kr.co.jhta.vo.OpenSearch;
-import kr.co.jhta.vo.Professor;
+import kr.co.jhta.vo.LectureEvaluationSheet;
+import kr.co.jhta.vo.ProfessorOpenLecture;
 
 @Controller
 public class OpenLecture {
@@ -28,37 +27,53 @@ public class OpenLecture {
 	}
 	
 	
-	@RequestMapping("/openregister.do")
+	@RequestMapping("/openratingregister.do")
 	public String openLectureRegister(Model model){
 	
-		List<Professor> openlecturelist = lectureservice.getInformationOfProfessorList();
+		List<ProfessorOpenLecture> openlecturelist = lectureservice.getInformationOfProfessorList();
 		model.addAttribute("openlecturelist",openlecturelist);
 		
 		
-		return "openlecture/openlectureregister";
+		return "openlecture/openlectureratingregister";
 	}
 	
 	@RequestMapping("/investigating.do")
-	public String addInvestingItems(InvestgationItems items){
+	public String addInvestingItems(InvestgationItems items, Errors errors)throws Exception{
 		
-		List<String> itemsList =  items.getContents();
-		String id = items.getProfessorId();
-		String professorId = items.getProfessorId();
-		InvestGationAttribute item = new InvestGationAttribute();
-		
-		for(int i=0; i<itemsList.size(); i++){
+		if(errors.hasErrors()){
 			
-			item.setContents(itemsList.get(i));
-			item.setProfessorId(professorId);
-			lectureservice.addInvestgation(item);
+			System.out.println(errors.getAllErrors());
+			return "redirect:/openregister.do";
+			
+		}else{
+			
+			List<String> itemsList =  items.getContents();
+			String register = items.getRegister();
+			String id = items.getProfessorId();
+			int no =items.getSubjectNo();
+			String professorId = items.getProfessorId();
+			InvestGationAttribute item = new InvestGationAttribute();
+			
+			for(int i=0; i<itemsList.size(); i++){
+				
+				item.setRegister(register);
+				item.setSubjectNo(no);
+				item.setContents(itemsList.get(i));
+				item.setProfessorId(professorId);
+				
+				lectureservice.addInvestgation(item);
+			}
+			
+			return"redirect:/openregister.do";
 		}
 		
 		
-		return"redirect:/openregister.do";
 	}
 	
 	@RequestMapping("/openinquiries.do")
 	public String getOpeninquiries(){
+		
+		//LectureEvaluationSheet evaluationSheet = lectureservice.getLecturEevaluationSheet(subjectNo);
 		
 		return"openlecture/openinquiries";
 	}

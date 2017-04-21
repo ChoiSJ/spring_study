@@ -31,7 +31,7 @@
 		where a.u_stu_division = b.t_code
 		and a.u_stu_register = c.c_code
 		<if test="register != 'all'">
-			and c_code LIKE '%' || #{register} || '%'
+			and C.c_code LIKE '%' || #{register} || '%'
 		</if>
 		<if test="q != '' ">
 			and  ${sort} = #{q}
@@ -65,7 +65,8 @@
 				U_STU_PWD as pwd, 
 				c_name as register, 
 				U_STU_SCORE as score, 
-				U_STU_SSN as ssn
+				U_STU_SSN as ssn,
+				U_STU_REMAINLEAVE as remainLeave
 		from U_STUDENT a, t_sitemap b, C_CODEREGISTER C 
 		where a.u_stu_division = b.t_code
 		and a.u_stu_register = c.c_code
@@ -92,7 +93,8 @@
 				U_STU_PWD as pwd, 
 				C_NAME as register, 
 				U_STU_SCORE as score, 
-				U_STU_SSN as ssn
+				U_STU_SSN as ssn,
+				U_STU_REMAINLEAVE as remainLeave
 		from U_STUDENT a, t_sitemap b, C_CODEREGISTER C
 		where a.u_stu_division = b.t_code
 		and a.u_stu_register = c.c_code
@@ -120,10 +122,263 @@
 				U_STU_PWD as pwd, 
 				c_name as register, 
 				U_STU_SCORE as score, 
-				U_STU_SSN as ssn
+				U_STU_SSN as ssn,
+				U_STU_REMAINLEAVE as remainLeave
 		from U_STUDENT a, t_sitemap b, C_CODEREGISTER C
 		where a.u_stu_division = b.t_code
 		and a.u_stu_register = c.c_code
 		and u_stu_register in ('AD1000', 'AD2000')
 	</select>
+	
+	<select id="getAllProfessor" resultType="Professor">
+		select 
+			u_prof_no as no,
+			u_prof_id as id,
+			u_prof_name as name,
+			u_prof_gender as gender,
+			u_prof_code as code,
+			T_NAME as division,
+			u_prof_pwd as pwd,
+			C_NAME as register,
+			u_prof_phone as phone,
+			u_prof_addr as addr,
+			u_prof_email as email,
+			u_prof_grade as grade,
+			u_prof_ssn as ssn,
+			u_prof_forei as forei,
+			u_prof_entrydate as entrydate,
+			u_prof_leavedate as leavedate
+		from
+			u_professor A, C_CODEREGISTER B, T_SITEMAP C
+		where 
+			A.U_PROF_REGISTER = B.C_CODE
+		AND	
+			A.U_PROF_DIVISION = C.T_CODE			
+		AND	
+			U_PROF_REGISTER = 'PF1000'
+	</select>
+	<select id="getProfessorById" resultType="Professor" parameterType="string">
+		select 
+			u_prof_no as no,
+			u_prof_id as id,
+			u_prof_name as name,
+			u_prof_gender as gender,
+			u_prof_code as code,
+			T_NAME as division,
+			u_prof_pwd as pwd,
+			C_NAME as register,
+			u_prof_phone as phone,
+			u_prof_addr as addr,
+			u_prof_email as email,
+			u_prof_grade as grade,
+			u_prof_ssn as ssn,
+			u_prof_forei as forei,
+			u_prof_entrydate as entrydate,
+			u_prof_leavedate as leavedate
+		from
+			u_professor A, C_CODEREGISTER B, T_SITEMAP C
+		where 
+			A.U_PROF_REGISTER = B.C_CODE
+		AND	
+			A.U_PROF_DIVISION = C.T_CODE			
+		AND	
+			U_PROF_REGISTER = 'PF1000'
+		AND 
+			U_PROF_ID = #{id}
+	</select>
+	
+	<select id="getProfessorListBySearchProf" parameterType="kr.co.jhta.vo.hakjuk.ProfessorSearchForm" resultType="Professor">
+		select 
+			u_prof_no as no,
+			u_prof_id as id,
+			u_prof_name as name,
+			u_prof_gender as gender,
+			u_prof_code as code,
+			T_NAME as division,
+			u_prof_pwd as pwd,
+			C_NAME as register,
+			u_prof_phone as phone,
+			u_prof_addr as addr,
+			u_prof_email as email,
+			u_prof_grade as grade,
+			u_prof_ssn as ssn,
+			u_prof_forei as forei,
+			u_prof_entrydate as entrydate,
+			u_prof_leavedate as leavedate
+		from
+			u_professor A, C_CODEREGISTER B, T_SITEMAP C
+		where 
+			A.U_PROF_REGISTER = B.C_CODE
+		AND	
+			A.U_PROF_DIVISION = C.T_CODE			
+		<if test="register != 'all'">
+			and	U_PROF_REGISTER = #{register} 
+		</if>
+		<if test="q != '' ">
+			and  ${sort} = #{q}
+		</if>
+		<if test="grade != 'all'">
+			and u_prof_grade = #{grade}
+		</if>
+		<if test="division != 'all' ">
+			and U_prof_DIVISION = #{division}
+		</if>
+	</select>
+	
+	<select id="getadmissionStudentByForm" parameterType="kr.co.jhta.vo.hakjuk.SearchForm" resultType="Student">
+		select
+			U_STU_NO as no, 
+				U_STU_ADDR1 as addr1, 
+				U_STU_ADDR2 as addr2,
+				t_name as division, 
+				U_STU_EMAIL as email, 
+				U_STU_ENTERDATE as enterDate, 
+				U_STU_GENDER as gender, 
+				U_STU_GRADE as grade,
+				U_STU_ID as id, 
+				U_STU_LEAVEDATE as leaveDate,
+				U_STU_NAME as name, 
+				U_STU_NO as no, 
+				U_STU_PARENTNAME as parentName, 
+				U_STU_PARENTPHONE as parentPhone, 
+				U_STU_PHONE as phone, 
+				U_STU_PROFESSOR as professor, 
+				U_STU_PWD as pwd, 
+				c_name as register, 
+				U_STU_SCORE as score, 
+				U_STU_SSN as ssn
+				
+		from U_STUDENT a, t_sitemap b,C_CODEREGISTER C
+		where a.u_stu_division = b.t_code
+		and a.u_stu_register = c.c_code
+		<if test="register != 'all'">
+			and u_stu_register = #{register}
+		</if>
+		<if test="register == 'all'">
+			and u_stu_register in ('AD1000', 'AD2000')
+		</if>
+		<if test="q != '' ">
+			and  ${sort} = #{q}
+		</if>
+		<if test="grade != 00">
+			and SUBSTR(u_stu_id, 1, 2) = #{grade}
+		</if>
+		<if test="division != '' ">
+			and U_STU_DIVISION = #{division}
+		</if>
+	</select>
+	
+	<select id="getAllLeaveByFalse" resultType="kr.co.jhta.vo.hakjuk.Leave">
+		SELECT 
+			L_NO as no, 
+			b.u_STU_NAME as "student.name",
+			b.u_STU_id as "student.id",
+			c.t_name as "student.division", 
+			d.c_name as code, 
+			L_ENROLLDATE as enrollDate, 
+			L_PASS as pass, 
+			L_OKAYDATE as okDate, 
+			L_REINDATE as reinDate, 
+			L_SCOREPASS as scorePass 
+		FROM 
+			L_LEAVE a, u_student b, t_sitemap c, c_coderegister d
+		WHERE
+			a.STU_NO = b.u_stu_no
+		and	
+			b.u_stu_division = c.t_code
+		and	
+			a.c_code = d.c_code
+		and
+			L_PASS = 'false'
+	</select>
+	<select id="getAllLeaveFalseByForm" resultType="kr.co.jhta.vo.hakjuk.Leave" parameterType="kr.co.jhta.vo.hakjuk.LeaveSearchForm">
+		SELECT 
+			L_NO as no, 
+			b.u_STU_NAME as "student.name",
+			b.u_STU_id as "student.id",
+			c.t_name as "student.division", 
+			d.c_name as code, 
+			L_ENROLLDATE as enrollDate, 
+			L_PASS as pass, 
+			L_OKAYDATE as okDate, 
+			L_REINDATE as reinDate, 
+			L_SCOREPASS as scorePass 
+		FROM 
+			L_LEAVE a, u_student b, t_sitemap c, c_coderegister d
+		WHERE
+			a.STU_NO = b.u_stu_no
+		and	
+			b.u_stu_division = c.t_code
+		and	
+			a.c_code = d.c_code
+		and
+			L_PASS = 'false'
+		<if test="register != 'all'">
+			and d.c_code = #{register}
+		</if>
+		<if test="q != '' ">
+			and  ${sort} = #{q}
+		</if>
+		<if test="division != '' ">
+			and b.U_STU_DIVISION = #{division}
+		</if>
+	</select>
+	
+		<select id="getAllLeaveByTrue" resultType="kr.co.jhta.vo.hakjuk.Leave">
+		SELECT 
+			L_NO as no, 
+			b.u_STU_NAME as "student.name",
+			b.u_STU_id as "student.id",
+			c.t_name as "student.division", 
+			d.c_name as code, 
+			L_ENROLLDATE as enrollDate, 
+			L_PASS as pass, 
+			L_OKAYDATE as okDate, 
+			L_REINDATE as reinDate, 
+			L_SCOREPASS as scorePass 
+		FROM 
+			L_LEAVE a, u_student b, t_sitemap c, c_coderegister d
+		WHERE
+			a.STU_NO = b.u_stu_no
+		and	
+			b.u_stu_division = c.t_code
+		and	
+			a.c_code = d.c_code
+		and
+			L_PASS != 'false'
+	</select>
+	<select id="getAllLeaveByTrueForm" resultType="kr.co.jhta.vo.hakjuk.Leave" parameterType="kr.co.jhta.vo.hakjuk.LeaveSearchForm">
+		SELECT 
+			L_NO as no, 
+			b.u_STU_NAME as "student.name",
+			b.u_STU_id as "student.id",
+			c.t_name as "student.division", 
+			d.c_name as code, 
+			L_ENROLLDATE as enrollDate, 
+			L_PASS as pass, 
+			L_OKAYDATE as okDate, 
+			L_REINDATE as reinDate, 
+			L_SCOREPASS as scorePass 
+		FROM 
+			L_LEAVE a, u_student b, t_sitemap c, c_coderegister d
+		WHERE
+			a.STU_NO = b.u_stu_no
+		and	
+			b.u_stu_division = c.t_code
+		and	
+			a.c_code = d.c_code
+		and
+			L_PASS != 'false'
+		<if test="register != 'all'">
+			and d.c_code = #{register}
+		</if>
+		<if test="q != '' ">
+			and  ${sort} = #{q}
+		</if>
+		<if test="division != '' ">
+			and b.U_STU_DIVISION = #{division}
+		</if>
+	</select>
+	
+	
 </mapper>

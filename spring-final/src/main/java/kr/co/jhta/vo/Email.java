@@ -1,18 +1,20 @@
 package kr.co.jhta.vo;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class Email {
 	
-	private String address;
+	private List<String> address;
 	private String title;
 	private String contents;
 	private MultipartFile file;
 	
-	public String getAddress() {
+	public List<String> getAddress() {
 		return address;
 	}
-	public void setAddress(String address) {
+	public void setAddress(List<String> address) {
 		this.address = address;
 	}
 	public String getTitle() {
@@ -32,5 +34,10 @@ public class Email {
 	}
 	public void setFile(MultipartFile file) {
 		this.file = file;
+	}
+	
+	@Override
+	public String toString() {
+		return "Email [address=" + address + ", title=" + title + ", contents=" + contents + ", file=" + file + "]";
 	}
 }

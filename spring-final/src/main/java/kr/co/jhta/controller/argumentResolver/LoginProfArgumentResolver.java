@@ -23,6 +23,8 @@ public class LoginProfArgumentResolver implements HandlerMethodArgumentResolver{
 			NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
 		
 		HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
+		
+		
 		HttpSession session = request.getSession(true);
 		session.setMaxInactiveInterval(60*60*24);
 		Professor prof = (Professor) session.getAttribute("LOGIN_USER");

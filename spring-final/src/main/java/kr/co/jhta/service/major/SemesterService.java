@@ -15,4 +15,5 @@ public interface SemesterService {
 	List<Semester> getAllSemester();
 	Semester getSemesterByNo(int no);
 	void editSemesterByNo(Semester semester);
+	void delSemesterByNo (int no);
 }

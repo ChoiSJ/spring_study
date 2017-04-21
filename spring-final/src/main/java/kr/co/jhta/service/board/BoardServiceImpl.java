@@ -92,5 +92,11 @@ public class BoardServiceImpl implements BoardService{
 		
 	}
 
+	@Override
+	public void addStuQnaBoard(Board board) {
+		boardDao.addStuQnaBoard(board);
+		
+	}
+
 	
 }

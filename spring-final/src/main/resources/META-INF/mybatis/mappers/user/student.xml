@@ -24,7 +24,8 @@
 				U_STU_PWD as pwd, 
 				U_STU_REGISTER as register, 
 				U_STU_SCORE as score, 
-				U_STU_SSN as ssn
+				U_STU_SSN as ssn,
+				U_STU_REMAINLEAVE as remainLeave
 		from U_STUDENT
 	</select>
 	
@@ -33,7 +34,7 @@
 		VALUES(U_STUDENT_SEQ.nextval, #{id}, #{name}, #{gender}, #{division}, #{pwd}, #{register}, #{score}, #{phone}, #{addr1}, #{addr2}, #{email}, #{grade}, #{ssn}, sysdate, #{parentName}, #{professor}, #{parentPhone})
 	</insert>
 	
-	<select id="getStudentById" parameterType="String" resultType="Student">
+	<select id="getStudentById" parameterType="string" resultType="Student">
 		select U_STU_NO as no, 
 				U_STU_ADDR1 as addr1, 
 				U_STU_ADDR2 as addr2,
@@ -53,7 +54,8 @@
 				U_STU_PWD as pwd, 
 				U_STU_REGISTER as register, 
 				U_STU_SCORE as score, 
-				U_STU_SSN as ssn
+				U_STU_SSN as ssn,
+				U_STU_REMAINLEAVE as remainLeave
 		from U_STUDENT
 		where U_STU_ID = #{id}
 	</select>
@@ -74,16 +76,24 @@
 		WHERE U_STU_ID = #{id}
 	</update>
 	
-	<update id="updateStudentProfessor" parameterType="String">
+	<update id="updateStudentProfessor" parameterType="string">
 		update U_STUDENT SET U_STU_PROFESSOR = #{professor}
 		where U_STU_NO = #{no}
 	</update>
 	
-	<select id="getTnameByTcode" parameterType="String" resultType="String">
+	<select id="getTnameByTcode" parameterType="map" resultType="string">
 		select t.T_NAME as tName
 		from U_STUDENT s, T_SITEMAP t
 		where s.U_STU_DIVISION = t.T_CODE
-		and s.U_STU_DIVISION = #{Tcode}
+		and s.U_STU_DIVISION = #{tCode}
+		and s.U_STU_NO = #{stuNo}
+	</select>
+	
+	<select id="getCnameByRegister" parameterType="string" resultType="string">
+		select c.C_NAME 
+		from U_STUDENT u, C_CODEREGISTER c 
+		WHERE c.C_CODE = u.U_STU_REGISTER
+		AND u.U_STU_REGISTER = #{register}
 	</select>
 	
 </mapper>

@@ -12,4 +12,7 @@ public interface ProfessorService {
 	List<Professor> proAllList();
 	Professor loginByProfessor(LoginForm loginForm);
 	List<Professor> getProListByTCode(String code);
+	Professor getProfessorById(String id);
+	void updateProfessorInfo(Professor professor);
+	void updateProfessorPwd(Professor professor);
 }

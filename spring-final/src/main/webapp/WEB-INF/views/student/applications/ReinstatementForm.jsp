@@ -57,7 +57,7 @@ $(function() {
 	        		<tr>
 	        			<th>구분</th>
 	        			<td colspan="3">
-	        				<c:out value="${student.register }" />
+	        				<c:out value="${cName }" />
 	        			</td>
 	        		</tr>
 	        		<tr>

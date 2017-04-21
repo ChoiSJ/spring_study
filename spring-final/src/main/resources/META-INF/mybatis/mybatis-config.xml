@@ -15,16 +15,20 @@
 		<typeAlias alias="Regisubject" type="kr.co.jhta.vo.stu.Regisubject"/>
 		<typeAlias alias="Professor" type="kr.co.jhta.vo.Professor"/>
 		<typeAlias alias="Syllabus" type="kr.co.jhta.vo.Syllabus"/>
-		<typeAlias alias="opensearch" type="kr.co.jhta.vo.OpenSearch"/>
 		<typeAlias alias="Board" type="kr.co.jhta.vo.Board"/>
 		<typeAlias alias="SearchForm" type="kr.co.jhta.vo.SearchForm"/>
 		<typeAlias alias="SubjectIsPassed" type="kr.co.jhta.vo.SubjectIsPassed"/>
 		<typeAlias alias="ScheduleEvent" type="kr.co.jhta.vo.ScheduleEvent"/>
 		<typeAlias alias="BoardView" type="kr.co.jhta.vo.BoardView"/>
-		<typeAlias alias="Application" type="kr.co.jhta.vo.stu.ApplicationVO"/>
 		<typeAlias alias="professorsubjectlist" type="kr.co.jhta.vo.ProfessorSubject"/>
+		<typeAlias alias="Leave" type="kr.co.jhta.vo.appli.Leave"/>
+		<typeAlias alias="Disenroll" type="kr.co.jhta.vo.appli.Disenrollment"/>
+		<typeAlias alias="Rein" type="kr.co.jhta.vo.appli.Reinstatement"/>
+		<typeAlias alias="ChangeMajor" type="kr.co.jhta.vo.appli.ChangeMajor"/>
+		<typeAlias alias="professoropenlecture" type="kr.co.jhta.vo.ProfessorOpenLecture"/>
+		<typeAlias alias="evaluationSheet" type="kr.co.jhta.vo.LectureEvaluationSheet"/>
+		<typeAlias alias="SupplementAryLecture" type="kr.co.jhta.vo.SupplementAryLecture"/>
 	</typeAliases>
-	
 	
 	<mappers>
 		<mapper resource="META-INF/mybatis/mappers/lecture/lecture.xml"/>		
@@ -34,7 +38,6 @@
 		<mapper resource="META-INF/mybatis/mappers/major/semester.xml"/>		<!-- semester -->
 		<mapper resource="META-INF/mybatis/mappers/major/division.xml"/>		<!-- division -->
 		<mapper resource="META-INF/mybatis/mappers/board/board.xml"/>
-		<!-- <mapper resource="META-INF/mybatis/mappers/board/review.xml"/> -->
 		<mapper resource="META-INF/mybatis/mappers/score/attendance.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/score/score.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/score/report.xml"/>
@@ -46,6 +49,14 @@
 		<mapper resource="META-INF/mybatis/mappers/hakjuk/hakjuk.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/sitemap.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/schedule/scheduleEvent.xml"/>
+		<mapper resource="META-INF/mybatis/mappers/application/changemajor.xml"/>
+		<mapper resource="META-INF/mybatis/mappers/application/disenroll.xml"/>
+		<mapper resource="META-INF/mybatis/mappers/application/leave.xml"/>
+		<mapper resource="META-INF/mybatis/mappers/application/reinstate.xml"/>
+		<mapper resource="META-INF/mybatis/mappers/message/message.xml"/>
+		<mapper resource="META-INF/mybatis/mappers/report/stuReport.xml"/>
+		<mapper resource="META-INF/mybatis/mappers/lecture/SupplementAryLecture.xml"/>
+		<!-- <mapper resource="META-INF/mybatis/mappers/board/review.xml"/> -->
 		<!-- <mapper resource="META-INF/mybatis/mappers/messege.xml"/> -->
 	</mappers>
 </configuration>

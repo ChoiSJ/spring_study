@@ -1,5 +1,7 @@
 package kr.co.jhta.vo;
 
+import kr.co.jhta.vo.stu.Enroll;
+
 public class Subject {
 
 	private int no;
@@ -12,6 +14,34 @@ public class Subject {
 	private int score;
 	private int division;
 	private int limitStu;
+	private Enroll enroll;
+	private String enday;
+	private String entime;
+
+
+	public String getEnday() {
+		return enday;
+	}
+
+	public void setEnday(String enday) {
+		this.enday = enday;
+	}
+
+	public String getEntime() {
+		return entime;
+	}
+
+	public void setEntime(String entime) {
+		this.entime = entime;
+	}
+
+	public Enroll getEnroll() {
+		return enroll;
+	}
+
+	public void setEnroll(Enroll enroll) {
+		this.enroll = enroll;
+	}
 
 	public Subject() {
 		// TODO Auto-generated constructor stub

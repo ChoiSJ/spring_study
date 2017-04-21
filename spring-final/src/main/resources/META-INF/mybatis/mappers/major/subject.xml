@@ -21,7 +21,7 @@
 			C.u_prof_name as "professor.name",
 			D.s_seme_select as "selectNo.semeSelect",
 			A.j_grade as grade,
-			B.is_passed as "passed.isPassedName",
+			B.is_passed as "passed.passedName",
 			E.t_name as "siteCode.name",
 			A.j_score as score,
 			A.j_division as division,
@@ -75,11 +75,33 @@
 			</if>
 	</select>
 	
+	<select id="getEnorollByNo" parameterType="string" resultType="subject">
+		select
+			A.j_no as no,
+			A.j_subject_name as subjectName,
+			A.j_sub_prof as "professor.id",
+			A.j_semester as "selectNo.no",
+			A.j_grade as grade,
+			A.j_is_passed as "passed.code",
+			A.j_t_code as "siteCode.code",
+			A.j_score as score,
+			A.j_limit_stu as limitStu,
+			B.E_NO as no,
+			B.E_ENROLLDAY as enrollDay,
+			B.E_J_SUBJECT_NO as "subject.no",
+			B.E_ENROLLTIME as enrollTime,
+			B.E_ENROLLNUM as enrollNum
+		from
+			j_subject A, E_ENROLLMENT B
+		where
+			j_sub_prof = #{value}
+	</select>
+	
 	<select id="getSubByNo" parameterType="int" resultType="subject">
 		select
 			A.j_no as no,
 			A.j_subject_name as subjectName,
-			C.u_prof_name as "professor.name",
+			C.u_prof_id as "professor.id",
 			D.s_seme_select as "selectNo.semeSelect",
 			A.j_grade as grade,
 			B.pass_code as "passed.code",
@@ -100,6 +122,15 @@
 			A.j_t_code = E.t_code
 		and 
 			A.j_no = #{value}
+	</select>
+	
+	<select id="getPassCodeByNo" parameterType="int" resultType="string">
+		select
+			j_is_passed
+		from
+			j_subject
+		where
+			j_no = #{value}
 	</select>
 	
 	
@@ -168,4 +199,48 @@
 			j_no = #{no}
 	
 	</update>
+
+	<update id="editSubjectByNo" parameterType="kr.co.jhta.vo.SubjectEditForm">
+		update j_subject
+		set
+			j_subject_name = #{subjectName},
+			j_limit_stu = #{limitStu},
+			j_is_passed = #{passed.code},
+			j_grade = #{grade},
+			j_sub_prof = #{professor.id},
+			j_score = #{score}
+		where
+			j_no = #{no}
+	</update>
+	<select id="getallenroll" resultType="subject">
+		select
+			A.E_NO as "enroll.no",
+			F.T_Name as "siteCode.code",
+			B.J_T_CODE as "siteCode.name",
+			B.J_SUBJECT_NAME as subjectName,
+			C.U_prof_name as "professor.name",
+			D.S_SEME_SELECT as "selectNo.semeSelect",
+			B.J_GRADE as grade,
+			E.IS_PASSED as "passed.passedName",
+			F.T_NAME as "siteCode.name",
+			B.J_SCORE as score,
+			B.J_LIMIT_STU as limitStu,
+			A.E_ENROLLNUM as "enroll.enrollNum",
+			A.E_ENROLLDAY as "enroll.enrollDay",
+			A.E_ENROLLTIME as "enroll.enrollTime"
+		FROM
+			E_ENROLLMENT A, J_SUBJECT B, U_PROFESSOR C, S_SEMESTER D,
+			 J_IS_PASSED E, T_SITEMAP F
+		WHERE
+			A.E_J_SUBJECT_NO = B.J_NO
+		AND
+			B.J_SUB_PROF = C.U_PROF_ID
+		AND
+			B.J_SEMESTER = D.S_NO
+		AND
+			B.J_IS_PASSED = E.PASS_CODE
+		AND
+			B.J_T_CODE = F.T_CODE
+	</select>
+
 </mapper>

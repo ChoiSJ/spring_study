@@ -1,6 +1,5 @@
 package kr.co.jhta.vo.stu;
 
-import kr.co.jhta.vo.Score;
 import kr.co.jhta.vo.Subject;
 import kr.co.jhta.vo.SubjectDivision;
 
@@ -10,16 +9,27 @@ public class Enroll {
 	private Subject subject;
 	private SubjectDivision division;
 	private String enrollDay;
-	private int enrollTime;
+	private String enrollTime;
 	private int enrollNum;
 	private int stuNo;
+	private Student student;
 	
+	
+	
+	public Student getStudent() {
+		return student;
+	}
+
+	public void setStudent(Student student) {
+		this.student = student;
+	}
+
 	public Enroll() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Enroll(int no, Subject subject, SubjectDivision division, String enrollDay, int enrollTime, int enrollNum,
+	public Enroll(int no, Subject subject, SubjectDivision division, String enrollDay, String enrollTime, int enrollNum,
 			int stuNo) {
 		super();
 		this.no = no;
@@ -73,11 +83,20 @@ public class Enroll {
 	public void setEnrollDay(String enrollDay) {
 		this.enrollDay = enrollDay;
 	}
-	public int getEnrollTime() {
+
+	public String getEnrollTime() {
 		return enrollTime;
 	}
-	public void setEnrollTime(int enrollTime) {
+
+	public void setEnrollTime(String enrollTime) {
 		this.enrollTime = enrollTime;
 	}
+
+	@Override
+	public String toString() {
+		return "Enroll [no=" + no + ", subject=" + subject + ", division=" + division + ", enrollDay=" + enrollDay
+				+ ", enrollTime=" + enrollTime + ", enrollNum=" + enrollNum + ", stuNo=" + stuNo + "]";
+	}
+	
 	
 }

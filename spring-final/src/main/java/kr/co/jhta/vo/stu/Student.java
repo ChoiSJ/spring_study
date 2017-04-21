@@ -2,8 +2,6 @@ package kr.co.jhta.vo.stu;
 
 import java.util.Date;
 
-import kr.co.jhta.vo.SiteMap;
-
 public class Student {
 	
 	private int no;
@@ -25,17 +23,19 @@ public class Student {
 	private int score;
 	private String phone;
 	private String professor;
-	
+	private int remainLeave;
+	private String tName;
+	private String cName;	
 	public Student() {
 		super();
 		// TODO Auto-generated constructor stub
 	}		
-	
-	
+
 
 	public Student(int no, String addr1, String addr2, String email, int grade, String ssn, Date enterDate,
 			Date leaveDate, String parentName, String parentPhone, String id, String pwd, String name, String gender,
-			String division, String register, int score, String phone, String professor) {
+			String division, String register, int score, String phone, String professor, int remainLeave, String tName,
+			String cName) {
 		super();
 		this.no = no;
 		this.addr1 = addr1;
@@ -56,8 +56,10 @@ public class Student {
 		this.score = score;
 		this.phone = phone;
 		this.professor = professor;
+		this.remainLeave = remainLeave;
+		this.tName = tName;
+		this.cName = cName;
 	}
-
 
 
 	public int getNo() {
@@ -203,19 +205,39 @@ public class Student {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-
-	
-	
 	public String getProfessor() {
 		return professor;
 	}
-
-
-
 	public void setProfessor(String professor) {
 		this.professor = professor;
 	}
+	public int getRemainLeave() {
+		return remainLeave;
+	}
+	public void setRemainLeave(int remainLeave) {
+		this.remainLeave = remainLeave;
+	}
 
+	
+	
+	public String gettName() {
+		return tName;
+	}
+
+
+	public void settName(String tName) {
+		this.tName = tName;
+	}
+
+
+	public String getcName() {
+		return cName;
+	}
+
+
+	public void setcName(String cName) {
+		this.cName = cName;
+	}
 
 
 	@Override
@@ -224,9 +246,11 @@ public class Student {
 				+ ", ssn=" + ssn + ", enterDate=" + enterDate + ", leaveDate=" + leaveDate + ", parentName="
 				+ parentName + ", parentPhone=" + parentPhone + ", id=" + id + ", pwd=" + pwd + ", name=" + name
 				+ ", gender=" + gender + ", division=" + division + ", register=" + register + ", score=" + score
-				+ ", phone=" + phone + "]";
+				+ ", phone=" + phone + ", professor=" + professor + ", remainLeave=" + remainLeave + ", tName=" + tName
+				+ ", cName=" + cName + "]";
 	}
-	
+
+
 	
 	
 }

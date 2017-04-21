@@ -13,6 +13,7 @@
 			<bean class="kr.co.jhta.controller.argumentResolver.LoginProfArgumentResolver"></bean>
 		</mvc:argument-resolvers>
 	</mvc:annotation-driven>
+	
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/admin/**"/>

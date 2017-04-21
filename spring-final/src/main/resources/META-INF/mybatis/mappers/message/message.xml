@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.jhta.dao.message.MessageDao">
+	
+	<select id="getAddressByStuName" parameterType="string" resultType="Student">
+		select
+			u_stu_no as no,
+			u_stu_addr1 as addr1,
+			u_stu_email as email,
+			u_stu_grade as grade,
+			u_stu_ssn as ssn,
+			u_stu_enterdate as enterDate,
+			u_stu_leavedate as leaveDate,
+			u_stu_parentname as	parentName,
+			u_stu_professor as professor,
+			u_stu_parentphone as parentPhone,
+			u_stu_addr2 as addr2,
+			u_stu_id as id,
+			u_stu_remainleave as remainLeave,
+			u_stu_name as name,
+			u_stu_gender as gender,
+			u_stu_division as division,
+			u_stu_pwd as pwd,
+			u_stu_register as register,
+			u_stu_score as score,
+			u_stu_phone as phone
+		from
+			u_student
+		where
+			u_stu_name = #{searchWord}
+	</select>
+	
+	<select id="getAddressByProName" parameterType="string" resultType="Professor">
+		select
+			u_prof_no as no,
+			u_prof_addr as addr,
+			u_prof_email as email,
+			u_prof_grade as grade,
+			u_prof_ssn as ssn,
+			u_prof_forei as forei,
+			u_prof_entrydate as entrydate,
+			u_prof_leavedate as leavedate,
+			u_prof_id as id,
+			u_prof_name as name,
+			u_prof_gender as gender,
+			u_prof_code as code,
+			u_prof_division as division,
+			u_prof_pwd as pwd,
+			u_prof_register as register,
+			u_prof_phone as phone
+		from
+			u_professor
+		where
+			u_prof_name = #{searchWord}
+	</select>
+	
+</mapper>

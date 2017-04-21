@@ -13,10 +13,18 @@ public class BoardForm {
 	
 	private String fileName;
 	
+	private String subjectSelect;
+	
 	private MultipartFile attachFile;
 	
 	
 	
+	public String getSubjectSelect() {
+		return subjectSelect;
+	}
+	public void setSubjectSelect(String subjectSelect) {
+		this.subjectSelect = subjectSelect;
+	}
 	public String getFileName() {
 		return fileName;
 	}
@@ -50,8 +58,10 @@ public class BoardForm {
 	@Override
 	public String toString() {
 		return "BoardForm [title=" + title + ", contents=" + contents + ", category=" + category + ", fileName="
-				+ fileName + ", attachFile=" + attachFile + "]";
+				+ fileName + ", subjectSelect=" + subjectSelect + ", attachFile=" + attachFile + "]";
 	}
+	
+	
 	
 	
 }

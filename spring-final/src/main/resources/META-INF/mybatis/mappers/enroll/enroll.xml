@@ -11,52 +11,42 @@
 			   e.E_ENROLLNUM as enrollNum,
 			   	s.J_NO as "subject.no",
 			   	s.J_T_CODE as "subject.siteCode.code",
-			    s.J_IS_PASSED as "subject.isPassed", 
+			    s.J_IS_PASSED as "subject.passed.passedName", 
 			    s.J_GRADE as "subject.grade", 
 			    s.J_SUBJECT_NAME as "subject.subjectName", 
 			    s.J_SCORE as "subject.score",
-				s.J_SUB_PROF as "subject.professor",
-			     j.J_DIV_NUM as "division.divisionNo", 
-			     j.J_DIV_PROF as "division.divisionProfessor",
-			     j.J_LIMIT_NUM as "division.limitNumber",
-				 j.J_DIV_NO as "division.no",
+				s.J_SUB_PROF as "subject.professor.name",
+				s.J_LIMIT_STU as "subject.limitStu",
 				  t.T_NO as "subject.siteCode.no",
 				  t.T_CODE as "subject.siteCode.code",
 				  t.T_NAME as "subject.siteCode.name"
 		from E_ENROLLMENT e, 
-			 J_DIVISION j,
 			 J_SUBJECT s,
 			 T_SITEMAP t
-		where e.E_J_DIV_NO = j.J_DIV_NO
-		and e.E_J_SUBJECT_NO = s.J_NO
+		where e.E_J_SUBJECT_NO = s.J_NO
 		and t.T_CODE = s.J_T_CODE
 	</select>
 	
-	<select id="getAllEnrollByTcode" parameterType="String" resultType="Enroll">
+	<select id="getAllEnrollByTcode" parameterType="string" resultType="Enroll">
 		select e.E_NO as no, 
 			   e.E_ENROLLTIME as enrollTime, 
 			   e.E_ENROLLDAY as enrollDay,
 			   e.E_ENROLLNUM as enrollNum,
 			   	s.J_NO as "subject.no",
 			   	s.J_T_CODE as "subject.siteCode.code",
-			    s.J_IS_PASSED as "subject.isPassed.isPassed", 
+			    s.J_IS_PASSED as "subject.passed.passedName", 
 			    s.J_GRADE as "subject.grade", 
 			    s.J_SUBJECT_NAME as "subject.subjectName", 
 			    s.J_SCORE as "subject.score",
-				s.J_SUB_PROF as "subject.professor",
-			     j.J_DIV_NUM as "division.divisionNo", 
-			     j.J_DIV_PROF as "division.divisionProfessor",
-			     j.J_LIMIT_NUM as "division.limitNumber",
-				 j.J_DIV_NO as "division.no",
+				s.J_SUB_PROF as "subject.professor.name",
+				s.J_LIMIT_STU as "subject.limitStu",
 				  t.T_NO as "subject.siteCode.no",
 				  t.T_CODE as "subject.siteCode.code",
 				  t.T_NAME as "subject.siteCode.name"
 		from E_ENROLLMENT e, 
-			 J_DIVISION j,
 			 J_SUBJECT s,
 			 T_SITEMAP t
-		where e.E_J_DIV_NO = j.J_DIV_NO
-		and e.E_J_SUBJECT_NO = s.J_NO
+		where e.E_J_SUBJECT_NO = s.J_NO
 		and t.T_CODE = s.J_T_CODE
 		and s.J_T_CODE = #{value}
 	</select>
@@ -68,24 +58,19 @@
 			   e.E_ENROLLNUM as enrollNum,
 			   	s.J_NO as "subject.no",
 			   	s.J_T_CODE as "subject.siteCode.code",
-			    s.J_IS_PASSED as "subject.isPassed.isPassed", 
+			    s.J_IS_PASSED as "subject.passed.passedName", 
 			    s.J_GRADE as "subject.grade", 
 			    s.J_SUBJECT_NAME as "subject.subjectName", 
 			    s.J_SCORE as "subject.score",
-				s.J_SUB_PROF as "subject.professor",
-			     j.J_DIV_NUM as "division.divisionNo", 
-			     j.J_DIV_PROF as "division.divisionProfessor",
-			     j.J_LIMIT_NUM as "division.limitNumber",
-				 j.J_DIV_NO as "division.no",
+				s.J_SUB_PROF as "subject.professor.name",
+				s.J_LIMIT_STU as "subject.limitStu",
 				  t.T_NO as "subject.siteCode.no",
 				  t.T_CODE as "subject.siteCode.code",
 				  t.T_NAME as "subject.siteCode.name"
 		from E_ENROLLMENT e, 
-			 J_DIVISION j,
 			 J_SUBJECT s,
 			 T_SITEMAP t
-		where e.E_J_DIV_NO = j.J_DIV_NO
-		and e.E_J_SUBJECT_NO = s.J_NO
+		where e.E_J_SUBJECT_NO = s.J_NO
 		and t.T_CODE = s.J_T_CODE
 		and e.E_NO = #{Eno}
 	</select>
@@ -99,29 +84,24 @@
 			E_ENROLLNUM)
 		values
 			(enrollment_seq.nextval,
-			#{day},
+			#{enrollDay},
 			#{subject.no},
-			#{time},
+			#{enrollTime},
 			0)
 	</insert>
 	
 	<insert id="addRegisub" parameterType="Enroll">
-		INSERT INTO R_REGISUBJECT 
-				(R_REGI_NO, <!-- 1 -->
-				 R_GRADE, 	<!-- 2 -->
-				 R_MAXGRADE, <!-- 3 -->
+		INSERT INTO R_REGISUBJECT (
+				R_REGI_NO, <!-- 1 -->
 				 J_NO, 		<!-- 4 -->
 				 U_STU_NO, 	<!-- 5 -->
-				 E_NO, 		<!-- 6 -->
-				 J_DIV_NO) 	<!-- 7 -->
+				 E_NO)		<!-- 6 -->
 		VALUES(	
 				R_REGISUBJECT_SEQ.nextval, 
-				#{subject.score}, 
-				20,
 				#{subject.no},
-				#{stuNo},
-				#{no}, 
-				#{division.no})	
+				#{student.no, jdbcType=INTEGER},
+				#{no}
+			)	
 	</insert>
 	
 	<update id="updatePlusNowNum" parameterType="int">
@@ -138,10 +118,21 @@
 	
 	<select id="getEnrollCheckNum" parameterType="int" resultType="Enroll">
 		select e.E_ENROLLNUM as enrollNum,
-	   		   j.J_LIMIT_NUM as "division.limitNumber"
- 		from E_ENROLLMENT e, J_DIVISION j 
- 		where e.E_J_DIV_NO = j.J_DIV_NO
+	   		   j.J_LIMIT_STU as limitStu
+ 		from E_ENROLLMENT e, J_subject j
+ 		where e.E_j_subject_no = j.J_NO
  		and E_NO = #{enrollNo}
 	</select>	
 	
+	<!-- <select id="getEnrollById" paraterType="string" resultType="Enroll">
+		select
+			e_no,
+			e_enrollday,
+			e_j_subject_no
+			
+		from
+		
+		where
+			
+	</select> -->
 </mapper>

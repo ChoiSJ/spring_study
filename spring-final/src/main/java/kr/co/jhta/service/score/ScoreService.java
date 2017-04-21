@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.jhta.vo.Score;
 import kr.co.jhta.vo.Semester;
+import kr.co.jhta.vo.SemesterAvg;
 import kr.co.jhta.vo.SiteMap;
 import kr.co.jhta.vo.Subject;
 import kr.co.jhta.vo.SubjectRegister;
@@ -17,11 +18,8 @@ import kr.co.jhta.vo.stu.Student;
 @Transactional
 @Service
 public interface ScoreService {
-	List<SubjectRegister> getAllRegiList();
-	List<Score> getAllScoreList();
 	List<Regisubject> getRegisInfoByhash(HashMap<String, Object> list);
 	
-	SubjectRegister getRegiListByNo(int regiNo);
 	Student getStudentInfoByNo(int stuNo);
 	Subject getSubjectInfoByNo(int jNo);
 	
@@ -38,4 +36,10 @@ public interface ScoreService {
 	Score getScoreinfoByRno(int rno);
 	SubjectRegister getRegiListByStuNo(int stuno);
 	List<Regisubject> getSearchInfoByCode(HashMap<String, Object> searchcode);
+	List<Regisubject> getSearchInfoBySno(int sno);
+	List<SemesterAvg> getSemesterAvgBySno(int sno);
+	SemesterAvg getSemesterAvgTotalBySno(int sno);
+	List<Regisubject> getAllSearchInfo();
+	int getScoreCount();
+	
 }

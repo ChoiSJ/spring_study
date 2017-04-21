@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.jhta.vo.Subject;
+import kr.co.jhta.vo.SubjectEditForm;
 import kr.co.jhta.vo.SubjectIsPassed;
 import kr.co.jhta.vo.SubjectSearchForm;
 
@@ -22,4 +23,8 @@ public interface SubjectService {
 	Subject getByNoList(int no);
 	void subupdate(Subject subject);
 	Subject getSubByNo(int sno);
+	
+	String getPassCodeByNo(int sno);
+	void editSubjectByNo (SubjectEditForm editform);
+	List<Subject> getallenroll();
 }

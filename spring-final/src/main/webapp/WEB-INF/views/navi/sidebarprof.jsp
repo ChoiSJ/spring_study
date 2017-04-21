@@ -11,8 +11,8 @@
                             <b class="caret"></b>
                         </a>
                         <ul id="submenu-2" class="panel-collapse collapse panel-switch" role="menu">
-                            <li><a href="#"><i class="fa fa-caret-right"></i>정보 조회</a></li>
-                            <li><a href="#"><i class="fa fa-caret-right"></i>정보 수정</a></li>
+                            <li><a href="/jhta/prof/profinfo"><i class="fa fa-caret-right"></i>정보 조회</a></li>
+                            <li><a href="/jhta/prof/profPwdCheck"><i class="fa fa-caret-right"></i>비밀번호 수정</a></li>
                         </ul>
                     </li>
                     <li>

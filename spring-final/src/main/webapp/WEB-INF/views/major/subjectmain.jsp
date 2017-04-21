@@ -25,7 +25,7 @@ $(function () {
 <%@ include file="/WEB-INF/views/navi/sidebarmajor.jsp" %>
 	<div class="container" style="margin-left: 250px; padding-top:25px; ">
     	<div class="row text-right">
-			홈
+			홈 > 과목관리 > <strong>과목검색</strong>
     	</div>
     	<div class="row">
     	<h4><span class="glyphicon glyphicon-th-list"></span> 과목검색</h4>

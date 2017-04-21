@@ -50,10 +50,8 @@ public class ScheduleEventController {
 	
 	
 	@RequestMapping("/events.do")
-	public List<ScheduleEvent> getEvents(Date start, Date end, Student student) {
-		List<ScheduleEvent> events = scheduleService.getSchEventByDateService(student.getNo(), start, end);
-		
-		return events;
+	public List<ScheduleEvent> getEvents(Date start, Date end, Student student) {	
+		return scheduleService.getSchEventByDateService(student.getNo(), start, end);
 	}
 	
 	@RequestMapping("/deleteEvent.do")

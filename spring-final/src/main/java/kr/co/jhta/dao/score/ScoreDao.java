@@ -5,6 +5,7 @@ import java.util.List;
 
 import kr.co.jhta.vo.Score;
 import kr.co.jhta.vo.Semester;
+import kr.co.jhta.vo.SemesterAvg;
 import kr.co.jhta.vo.SiteMap;
 import kr.co.jhta.vo.Subject;
 import kr.co.jhta.vo.SubjectRegister;
@@ -13,9 +14,6 @@ import kr.co.jhta.vo.stu.Student;
 
 public interface ScoreDao {
 	
-	List<SubjectRegister> getAllRegiList();
-	List<Score> getAllScoreList();
-	SubjectRegister getRegiListByNo(int regiNo);
 	Student getStudentInfoByNo(int stuNo);
 	Subject getSubjectInfoByNo(int jNo);
 	Semester getSemesterByNo(int no);
@@ -31,4 +29,9 @@ public interface ScoreDao {
 	SubjectRegister getRegiListByStuNo(int stuno);
 	
 	List<Regisubject> getSearchInfoByCode(HashMap<String, Object> searchcode);
+	List<Regisubject> getSearchInfoBySno(int sno);
+	List<Regisubject> getAllSearchInfo();
+	List<SemesterAvg> getSemesterAvgBySno(int sno);
+	SemesterAvg getSemesterAvgTotalBySno(int sno);
+	int getScoreCount();
 }

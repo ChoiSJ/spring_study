@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<script type="text/javascript">
+$(function() {
+	$("a.accordion-toggle").click(function() {	
+	$(".panel-collapse").not($(this)).attr("class","panel-collapse panel-switch collapse");
+	});
+})
+</script>
 	<div id="wrapper">
         <div id="sidebar-wrapper">
             <aside id="sidebar">
@@ -77,6 +83,16 @@
                         <ul id="submenu-8" class="panel-collapse collapse panel-switch" role="menu">
                             <li><a href="#"><i class="fa fa-caret-right"></i>자퇴 신청 목록</a></li>
                             <li><a href="#"><i class="fa fa-caret-right"></i>자퇴 승인 목록</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-9">
+                            <span class="sidebar-icon"></span><span class="sidebar-title">커뮤니티 관리</span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul id="submenu-9" class="panel-collapse collapse panel-switch" role="menu">
+                            <li><a href="../adminrecmessagebox"><i class="fa fa-caret-right"></i>쪽지 관리</a></li>
+                            <li><a href="#"><i class="fa fa-caret-right"></i>메일 관리</a></li>
                         </ul>
                     </li>
                 </ul>

@@ -83,6 +83,8 @@ public class BoardAjaxController {
 		return board;
 	}
 	
+	
+	
 	@PostMapping(path="/admin/boardmanagement")
 	public @ResponseBody Map<String, Object> getDeptByUnibersityCode (@RequestBody String universityCode) {
 		
@@ -112,6 +114,7 @@ public class BoardAjaxController {
 					mapList.put("lectureList", lectureService.getMajorList(subjectCode));
 					
 					return mapList;
+					
 				}
 			}
 		}
@@ -128,5 +131,10 @@ public class BoardAjaxController {
 		return lectureService.getMajorList(subjectCode.replace("=", ""));
 		
 	}
+	
+	
+	
+	
+	
 	
 }

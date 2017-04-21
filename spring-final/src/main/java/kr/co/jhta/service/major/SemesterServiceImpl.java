@@ -35,4 +35,9 @@ public class SemesterServiceImpl implements SemesterService{
 	public void editSemesterByNo(Semester semester) {
 		semesterDao.editSemesterByNo(semester);
 	}
+	
+	@Override
+	public void delSemesterByNo(int no) {
+		semesterDao.delSemesterByNo(no);
+	}
 }

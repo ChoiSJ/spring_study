@@ -36,4 +36,6 @@ public interface BoardService {
 
 	void addProfBoard(Board board);
 
+	void addStuQnaBoard(Board board);
+
 }

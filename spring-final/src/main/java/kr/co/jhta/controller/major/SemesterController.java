@@ -63,6 +63,13 @@ public class SemesterController {
 		return "major/semedetail"; 
 	}
 	
+	@RequestMapping(value="/deleteSeme")
+	public String deleteSeme(@RequestParam("no") int no) {
+		
+		semesterService.delSemesterByNo(no);
+		return "redirect:/admin/semester";
+	}
+	
 	@RequestMapping(value="/editseme", method=RequestMethod.POST )
 	public String editSeme(SemesterForm semeform, String selectyear, String selectseme) throws Exception {
 		

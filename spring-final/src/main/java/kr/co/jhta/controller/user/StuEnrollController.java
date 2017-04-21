@@ -2,8 +2,6 @@ package kr.co.jhta.controller.user;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,11 +11,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.jhta.service.lecture.LectureService;
+import kr.co.jhta.service.major.SubjectService;
 import kr.co.jhta.service.sitemap.SitemapService;
 import kr.co.jhta.service.user.EnrollService;
 import kr.co.jhta.service.user.RegisubjectService;
 import kr.co.jhta.service.user.StudentService;
 import kr.co.jhta.vo.SiteMap;
+import kr.co.jhta.vo.Subject;
 import kr.co.jhta.vo.stu.Enroll;
 import kr.co.jhta.vo.stu.Regisubject;
 import kr.co.jhta.vo.stu.Student;
@@ -30,6 +30,9 @@ public class StuEnrollController {
 	StudentService stuService;
 	
 	@Autowired
+	SubjectService subjectService;
+	
+	@Autowired
 	EnrollService enrollService;
 	
 	@Autowired
@@ -40,9 +43,7 @@ public class StuEnrollController {
 	
 	@Autowired
 	LectureService lectureService;
-	
-	private static final Logger logger = LoggerFactory.getLogger(StuEnrollController.class);
-	
+		
 	@RequestMapping(value="/enrollMain", method=RequestMethod.GET)
 	public String stuEnroll(Model model, Student student) {
 		
@@ -54,14 +55,14 @@ public class StuEnrollController {
 		}
 		
 		model.addAttribute("deptList", deptList);
-				
 		// 수강신청 목록 뿌려주기
 		
 		List<Enroll> enrollList = enrollService.getAllEnrollByTcodeService(student.getDivision());
 		if(!enrollList.isEmpty()) {			
 			model.addAttribute("enrollList", enrollList);
 		}
-		
+		List<Subject> subList = subjectService.getallenroll();
+		model.addAttribute("subList", subList);
 		// 수강신청한 목록 아이디를 가져와 뿌려주기로 바꾸기 
 		List<Regisubject> regisubList = regisubjectService.getRegisByUserNoService(student.getNo());
 		if(!regisubList.isEmpty()) {			
@@ -74,8 +75,9 @@ public class StuEnrollController {
 	@RequestMapping(value="/enrollSend", method=RequestMethod.GET)
 	public String stuEnrollSending(@RequestParam(value="enrollNo") int enrollNo, Student student) {
 		// 사용자가 같은지 비교조건 추가
+		System.out.println(enrollNo);
 		Enroll enroll = enrollService.getEnrollByENoService(enrollNo);
-		boolean check = checkEnrollMax(enroll.getEnrollNum(), enroll.getDivision().getLimitNumber());
+		boolean check = checkEnrollMax(enroll.getEnrollNum(), enroll.getSubject().getLimitStu());
 		if(check) {
 			enroll.setStuNo(student.getNo());
 			enrollService.updatePlusNowNumService(enrollNo);

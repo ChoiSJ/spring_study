@@ -167,14 +167,4 @@ public class AdminRegisterSubjectController {
 		
 		return "redirect:adminregstudent";
 	}
-	
-	@RequestMapping("/adminsendemailbox")
-	public String adminSendEmailBox() {
-		return "administer/adminsendemailbox";
-	}
-	
-	@RequestMapping("/adminrecievemailbox")
-	public String adminRecieveEmailBox() {
-		return "administer/adminrecievemailbox";
-	}
 }

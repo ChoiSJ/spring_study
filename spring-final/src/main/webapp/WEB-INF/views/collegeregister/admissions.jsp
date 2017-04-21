@@ -14,7 +14,13 @@
 	<script type="text/javascript">
 	$(function () {
 		$("#college").change(function (event) {
+			
 			var dept = $(this).find("option:selected").val();
+			if(dept == ''){
+				$('#division').empty();
+				return false;
+			}
+			
 			$.ajax({
 				url: "searchmajor?dept=" + dept,
 				dataType: "json",
@@ -27,6 +33,20 @@
 				}
 			});
 		});
+		$("#search-btn").click(function (event) {
+			event.preventDefault();
+			$("[name='register']").val($("#register").find("option:selected").val());
+			if($("#division").find("option:selected").val() != 'not'){
+				$("[name='division']").val($("#division").find("option:selected").val());	
+			}else{
+				$("[name='division']").val('');
+			}
+			$("[name='grade']").val($("#grade").find("option:selected").val());
+			$("[name='sort']").val($("#sort").find("option:selected").val());
+			$("[name='q']").val($("#q").val());
+			$("#search-form").submit();
+		});
+		
 	});
 	</script>
 </head>
@@ -52,7 +72,7 @@
 							<div class="col-md-2">
 								<div class="form-group">
 									<select class="form-control" id="register">
-										<option value="">전체</option>
+										<option value="all">전체</option>
 										<option value="AD1000">신입학</option>
 										<option value="AD2000">재입학</option>	
 									</select>
@@ -64,15 +84,15 @@
 							<div class="col-md-2">
 								<div class="form-group">
 									<select class="form-control" id="grade">
-										<option value="">전체</option>	
-										<option value="">2017년</option>
-										<option value="">2016년</option>
-										<option value="">2015년</option>
-										<option value="">2014년</option>
-										<option value="">2013년</option>
-										<option value="">2012년</option>
-										<option value="">2011년</option>
-										<option value="">2010년</option>
+										<option value="00">전체</option>	
+										<option value="17">2017년</option>
+										<option value="16">2016년</option>
+										<option value="15">2015년</option>
+										<option value="14">2014년</option>
+										<option value="13">2013년</option>
+										<option value="12">2012년</option>
+										<option value="11">2011년</option>
+										<option value="10">2010년</option>
 									</select>
 								</div>
 							</div>
@@ -92,6 +112,7 @@
 							</div>
 							<div class="col-md-2">
 								<select class="form-control" id="division">
+									<option value="not">대학을 선택하세요</option>
 								</select>
 							</div>  
 						</div>
@@ -101,16 +122,16 @@
 						<div class="row">
 							<div class="col-md-2">
 								<select class="form-control" id="sort">
-									<option value="">이름</option>	
-									<option value="">학번</option>
-									<option value="">전화번호</option>
+									<option value="U_STU_NAME">이름</option>	
+									<option value="U_STU_ID">학번</option>
+									<option value="U_STU_PHONE">전화번호</option>
 								</select>
 							</div>
 							<div class="col-md-6">
 								<input class="form-control" type="text" id="q" placeholder="전화번호로 검색시 '-'을 생략하여 입력하세요."/>
 							</div>
 							<div class="col-md-1">
-								<button type="submit" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-search"></span> 검색</button>
+								<button type="submit" class="btn btn-sm btn-primary" id="search-btn"><span class="glyphicon glyphicon-search"></span> 검색</button>
 							</div>
 						</div>
 					</form>
@@ -141,8 +162,13 @@
 								</tr>
 							</thead>
 							<tbody>
+								<c:if test="${empty studList }">
+									<tr class="text-center">
+										<td colspan="6">조회된 학생이 없습니다.</td>
+									</tr>
+								</c:if>
 								<c:forEach var="stud" items="${studList }" varStatus="status">
-									<tr>
+									<tr onclick="location.href='studinfo?id=${stud.id}'" style="cursor: pointer;">
 										<td>${status.count }</td>
 										<td>${stud.register }</td>
 										<td>${stud.id }</td>
@@ -157,6 +183,13 @@
 				</div>
 			</div>
 		</div>
+		<form action="searchadmission" method="post" id="search-form">
+			<input type="hidden" name="register">
+			<input type="hidden" name="division">
+			<input type="hidden" name="grade">
+			<input type="hidden" name="sort">
+			<input type="hidden" name="q">
+		</form>
 	</div>
 </body>
 </html>

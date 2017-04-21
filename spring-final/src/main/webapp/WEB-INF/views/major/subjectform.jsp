@@ -62,10 +62,10 @@ $(function() {
 <%@ include file="/WEB-INF/views/navi/sidebarmajor.jsp" %>
 	<div class="container" style="margin-left: 250px; padding-top:25px; ">
     	<div class="row text-right">
-         	홈
+         	홈 > 과목관리 > <strong>과목등록</strong>
       	</div>
       	<div class="row">
-         	<h4><span class="glyphicon glyphicon-th-list"></span> 교과등록</h4>
+         	<h4><span class="glyphicon glyphicon-th-list"></span> 과목등록</h4>
          	<hr style="border:solid 0.5px #2C7BB5;">
       	</div>
       	<div class="row">

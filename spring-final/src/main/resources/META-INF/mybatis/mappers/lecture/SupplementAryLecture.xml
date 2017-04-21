@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="kr.co.jhta.dao.suplementAryLecture.SupplementLecturedao">
+ 
+ <!-- select box 정보 -->
+ <select id="getColleageInfor" parameterType="string" resultType="kr.co.jhta.vo.SupplementAryLecture">
+ 	select
+ 		T_NO 			AS college,
+ 		T_CODE 			AS collegeCode,
+ 		T_NAME 			AS major,
+ 		T_PRECODE 		AS rinkCode
+ 	from
+ 		T_SITEMAP
+ 	where
+ 		T_PRECODE = #{rinkCode}
+ </select>
+ <select id="getSubjectInfor" parameterType="string" resultType="kr.co.jhta.vo.SupplementArtLectureTable">
+ 	select
+		U.U_PROF_ID  			AS professorId,
+ 		U.U_PROF_NAME 			AS professorName,
+ 		U.U_PROF_NO 			AS professorNo,
+ 		U.U_PROF_REGISTER 		AS professorRegister,
+ 		J.J_NO 					AS subjectNo,
+ 		J.J_SUBJECT_NAME 		AS subjectName,
+ 		J.J_SCORE 				AS subjectScore,
+ 		J.J_IS_PASSED 			AS subjectPassed
+ 	from
+ 		U_PROFESSOR U,
+ 		J_SUBJECT J
+ 	where
+ 		J.J_SUB_PROF = U.U_PROF_ID
+ 	and	
+ 		U.U_PROF_ID = #{professorId};
+ 			
+ </select>
+ </mapper>

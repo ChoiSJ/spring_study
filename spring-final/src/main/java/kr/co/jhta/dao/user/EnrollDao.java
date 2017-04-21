@@ -16,4 +16,5 @@ public interface EnrollDao {
 	Enroll getEnrollCheckNum(int enrollNo);
 	List<Enroll> getAllEnrollByTcode(String siteCode);
 	void addEnroll(Enroll enroll);
+	List<Enroll> getEnrollById(String id);
 }

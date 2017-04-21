@@ -9,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import kr.co.jhta.service.professor.ProfessorService;
 import kr.co.jhta.service.professor.SyllabusService;
 import kr.co.jhta.service.user.EnrollService;
 import kr.co.jhta.vo.Professor;
+import kr.co.jhta.vo.ProfessorForm;
 import kr.co.jhta.vo.Semester;
 import kr.co.jhta.vo.SiteMap;
 import kr.co.jhta.vo.Subject;
@@ -30,6 +32,8 @@ import kr.co.jhta.vo.Syllabus;
 import kr.co.jhta.vo.Syllabusform;
 import kr.co.jhta.vo.stu.Enroll;
 import kr.co.jhta.vo.stu.EnrollForm;
+import kr.co.jhta.vo.stu.Student;
+import kr.co.jhta.vo.stu.StudentForm;
 
 @Controller
 @RequestMapping("/prof")
@@ -142,7 +146,7 @@ public class ProfController {
 		seme.setNo(subjackform.getSelectNo());
 		subject.setSelectNo(seme);
 		SubjectIsPassed pass = new SubjectIsPassed();
-		pass.setCode(subjackform.getIsPassed());
+		pass.setCode(subjackform.getPassed());
 		subject.setPassed(pass);
 		
 		BeanUtils.copyProperties(subjackform, subject);
@@ -193,7 +197,9 @@ public class ProfController {
 		Enroll enroll = new Enroll();
 		Subject subject = new Subject();
 		subject.setNo(enrollform.getSubjectNo());
-		
+		enroll.setSubject(subject);
+		BeanUtils.copyProperties(enrollform, enroll);
+		enrollService.addEnroll(enroll);
 		
 		
 		return "redirect:/prof/subinfo";
@@ -249,7 +255,7 @@ public class ProfController {
 		seme.setNo(subjackform.getSelectNo());
 		subject.setSelectNo(seme);
 		SubjectIsPassed pass = new SubjectIsPassed();
-		pass.setCode(subjackform.getIsPassed());
+		pass.setCode(subjackform.getPassed());
 		subject.setPassed(pass);
 		SiteMap site = new SiteMap();
 		site.setCode(subjackform.getCode());
@@ -258,5 +264,52 @@ public class ProfController {
 		subjectService.subupdate(subject);
 		return "redirect:/prof/subinfo";
 	}
+	@RequestMapping(value="/profinfo", method=RequestMethod.GET)
+	public String profinfo(@Valid @ModelAttribute("professorForm")ProfessorForm professorForm,Model model, HttpSession session){
+		Professor prof = (Professor) session.getAttribute("LOGIN_USER");
+		System.out.println("prof 찍기 전 db작업전");
+		professorService.getProfessorById(prof.getId());
+		System.out.println(prof);
+		model.addAttribute("prof", prof);
+		return "/prof/profinfo";
+	}
 	
+	@RequestMapping(value="/profinfo", method=RequestMethod.POST)
+	public String profinfoform(@Valid @ModelAttribute("professorForm")ProfessorForm professorForm,
+						BindingResult errors, Professor professor, Model model)throws Exception{
+		if(errors.hasErrors()){
+			model.addAttribute("prof",professor);
+			return "/prof/profinfo";
+		}
+		System.out.println(professorForm);
+		System.out.println(professor);
+		model.addAttribute("professorForm", professorForm);
+		BeanUtils.copyProperties(professorForm, professor);		
+		professorService.updateProfessorInfo(professor);
+		
+		
+		return "redirect:/prof/profinfo";
+	}
+	@RequestMapping(value="/profPwdCheck", method=RequestMethod.GET)
+	public String profPwdCheckForm(){
+		
+		return "/prof/profpwdcheck";
+	}
+	@RequestMapping(value="/profPwdCheck", method=RequestMethod.POST)
+	public String profPwdCheck(Professor professor, Model model,
+					@RequestParam(value="profPwd", required=true)String profPwd,
+					@RequestParam(value="Repwd", required=true)String Repwd){
+		boolean isPassed = false;
+		if(professor.getPwd().equals(profPwd)){
+			System.out.println(profPwd + "." +professor);
+			isPassed = true;
+			professor.setPwd(Repwd);
+			professorService.updateProfessorPwd(professor);
+			model.addAttribute("confirm", isPassed);
+			model.addAttribute("professor",professor);
+			return "/prof/profpwdcheck";
+		}
+		return "redirect:/prof/profpwdcheck";
+	}
+
 }

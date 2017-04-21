@@ -12,5 +12,6 @@ public interface ProfessorDao {
 	List<Professor> proAllList();
 	Professor getProfessorById(String id);
 	List<Professor> getProListByTCode(String code);
-	
+	void updateProfessorInfo(Professor professor);
+	void updateProfessorPwd(Professor professor);
 }
