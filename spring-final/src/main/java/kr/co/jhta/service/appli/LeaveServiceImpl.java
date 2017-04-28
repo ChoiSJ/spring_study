@@ -20,6 +20,11 @@ public class LeaveServiceImpl implements LeaveService{
 	public void addNewLeaveService(Leave leave) {
 		leaveDao.addNewLeave(leave);
 	}
+	
+	@Override
+	public List<Leave> getLeaveOneBystuNoService(int stuNo) {
+		return leaveDao.getLeaveOneBystuNo(stuNo);
+	}
 
 	@Override
 	public List<Leave> getAllEnrolledLeaveByStuNoService(int stuNo) {

@@ -37,4 +37,6 @@ List<Subject> getAllList();
 	void editSubjectByNo (SubjectEditForm editform);
 	
 	List<Subject> getallenroll();
+	
+	Subject getByENoList(int no);
 }

@@ -15,6 +15,44 @@
 			A_ATTENDANCE_SEQ.nextval
 		)
 	</insert>
+	<update id="updateAttendanceByAttno" parameterType="attendance">
+		update
+			A_ATTENDANCE
+		set
+			A_ATT_SCORE = #{attScore},
+			A_ATT_WEEK1 = #{week1},
+   			A_ATT_WEEK2 = #{week2},
+  		 	A_ATT_WEEK3 = #{week3},
+   			A_ATT_WEEK4 = #{week4},
+   			A_ATT_WEEK5 = #{week5},
+   			A_ATT_WEEK6 = #{week6},
+   			A_ATT_WEEK7 = #{week7},
+   			A_ATT_WEEK8 = #{week8},
+   			A_ATT_WEEK9 = #{week9},
+   			A_ATT_WEEK10 = #{week10},
+  		 	A_ATT_WEEK11 = #{week11},
+   			A_ATT_WEEK12 = #{week12},
+   			A_ATT_WEEK13 = #{week13},
+   			A_ATT_WEEK14 = #{week14},
+   			A_ATT_WEEK15 = #{week15} 		
+		where
+			A_ATT_NO  = #{attNo}
+	</update>
+	<update id="updateAttScoreByScoreNo" parameterType="attendance">
+		update
+			S_SCORE
+		set
+			S_ATTENDANCE_SCORE = #{attScore}
+		where
+			S_SCORE_NO = #{scoreNo}
+	</update>
+	<delete id="delAttendance" parameterType="int">
+		delete
+		from 
+			A_ATTENDANCE
+		where
+			A_SCORE_NO = #{sno}
+	</delete>
 	
 	<select id="getAllAttendanceList" resultType="attendance">
 		select
@@ -36,5 +74,47 @@
 			a_attendance
 		where
 			a_score_no = #{sno}
+	</select>
+	
+	<select id="getAttInfolistByStuNo" parameterType="int" resultType="kr.co.jhta.vo.Scorelist">
+		select
+	   r.R_REGI_NO as "no",
+		s.J_SUBJECT_NAME as "subject.subjectName",
+			sc.s_score_no as "score.no",
+				sem.S_SEME_SELECT as "subject.selectNo.semeSelect",
+				 att.A_ATT_NO as "score.attendance.attNo",
+				 att.A_ATT_SCORE as "score.attendance.attScore",
+				 att.A_ATT_WEEK1 as "score.attendance.week1",
+				 att.A_ATT_WEEK2 as "score.attendance.week2",
+				 att.A_ATT_WEEK3 as "score.attendance.week3",
+				 att.A_ATT_WEEK4 as "score.attendance.week4",
+				 att.A_ATT_WEEK5 as "score.attendance.week5",
+				 att.A_ATT_WEEK6 as "score.attendance.week6",
+				 att.A_ATT_WEEK7 as "score.attendance.week7",
+				 att.A_ATT_WEEK8 as "score.attendance.week8",
+				 att.A_ATT_WEEK9 as "score.attendance.week9",
+				 att.A_ATT_WEEK10 as "score.attendance.week10",
+				 att.A_ATT_WEEK11 as "score.attendance.week11",
+				 att.A_ATT_WEEK12 as "score.attendance.week12",
+				 att.A_ATT_WEEK13 as "score.attendance.week13",
+				 att.A_ATT_WEEK14 as "score.attendance.week14",
+				 att.A_ATT_WEEK15 as "score.attendance.week15"
+		from  
+				J_SUBJECT s,
+				T_SITEMAP t,
+				R_REGISUBJECT r,
+				S_SCORE sc,
+				U_STUDENT u,
+				S_SEMESTER sem,
+				A_ATTENDANCE att
+		where 
+			t.T_CODE = s.J_T_CODE
+		and r.J_NO = s.J_NO
+		and sem.S_NO = s.J_SEMESTER
+		and att.A_SCORE_NO = sc.S_SCORE_NO
+		and sc.REGISTER = r.R_REGI_NO
+		and r.U_STU_NO = u.U_STU_NO
+		and r.U_STU_NO = #{stuno}
+		order by r.R_REGI_NO
 	</select>
 </mapper>

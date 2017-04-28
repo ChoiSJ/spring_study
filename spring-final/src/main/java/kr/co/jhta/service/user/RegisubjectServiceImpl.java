@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.co.jhta.dao.score.ScoreDao;
 import kr.co.jhta.dao.user.EnrollDao;
 import kr.co.jhta.dao.user.RegisubjectDao;
+import kr.co.jhta.service.score.ScoreService;
 import kr.co.jhta.vo.stu.Regisubject;
 
 @Service
@@ -20,7 +20,7 @@ public class RegisubjectServiceImpl implements RegisubjectService{
 	EnrollDao enrollDao;
 	
 	@Autowired
-	ScoreDao scoreDao;
+	ScoreService scoreService;
 
 	@Override
 	public List<Regisubject> getAllRegisInfoService() {
@@ -32,9 +32,8 @@ public class RegisubjectServiceImpl implements RegisubjectService{
 
 	@Override
 	public void deleteRegisubByENoService(int enrollNo) {
-		int rno = scoreDao.getRegisInfoByEno(enrollNo).getNo();
-		System.out.println(rno);
-		scoreDao.delScore(rno);
+		Regisubject regilist = scoreService.getRegisInfoByEno(enrollNo);
+		scoreService.delScore(regilist.getNo());
 		regiDao.deleteRegisubByENo(enrollNo);
 	}
 

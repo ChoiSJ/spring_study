@@ -12,7 +12,7 @@ public interface LeaveDao {
 	
 	void addNewLeave(Leave leave);
 	List<Leave> getAllEnrolledLeaveByStuNo(int stuNo);
-	
+	List<Leave> getLeaveOneBystuNo(int stuNo);
 	void deleteEnrollByNo(Map<String, Object> map);
 	String getCnameByCcode(String cCode);
 	void updateLeave(Map<String, Object> map);

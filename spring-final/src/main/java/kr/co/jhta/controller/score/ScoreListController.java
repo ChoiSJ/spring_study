@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.jhta.service.score.ScoreService;
 import kr.co.jhta.service.sitemap.SitemapService;
-import kr.co.jhta.vo.PageNation;
 import kr.co.jhta.vo.Score;
 import kr.co.jhta.vo.SearchForm;
 import kr.co.jhta.vo.SiteMap;
@@ -31,49 +30,47 @@ public class ScoreListController {
 	@Autowired
 	private SitemapService sitemapService;
 				
-	@RequestMapping(value="/scorelist.do",method=RequestMethod.GET)
-	public String scorelist(SearchForm searchForm, Model model){
+	@RequestMapping(value="/admin/scorelist.do",method=RequestMethod.GET)
+	public String scorelist(Model model){
 		
 		List<Regisubject> regilist = scoreService.getAllSearchInfo();
-		/*int rows = scoreService.getScoreCount();
-		PageNation pageNation = null;
-		pageNation = new PageNation(searchForm.getPageNo(), rows);
-
-		searchForm.setBeginIndex(pageNation.getBeginIndex());
-		searchForm.setEndIndex(pageNation.getEndIndex());
+		List<SiteMap> sitemaplist = sitemapService.getAllSitemapService();
 		
-		model.addAttribute("search", searchForm);*/
 		model.addAttribute("regilist", regilist);
+		model.addAttribute("sitemaplist", sitemaplist);
 		
 		return "score/scorelist";
 	}
 	
-	@RequestMapping(value="/scoreform.do", method=RequestMethod.GET)
-	public String scoreedit(@RequestParam String sno, Model model){
-		int no = Integer.parseInt(sno);
-		Score score = scoreService.getScoreByNo(no);
+	@RequestMapping(value="/admin/scoreform.do", method=RequestMethod.GET)
+	public String scoreedit(@RequestParam int sno, @RequestParam int psco ,Model model){
+		Score score = scoreService.getScoreByNo(sno);
+		
+		model.addAttribute("no", sno);
+		model.addAttribute("psco", psco);
 		model.addAttribute("score", score);
 		model.addAttribute("scoreupdate", new Score());
 		return "score/scoreform";
 	}
 	
-	@RequestMapping(value="/scoreform.do", method=RequestMethod.POST)
+	@RequestMapping(value="/admin/scoreform.do", method=RequestMethod.POST)
 	public String scoreupdate(@Valid @ModelAttribute("scoreupdate") Score scores, Errors errors){
 		if(errors.hasErrors()){
 			return "score/scoreform";
 		}
 		scoreService.updateScoreByNo(scores);
-		return "redirect:/scorelist.do";
+		return "redirect:/admin/scorelist.do";
 	}
 	
-	@RequestMapping(value="/scoreSearch.do", method=RequestMethod.POST)
-	public @ResponseBody List<SiteMap> siteListBysiteCode(String score){
+	@RequestMapping(value="/admin/scoreSearch.do", method=RequestMethod.POST)
+	public @ResponseBody List<SiteMap> siteListBysiteCode(SearchForm searchForm, String score){
 		SiteMap sitemap = new SiteMap();
 		sitemap.setPreCode(score);
+		searchForm.setKeyword(score);
 		return sitemapService.getAllSitemapSecService(sitemap);
 	}
 	
-	@RequestMapping(value="/scoreSearchInfo", method=RequestMethod.POST)
+	@RequestMapping(value="/admin/scoreSearchInfo", method=RequestMethod.POST)
 	public @ResponseBody List<Regisubject> searchScoreList(@RequestParam(value="code") String code1, @RequestParam(value="codes") String code2, @RequestParam(value="stucode") String stucode){
 		
 		HashMap<String, Object> searchcode = new HashMap<String, Object>();
@@ -81,6 +78,7 @@ public class ScoreListController {
 		searchcode.put("code2", code2);
 		searchcode.put("stucode", stucode);
 		List<Regisubject> scorelist = (List<Regisubject>) scoreService.getSearchInfoByCode(searchcode);
+		System.out.println(scorelist);
 		return scorelist;
 	}
 }

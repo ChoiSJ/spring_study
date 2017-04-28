@@ -8,12 +8,161 @@
 		insert into p_report(
 			p_no,
 			p_e_no,
-			p_content,
+			p_prof_no,	
 			p_title,
-			p_prof_no	
+			p_content,
+			p_report_st,
+			p_report_end,
+			p_upfile
 		)values(
-			preport_comm
+			preport_comm.nextval,
+			#{enroll.no},
+			#{professor.no},
+			#{title},
+			#{content},
+			#{prost},
+			#{proend},
+			#{upfile, jdbcType=VARCHAR}
 		)
 	</insert>
-
+	<select id="reportAllList" resultType="Preport">
+		select
+			p_no as no,
+			p_e_no as "enroll.no",
+			p_prof_no as "professor.no",	
+			p_title title,
+			p_content content,
+			p_report_st prost,
+			p_report_end proend,
+			p_upfile as upfile
+		from
+			p_report
+	</select>
+	
+	<select id="getProftitle" parameterType="int" resultType="Preport">
+	SELECT
+		A.J_SUBJECT_NAME as"subject.subjectName",
+		B.P_TITLE as "title",
+		B.P_no as no,
+		C.E_no as "enroll.no"
+	from
+		J_SUBJECT A, P_REPORT B, E_enrollment C
+	where
+		C.E_NO = B.P_E_NO
+	and
+		A.J_NO = C.E_J_SUBJECT_NO
+	and
+		B.P_prof_no = #{value}
+	</select>
+	<select id="getupdate" parameterType="int" resultType="Preport">
+	SELECT
+		A.J_SUBJECT_NAME as"subject.subjectName",
+		B.P_TITLE as "title",
+		B.P_no as no
+		B.P_content as content
+	from
+			J_SUBJECT A, P_REPORT B, E_enrollment C
+	where
+		C.E_NO = B.P_E_NO
+	and
+		A.J_NO = C.E_J_SUBJECT_NO
+	and
+		B.P_NO = #{value}
+	</select>
+	<select id ="getByProfNo" parameterType="int" resultType="Preport">
+		select
+			B.E_NO as "enroll.no",		
+			A.J_SUBJECT_NAME as "subject.subjectName",
+			D.P_TITLE as title,
+			D.P_CONTENT as content,
+			C.U_PROF_NO as "professor.no"
+		from
+			J_SUBJECT A, E_ENROLLMENT B, U_PROFESSOR C, P_REPORT D
+		where
+			A.J_NO = B.E_J_SUBJECT_NO
+		and
+			C.U_PROF_ID = A.J_SUB_PROF
+		AND
+			D.P_E_NO = B.E_NO
+		and
+			B.E_NO = #{value}
+	</select>
+	<select id="getProfEnroll" parameterType="string" resultType="Preport">
+		select
+			B.E_NO as "enroll.no",
+			A.J_SUBJECT_NAME as "subject.subjectName"
+		from
+			J_SUBJECT A, E_ENROLLMENT B, U_PROFESSOR C
+		where
+			A.J_NO = B.E_J_SUBJECT_NO
+		and
+			C.U_PROF_ID = A.J_SUB_PROF
+		and
+			C.U_PROF_ID = #{value}
+	</select>
+	
+	<select id="getupdatereport" parameterType="int" resultType="Preport">
+		select
+			B.E_NO as "enroll.no",
+			A.J_SUBJECT_NAME as "subject.subjectName",
+			D.P_NO as no,
+			D.P_TITLE as title,
+			C.U_PROF_NO as "professor.no",
+			D.P_CONTENT as content,
+			D.P_report_st as prost,
+			D.P_report_end as proend
+		from
+			J_SUBJECT A, E_ENROLLMENT B, U_PROFESSOR C, P_REPORT D
+		where
+			A.J_NO = B.E_J_SUBJECT_NO
+		and
+			C.U_PROF_ID = A.J_SUB_PROF
+		and
+			D.P_E_NO = B.E_NO
+		and
+			D.P_NO = #{value}
+	</select>
+	<update id="getByNoupdate" parameterType="Preport">
+		UPDATE 
+			P_REPORT
+		SET 
+			p_title = #{title},
+			p_content = #{content},
+			p_report_st = #{prost},
+			p_report_end = #{proend}
+		WHERE 
+			p_no = #{no}
+	</update>
+	<delete id="deleteReport" parameterType="int">
+  		delete 
+  			from p_report
+  		where
+  			 p_no = #{no}
+	</delete>
+	<select id="getAttchFileName" parameterType="int" resultType="string">
+		SELECT p_upfile
+		FROM P_REPORt
+		WHERE P_NO = #{value}
+	</select>	
+	<select id="getByEnoOne" parameterType="map" resultType="Preport">
+		SELECT
+			DISTINcT S.S_SCORE_NO as "score.no",
+			J.J_SCORE as "subject.score"
+		FROM
+			R_REGISUBJECT R, U_STUDENT U, S_SCORE S, P_REPORT T, P_REPORTCONTENT P, J_SUBJECT J
+		where
+			R.U_STU_NO = U.U_STU_NO
+		and
+			S.REGISTER = R.R_REGI_NO
+		and
+			T.P_NO = P.P_P_NO
+		AND
+			U.U_STU_NO = P.P_S_NO
+		AND
+			J.J_NO = R.J_NO
+		and
+			R.E_NO = #{eNo}
+		and
+			P.P_S_NO = #{stuNo}
+	</select>
 </mapper>

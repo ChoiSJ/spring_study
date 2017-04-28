@@ -47,14 +47,14 @@ $(function() {
    <div class="container" style="margin-left: 250px; padding-top:25px; ">
    <input type="hidden" value="${confirm }" id="pwdConfirm"/>
     <div class="row text-right">
-         홈
+         홈 > 비밀번호 변경
       </div>
       <div class="row">
          <h4><span class="glyphicon glyphicon-th-list"></span> 비밀번호 변경</h4>
          <hr style="border:solid 0.5px #2C7BB5;">
       </div>
       <div class="row">
-		<div style="padding-top: 2px; text-align: center;  border:1px solid gray;">
+		<div style="padding-top: 2px; padding: 5px; margin:25px; text-align: center;  border:1px solid gray;">
 			<form action="stuPwdCheck" method="POST">
 				<h2 style="padding-top: 30px;"><strong>비밀번호 변경</strong></h2><br />
 				<hr />
@@ -66,15 +66,15 @@ $(function() {
 				<hr />
 				<div class="text-left">
 					<p>
-						<label for="stuPwd" style="padding-left: 30px; padding-right: 28px;">현재 비밀번호</label> 
+						<label for="stuPwd" style="padding-left: 30px; padding-right: 28px;">*현재 비밀번호</label> 
 						<input type="password" id="stuPwd" name="stuPwd"/>	
 					</p>
 					<p>
-						<label for="Repwd" style="padding-left: 30px; padding-right: 42px;">새 비밀번호</label>
+						<label for="Repwd" style="padding-left: 30px; padding-right: 42px;">*새 비밀번호</label>
 						<input type="password" id="Repwd" name="Repwd"/>	
 					</p>
 					<p>
-						<label for="RepwdCheck" style="padding-left: 30px; padding-right: 10px;">새 비밀번호 확인</label>
+						<label for="RepwdCheck" style="padding-left: 30px; padding-right: 10px;">*새 비밀번호 확인</label>
 						<input type="password" id="RepwdCheck"/> <span id="RepwdCheckSpan"></span>
 					</p>
 				</div>

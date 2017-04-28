@@ -34,7 +34,7 @@ public class AdminRegisterSubjectController {
 	@Autowired
 	private EnrollDao enrollDao;
 	
-	@RequestMapping(value="/adminregsubject", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/adminregsubject", method=RequestMethod.GET)
 	public String adminRegSubject(Model model) {
 		List<SiteMap> deptList = sitemapService.getAllSitemapPreService();
 		List<Semester> semesterList = lectureService.getAllSemesterList();
@@ -50,7 +50,7 @@ public class AdminRegisterSubjectController {
 	}
 	
 	// 대학을 선택하면 학과들이 검색되도록 하는 ajax 검색 기능
-	@RequestMapping(value="/adminregsubjectmenu", method=RequestMethod.POST)
+	@RequestMapping(value="/admin/adminregsubjectmenu", method=RequestMethod.POST)
 	public @ResponseBody List<SiteMap> adminRegSubjectGetMajor(String dept) {
 		SiteMap siteMap = new SiteMap();
 		siteMap.setPreCode(dept);;
@@ -59,7 +59,7 @@ public class AdminRegisterSubjectController {
 	}
 	
 	// 대학과 학과를 선택해서 조회
-	@RequestMapping(value="/adminregsubject", method=RequestMethod.POST)
+	@RequestMapping(value="/admin/adminregsubject", method=RequestMethod.POST)
 	public String adminRegSubjectSearch(Model model, String major, int semesterNo, int pagination, int currentPageNo) {
 		// 화면이 로드될 때마다 선택메뉴가 보이게 하기 위한 리스트 생성문
 		model.addAttribute("deptList", sitemapService.getAllSitemapPreService());
@@ -67,15 +67,26 @@ public class AdminRegisterSubjectController {
 		
 		// 검색했을 때 과목 정보를 가져오는 코드
 		List<Map<String, Object>> subTempList = lectureService.getSubjectList(major);
-		
+		System.out.println(subTempList);
 		// 검색했을 때 전공 이름을 가져오는 코드
 		SiteMap searchDept = lectureService.getDetpList(major);
 		
 		// 검색했을 때 수강신청기간 정보를 가져오는 코드
 		Semester semester = lectureService.getSemesterList(semesterNo);
 		
+		// 같은 학기가 아닐 때 그 정보를 걸러내는 코드
+		for (int i=0; i<subTempList.size(); i++) {
+			@SuppressWarnings("unchecked")
+			Map<String, Object> selectNoMap = (Map<String, Object>) subTempList.get(i).get("selectNo");
+			int no = Integer.parseInt(String.valueOf(selectNoMap.get("no")));
+			
+			if (no != semesterNo) {
+				subTempList.remove(i);
+			}
+		}
+		System.out.println(subTempList);
 		// 페이지네이션
-		int totalRows = lectureService.getSubjectRowCount(major);
+		int totalRows = subTempList.size();
 		int totalPageNo = (int) Math.ceil((double) totalRows/pagination);
 		int beginPage = (currentPageNo - 1) * pagination + 1;
 		int endPage = currentPageNo * pagination;
@@ -104,7 +115,7 @@ public class AdminRegisterSubjectController {
 		// form 대신에 검색된 페이지네이션 갯수만큼 전체 결과에서 현재 페이지 표현수만큼 다시 복사하는 코드
 		if (subTempList.size() != 0) {
 			for (int i=beginPage-1; i<endPage; i++) {
-				subList.add(subTempList.get(i));
+				subList.add(subTempList.get(i));					
 			}
 
 			// 과목 정보에 과목 이름을 전부 넣는 코드
@@ -126,7 +137,7 @@ public class AdminRegisterSubjectController {
 		return "administer/adminregsubject";
 	}
 	
-	@RequestMapping("/adminregstudent")
+	@RequestMapping("/admin/adminregstudent")
 	public String adminRegStudent(Model model) {
 		model.addAttribute("semesterList", lectureService.getAllSemesterList());
 		model.addAttribute("majorList", lectureService.getAllMajorList());
@@ -134,7 +145,7 @@ public class AdminRegisterSubjectController {
 		return "administer/adminregstudent";
 	}
 	
-	@RequestMapping(value="/adminregstudent", method=RequestMethod.POST)
+	@RequestMapping(value="/admin/adminregstudent", method=RequestMethod.POST)
 	public String adminStuSearch(Model model, String major, int semester, String student, String word) {
 		model.addAttribute("semesterList", lectureService.getAllSemesterList());
 		model.addAttribute("majorList", lectureService.getAllMajorList());
@@ -165,6 +176,6 @@ public class AdminRegisterSubjectController {
 		regiSubjectDao.deleteRegisubByENo(dno);
 		enrollDao.updateMinusNowNum(dno);
 		
-		return "redirect:adminregstudent";
+		return "redirect:/admin/adminregstudent";
 	}
 }

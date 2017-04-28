@@ -19,7 +19,8 @@
 				s.J_LIMIT_STU as "subject.limitStu",
 				  t.T_NO as "subject.siteCode.no",
 				  t.T_CODE as "subject.siteCode.code",
-				  t.T_NAME as "subject.siteCode.name"
+				  t.T_NAME as "subject.siteCode.name",
+				  t.T_PRECODE as "subject.siteCode.preCode"
 		from E_ENROLLMENT e, 
 			 J_SUBJECT s,
 			 T_SITEMAP t
@@ -42,7 +43,8 @@
 				s.J_LIMIT_STU as "subject.limitStu",
 				  t.T_NO as "subject.siteCode.no",
 				  t.T_CODE as "subject.siteCode.code",
-				  t.T_NAME as "subject.siteCode.name"
+				  t.T_NAME as "subject.siteCode.name",
+				  t.T_PRECODE as "subject.siteCode.preCode"
 		from E_ENROLLMENT e, 
 			 J_SUBJECT s,
 			 T_SITEMAP t
@@ -57,6 +59,7 @@
 			   e.E_ENROLLDAY as enrollDay,
 			   e.E_ENROLLNUM as enrollNum,
 			   	s.J_NO as "subject.no",
+			   	s.J_subject_name as "subject.subjectName",
 			   	s.J_T_CODE as "subject.siteCode.code",
 			    s.J_IS_PASSED as "subject.passed.passedName", 
 			    s.J_GRADE as "subject.grade", 
@@ -66,13 +69,28 @@
 				s.J_LIMIT_STU as "subject.limitStu",
 				  t.T_NO as "subject.siteCode.no",
 				  t.T_CODE as "subject.siteCode.code",
-				  t.T_NAME as "subject.siteCode.name"
+				  t.T_NAME as "subject.siteCode.name",
+				  t.T_PRECODE as "subject.siteCode.preCode"
 		from E_ENROLLMENT e, 
 			 J_SUBJECT s,
 			 T_SITEMAP t
 		where e.E_J_SUBJECT_NO = s.J_NO
 		and t.T_CODE = s.J_T_CODE
 		and e.E_NO = #{Eno}
+	</select>
+	<select id="getProfEnroll" parameterType="string" resultType="Enroll">
+		SELECT
+			B.e_no as no,
+			A.j_subject_name as "subject.subjectName",
+			B.e_enrollday as enrollDay,
+			B.e_enrolltime as enrollTime,
+			A.j_no as "subject.no"
+		FROM
+			J_SUBJECT A, E_ENROLLMENT B
+		WHERE
+			A.J_NO = B.E_J_SUBJECT_NO			
+		AND
+			A.J_SUB_PROF=#{value}
 	</select>
 	
 	<insert id="addEnroll" parameterType="Enroll">
@@ -83,12 +101,21 @@
 			E_ENROLLTIME,
 			E_ENROLLNUM)
 		values
-			(enrollment_seq.nextval,
+			(addenroll_comm.nextval,
 			#{enrollDay},
 			#{subject.no},
 			#{enrollTime},
 			0)
 	</insert>
+	<update id="updateEnroll" parameterType="Enroll">
+		update E_Enrollment
+			set
+				E_J_SUBJECT_NO = #{subject.no, jdbcType=INTEGER},
+				E_ENROLLDAY = #{enrollDay},
+				E_ENROLLTIME = #{enrollTime}
+			where
+				E_NO = #{no}
+	</update>
 	
 	<insert id="addRegisub" parameterType="Enroll">
 		INSERT INTO R_REGISUBJECT (
@@ -135,4 +162,24 @@
 		where
 			
 	</select> -->
+	<delete id="deleteEnroll" parameterType="int">
+  		delete 
+  			from e_enrollment
+  		where
+  			 e_no = #{value}
+	</delete>
+	<select id="enrollAllList" parameterType="int" resultType="Enroll">
+		SELECT
+			E.E_ENROLLDAY as enrollDay,
+			E.E_ENROLLTIME as enrollTime,
+			J.J_NO as "subject.no"
+		FROM
+			E_ENROLLMENT E, U_PROFESSOR U, J_SUBJECT J
+		where
+			E.E_J_SUBJECT_NO = J.J_NO
+		and
+			U.U_PROF_ID = J.J_SUB_PROF
+		AND
+			U.U_PROF_NO = #{value}
+	</select>
 </mapper>

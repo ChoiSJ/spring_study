@@ -16,7 +16,7 @@ public class ScoreInfoController {
 	@Autowired
 	private ScoreDao scoreDao;
 	
-	@RequestMapping("/scoreInfo.do")
+	@RequestMapping("/admin/scoreInfo.do")
 	public String scoreInfo(@RequestParam String stuno, Model model){
 		
 		int sno = Integer.parseInt(stuno);

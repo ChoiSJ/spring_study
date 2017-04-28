@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.jhta.dao.timechart.TimeChartDao">
+	<select id="getEnroll" parameterType="int" resultType="TimeChart">
+		select 		
+			r.U_STU_NO as studentNo,
+			e.E_NO as enrollNo,
+			e.E_ENROLLTIME as enrollTime,
+			e.E_ENROLLDAY as enrollDay,
+			j.J_SUBJECT_NAME as subjectName,
+			j.J_NO as subjectNo
+		from
+			e_enrollment e,
+			r_regisubject r,
+			j_subject j
+		where 
+			e.E_NO = r.E_NO
+		and 
+			e.E_J_SUBJECT_NO = j.J_NO 
+		and 
+			r.U_STU_NO = #{studentNo}
+	</select>
+	
+	<select id="getEnrollByOne" parameterType="int" resultType="TimeChart">
+		select 		
+			r.U_STU_NO as studentNo,
+			e.E_NO as enrollNo,
+			e.E_ENROLLTIME as enrollTime,
+			e.E_ENROLLDAY as enrollDay,
+			j.J_SUBJECT_NAME as subjectName,
+			j.J_NO as subjectNo
+		from
+			e_enrollment e,
+			r_regisubject r,
+			j_subject j
+		where 
+			e.E_NO = r.E_NO
+		and 
+			e.E_J_SUBJECT_NO = j.J_NO 
+		and 
+			r.U_STU_NO = #{studentNo}
+	</select>
+	
+	<select id="getProfEnroll" parameterType="string" resultType="TimeChart">
+	select
+		B.E_NO as enrollNo,
+		B.E_ENROLLTIME as enrollTime,
+		B.E_ENROLLDAY as enrollDay,
+		A.J_SUBJECT_NAME as subjectName,
+		A.J_NO as subjectNo
+	from
+		j_subject A, e_enrollment B
+	where 
+		A.J_NO = B.E_J_subject_no
+	and 
+		j_sub_prof = #{value}
+	</select>
+</mapper>

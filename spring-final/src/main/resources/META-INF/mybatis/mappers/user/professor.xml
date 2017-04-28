@@ -10,7 +10,6 @@
 			u_prof_name as name,
 			u_prof_gender as gender,
 			u_prof_code as code,
-			u_prof_division as division,
 			u_prof_pwd as pwd,
 			u_prof_register as register,
 			u_prof_phone as phone,
@@ -26,26 +25,55 @@
 	</select>
 	<select id="getProfessorById" parameterType="string" resultType="kr.co.jhta.vo.Professor">
 		select 
-			u_prof_no as no,
-			u_prof_id as id,
-			u_prof_name as name,
-			u_prof_gender as gender,
-			u_prof_code as code,
-			U_PROF_DIVISION as division,
-			u_prof_pwd as pwd,
-			u_prof_register as register,
-			u_prof_phone as phone,
-			u_prof_addr as addr,
-			u_prof_email as email,
-			u_prof_grade as grade,
-			u_prof_ssn as ssn,
-			u_prof_forei as forei,
-			u_prof_entrydate as entrydate,
-			u_prof_leavedate as leavedate
+			A.u_prof_no as no,
+			A.u_prof_id as id,
+			A.u_prof_name as name,
+			A.u_prof_gender as gender,
+			A.u_prof_code as code,
+			A.u_prof_pwd as pwd,
+			c.c_name as register,
+			A.u_prof_phone as phone,
+			B.t_name as "sitemap.name",
+			A.u_prof_addr as addr,
+			A.u_prof_email as email,
+			A.u_prof_grade as grade,
+			A.u_prof_ssn as ssn,
+			A.u_prof_forei as forei,
+			A.u_prof_entrydate as entrydate,
+			A.u_prof_leavedate as leavedate
 		from
-			u_professor A
+			u_professor A, t_sitemap B, c_coderegister c
 		where 
 			A.u_prof_id = #{id}
+		and
+			A.u_prof_code = B.t_code
+		and
+			A.u_prof_register = c.c_code
+	</select>
+	<select id="getLoginUserById" parameterType="string" resultType="kr.co.jhta.vo.Professor">
+				select 
+			A.u_prof_no as no,
+			A.u_prof_id as id,
+			A.u_prof_name as name,
+			A.u_prof_gender as gender,
+			A.u_prof_code as code,
+			A.u_prof_pwd as pwd,
+			a.u_prof_division as division,		
+			c.c_name as register,
+			A.u_prof_phone as phone,
+			A.u_prof_addr as addr,
+			A.u_prof_email as email,
+			A.u_prof_grade as grade,
+			A.u_prof_ssn as ssn,
+			A.u_prof_forei as forei,
+			A.u_prof_entrydate as entrydate,
+			A.u_prof_leavedate as leavedate
+		from
+			u_professor A,C_CODEREGISTER c
+		where 
+			A.u_prof_id = #{id}
+		and
+			c.C_CODE = U_PROF_REGISTER
 	</select>
 	
 	<select id="getProListByTCode" parameterType="string" resultType="kr.co.jhta.vo.Professor">

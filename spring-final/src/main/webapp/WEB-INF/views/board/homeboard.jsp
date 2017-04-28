@@ -94,7 +94,7 @@
 				dataType:'json',
 				success : function(data){
 					console.log(data);
-					$(data.pagiNation).each(function(index, item){
+					$(data).each(function(index, item){
 						var htmlContent = "<tr>";
 							htmlContent += "<td><input type='checkbox' id='deleteCheck-"+item.no+"'</td>";
 							htmlContent += "<td>"+item.no+"</td>";
@@ -103,7 +103,6 @@
 							htmlContent += "<td>"+item.regdate+"</td>";
 							htmlContent += "<td>"+item.countView+"</td>";
 							htmlContent += "</tr>";
-						
 						$tbody.append(htmlContent);
 					});
 				}
@@ -115,7 +114,7 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/views/navi/adminnavi.jsp" %>
-<%@ include file="/WEB-INF/views/navi/adminSidebar.jsp" %>
+<%@ include file="/WEB-INF/views/collegeregister/sidebar-hakjuk.jsp" %>
 	<div class="container" style="margin-left: 250px; padding-top:25px;">
 		<div class="row text-right">
 			홈 > 학적관리 > 입학관리 > 신입학 조회 

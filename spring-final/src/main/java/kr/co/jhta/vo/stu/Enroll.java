@@ -2,6 +2,7 @@ package kr.co.jhta.vo.stu;
 
 import kr.co.jhta.vo.Subject;
 import kr.co.jhta.vo.SubjectDivision;
+import kr.co.jhta.vo.Syllabus;
 
 public class Enroll {
 
@@ -13,9 +14,16 @@ public class Enroll {
 	private int enrollNum;
 	private int stuNo;
 	private Student student;
-	
-	
-	
+	private Syllabus syllabus;
+		
+	public Syllabus getSyllabus() {
+		return syllabus;
+	}
+
+	public void setSyllabus(Syllabus syllabus) {
+		this.syllabus = syllabus;
+	}
+
 	public Student getStudent() {
 		return student;
 	}

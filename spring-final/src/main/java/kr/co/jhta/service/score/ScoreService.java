@@ -29,7 +29,7 @@ public interface ScoreService {
 	void updateScoreByNo(Score score);
 	SiteMap getSitemapByCode(String code);
 	
-	void addScore();
+	void addScore(int pno);
 	void delScore(int rno);
 	int getScoreNoByRno(int rno);
 	
@@ -41,5 +41,9 @@ public interface ScoreService {
 	SemesterAvg getSemesterAvgTotalBySno(int sno);
 	List<Regisubject> getAllSearchInfo();
 	int getScoreCount();
-	
+	List<Regisubject> getAllScorelistByProfID (String pid);
+	int getProfNoByEno(int eno);
+	List<String> getSemeNameByStuNo(int stno);
+	List<Subject> getsubjectlistByProfId(int pid);
+	List<Regisubject> getSearchScorelistByhash(HashMap<String, Object> searchcode);
 }

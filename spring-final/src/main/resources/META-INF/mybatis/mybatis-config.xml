@@ -5,6 +5,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias="Student" type="kr.co.jhta.vo.stu.Student"/>
+		<typeAlias alias="StuReport" type="kr.co.jhta.vo.PreportContent"/>
 		<typeAlias alias="subject" type="kr.co.jhta.vo.Subject"/>
 		<typeAlias alias="semester" type="kr.co.jhta.vo.Semester"/>
 		<typeAlias alias="division" type="kr.co.jhta.vo.SubjectDivision"/>
@@ -22,12 +23,20 @@
 		<typeAlias alias="BoardView" type="kr.co.jhta.vo.BoardView"/>
 		<typeAlias alias="professorsubjectlist" type="kr.co.jhta.vo.ProfessorSubject"/>
 		<typeAlias alias="Leave" type="kr.co.jhta.vo.appli.Leave"/>
+		<typeAlias alias="jejuk" type="kr.co.jhta.vo.hakjuk.StudentJejuk"/>
 		<typeAlias alias="Disenroll" type="kr.co.jhta.vo.appli.Disenrollment"/>
 		<typeAlias alias="Rein" type="kr.co.jhta.vo.appli.Reinstatement"/>
 		<typeAlias alias="ChangeMajor" type="kr.co.jhta.vo.appli.ChangeMajor"/>
 		<typeAlias alias="professoropenlecture" type="kr.co.jhta.vo.ProfessorOpenLecture"/>
 		<typeAlias alias="evaluationSheet" type="kr.co.jhta.vo.LectureEvaluationSheet"/>
-		<typeAlias alias="SupplementAryLecture" type="kr.co.jhta.vo.SupplementAryLecture"/>
+		<typeAlias alias="TimeChart" type="kr.co.jhta.vo.TimeChart"/>
+		<typeAlias alias="Review" type="kr.co.jhta.vo.Review"/>
+		<typeAlias alias="supplementLectureVo" type="kr.co.jhta.vo.SupplementLectureVo"/>
+		<typeAlias alias="SupplementLectureTableVo" type="kr.co.jhta.vo.SupplementLectureTableVo"/>
+		<typeAlias alias="Preport" type="kr.co.jhta.vo.Preport"/>
+		<typeAlias alias="LectureRatingScore" type="kr.co.jhta.vo.LectureRatingScore"/>
+		<typeAlias alias="Disenroll" type="kr.co.jhta.vo.appli.Disenrollment"/>
+		<typeAlias alias="MakeupLessonAll" type="kr.co.jhta.vo.MakeupLessonAll"/>
 	</typeAliases>
 	
 	<mappers>
@@ -47,6 +56,7 @@
 		<mapper resource="META-INF/mybatis/mappers/user/professor.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/user/syllabus.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/hakjuk/hakjuk.xml"/>
+		<mapper resource="META-INF/mybatis/mappers/hakjuk/jejuk.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/sitemap.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/schedule/scheduleEvent.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/application/changemajor.xml"/>
@@ -55,8 +65,13 @@
 		<mapper resource="META-INF/mybatis/mappers/application/reinstate.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/message/message.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/report/stuReport.xml"/>
+		<mapper resource="META-INF/mybatis/mappers/timechart/timechart.xml"/>
+		<mapper resource="META-INF/mybatis/mappers/board/review.xml"/>
 		<mapper resource="META-INF/mybatis/mappers/lecture/SupplementAryLecture.xml"/>
-		<!-- <mapper resource="META-INF/mybatis/mappers/board/review.xml"/> -->
+		<mapper resource="META-INF/mybatis/mappers/report/report.xml"/>
+		<mapper resource="META-INF/mybatis/mappers/application/disenroll.xml"/>
+		<mapper resource="META-INF/mybatis/mappers/application/dropoff.xml"/>
+		<mapper resource="META-INF/mybatis/mappers/lecture/makeuplesson.xml"/>
 		<!-- <mapper resource="META-INF/mybatis/mappers/messege.xml"/> -->
 	</mappers>
 </configuration>

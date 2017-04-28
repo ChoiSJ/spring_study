@@ -74,6 +74,12 @@
 							<th>직위</th>
 							<td>${prof.grade }</td>
 						</tr>
+						<tr>
+							<th>외국인 여부</th> 
+							<td>${prof.forei } </td>
+							<th>임용 일자</th> 
+							<td><fmt:formatDate value="${prof.entrydate }" pattern="yyyy-MM-dd"/>  </td>
+						</tr>
 					</thead>
 				</table>
 			</div>
@@ -103,7 +109,7 @@
 					</tr>
 					<tr>
 						<th rowspan="4">자택</th>
-						<th rowspan="2">주소</th>
+						<th>주소</th>
 						<td colspan="3">
 							<div class="row">
 								<div class="col-md-10">
@@ -112,13 +118,11 @@
 							</div>
 						</td>
 					</tr>
-					<tr>
-						<td colspan="3"></td>
-					</tr>
 				</tbody>
 			</table>
-			<div class="text-right">
-				<a href="searchprof" class="btn btn-primary"><span class="glyphicon glyphicon-th-large"></span> 목록으로</a>
+			<div class="row text-right">
+				<a href="updateprof?id=${prof.id }" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> 정보 수정</a>
+				<a href="searchprof" class="btn btn-default"><span class="glyphicon glyphicon-th-large"></span> 목록으로</a>
 			</div>
 		</div>			
 	</div>

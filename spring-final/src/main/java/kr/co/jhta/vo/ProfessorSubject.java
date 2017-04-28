@@ -12,6 +12,13 @@ public class ProfessorSubject {
 	
 	
 	
+	
+	public String getSubjectProfeesorId() {
+		return subjectProfeesorId;
+	}
+	public void setSubjectProfeesorId(String subjectProfeesorId) {
+		this.subjectProfeesorId = subjectProfeesorId;
+	}
 	public String getRegister() {
 		return register;
 	}

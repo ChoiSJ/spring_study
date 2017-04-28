@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -25,7 +27,7 @@
 		<div class="container">
 			<div class="text-center">
 				<div>
-					${board.contents }
+					${board.contentsForHTML }
 				</div>
 				<c:if test="${!empty board.fileName }">
 					<hr>
@@ -39,6 +41,49 @@
 			<a href="modified?bno=${board.no }" class="btn btn-danger btn-xs">수정</a>
 			<a href="profdeptboard" class="btn btn-default btn-xs">뒤로가기</a>
 		</div>
+		<hr>
+		<div class="row">
+				<c:if test="${empty reviewList }">
+					<div class="text-center">
+						<div class="alert alert-info">댓글이 존재하지 않습니다.</div>
+					</div>
+				</c:if>
+				<c:if test="${!empty reviewList }">
+					<c:if test="${!empty param.err }">
+						<hr>
+						<div class="text-center">
+							<h3 class="text-danger">본인이 작성한 댓글만 삭제할수 있습니다.</h3>
+						</div>
+					</c:if>
+					<c:forEach var="review" items="${reviewList }">
+						<div class="well">
+							<div class="">
+								<strong>${review.writer }</strong>
+								<span class="pull-right"><fmt:formatDate value="${review.regdate }"/></span>
+							</div>
+							<hr>
+							<p>${review.contentsForBr }</p>
+							<div class="text-right">
+								<a href="deleteprofdeptboardreview?rno=${review.no }" class="btn btn-danger btn-xs">삭제</a>
+							</div>
+						</div>
+						<hr>
+					</c:forEach>
+				</c:if>
+			</div>
+			<div class="row well">
+				<c:if test="${param.err eq 'invalid' }">
+					<div class="text-center">
+						<h3 class="text-danger">댓글을 작성해 주세요.</h3>
+					</div>
+				</c:if>
+				<form action="profdeptaddreview?bno=${board.no }" method="post">
+					<textarea name="reviewContents" rows="7" class="form-control"></textarea>
+					<div class="text-right" style="margin-top: 20px;">
+						<button type="submit" class="btn btn-primary">등록</button>
+					</div>
+				</form>
+			</div>
 	</div>
 <%@ include file="/WEB-INF/views/footer/footer.jsp" %>
 </body>

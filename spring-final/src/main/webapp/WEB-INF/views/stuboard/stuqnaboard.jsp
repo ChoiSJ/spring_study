@@ -11,22 +11,38 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <title></title>
+<style type="text/css">
+   th { 
+   	  text-align: center !important;
+      vertical-align: middle !important;
+      }
+   td{
+   	  text-align: center !important;
+      vertical-align: middle !important;
+   }
+</style>
 <script type="text/javascript">
 	$(function(){
 		
+		var code = '';
+		code = $('select[name="subjectSelect"]').val();
+		$('#search-form :input[name="subjectNo"]').val(code);
+		
 		$('select[name="subjectSelect"]').change(function(){
-			var code = $(this).val();
-			console.log(code);
-			$.ajax({
-				type:'post',
-				url: 'stuqnaboard/search',
-				data: {subjectCode : code},
-				dataType:'json',
-				success : function(data){
-					console.log(data);
-				}
-			});
+			 code = $('select[name="subjectSelect"]').val();
+			$('#search-form :input[name="subjectNo"]').val(code);
 		});
+		
+		$('#search-btn').click(function(){
+			
+			$('#search-form').submit();
+		});
+		
+		var error = $('#err').val();
+		if (error) {
+			alert('수강신청을 먼저 해주세요.');
+			history.back();
+		}
 		
 	});
 </script>
@@ -44,11 +60,14 @@
 		</div>
 		<div style="margin-top: 20px;"></div>
 		<div class="row well">
-			<select class="form-control" name="subjectSelect">
-			<c:forEach var="item" items="${subject }">
-				<option value="${item.enday }">${item.subjectName }</option>
-			</c:forEach>
-			</select>
+			<div class="form-inline">
+				<select class="form-control" name="subjectSelect" style="width: 300px;">
+				<c:forEach var="item" items="${subject }">
+					<option value="${item.division }">${item.subjectName }</option>
+				</c:forEach>
+				</select>
+				<button id="search-btn" class="btn btn-primary">검색</button>
+			</div>
 		</div>
 		<div class="row">
 			<table class="table table-striped">
@@ -92,7 +111,9 @@
 			<a href="stuqnaboardform" class="btn btn-primary btn-xs">Q&amp;A 등록</a>
 		</div>
 		<div class="text-center">
-			<%@ include file="/WEB-INF/views/board/nav.jsp" %>
+			<div class="text-center">
+				<%@ include file="/WEB-INF/views/board/nav.jsp" %>
+			</div>
 		</div>
 	</div>
 	<form id="search-form" action="stuqnaboard" method="post">
@@ -100,7 +121,9 @@
 		<input type="hidden" name="searchType"  value="${serch.searchType }">
 		<input id="keyword" type="hidden" name="keyword" value="${search.keyword }" >
 		<input type="hidden" name="display"  value="10">
+		<input type="hidden" name="subjectNo" value="">
 	</form>
+	<input type="hidden" id="err" value=${err eq 'error' }>
 <%@ include file="/WEB-INF/views/footer/footer.jsp" %>
 </body>
 </html>

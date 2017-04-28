@@ -29,7 +29,7 @@
 						$("#major").append("<option value="+data.sitemapList[i].code+">"+data.sitemapList[i].name+"</option>");	
 					}
 					for (var i=0; i<data.profList.length; i++) {
-						$("#professor").append("<option value="+data.profList[i].id+">"+data.profList[i].name+"</option>");	
+						$("#professor").append("<option value="+data.profList[i].id+">"+data.profList[i].name+" ("+data.profList[i].id+")"+"</option>");	
 					}
 				}
 			});
@@ -44,7 +44,7 @@
 					console.log(data);
 					$("#professor").empty();
 					for (var i=0; i<data.length; i++) {						
-						$("#professor").append("<option value="+data[i].id+">"+data[i].name+"</option>");	
+						$("#professor").append("<option value="+data[i].id+">"+data[i].name+" ("+data[i].id+")"+"</option>");	
 					}
 				}
 			});
@@ -93,7 +93,7 @@
 										<tr>
 											<th>학생 성명 : </th>
 											<td><input type="text" name="name" class="form-control"/></td>
-											<th>학적 상태 : </th>
+											<th>입학 구분 : </th>
 											<td>
 												<select class="form-control" name="register">
 													<option value="AD1000">신입학</option>
@@ -147,7 +147,7 @@
 												<select class="form-control" name="professor" id="professor">
 													<c:if test="${not empty professors }">
 														<c:forEach var="professor" items="${professors }">
-															<option value="${professor.id }">${professor.name }</option> 
+															<option value="${professor.id }">${professor.name } (${professor.id })</option> 
 														</c:forEach>
 													</c:if>
 												</select>
@@ -202,9 +202,6 @@
 											<div class="row">
 												<div class="col-md-10">
 													<input type="text" name="addr1" class="form-control" /> 
-												</div>
-												<div class="col-md-2">
-													<a href="#" class="btn btn-success">우편번호 검색</a>
 												</div>
 											</div>
 										</td>

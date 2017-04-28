@@ -146,7 +146,7 @@
 							</select>	
 						</div>
 						<div class="col-md-6 text-right">
-							<p>조회된 학생 수 : 5 명</p>
+							<p>조회된 학생 수 : ${rows } 명</p>
 						</div>
 					</div>
 					<div class="row">
@@ -170,7 +170,14 @@
 								<c:forEach var="stud" items="${studList }" varStatus="status">
 									<tr onclick="location.href='studinfo?id=${stud.id}'" style="cursor: pointer;">
 										<td>${status.count }</td>
-										<td>${stud.register }</td>
+										<td>
+											<c:if test="${stud.register eq 'AD1000' }">
+												신입학
+											</c:if>
+											<c:if test="${stud.register eq 'AD2000' }">
+												재입학
+											</c:if>
+										</td>
 										<td>${stud.id }</td>
 										<td>${stud.name }</td>
 										<td>${stud.division }</td>

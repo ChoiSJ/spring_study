@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" href="resources/bootstrap/bootstrap.min.css">
+<script type="text/javascript" src="resources/angular/angular.min.js"></script>
+<script type="text/javascript" src="resources/angular/angular-locale_ko-kr.js"></script>
+<script type="text/javascript">
+	var myApp = angular.module("myApp", []);
+	
+	// 모듈에 컨트롤러 추가
+	myApp.controller("productCtrl", function($scope) {
+		$scope.products = [
+			{name: "아이패드", price: 1000000, company: "apple"},
+			{name: "플레이스테이션", price: 400000, company: "sony"},
+			{name: "닌텐도DS", price: 200000, company: "닌텐도"},
+			{name: "아이폰", price: 900000, company: "apple"},
+			{name: "엑스박스", price: 300000, company: "microsoft"},
+			{name: "레고", price: 20000, company: "레고"},
+			{name: "겔럭시노트", price: 700000, company: "샘숭"},
+			{name: "킨들", price: 65000, company: "아마존"}      
+		];
+	});
+	
+	// 모듈에 디렉티브 추가
+	myApp.directive("itemWidget", function() {
+		return {
+			templateUrl: "item.html"
+		}
+	});
+</script>
+</head>
+<body>
+	<div class="container" ng-controller="productCtrl">
+		<!-- 
+			디렉티브(Directive)
+			- angularjs 의 지시어
+			- html 태그의 기능을 확장시킨다.
+			- 다양한 built-in 디렉티브를 제공한다.
+			- ng-App, ng-Controller, ng-repeat, ng-show, ng-hide, ng-model, ng-bind, 
+			ng-class, ng-click, ng-submit, ng-disabled, ng-enabled, ng-if, ng-switch
+		-->
+		<div ng-repeat="product in products">
+			<div item-widget></div>
+		</div>
+	</div>
+</body>
+</html>

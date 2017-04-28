@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -9,12 +11,34 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	$("#all-check").change(function() {
+		var isChecked = $(":input[name='dnoList']").is(":checked");
+		
+		if (!isChecked) {
+			$(":input[name='dnoList']").prop("checked", true);
+			$(this).prop("checked", true);
+		} else {
+			$(":input[name='dnoList']").prop("checked", false);
+			$(this).prop("checked", false);
+		}
+	});
+	
+	$("#delete-button").click(function() {
+		if (!$(":input[name='dnoList']").is(":checked")) {
+			alert("삭제할 쪽지를 선택해주세요.");
+			return false;
+		}
+	});
+})
+</script>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/navi/adminnavi.jsp" %>
-<%@ include file="/WEB-INF/views/navi/adminSidebar.jsp" %>
+<%@ include file="/WEB-INF/views/collegeregister/sidebar-hakjuk.jsp" %>
 <div class="container" style="margin-left: 250px; padding-top: 25px;">
-	<form method="post" action="">
+	<form method="get" action="deletesendmessage">
 		<div class="row" style="margin-bottom: 15px;">
 			<div class="col-sm-12">
 				<div class="btn-group">
@@ -34,11 +58,10 @@
 					<tbody>
 						<tr>
 							<td style="vertical-align: middle;">
-								읽지 않은 쪽지가 0통이 있습니다. 전체 받은 쪽지 (0통)
+								전체 쪽지 (${pagination.totalRows }통) 입니다.
 							</td>
 							<td class="text-right">
-								<button class="btn btn-default">선택삭제</button>
-								<button class="btn btn-default">전체삭제</button>
+								<button class="btn btn-default" id="delete-button">선택삭제</button>
 							</td>
 						</tr>
 					</tbody>
@@ -59,24 +82,44 @@
 					<thead>
 						<tr>
 							<th>
-								<input type="checkbox" name="">
+								<input type="checkbox" name="all" id="all-check">
 							</th>
-							<th>보낸사람</th>
+							<th>받는사람</th>
 							<th>제목</th>
-							<th>첨부</th>
-							<th>보낸날짜</th>
+							<th>보낸시간</th>
+							<th>상대방 확인시간</th>
 						</tr>
 					</thead>
 					<tbody>
+					<c:forEach items="${messageList }" var="message">
+						<c:if test="${message.isDeletedBySender ne 'Y'.charAt(0) }">
 						<tr>
 							<td>
-								<input type="checkbox" name="">
+								<input type="checkbox" name="dnoList" value="${message.no }">
 							</td>
-							<td>임요환</td>
-							<td>삼연벙 괜찮았음?</td>
-							<td>sample.jsp</td>
-							<td>2017-4-12</td>
+							<td>${message.receiver } &#40;${message.receiverName }&#41;</td>
+							<td><a style="cursor: pointer;" data-toggle="modal" data-target="#modal-${message.no }">${message.title }</a></td>
+							<td><fmt:formatDate value="${message.sendTime }" pattern="HH:mm"/></td>
+							<td><fmt:formatDate value="${message.checkTime }" pattern="HH:mm"/></td>
 						</tr>
+						</c:if>
+						<div id="modal-${message.no }" class="modal fade" role="dialog">
+							<div class="modal-dialog modal-sm">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
+										<p style="text-align: center;"><strong>${message.title }</strong><p>
+									</div>
+									<div class="modal-body">
+										<p>${message.contents }</p>
+									</div>
+									<div class="modal-footer text-right">
+										<button type="button" class="btn btn-info" data-dismiss="modal">닫기</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
 					</tbody>
 				</table>
 			</div>
@@ -84,13 +127,17 @@
 		<div class="row text-center">
 			<div class="col-sm-12">
 				<ul class="pagination">
-					<li><a href="#"><span aria-hidden="true">&laquo;</span></a></li>
-					<li><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
-					<li><a href="#"><span aria-hidden="true">&raquo;</span></a></li>
+				<c:if test="${pagination.totalRows ne 0 }">
+					<c:if test="${pagination.beginPage ne pagination.currentBlock }">
+						<li><a href="adminsendmessagebox?pno=${pagination.beginPage-1 }"><span aria-hidden="true">&laquo;</span></a></li>
+					</c:if>
+					<c:forEach begin="${pagination.beginPage }" end="${pagination.endPage }" var="pageNo">
+						<li><a href="adminsendmessagebox?pno=${pageNo }">${pageNo }</a></li>
+					</c:forEach>
+					<c:if test="${pagination.totalBlocks ne pagination.currentBlock }">
+						<li><a href="adminsendmessagebox?pno=${pagination.endPage+1 }"><span aria-hidden="true">&raquo;</span></a></li>
+					</c:if>
+				</c:if>
 				</ul>
 			</div>
 		</div>

@@ -70,12 +70,12 @@
 								<div class="form-group">
 									<select class="form-control" id="register">
 										<option value="all">전체</option>	
-										<option value="">재직</option>
-										<option value="">휴직</option>
-										<option value="">출장</option>
-										<option value="">연수</option>
-										<option value="">퇴사</option>
-										<option value="">퇴임</option>
+										<option value="PF1000">재직</option>
+										<option value="PF2000">휴직</option>
+										<option value="PF3000">출장</option>
+										<option value="PF4000">연수</option>
+										<option value="PF5000">퇴사</option>
+										<option value="PF6000">퇴임</option>
 									</select>
 								</div>
 							</div>
@@ -142,7 +142,7 @@
 							</select>	
 						</div>
 						<div class="col-md-6 text-right">
-							<p>조회된 교수 수 : 5 명</p>
+							<p>조회된 교수 수 : ${rows } 명</p>
 						</div>
 					</div>
 					<div class="row">

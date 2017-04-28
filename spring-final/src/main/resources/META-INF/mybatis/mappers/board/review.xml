@@ -2,6 +2,56 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.jhta.dao.StudentDao">
-
+<mapper namespace="kr.co.jhta.dao.board.ReviewDao">
+	
+	<insert id="addReview" parameterType="Review">
+		insert into 
+				R_REVIEW (
+							R_NO, 
+							R_GROUPNO, 
+							R_CONTENTS, 
+							R_WRITER
+						)
+		values (
+				R_REVIEW_SEQ.NEXTVAL,
+				 #{groupNo},
+				 #{contents},
+				 #{writer}
+				 )
+	</insert>
+	
+	<select id="getAllReviewByNo" parameterType="int" resultType="Review">
+		select 
+			R_NO as no, 
+			R_GROUPNO as groupNo, 
+			R_CONTENTS as contents, 
+			R_WRITER as writer, 
+			R_REGDATE as regdate
+		from 
+			R_REVIEW
+		where 
+			R_GROUPNO = #{groupNo}
+	</select>
+	
+	<select id="getReviewByNo" parameterType="int" resultType="Review">
+		select 
+			R_NO as no, 
+			R_GROUPNO as groupNo, 
+			R_CONTENTS as contents, 
+			R_WRITER as writer, 
+			R_REGDATE as regdate
+		from 
+			R_REVIEW
+		where 
+			R_NO = #{no}
+	</select>
+	
+	<delete id="deleteReview" parameterType="int">
+		delete 
+			FROM 
+				R_REVIEW 
+			WHERE 
+				r_no = #{no}	
+	</delete>
+	
 </mapper>

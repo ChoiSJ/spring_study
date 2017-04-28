@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.jhta.vo.Professor;
 import kr.co.jhta.vo.Syllabus;
+import kr.co.jhta.vo.stu.Regisubject;
 
 @Transactional
 public interface ProfessorDao {
@@ -14,4 +15,6 @@ public interface ProfessorDao {
 	List<Professor> getProListByTCode(String code);
 	void updateProfessorInfo(Professor professor);
 	void updateProfessorPwd(Professor professor);
+	Professor getLoginUserById(String id);
+	
 }

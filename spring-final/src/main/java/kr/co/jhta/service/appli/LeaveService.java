@@ -8,6 +8,7 @@ public interface LeaveService {
 
 	void addNewLeaveService(Leave leave);
 	List<Leave> getAllEnrolledLeaveByStuNoService(int stuNo);
+	List<Leave> getLeaveOneBystuNoService(int stuNo);
 	
 	void deleteEnrollByNoService(int lNo, int stuNo);
 	String getCnameByCcodeService(String cCode);

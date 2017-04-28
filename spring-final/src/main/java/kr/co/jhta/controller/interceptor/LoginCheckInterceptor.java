@@ -18,7 +18,7 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter{
 			return true;
 		}
 		System.out.println("미 인증 사용자입니다.");
-		response.sendRedirect("/jhta/login?err=deny");			
+		response.sendRedirect("/jhta/login?err=deny");
 		return false;
 		
 	}

@@ -120,7 +120,7 @@ $(function() {
 			return;
 		}
 	});
-})
+});
 </script>
 <style type="text/css">
 	th { text-align: center !important;
@@ -135,7 +135,7 @@ $(function() {
 			홈 > 학적관리 > 휴학관리 > <strong>휴학 신청 목록</strong> 
 		</div>
 		<div class="row" style="margin: 0px; padding: 0px;">
-			<h4><span class="glyphicon glyphicon-list-alt"></span> 휴학 신청 목록</h4>
+			<h4><span class="glyphicon glyphicon-list-alt"></span> 휴학 신청 내역</h4>
 			<hr style="border:solid 0.5px #2C7BB5;">
 		</div>
       <div class="row">
@@ -143,7 +143,7 @@ $(function() {
       		<img src="../resources/images/student/PeoPleDefault.png" alt="person" style="width: 130px; height: 140px;"/>
       	</div>
       	<div class="col-xs-10">
-      		<p>나의 정보</p>
+      		<p>학생 정보</p>
         	<table class="table table-bordered">
 	        	<colgroup>
 	        		<col width="20%" />
@@ -155,7 +155,7 @@ $(function() {
 	        		<tr>
 	        			<th>학적</th>
 	        			<td colspan="3">
-	        				<c:out value="${cName }" />
+	        				<c:out value="${student.register }" />
 	        			</td>
 	        		</tr>
 	        		<tr>
@@ -177,7 +177,7 @@ $(function() {
 	        		</tr>
 	        		<tr>
 	        			<th>전공</th>
-	        			<td><c:out value="${tName}"/></td>
+	        			<td><c:out value="${student.division}"/></td>
 	        			<th>학년</th>
 	        			<td><c:out value="${student.grade }"/></td>
 	        		</tr>
@@ -186,7 +186,7 @@ $(function() {
 	        			<td><c:out value="${student.professor }"/></td>
 	        			<th>입학 년도</th>
 	        			<td>
-	        				<fmt:formatDate value="${student.enterDate }" pattern="yyyy-MM-dd"/>
+	        				<fmt:formatDate value="${student.enterDate }" pattern="yyyy"/>년
 	        			</td>
 	        		</tr>
 	        		<tr>
@@ -201,26 +201,10 @@ $(function() {
       </div>  
       
       <div class="row" style="padding: 20px;">
-      	<h4>휴학(연장) 신청 내역</h4>
+      	<h4><strong>휴학(연장) 신청 내역</strong></h4>
       	<table class="table table-bordered">
-      		<colgroup>
-      			<col width="5%" />
-      			<col width="8%" />
-      			<col width="5%" />
-      			<col width="12%" />
-      			<col width="5%" />
-      			<col width="10%" />
-      			<col width="*" />
-      			<col width="5%" />
-      			<col width="10%" />
-      			<col width="10%" />
-      			<col width="8%" />
-      			<col width="8%" />
-      			<col width="5%" />
-      		</colgroup>
 			<thead>
 				<tr>
-					<th>선택</th>
 					<th>학년도</th>
 					<th>학기</th>
 					<th>학과</th>
@@ -228,11 +212,10 @@ $(function() {
 					<th>학번</th>
 					<th>성명</th>
 					<th>학적변동</th>
-					<th>변동일자</th>
+					<th>신청일자</th>
 					<th>복학일자</th>
 					<th>결재상태</th>
-					<th>비고</th>
-					<th>취소</th>
+					<th>처리</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -244,19 +227,15 @@ $(function() {
 				<c:forEach var="leave" items="${leaveList}">
 					<input type="hidden" value="${leave.enrollDate}" id="leaveEnrollDate" />
 					<tr>
-						<th><input type="checkbox" id="checkbox-leave" name="checkboxTrue" value="true"/>
-							<input type="hidden" name="checkboxTrue" value="false"/>
-						</th>
 						<th>${leave.year }</th>
 						<th>${leave.period }</th>
-						<th>${tName }</th>
+						<th>${student.division }</th>
 						<th>${student.grade }</th>
 						<th>${student.id }</th>
 						<th>${student.name }</th>
-						<th>${cName }</th>
+						<th>${student.register }</th>
 						<th>
 							<fmt:formatDate value="${leave.enrollDate }" pattern="YYYY-MM-dd"/></th>
-
 						<th>
 							<fmt:formatDate value="${leave.reinDate }" pattern="YYYY-MM-dd"/></th>
 						<th>
@@ -265,118 +244,24 @@ $(function() {
 									<input type="hidden" id="leave-Pass" value="false" />
 									<font color="red"><strong>미승인</strong></font>
 								</c:when>
-								<c:otherwise>
+								<c:when test="${leave.pass eq 'ok' }">
+									<input type="hidden" id="leave-Pass" value="false" />
 									<font color="blue"><strong>승인</strong></font>
-								</c:otherwise>
-							</c:choose>
-						</th>
-						<th>${leave.cName }<input type="hidden" id="leave-Code" value="${leave.code }"/>
-						</th>	
-						<th>
-							<c:choose>
-								<c:when test="${leave.pass eq 'true' }">
-									<font color="red">취소 불가</font>
 								</c:when>
 								<c:otherwise>
-									<a href="enrollCancel?lNo=${leave.no}" class="btn btn-default">취소</a>							
+									<font color="red"><strong>거절</strong></font>
 								</c:otherwise>
 							</c:choose>
-						</th>											
+						</th>	
+						<th>
+							<a class="btn btn-sm btn-primary" href="leaveOk?no=${leave.no }">승인</a>
+							<a class="btn btn-sm btn-danger" href="leaveCancel?no=${leave.no }">거절</a>
+						</th>
 					</tr>
 				</c:forEach>
 			</tbody>      	
       	</table>
       </div>
-      <div class="row" style="padding: 20px;">
-      	<h4>휴학 (연장)신청</h4>
-      	<form action="enrollLeave" method="POST" id="formActionRoot">
-      	<input type="hidden" name="checkboxTrue" id="checkbox-leaveHidden" />
-	   		<table class="table table-bordered">
-	   			<colgroup>
-	   				<col width="12%" />
-	   				<col width="17%" />
-	   				<col width="17%" />
-	   				<col width="15%" />
-	   				<col width="14%" />
-	   				<col width="*" />
-	   			</colgroup>
-	   			<thead>
-	   				<tr>
-	   					<th>휴학구분</th>
-	   					<td colspan="3">
-						    <input type="radio" name="cCode" value="LV1000" checked="checked"/>일반 휴학  &nbsp;
-						    <c:if test="${student.gender eq 'M' }">
-							    <input type="radio" name="cCode" value="LV2000"/>군휴학  &nbsp;
-						    </c:if>
-						    <input type="radio" name="cCode" value="LV3000"/>질병 휴학  &nbsp;
-						    <input type="radio" name="cCode" value="LV4000"/>출산/육아 휴학  &nbsp;
-						    <input type="radio" name="cCode" value="LV5000"/>창업 휴학
-	   					</td>
-	   					<th>휴학일자</th>
-	   					<th id="input-today"></th>
-	   				</tr>
-	   				<tr>
-	   					<th>현재 학생 정보</th>
-	   					<td colspan="3">${tName}학과 ${student.grade }학년 / ${cName } / 현재 이수학기 : <span id="now-Semester" class="${student.grade}"></span></td>
-	   					<th>잔여휴학 학기</th>
-	   					<th>
-	   						${student.remainLeave }
-	   					</th>
-	   				</tr>
-	   					<!-- 리스트에서 해당 휴학을 선택했을 때만 면동가능하도록  -->
-   					<c:if test="${!empty leaveList}">
-   					<c:forEach var="leave" items="${leaveList }">
-   						<input type="hidden" name="reEno" id="re-Eno" value="${leave.no }"/>
-   					</c:forEach>
-		   				<tr style="display : none;" id="change-Leave">
-		   					<th>변동 사유</th>
-		   					<th colspan="5">
-		   						<div class="form-group">
-		   							<select name="chageReason" class="form-control">
-		   								<option value="LV1000">일반휴학</option>
-		   								<c:if test="${student.gender eq 'M' }">
-		   									<option value="LV2000">군휴학</option>
-		   									<option value="LV3000">질병 휴학</option>
-		   									<option value="LV4000">출산/육아 휴학</option>
-		   									<option value="LV5000">창업 휴학</option>
-		   								</c:if>
-		   							</select>
-		   						</div>
-		   					</th>
-		   				</tr>
-   					</c:if>
-	   				<tr>
-	   					<th>성적취득여부</th>
-	   					<th> 
-	   						<label for="">해당없음
-	   							<!-- 성적이 한개라도 취득 되어있으면 Check-->
-	   							<input type="checkbox" name="scorePass" value="false" />
-	   							<input type="hidden" name="scorePass" value="true" />
-	   							<!-- 성적이 취득되어있지 않으면 disabled-->
-	   						</label> 
-	   					</th>
-	   						
-	   					<th>휴학학기 수</th>
-	   					<th>
-	   						<div class="form-group">
-	   							<select name="selectSemeter" id="select-Semester" class="form-control">
-	   								<option value="">선택</option>
-	   								<option value="2">2</option>
-	   							</select>
-	   						</div>
-	   					</th>
-	   					<th>복학학년도 학기</th>
-	   					<th id="change-BackYear"></th>
-	   				</tr>
-	   			</thead>
-	   		</table>
-   			<input type="hidden" id="reinDate" name="reinDate"/>
-	   		<div class="form-group text-center">
-			   	<button type="submit" class="btn btn-default" id="leave-Enroll">신청</button>		
-	   			<a class="btn btn-default" href="home">취소</a>
-	   		</div>
-   		</form>
-      </div>      
    </div>
 </body>
 </html>

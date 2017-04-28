@@ -51,11 +51,11 @@
 				<div class="col-md-7 col-md-offset-2">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<img alt="logo" src="resources/logo/login-logo1.jpg">
+							<img style="width: 200px;" alt="logo" src="resources/logo/login-logo4.png">
 						</div>
 						<div class="panel-body">
 							<div class="col-md-5">
-								<img src = "resources/logo/login-logo2.jpg"  alt="logo" style="height: 200px;">
+								<img src = "resources/logo/login-logo5.png"  alt="logo" style="width: 210px; text-align: center; padding-top: 20px;">
 							</div>
 							<div class="form-group col-md-7">
 								<div class="form-group row">
@@ -80,7 +80,7 @@
 									</c:if>
 								</div>
 								<div class="form-group row">
-									<button class="btn btn-success btn-block" type="submit" id="login-btn">로그인</button>
+									<button class="btn btn-primary btn-block" type="submit" id="login-btn">로그인</button>
 								</div>
 							</div>
 						</div>

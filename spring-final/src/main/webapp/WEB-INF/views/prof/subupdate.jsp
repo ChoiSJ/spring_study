@@ -16,53 +16,38 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+	
+</script>
 </head>
 <body>
-<%@ include file="/WEB-INF/views/navi/adminnavi.jsp" %>
+<%@ include file="/WEB-INF/views/navi/profnavi.jsp" %>
 <%@ include file="/WEB-INF/views/navi/sidebarprof.jsp" %>
 	<div class="container">
-		<h1>새 강의등록하기</h1>
+		<h1>강의수정하기</h1>
 		<hr class="one">
 		<div class="row well">
-			<form:form method="post" action="/jhta/prof/subupdate?no=${subno.no }" modelAttribute="subjackform">
+			<form:form method="post" action="/jhta/prof/subupdate?no=${enroll.no }" modelAttribute="enrollform">
 				<div class="form-group">
-					<label>과목명</label>
-					<form:input cssClass="form-control" path="subjectName" value="${subno.subjectName }" />
-				</div>
-				<div class="form-group">
-					<label>담당 교수</label>
-					<form:input path="professor" cssClass="form-control" value="${subno.professor.id }"/>
-				</div>
-				<div class="form-group">
-					<label>학과코드</label>
-					<form:input path="code" cssClass="form-control" value="${subno.siteCode.code }"/>
-					<form:errors path="code" cssClass="text-danger"></form:errors>
-				</div>
-				<div class="form-group">
-					<label>학기 선택</label>
-					<form:select path="selectNo" cssClass="form-control" selected="">
-						<c:forEach var="semester" items="${semeList }" varStatus="status">
-							<form:option id="semester-${status.count }" value="${semester.no }">${semester.semeSelect }</form:option>							
+					<label>과목 선택</label>
+					<form:select path="subjectNo" id="subjectNo" cssClass="form-control" >
+						<c:forEach var="sublist" items="${subList }" varStatus="status">
+							<c:if test="${sublist.no eq sele }">
+								<form:option id="semester-${status.count }" value="${sublist.no }" selected="selected" >${sublist.subjectName }</form:option>	
+							</c:if>
+							<form:option id="semester-${status.count }" value="${sublist.no }">${sublist.subjectName }</form:option>
 						</c:forEach>
 					</form:select>			
 				</div>
 				<div class="form-group">
-					<label>학년</label>
-					<form:input path="grade" type="number" cssClass="form-control" value="${subno.grade }"/>
-					<form:errors path="grade" cssClass="text-danger"></form:errors>
+					<label>강의요일</label>
+					<form:input path="enrollDay" cssClass="form-control" value="${enroll.enrollDay }"/>
+					<form:errors path="enrollDay" cssClass="text-danger"></form:errors>
 				</div>
 				<div class="form-group">
-					<label>이수구분</label>
-					<form:select path="isPassed" id="sele" cssClass="form-control" selected="">
-						<c:forEach var="pass" items="${passList }" varStatus="status">
-							<form:option id="pass-${status.count }" value="${pass.code }">${pass.isPassedName }</form:option>							
-						</c:forEach>
-					</form:select>
-				</div>
-				<div class="form-group">
-					<label>학점</label>
-					<form:input path="score" type="number" cssClass="form-control" value="${subno.score }"/>
-					<form:errors path="score" cssClass="text-danger"></form:errors>
+					<label>강의시간</label>
+					<form:input path="enrollTime"  cssClass="form-control" value="${enroll.enrollTime }"/>
+					<form:errors path="enrollTime" cssClass="text-danger"></form:errors>
 				</div>
 				
 				<div class="form-group text-right">

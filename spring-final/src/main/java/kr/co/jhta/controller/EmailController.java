@@ -29,13 +29,13 @@ public class EmailController {
 	@Autowired
 	private MessageService messageService;
 	
-	@RequestMapping("/adminsendemail")
+	@RequestMapping("/admin/adminsendemail")
 	public String adminSendEmail(Model model) {
 		model.addAttribute("email", new Email());
 		return "administer/adminsendemail";
 	}
 	
-	@RequestMapping(value="/adminsendprocess", method=RequestMethod.POST)
+	@RequestMapping(value="/admin/adminsendprocess", method=RequestMethod.POST)
 	public String adminSendProcess(@ModelAttribute(name="email") Email email) {
 		MimeMessage message = mailSender.createMimeMessage();
 		
@@ -62,10 +62,10 @@ public class EmailController {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/adminsendemail";
+		return "redirect:/admin/adminsendemail";
 	}
 	
-	@RequestMapping("/adminAddressSearch")
+	@RequestMapping("/admin/adminaddresssearch")
 	public @ResponseBody List<?> adminAddressSearch(String checkedRadio, String searchWord) {
 		List<?> resultList = new ArrayList<Object>();
 		

@@ -11,12 +11,23 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
-	
+	$(function() {		
+		
+		if($("#subPass").val()) {
+			alert("동일한 과목명이 존재합니다.");
+		}
+		if($("#dayPass").val()) {
+			alert("동일한 시간이 존재합니다.");
+		}
+				
+	})
 </script>
 </head>
 <body>
-<%@ include file="/WEB-INF/views/navi/adminnavi.jsp" %>
+<%@ include file="/WEB-INF/views/navi/profnavi.jsp" %>
 <%@ include file="/WEB-INF/views/navi/sidebarprof.jsp" %>
+<input type="text" value="${param.subPass }" id="subPass"/>
+<input type="text" value="${param.dayPass }" id="dayPass"/>
 	<div class="container">
 		<h1>새 강의등록하기</h1>
 		<hr class="one">

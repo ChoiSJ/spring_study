@@ -34,7 +34,7 @@
 				<img src="/jhta/resources/images/student/PeoPleDefault.png" alt="person" style="width: 130px; height: 140px;" />
 			</div>
 			<div class="col-xs-10">
-				<p>기본 정보</p>
+				<p>[기본 정보]</p>
 				<table class="table table-bordered">
 					<colgroup>
 						<col width="20%" />
@@ -74,11 +74,16 @@
 							<th>학년</th>
 							<td>${stud.grade }학년</td>
 						</tr>
+						<tr>
+							<th>입학년도</th>
+							<td><fmt:formatDate value="${stud.enterDate }" pattern="yyyy" />년</td>
+							<th>지도교수</th>
+							<td>${stud.professor }</td>
+						</tr>
 					</thead>
 				</table>
 			</div>
 		</div>
-
 		<div class="row">
 			<p>[추가 정보]</p>
 			<table class="table table-bordered">
@@ -122,9 +127,10 @@
 						<td>${stud.parentPhone }</td>
 					</tr>
 				</tbody>
-			</table>
-			<div class="text-right">
-				<a href="searchstud" class="btn btn-primary"><span class="glyphicon glyphicon-th-large"></span> 목록으로</a>
+			</table>			
+			<div class="row text-right">
+				<a href="updatestud?id=${stud.id }" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> 정보 수정</a>
+				<a href="" onclick="window.history.back();" class="btn btn-default"><span class="glyphicon glyphicon-th-large"></span> 목록으로</a>
 			</div>
 		</div>			
 	</div>

@@ -80,7 +80,7 @@
 </script>
 </head>
 <body>
-<%@ include file="/WEB-INF/views/navi/adminnavi.jsp" %>
+<%@ include file="/WEB-INF/views/navi/profnavi.jsp" %>
 <%@ include file="/WEB-INF/views/navi/sidebarprof.jsp" %>
 	<div class="container">
 		<h1>강의계획서 수정</h1>
@@ -89,7 +89,7 @@
 			<form:form method="post" action="/jhta/prof/syllupdate?no=${syno.no }" modelAttribute="syllabusform">
 				<div class="form-group" id="subclass">
 					<label>과목명</label>
-					<form:select path="subno" cssClass="form-control" selected="${syno.subject.subjackName }">
+					<form:select path="subno" cssClass="form-control" selected="${syno.subject.subjactName }">
 						<c:forEach var="subject" items="${subList }" varStatus="status">
 							<form:option id="subname-${status.count }" value="${subject.no }">${subject.subjectName }</form:option>							
 						</c:forEach>

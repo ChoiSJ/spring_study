@@ -38,6 +38,9 @@ public class LoginController {
 			if(stud == null){
 				return "redirect:/login?err=fail";
 			}
+			if(stud.getRegister().equals("DM1000") || stud.getRegister().equals("OU1000")){
+				return "redirect:/login?err=deny";
+			}
 			sessioncheck.setCheck("stud");
 			session.setAttribute("SESSION_CHECK", sessioncheck);
 			session.setAttribute("LOGIN_USER", stud);

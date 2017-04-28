@@ -189,6 +189,18 @@ public class Semester {
 	public void setCourseTermEnd(Date courseTermEnd) {
 		this.courseTermEnd = courseTermEnd;
 	}
+
+	@Override
+	public String toString() {
+		return "Semester [no=" + no + ", semeSelect=" + semeSelect + ", termStart=" + termStart + ", termEnd=" + termEnd
+				+ ", enrollTermStart=" + enrollTermStart + ", enrollTermEnd=" + enrollTermEnd + ", enrollEditTermStart="
+				+ enrollEditTermStart + ", enrollEditTermEnd=" + enrollEditTermEnd + ", applyTermStart="
+				+ applyTermStart + ", applyTermEnd=" + applyTermEnd + ", evalTermStart=" + evalTermStart
+				+ ", evalTermEnd=" + evalTermEnd + ", gradeTermStart=" + gradeTermStart + ", gradeTermEnd="
+				+ gradeTermEnd + ", gradeEditTermStart=" + gradeEditTermStart + ", gradeEditTermEnd=" + gradeEditTermEnd
+				+ ", appealTermStart=" + appealTermStart + ", appealTermEnd=" + appealTermEnd + ", courseTermStart="
+				+ courseTermStart + ", courseTermEnd=" + courseTermEnd + "]";
+	}
 	
 	
 	

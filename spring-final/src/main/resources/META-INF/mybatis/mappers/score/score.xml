@@ -15,34 +15,47 @@
 		select
 	   r.R_REGI_NO as "no",
 	   r.U_STU_NO as "student.no",
-	    e.E_NO as "enroll.no", 
-	    e.E_ENROLLTIME as "enroll.enrollTime", 
-	    e.E_ENROLLDAY as "enroll.enrollDay",
-	    e.E_ENROLLNUM as "enroll.enrollNum",
-		 s.J_NO as "subject.no",
-		 s.J_T_CODE as "subject.siteCode.code",
-		 s.J_IS_PASSED as "subject.passed", 
-		 s.J_GRADE as "subject.grade", 
-		 s.J_SUBJECT_NAME as "subject.subjectName", 
-		 s.J_SCORE as "subject.score",
-		 s.J_SUB_PROF as "subject.professor",
-		  j.J_DIV_NUM as "division.divisionNo", 
-		  j.J_DIV_PROF as "division.divisionProfessor",
-		  j.J_LIMIT_NUM as "division.limitNumber",
-		  j.J_DIV_NO as "division.no",
-		   t.T_NO as "subject.siteCode.no",
-		   t.T_CODE as "subject.siteCode.code",
-		   t.T_NAME as "subject.siteCode.name"
-		from E_ENROLLMENT e, 
-			 J_DIVISION j,
-			 J_SUBJECT s,
-			 T_SITEMAP t,
-			 R_REGISUBJECT r
-		where j.J_DIV_NO = e.E_J_DIV_NO
-		and e.E_J_SUBJECT_NO = s.J_NO
-		and t.T_CODE = s.J_T_CODE
-		and	r.E_NO = e.E_NO
-		and e.E_NO = #{eno}
+	   r.J_NO as "subject.no",
+		   u.U_STU_ID as "student.id",
+		   u.U_STU_NAME as "student.name",
+		   u.U_STU_DIVISION as "student.division",
+			sc.S_SCORE_NO as "score.no",
+			sc.REGISTER as "score.registerinfo.regiNo",
+			sc.S_GRADE as "score.grade",
+			sc.S_CREDIT as "score.credit",
+			sc.S_REPORT_SCORE as "score.reportScore",
+			sc.S_ATTENDANCE_SCORE as "score.attScore",
+			sc.S_ENDTERM_SCORE as "score.endtermScore",
+			sc.S_MIDTERM_SCORE as "score.midtermScore",
+			  s.J_NO as "subject.no",
+			  s.J_T_CODE as "subject.siteCode.code",
+			  s.J_IS_PASSED as "subject.passed.passedName", 
+			  s.J_GRADE as "subject.grade", 
+			  s.J_SUBJECT_NAME as "subject.subjectName", 
+			  s.J_SCORE as "subject.score",
+			  s.J_SUB_PROF as "subject.professor",
+			  s.J_SEMESTER as "subject.selectNo.no",
+			  	sem.S_SEME_SELECT as "subject.selectNo.semeSelect",
+				 t.T_NO as "subject.siteCode.no",
+				 t.T_CODE as "subject.siteCode.code",
+				 t.T_NAME as "subject.siteCode.name"
+		from  
+				J_SUBJECT s,
+				T_SITEMAP t,
+				R_REGISUBJECT r,
+				S_SCORE sc,
+				U_STUDENT u,
+				S_SEMESTER sem,
+				E_ENROLLMENT enroll
+		where 
+			t.T_CODE = s.J_T_CODE
+		and r.J_NO = s.J_NO
+		and sem.S_NO = s.J_SEMESTER
+		and enroll.E_NO = r.E_NO
+		and sc.REGISTER = r.R_REGI_NO
+		and r.U_STU_NO = u.U_STU_NO
+		and enroll.E_NO = #{eno}
+		order by r.R_REGI_NO
 	</select>
 	
 	<delete id="delScore" parameterType="int">
@@ -51,13 +64,15 @@
 		WHERE 
 			register = #{rno}
 	</delete>
-	<select id="addScore">
+	<select id="addScore" parameterType="int">
 		insert into s_score(
 			REGISTER,
-			S_SCORE_NO)
+			S_SCORE_NO,
+			S_U_NO)
 		values(
 			R_REGISUBJECT_SEQ.currval,
-			S_SCORE_SEQ.nextval)
+			S_SCORE_SEQ.nextval,
+			#{pno})
 	</select>
 	<select id="getAllRegiList" resultType="kr.co.jhta.vo.SubjectRegister">
 		select
@@ -314,6 +329,7 @@
 			and u.U_STU_DIVISION = #{code2 }
 			and u.U_STU_ID = #{stucode }
 		</if>
+		order by r.R_REGI_NO
 	</select>
 	
 	<select id="getSearchInfoBySno" parameterType="int" resultType="kr.co.jhta.vo.stu.Regisubject">
@@ -332,13 +348,14 @@
 			sc.S_ATTENDANCE_SCORE as "score.attScore",
 			sc.S_ENDTERM_SCORE as "score.endtermScore",
 			sc.S_MIDTERM_SCORE as "score.midtermScore",
+			sc.S_TEST as "score.test",
 			  s.J_NO as "subject.no",
 			  s.J_T_CODE as "subject.siteCode.code",
 			  s.J_IS_PASSED as "subject.passed.passedName", 
 			  s.J_GRADE as "subject.grade", 
 			  s.J_SUBJECT_NAME as "subject.subjectName", 
 			  s.J_SCORE as "subject.score",
-			  s.J_SUB_PROF as "subject.professor",
+			  s.J_SUB_PROF as "subject.professor.name",
 			  s.J_SEMESTER as "subject.selectNo.no",
 			  	sem.S_SEME_SELECT as "subject.selectNo.semeSelect",
 				 t.T_NO as "subject.siteCode.no",
@@ -366,13 +383,22 @@
 			sem.S_SEME_SELECT as semename,
 			sum(s.j_score) as credit1,
 			sum(sc.S_CREDIT) as credit2,
-			trunc(avg(sc.S_CREDIT), 1) as credit3,
+			avg(DECODE(sc.S_GRADE, 
+				'A', 4, 
+				'B', 3,
+				'C', 2,
+				'D', 1,
+				0)) as credit3,
 			avg(sc.S_REPORT_SCORE*0.1 + sc.S_ATTENDANCE_SCORE*0.3 + sc.S_MIDTERM_SCORE*0.3 + sc.S_ENDTERM_SCORE*0.3) as credit4,
 			count(case when sc.s_grade = 'F' then 0 end) as grade,
 			count(case when s.J_IS_PASSED ='me' then 0 end) as pass1,
 			count(case when s.J_IS_PASSED ='ms' then 0 end) as pass2,
 			count(case when s.J_IS_PASSED ='cs' then 0 end) as pass3,
-			count(case when s.J_IS_PASSED ='ce' then 0 end) as pass4
+			count(case when s.J_IS_PASSED ='ce' then 0 end) as pass4,
+			count(case when s.J_IS_PASSED ='ns' then 0 end) as pass5,
+			count(case when s.J_IS_PASSED ='gs' then 0 end) as pass6,
+			count(case when s.J_IS_PASSED ='db' then 0 end) as pass7,
+			count(case when sc.S_TEST ='N' then 0 end) as testcount
 		from  
 			J_SUBJECT s,
 			T_SITEMAP t,
@@ -388,35 +414,40 @@
 		and r.U_STU_NO = u.U_STU_NO
 		and r.U_STU_NO = #{sno }
 		group by sem.S_SEME_SELECT
+		order by sem.S_SEME_SELECT
 	</select>
 	
 	<select id ="getSemesterAvgTotalBySno" parameterType="int" resultType="kr.co.jhta.vo.SemesterAvg">
 		select
-		r.U_STU_NO as sno,
-		sum(s.j_score) as credit1,
-		sum(sc.S_CREDIT) as credit2,
-		trunc(avg(sc.S_CREDIT), 1) as credit3,
-		avg(sc.S_REPORT_SCORE*0.1 + sc.S_ATTENDANCE_SCORE*0.3 + sc.S_MIDTERM_SCORE*0.3 + sc.S_ENDTERM_SCORE*0.3) as credit4,
-		count(case when sc.s_grade = 'F' then 0 end) as grade,
-		count(case when s.J_IS_PASSED ='me' then 0 end) as pass1,
-		count(case when s.J_IS_PASSED ='ms' then 0 end) as pass2,
-		count(case when s.J_IS_PASSED ='cs' then 0 end) as pass3,
-		count(case when s.J_IS_PASSED ='ce' then 0 end) as pass4
-from  
-		J_SUBJECT s,
-		T_SITEMAP t,
-		R_REGISUBJECT r,
-		S_SCORE sc,
-		U_STUDENT u,
-		S_SEMESTER sem
-where 
-		t.T_CODE = s.J_T_CODE
-	and r.J_NO = s.J_NO
-	and sem.S_NO = s.J_SEMESTER
-	and sc.REGISTER = r.R_REGI_NO
-	and r.U_STU_NO = u.U_STU_NO
-	and r.U_STU_NO = #{sno }
-group by r.U_STU_NO
+				r.U_STU_NO as sno,
+				sum(s.j_score) as credit1,
+				sum(sc.S_CREDIT) as credit2,
+				trunc(avg(sc.S_CREDIT), 1) as credit3,
+				avg(sc.S_REPORT_SCORE*0.1 + sc.S_ATTENDANCE_SCORE*0.3 + sc.S_MIDTERM_SCORE*0.3 + sc.S_ENDTERM_SCORE*0.3) as credit4,
+				count(case when sc.s_grade = 'F' then 0 end) as grade,
+				count(case when s.J_IS_PASSED ='me' then 0 end) as pass1,
+				count(case when s.J_IS_PASSED ='ms' then 0 end) as pass2,
+				count(case when s.J_IS_PASSED ='cs' then 0 end) as pass3,
+				count(case when s.J_IS_PASSED ='ce' then 0 end) as pass4,
+				count(case when s.J_IS_PASSED ='ns' then 0 end) as pass5,
+				count(case when s.J_IS_PASSED ='gs' then 0 end) as pass6,
+				count(case when s.J_IS_PASSED ='db' then 0 end) as pass7,
+				count(case when sc.S_TEST ='N' then 0 end) as testcount
+		from  
+				J_SUBJECT s,
+				T_SITEMAP t,
+				R_REGISUBJECT r,
+				S_SCORE sc,
+				U_STUDENT u,
+				S_SEMESTER sem
+		where 
+				t.T_CODE = s.J_T_CODE
+			and r.J_NO = s.J_NO
+			and sem.S_NO = s.J_SEMESTER
+			and sc.REGISTER = r.R_REGI_NO
+			and r.U_STU_NO = u.U_STU_NO
+			and r.U_STU_NO = #{sno }
+		group by r.U_STU_NO
 	</select>
 	
 	<select id="getAllSearchInfo" resultType="kr.co.jhta.vo.stu.Regisubject">
@@ -467,5 +498,199 @@ group by r.U_STU_NO
 	   count(*)
 	from  
 		S_SCORE
+	</select>
+	<select id="getAllScorelistByProfID" parameterType="String" resultType="kr.co.jhta.vo.stu.Regisubject">
+		select
+	   r.R_REGI_NO as "no",
+	   r.U_STU_NO as "student.no",
+	   r.J_NO as "subject.no",
+		   u.U_STU_ID as "student.id",
+		   u.U_STU_NAME as "student.name",
+		   u.U_STU_DIVISION as "student.division",
+			sc.S_SCORE_NO as "score.no",
+			sc.REGISTER as "score.registerinfo.regiNo",
+			sc.S_GRADE as "score.grade",
+			sc.S_CREDIT as "score.credit",
+			sc.S_REPORT_SCORE as "score.reportScore",
+			sc.S_ATTENDANCE_SCORE as "score.attScore",
+			sc.S_ENDTERM_SCORE as "score.endtermScore",
+			sc.S_MIDTERM_SCORE as "score.midtermScore",
+			  s.J_NO as "subject.no",
+			  s.J_T_CODE as "subject.siteCode.code",
+			  s.J_IS_PASSED as "subject.passed.passedName", 
+			  s.J_GRADE as "subject.grade", 
+			  s.J_SUBJECT_NAME as "subject.subjectName", 
+			  s.J_SCORE as "subject.score",
+			  s.J_SUB_PROF as "subject.professor",
+			  s.J_SEMESTER as "subject.selectNo.no",
+			  	sem.S_SEME_SELECT as "subject.selectNo.semeSelect",
+				 t.T_NO as "subject.siteCode.no",
+				 t.T_CODE as "subject.siteCode.code",
+				 t.T_NAME as "subject.siteCode.name"
+		from  
+				J_SUBJECT s,
+				T_SITEMAP t,
+				R_REGISUBJECT r,
+				S_SCORE sc,
+				U_STUDENT u,
+				S_SEMESTER sem
+		where 
+			t.T_CODE = s.J_T_CODE
+		and r.J_NO = s.J_NO
+		and sem.S_NO = s.J_SEMESTER
+		and sc.REGISTER = r.R_REGI_NO
+		and r.U_STU_NO = u.U_STU_NO
+		and s.J_SUB_PROF = #{pid}
+		order by r.R_REGI_NO
+	</select>
+	<select id="getStuScoreInfoByStuNo" parameterType="int" resultType="kr.co.jhta.vo.stu.Regisubject">
+		select
+	   r.R_REGI_NO as "no",
+	   r.U_STU_NO as "student.no",
+	   r.J_NO as "subject.no",
+		   u.U_STU_ID as "student.id",
+		   u.U_STU_NAME as "student.name",
+		   u.U_STU_DIVISION as "student.division",
+			sc.S_SCORE_NO as "score.no",
+			sc.REGISTER as "score.registerinfo.regiNo",
+			sc.S_GRADE as "score.grade",
+			sc.S_CREDIT as "score.credit",
+			sc.S_REPORT_SCORE as "score.reportScore",
+			sc.S_ATTENDANCE_SCORE as "score.attScore",
+			sc.S_ENDTERM_SCORE as "score.endtermScore",
+			sc.S_MIDTERM_SCORE as "score.midtermScore",
+			sc.S_TEST as "score.test",
+			  s.J_NO as "subject.no",
+			  s.J_T_CODE as "subject.siteCode.code",
+			  s.J_IS_PASSED as "subject.passed.passedName", 
+			  s.J_GRADE as "subject.grade", 
+			  s.J_SUBJECT_NAME as "subject.subjectName", 
+			  s.J_SCORE as "subject.score",
+			  s.J_SUB_PROF as "subject.professor.name",
+			  s.J_SEMESTER as "subject.selectNo.no",
+			  	sem.S_SEME_SELECT as "subject.selectNo.semeSelect",
+				 t.T_NO as "subject.siteCode.no",
+				 t.T_CODE as "subject.siteCode.code",
+				 t.T_NAME as "subject.siteCode.name"
+		from  
+				J_SUBJECT s,
+				T_SITEMAP t,
+				R_REGISUBJECT r,
+				S_SCORE sc,
+				U_STUDENT u,
+				S_SEMESTER sem
+		where 
+			t.T_CODE = s.J_T_CODE
+		and r.J_NO = s.J_NO
+		and sem.S_NO = s.J_SEMESTER
+		and sc.REGISTER = r.R_REGI_NO
+		and r.U_STU_NO = u.U_STU_NO
+		and r.U_STU_NO = #{stno}
+		order by r.R_REGI_NO
+	</select>
+	<select id="getProfNoByEno" parameterType="int" resultType="int">
+		select
+			u.U_PROF_NO as profno
+		from
+			E_ENROLLMENT e,
+			J_SUBJECT j,
+			U_PROFESSOR u
+		where
+			e.E_J_SUBJECT_NO = j.J_NO
+		and j.J_SUB_PROF = u.U_PROF_ID
+		and e.E_NO = #{eno}
+	</select>
+	
+	<select id="getSemeNameByStuNo" parameterType="int" resultType="String">
+		select
+			  sem.S_SEME_SELECT as sem
+		from  
+			J_SUBJECT s,
+			T_SITEMAP t,
+			R_REGISUBJECT r,
+			S_SCORE sc,
+			U_STUDENT u,
+			S_SEMESTER sem
+		where 
+			t.T_CODE = s.J_T_CODE
+		and r.J_NO = s.J_NO
+		and sem.S_NO = s.J_SEMESTER
+		and sc.REGISTER = r.R_REGI_NO
+		and r.U_STU_NO = u.U_STU_NO
+		and r.U_STU_NO = #{stno}
+		group by sem.S_SEME_SELECT
+		order by sem.S_SEME_SELECT
+	</select>
+	
+	<select id="getsubjectlistByProfId" parameterType="int" resultType="subject">
+	select
+			A.j_no as no,
+			A.j_subject_name as subjectName,
+			C.u_prof_name as "professor.name"
+			
+		from 
+			j_subject A, j_is_passed B, u_professor C, s_semester D, t_sitemap E
+		where 
+			A.j_sub_prof = C.u_prof_id
+		and
+			A.j_semester = D.s_no
+		and
+			A.j_is_passed = B.pass_code
+		and
+			A.j_t_code = E.t_code
+		and 
+			C.U_PROF_NO = #{pno}
+		order by A.j_no
+	</select>
+	<select id="getSearchScorelistByhash" parameterType="hashmap" resultType="kr.co.jhta.vo.stu.Regisubject">
+		select
+	   r.R_REGI_NO as "no",
+	   r.U_STU_NO as "student.no",
+	   r.J_NO as "subject.no",
+		   u.U_STU_ID as "student.id",
+		   u.U_STU_NAME as "student.name",
+		   u.U_STU_DIVISION as "student.division",
+			sc.S_SCORE_NO as "score.no",
+			sc.REGISTER as "score.registerinfo.regiNo",
+			sc.S_GRADE as "score.grade",
+			sc.S_CREDIT as "score.credit",
+			sc.S_REPORT_SCORE as "score.reportScore",
+			sc.S_ATTENDANCE_SCORE as "score.attScore",
+			sc.S_ENDTERM_SCORE as "score.endtermScore",
+			sc.S_MIDTERM_SCORE as "score.midtermScore",
+			  s.J_NO as "subject.no",
+			  s.J_T_CODE as "subject.siteCode.code",
+			  s.J_IS_PASSED as "subject.passed.passedName", 
+			  s.J_GRADE as "subject.grade", 
+			  s.J_SUBJECT_NAME as "subject.subjectName", 
+			  s.J_SCORE as "subject.score",
+			  s.J_SUB_PROF as "subject.professor",
+			  s.J_SEMESTER as "subject.selectNo.no",
+			  	sem.S_SEME_SELECT as "subject.selectNo.semeSelect",
+				 t.T_NO as "subject.siteCode.no",
+				 t.T_CODE as "subject.siteCode.code",
+				 t.T_NAME as "subject.siteCode.name"
+		from  
+				J_SUBJECT s,
+				T_SITEMAP t,
+				R_REGISUBJECT r,
+				S_SCORE sc,
+				U_STUDENT u,
+				S_SEMESTER sem
+		where 
+			t.T_CODE = s.J_T_CODE
+		and r.J_NO = s.J_NO
+		and sem.S_NO = s.J_SEMESTER
+		and sc.REGISTER = r.R_REGI_NO
+		and r.U_STU_NO = u.U_STU_NO
+		<if test="subname == 'all'">
+			and s.J_SUB_PROF = #{pid}
+			order by r.R_REGI_NO
+		</if>
+		<if test="subname != 'all'">
+			and s.J_SUB_PROF = #{pid}
+			and s.J_SUBJECT_NAME = #{subname}
+			order by r.R_REGI_NO
+		</if>
 	</select>
 </mapper>

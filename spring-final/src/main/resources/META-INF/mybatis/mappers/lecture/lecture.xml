@@ -36,43 +36,38 @@
 	<select id="getSubjectList" parameterType="String" resultType="hashmap">
 		select
 			s.j_no as no,
-			s.j_reference as reference,
-			s.j_progress as progress,
 			s.j_subject_name as subjectName,
-			s.j_semester as semester,
+			s.j_semester as "selectNo.no",
 			s.j_grade as grade,
-			s.j_is_passed as isPassed,
+			s.j_is_passed as "passed.code",
 			s.j_score as score,
-			s.j_outline as outline,
 			s.J_t_code as "siteCode.code",
 			s.j_sub_prof as professor,
-			d.j_div_no as divNo,
-			d.j_div_num as divisionNo,
-			d.j_limit_num as limitNumber,
-			d.j_div_prof as divisionProfessor,
-			e.e_no as no,
-			e.e_enrollday	as enrollDay,
-			e.e_j_div_no as "division.no",
+			s.j_division as division,
+			s.j_limit_stu as limitStu,
+			e.e_no as enrollNo,
+			e.e_enrollday as enrollDay,
 			e.e_j_subject_no as "subject.no",
 			e.e_enrolltime as enrollTime,
-			e.e_enrollnum as	enrollNum
+			e.e_enrollnum as enrollNum,
+			i.is_passed as isPassed
 		from
 			j_subject s,
-			j_division d,
-			e_enrollment e
+			e_enrollment e,
+			j_is_passed i
 		where
 			s.J_t_code = #{majorCode}
-			and s.j_no = d.j_subject_no
 			and s.j_no = e.e_j_subject_no
+			and s.j_is_passed = i.pass_code
 	</select>
 	
 	<select id="getSubjectRowCount" parameterType="string" resultType="int">
 		select 
 			count(*)
 		from
-			j_subject s, j_division d, e_enrollment e
+			j_subject s, e_enrollment e
 		where
-			s.j_t_code = #{majorCode} and s.j_no = d.j_subject_no and s.j_no = e.e_j_subject_no 
+			s.j_t_code = #{majorCode} and s.j_no = e.e_j_subject_no 
 	</select>
 	
 	<select id="getAllSemesterList" resultType="semester">
@@ -98,6 +93,8 @@
 			s_courseterm_end as courseTermEnd
 		from
 			s_semester
+		order by
+			s_seme_select desc
 	</select>
 	
 	<select id="getSemesterList" parameterType="int" resultType="semester">
@@ -131,29 +128,22 @@
 	<select id="getAllSubjectList" resultType="hashmap">
 		select
 			s.j_no as no,
-			s.j_reference as reference,
-			s.j_progress as progress,
 			s.j_subject_name as subjectName,
-			s.j_semester as semester,
+			s.j_semester as "selectNo.no",
 			s.j_grade as grade,
-			s.j_is_passed as isPassed,
+			s.j_is_passed as "passed.code",
 			s.j_score as score,
-			s.j_outline as outline,
 			s.J_t_code as "siteCode.code",
 			s.j_sub_prof as professor,
-			d.j_div_no as divNo,
-			d.j_div_num as divisionNo,
-			d.j_limit_num as limitNumber,
-			d.j_div_prof as divisionProfessor,
-			e.e_no as no,
-			e.e_enrollday	as enrollDay,
-			e.e_j_div_no as "division.no",
+			s.j_division as division,
+			s.j_limit_stu as limitStu
+			e.e_no as enrollNo,
+			e.e_enrollday as enrollDay,
 			e.e_j_subject_no as "subject.no",
 			e.e_enrolltime as enrollTime,
-			e.e_enrollnum as	enrollNum
+			e.e_enrollnum as enrollNum
 		from
 			j_subject s,
-			j_division d,
 			e_enrollment e
 		where
 			s.j_no = d.j_subject_no
@@ -196,40 +186,38 @@
 			s.u_stu_phone as phone,
 			s.u_stu_professor as professor,
 			r.r_regi_no as no,
-			r.r_maxgrade as maxGrade,
 			r.j_no as "subject.no",
 			r.u_stu_no as "student.no",
 			r.e_no as "enroll.no",
-			r.j_div_no as "division.no",
 			e.e_enrollday as enrollDay,
 			e.e_enrolltime as enrollTime,
 			e.e_enrollnum as emrollNum,
-			u.j_reference as reference,
-			u.j_progress as progress,
 			u.j_subject_name as subjectName,
 			u.j_semester as semester,
 			u.j_grade as subGrade,
-			u.j_is_passed as isPassed,
+			u.j_is_passed as isPassedCode,
 			u.j_score as score,
-			u.j_outline as outline,
 			u.J_t_code as "siteCode.code",
 			u.j_sub_prof as professor,
-			m.s_seme_select as semeSelect
+			u.j_division as subDivision,
+			m.s_seme_select as semeSelect,
+			i.is_passed as isPassed
 		from 
-			u_student s, r_regisubject r, e_enrollment e, j_subject u, s_semester m
+			u_student s, r_regisubject r, e_enrollment e, j_subject u, s_semester m, j_is_passed i
 		where
 			s.u_stu_no = r.u_stu_no
 			and r.j_no = e.e_j_subject_no
 			and r.j_no = u.j_no
 			and u.j_semester = m.s_no
-			and u.J_t_code = #{major}	
+			and i.pass_code = u.j_is_passed
+			and s.u_stu_division = #{major}	
 			<if test="semester != 0">
 				and u.j_semester = #{semester}
 			</if>
-			<if test="student == name">
+			<if test="student == 'name'">
 				and s.u_stu_name like '%' || #{word} || '%'
 			</if>
-			<if test="student == stuNo">
+			<if test="student == 'stuNo'">
 				and s.u_stu_id = #{word}
 			</if>	
 	</select>

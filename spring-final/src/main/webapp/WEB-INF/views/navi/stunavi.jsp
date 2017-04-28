@@ -154,18 +154,16 @@
                         <a class="navbar-brand" href="home" style="color: white;"><span class="glyphicon glyphicon-education"></span> JHTA 학사 관리 시스템</a>
                             <ul class="nav navbar-nav">
 						      <li><a href="stuInfo" style="color: white;">학생 정보</a></li>
-						      <li><a href="#" style="color: white;">성적 조회</a></li>
-						      <li><a href="#" style="color: white;">학적 관리</a></li>
-						      <li><a href="#" style="color: white;">재학 관리</a></li>
-						      <li><a href="#" style="color: white;">과제 관리</a></li>
-						      <li><a href="#" style="color: white;">게시판</a></li>
+						      <li><a href="lookupScore" style="color: white;">성적 조회</a></li>
+						      <li><a href="stuReport" style="color: white;">과제 관리</a></li>
+						      <li><a href="studeptboard" style="color: white;">게시판</a></li>
     						</ul>
                     </div>
                     
                     <div id="navbar-collapse" class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
-                        	<li><a id="user-profile" href="#"style="color: white;"><img src="" class="img-responsive img-thumbnail img-circle"> ${LOGIN_USER.name }님 환영합니다.</a></li>
-                            <li><a href="#" style="color: white;">내 정보 수정</a></li>
+                        	<li><a id="user-profile" href="stuInfo"style="color: white;"><img src="../resources/images/map/defaultPersonSircle.jpg" class="img-responsive img-thumbnail img-circle"> ${LOGIN_USER.name }님</a></li>
+                            <li><a href="stuInfo" style="color: white;">내 정보 수정</a></li>
                             <li><a href="/jhta/logout" style="color: white;">로그아웃</a></li>
                         </ul>
                     </div>

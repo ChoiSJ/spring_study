@@ -4,9 +4,10 @@ public class LeaveSearchForm {
 	
 	private String register;
 	private String division;
-	private String pass;
 	private String sort;
 	private String q;
+	
+	
 	public String getRegister() {
 		return register;
 	}
@@ -18,12 +19,6 @@ public class LeaveSearchForm {
 	}
 	public void setDivision(String division) {
 		this.division = division;
-	}
-	public String getPass() {
-		return pass;
-	}
-	public void setPass(String pass) {
-		this.pass = pass;
 	}
 	public String getQ() {
 		return q;
@@ -39,7 +34,6 @@ public class LeaveSearchForm {
 	}
 	@Override
 	public String toString() {
-		return "LeaveSearchForm [register=" + register + ", division=" + division + ", pass=" + pass + ", sort=" + sort
-				+ ", q=" + q + "]";
+		return "LeaveSearchForm [register=" + register + ", division=" + division + ", sort=" + sort + ", q=" + q + "]";
 	}
 }

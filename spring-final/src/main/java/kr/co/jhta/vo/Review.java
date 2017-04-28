@@ -27,6 +27,12 @@ public class Review {
 	public void setContents(String contents) {
 		this.contents = contents;
 	}
+	public String getContentsForBr() {
+		if (contents == null) {
+			return null;
+		}
+		return contents.replaceAll("\n", "<br>").replaceAll(" ", "&nbsp;");
+	}
 	public String getWriter() {
 		return writer;
 	}

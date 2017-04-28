@@ -7,6 +7,8 @@ public class Student {
 	private int no;
 	private String addr1;
 	private String addr2;
+	private String addr3;
+	private int zipcode;
 	private String email;
 	private int grade;
 	private String ssn;
@@ -26,41 +28,13 @@ public class Student {
 	private int remainLeave;
 	private String tName;
 	private String cName;	
+	private int maxOneScore;
+	private int nowScore;
+	
 	public Student() {
 		super();
 		// TODO Auto-generated constructor stub
 	}		
-
-
-	public Student(int no, String addr1, String addr2, String email, int grade, String ssn, Date enterDate,
-			Date leaveDate, String parentName, String parentPhone, String id, String pwd, String name, String gender,
-			String division, String register, int score, String phone, String professor, int remainLeave, String tName,
-			String cName) {
-		super();
-		this.no = no;
-		this.addr1 = addr1;
-		this.addr2 = addr2;
-		this.email = email;
-		this.grade = grade;
-		this.ssn = ssn;
-		this.enterDate = enterDate;
-		this.leaveDate = leaveDate;
-		this.parentName = parentName;
-		this.parentPhone = parentPhone;
-		this.id = id;
-		this.pwd = pwd;
-		this.name = name;
-		this.gender = gender;
-		this.division = division;
-		this.register = register;
-		this.score = score;
-		this.phone = phone;
-		this.professor = professor;
-		this.remainLeave = remainLeave;
-		this.tName = tName;
-		this.cName = cName;
-	}
-
 
 	public int getNo() {
 		return no;
@@ -239,18 +213,47 @@ public class Student {
 		this.cName = cName;
 	}
 
+	public int getMaxOneScore() {
+		return maxOneScore;
+	}
+
+	public void setMaxOneScore(int maxOneScore) {
+		this.maxOneScore = maxOneScore;
+	}
+
+	public int getNowScore() {
+		return nowScore;
+	}
+
+	public void setNowScore(int nowScore) {
+		this.nowScore = nowScore;
+	}
+
+	public String getAddr3() {
+		return addr3;
+	}
+
+	public void setAddr3(String addr3) {
+		this.addr3 = addr3;
+	}
+
+	public int getZipcode() {
+		return zipcode;
+	}
+
+	public void setZipcode(int zipcode) {
+		this.zipcode = zipcode;
+	}
 
 	@Override
 	public String toString() {
-		return "Student [no=" + no + ", addr1=" + addr1 + ", addr2=" + addr2 + ", email=" + email + ", grade=" + grade
-				+ ", ssn=" + ssn + ", enterDate=" + enterDate + ", leaveDate=" + leaveDate + ", parentName="
-				+ parentName + ", parentPhone=" + parentPhone + ", id=" + id + ", pwd=" + pwd + ", name=" + name
-				+ ", gender=" + gender + ", division=" + division + ", register=" + register + ", score=" + score
-				+ ", phone=" + phone + ", professor=" + professor + ", remainLeave=" + remainLeave + ", tName=" + tName
-				+ ", cName=" + cName + "]";
-	}
-
-
-	
+		return "Student [no=" + no + ", addr1=" + addr1 + ", addr2=" + addr2 + ", addr3=" + addr3 + ", zipcode="
+				+ zipcode + ", email=" + email + ", grade=" + grade + ", ssn=" + ssn + ", enterDate=" + enterDate
+				+ ", leaveDate=" + leaveDate + ", parentName=" + parentName + ", parentPhone=" + parentPhone + ", id="
+				+ id + ", pwd=" + pwd + ", name=" + name + ", gender=" + gender + ", division=" + division
+				+ ", register=" + register + ", score=" + score + ", phone=" + phone + ", professor=" + professor
+				+ ", remainLeave=" + remainLeave + ", tName=" + tName + ", cName=" + cName + ", maxOneScore="
+				+ maxOneScore + ", nowScore=" + nowScore + "]";
+	}	
 	
 }

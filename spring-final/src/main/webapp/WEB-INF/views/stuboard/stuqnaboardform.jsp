@@ -27,8 +27,8 @@
 		<div class="row well">
 			<form:form action="stuqnaboardform" commandName="boardForm">
 				<select class="form-control" name="subjectSelect">
-					<c:forEach var="sub" items="${subjectName }">
-						<option value="${sub.subjectCode }">${sub.subjectName }</option>
+					<c:forEach var="sub" items="${subject }">
+						<option value="${sub.division }">${sub.subjectName }</option>
 					</c:forEach>
 				</select>
 				<div class="form-group">
@@ -41,8 +41,9 @@
 					<form:textarea path="contents" cssClass="form-control"/>
 					<form:errors path="contents" cssClass="text-danger"/>
 				</div>
-				<div class="form-inline">
-					<button type="submit" class="btn btn-default btn-sm">등록</button>
+				<div class="text-right">
+					<button type="submit" class="btn btn-primary btn-sm">등록</button>
+					<a href="stuqnaboard" class="btn btn-danger btn-sm">뒤로가기</a>
 				</div>
 			</form:form>
 		</div>

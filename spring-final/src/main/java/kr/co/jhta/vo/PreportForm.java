@@ -1,21 +1,57 @@
 package kr.co.jhta.vo;
 
+import java.util.Date;
+
+import org.springframework.web.multipart.MultipartFile;
+
 public class PreportForm {
 	private int enrollno;
-	private String profname;
+	private int profno;
 	private String title;
 	private String content;
+	private Date prost;
+	private Date proend;
+	private String upfile;
+	private MultipartFile file;
+	
+	
+	
+	
+	public MultipartFile getFile() {
+		return file;
+	}
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
+	public String getUpfile() {
+		return upfile;
+	}
+	public void setUpfile(String upfile) {
+		this.upfile = upfile;
+	}
+	public Date getProst() {
+		return prost;
+	}
+	public void setProst(Date prost) {
+		this.prost = prost;
+	}
+	public Date getProend() {
+		return proend;
+	}
+	public void setProend(Date proend) {
+		this.proend = proend;
+	}
 	public int getEnrollno() {
 		return enrollno;
 	}
 	public void setEnrollno(int enrollno) {
 		this.enrollno = enrollno;
 	}
-	public String getProfname() {
-		return profname;
+	public int getProfno() {
+		return profno;
 	}
-	public void setProfname(String profname) {
-		this.profname = profname;
+	public void setProfno(int profno) {
+		this.profno = profno;
 	}
 	public String getTitle() {
 		return title;
@@ -29,6 +65,13 @@ public class PreportForm {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	@Override
+	public String toString() {
+		return "PreportForm [enrollno=" + enrollno + ", profno=" + profno + ", title=" + title + ", content=" + content
+				+ ", prost=" + prost + ", proend=" + proend + "]";
+	}
+	
+	
 	
 	
 }

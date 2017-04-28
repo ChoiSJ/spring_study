@@ -11,6 +11,35 @@ public class SemesterAvg {
 	private int pass2;
 	private int pass3;
 	private int pass4;
+	private int pass5;
+	private int pass6;
+	private int pass7;
+	private int testcount;
+	
+	public void setTestcount(int testcount) {
+		this.testcount = testcount;
+	}
+	public int getTestcount() {
+		return testcount;
+	}
+	public void setPass5(int pass5) {
+		this.pass5 = pass5;
+	}
+	public void setPass6(int pass6) {
+		this.pass6 = pass6;
+	}
+	public void setPass7(int pass7) {
+		this.pass7 = pass7;
+	}
+	public int getPass5() {
+		return pass5;
+	}
+	public int getPass6() {
+		return pass6;
+	}
+	public int getPass7() {
+		return pass7;
+	}
 	public String getSemename() {
 		return semename;
 	}
@@ -76,7 +105,7 @@ public class SemesterAvg {
 	public String toString() {
 		return "SemesterAvg [semename=" + semename + ", credit1=" + credit1 + ", credit2=" + credit2 + ", credit3="
 				+ credit3 + ", credit4=" + credit4 + ", grade=" + grade + ", pass1=" + pass1 + ", pass2=" + pass2
-				+ ", pass3=" + pass3 + ", pass4=" + pass4 + "]";
-	}
-	
+				+ ", pass3=" + pass3 + ", pass4=" + pass4 + ", pass5=" + pass5 + ", pass6=" + pass6 + ", pass7=" + pass7
+				+ "]";
+	}	
 }

@@ -7,7 +7,7 @@ public class ScheduleEventForm {
 	
 	private static final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	private String title;
-	private String description;
+	private String location;
 	private String startDate;
 	private String startHour;
 	private String startMinute;
@@ -20,19 +20,6 @@ public class ScheduleEventForm {
 		super();
 	}
 
-	public ScheduleEventForm(String title, String description, String startDate, String startHour, String startMinute,
-			String endDate, String endHour, String endMinute, boolean allDay) {
-		super();
-		this.title = title;
-		this.description = description;
-		this.startDate = startDate;
-		this.startHour = startHour;
-		this.startMinute = startMinute;
-		this.endDate = endDate;
-		this.endHour = endHour;
-		this.endMinute = endMinute;
-		this.allDay = allDay;
-	}
 
 	public String getTitle() {
 		return title;
@@ -42,14 +29,17 @@ public class ScheduleEventForm {
 		this.title = title;
 	}
 	
-	public String getDescription() {
-		return description;
-	}
 	
-	public void setDescription(String description) {
-		this.description = description;
+	public String getLocation() {
+		return location;
 	}
-	
+
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+
 	public Date getStart() {
 		return stringToDate(startDate, startHour, startMinute);
 	}
@@ -102,13 +92,5 @@ public class ScheduleEventForm {
 			throw new RuntimeException("날짜형식 오류");
 		}
 	}
-	
-	@Override
-	public String toString() {
-		return "EventForm [title=" + title + ", description=" + description + ", startDate=" + startDate
-				+ ", startHour=" + startHour + ", startMinute=" + startMinute + ", endDate=" + endDate + ", endHour="
-				+ endHour + ", endMinute=" + endMinute + ", allDay=" + allDay + "]";
-	}
-	
 	
 }

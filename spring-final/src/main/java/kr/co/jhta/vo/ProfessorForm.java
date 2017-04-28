@@ -13,15 +13,7 @@ public class ProfessorForm {
 	@Pattern(regexp="[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}", message="올바른 이메일 형식을 입력하세요")
 	private String email;
 	private String addr;
-	private String pwd;
-	
-	
-	public String getPwd() {
-		return pwd;
-	}
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
-	}
+
 	public String getPhone() {
 		return phone;
 	}
@@ -42,8 +34,9 @@ public class ProfessorForm {
 	}
 	@Override
 	public String toString() {
-		return "ProfessorForm [phone=" + phone + ", email=" + email + ", addr=" + addr + ", pwd=" + pwd + "]";
+		return "ProfessorForm [phone=" + phone + ", email=" + email + ", addr=" + addr + "]";
 	}
+	
 	
 	
 }

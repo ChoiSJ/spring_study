@@ -30,11 +30,13 @@ public class ScheduleEventController {
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 	}
 	
+	
+	
 	@RequestMapping("/addevent.do")
 	public ScheduleEvent addEvent(ScheduleEventForm eventForm, Student student) {
 		ScheduleEvent schedule = new ScheduleEvent();
 		schedule.setTitle(eventForm.getTitle());
-		schedule.setDescription(eventForm.getDescription());
+		schedule.setLocation(eventForm.getLocation());
 		schedule.setStart(eventForm.getStart());
 		schedule.setEnd(eventForm.getEnd());
 		schedule.setStudent(student);

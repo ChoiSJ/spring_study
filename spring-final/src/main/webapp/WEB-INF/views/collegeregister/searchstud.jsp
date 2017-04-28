@@ -138,7 +138,7 @@
 							</select>	
 						</div>
 						<div class="col-md-6 text-right">
-							<p>조회된 학생 수 : 5 명</p>
+							<p>조회된 학생 수 : ${rows } 명</p>
 						</div>
 					</div>
 					<div class="row">

@@ -12,10 +12,24 @@ public class AddStudentForm {
 	private String name;
 	private String gender;
 	private String division;
+	private String email;
 	private String register;
 	private String phone;
 	private String professor;
-	
+	private String id;
+
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	public int getNo() {
 		return no;
 	}
@@ -98,10 +112,9 @@ public class AddStudentForm {
 	public String toString() {
 		return "AddStudentForm [no=" + no + ", addr1=" + addr1 + ", addr2=" + addr2 + ", grade=" + grade + ", ssn="
 				+ ssn + ", parentName=" + parentName + ", parentPhone=" + parentPhone + ", name=" + name + ", gender="
-				+ gender + ", division=" + division + ", register=" + register + ", phone=" + phone + ", professor="
-				+ professor + "]";
+				+ gender + ", division=" + division + ", email=" + email + ", register=" + register + ", phone=" + phone
+				+ ", professor=" + professor + "]";
 	}
-	
 }
 
 

@@ -105,7 +105,7 @@
 			D.s_seme_select as "selectNo.semeSelect",
 			A.j_grade as grade,
 			B.pass_code as "passed.code",
-			E.t_name as "siteCode.name",
+			A.j_t_code as "siteCode.code",
 			A.j_score as score,
 			A.j_division as division,
 			A.j_limit_stu as limitStu
@@ -164,9 +164,12 @@
 			B.is_passed as "passed.passedName",
 			E.t_name as "siteCode.name",
 			A.j_score as score,
-			A.j_limit_stu as limitStu
+			A.j_limit_stu as limitStu,
+			F.E_No as "enroll.no",
+			F.E_enrollday as "ernoll.enrollDay",
+			F.E_enrolltime as "enroll.enrollTime"
 		from 
-			j_subject A, j_is_passed B, u_professor C, s_semester D, t_sitemap E
+			j_subject A, j_is_passed B, u_professor C, s_semester D, t_sitemap E, E_Enrollment F
 		where 
 			A.j_sub_prof = C.u_prof_id
 		and
@@ -177,6 +180,38 @@
 			A.j_t_code = E.t_code
 		and 
 			A.j_no = #{value}
+	</select>
+	
+	<select id="getByENoList" parameterType="int" resultType="subject">
+		select
+			A.j_no as no,
+			A.j_subject_name as subjectName,
+			E.t_code as "siteCode.code",
+			C.u_prof_id as "professor.id",
+			C.u_prof_name as "professor.name",
+			D.s_seme_select as "selectNo.semeSelect",
+			A.j_grade as grade,
+			B.is_passed as "passed.passedName",
+			E.t_name as "siteCode.name",
+			A.j_score as score,
+			A.j_limit_stu as limitStu,
+			F.E_No as "enroll.no",
+			F.E_enrollday as "enroll.enrollDay",
+			F.E_enrolltime as "enroll.enrollTime"
+		from 
+			j_subject A, j_is_passed B, u_professor C, s_semester D, t_sitemap E, E_Enrollment F
+		where 
+			A.j_sub_prof = C.u_prof_id
+		and
+			A.j_semester = D.s_no
+		and
+			A.j_is_passed = B.pass_code
+		and
+			A.j_t_code = E.t_code
+		and 
+			F.E_J_SUBJECT_NO = A.J_NO
+		and 
+			F.E_no = #{value}
 	</select>
 	<delete id="deleteSub" parameterType="int">
   		delete 
@@ -215,8 +250,9 @@
 	<select id="getallenroll" resultType="subject">
 		select
 			A.E_NO as "enroll.no",
-			F.T_Name as "siteCode.code",
-			B.J_T_CODE as "siteCode.name",
+			F.T_Name as "siteCode.name",
+			B.J_T_CODE as "siteCode.code",
+			B.J_NO as no,
 			B.J_SUBJECT_NAME as subjectName,
 			C.U_prof_name as "professor.name",
 			D.S_SEME_SELECT as "selectNo.semeSelect",

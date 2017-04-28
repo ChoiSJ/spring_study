@@ -15,14 +15,14 @@ public class Board {
 	private String category;
 	private String fileName;
 	private String department;
-	private String subjectNo;
+	private int subjectNo;
 	
 	
 	
-	public String getSubjectNo() {
+	public int getSubjectNo() {
 		return subjectNo;
 	}
-	public void setSubjectNo(String subjectNo) {
+	public void setSubjectNo(int subjectNo) {
 		this.subjectNo = subjectNo;
 	}
 	public int getNo() {
@@ -39,6 +39,12 @@ public class Board {
 	}
 	public String getContents() {
 		return contents;
+	}
+	public String getContentsForHTML(){
+		if (contents == null){
+			return null;
+		}
+		return contents.replaceAll("\n", "<br>").replaceAll(" ", "&nbsp;");
 	}
 	public void setContents(String contents) {
 		this.contents = contents;

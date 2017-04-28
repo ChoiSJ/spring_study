@@ -8,7 +8,8 @@ public class Score {
 	private int no;
 	private int credit;
 	private String grade;
-	
+	private Attendance attendance;
+	private String test;
 	@Min(value=0, message="과제점수는 0점 이상 만 가능합니다.")
 	@Max(value=100, message="과제점수는 100점 이하 만 가능합니다.")
 	private int reportScore;
@@ -28,7 +29,24 @@ public class Score {
 	public Score() {
 		// TODO Auto-generated constructor stub
 	}
-	
+		
+	public void setTest(String test) {
+		this.test = test;
+	}
+
+	public String getTest() {
+		return test;
+	}
+
+	public void setAttendance(Attendance attendance) {
+		this.attendance = attendance;
+	}
+
+	public Attendance getAttendance() {
+		return attendance;
+	}
+
+
 	public SubjectRegister getRegister() {
 		return registerinfo;
 	}

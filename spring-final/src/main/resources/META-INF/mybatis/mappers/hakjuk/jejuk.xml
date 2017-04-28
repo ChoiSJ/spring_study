@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.jhta.dao.hakjuk.JejukDAO">
+	<!-- 검색으로 학생불러오기 -->
+	<select id="searchByOpt" parameterType="kr.co.jhta.vo.JejukStuSearchForm" resultType="Student">
+		select 
+			u.U_STU_NO as no, 
+			t.t_name as division, 
+			U_STU_EMAIL as email, 
+			U_STU_ENTERDATE as enterDate, 
+			U_STU_GRADE as grade,
+			U_STU_ID as id, 
+			U_STU_LEAVEDATE as leaveDate, 
+			U_STU_NAME as name, 
+			U_STU_PHONE as phone, 
+			c.c_name as register
+		from 
+			U_STUDENT u, T_SITEMAP t, C_CODEREGISTER c
+		where
+			u.u_stu_division = t.t_code
+		and 
+			u.u_stu_register = c.c_code
+			
+		
+			<if test="keyword != ''">
+				<if test="opt == 'studentid'">
+					and U_STU_ID like '%'|| #{keyword} || '%'
+				</if>
+				<if test="opt == 'studentname'">
+					and U_STU_NAME like '%'|| #{keyword} || '%'
+				</if>
+			</if>
+		
+	</select>
+	
+	<!-- 번호로 학생 상세보기 -->
+	<select id="getDetailStuForJejuk" parameterType="int" resultType="Student">
+		select
+			u.U_STU_NO as no, 
+			t.t_name as division, 
+			U_STU_EMAIL as email, 
+			U_STU_ENTERDATE as enterDate, 
+			U_STU_GRADE as grade,
+			U_STU_ID as id, 
+			U_STU_LEAVEDATE as leaveDate, 
+			U_STU_NAME as name, 
+			U_STU_PHONE as phone, 
+			c.c_name as register
+		from 
+			U_STUDENT u, T_SITEMAP t, C_CODEREGISTER c
+		where
+			u.u_stu_division = t.t_code
+		and 
+			u.u_stu_register = c.c_code
+		and 
+			u.U_STU_NO = #{value}
+	</select>
+	
+	<!-- 제적등록 -->
+	<insert id="registjejuk" parameterType="jejuk">
+		insert into d_disenrollment
+		(d_no, stu_no, d_reason)
+		values
+		(d_disenrollment_seq.nextval, #{student.no}, #{reason})
+	</insert>
+	
+	
+	<update id="studentjejuk" parameterType="int">
+		update U_STUDENT
+		set
+			u_stu_register = 'DM1000'
+		where
+			u_stu_no = #{value}
+			
+	</update>	
+	
+	<!-- 제적리스트 불러오기 -->
+	<select id="getStudentJejuk" resultType="kr.co.jhta.vo.hakjuk.JejukList"> 
+		select 
+			u.U_STU_NO as no,
+			u.u_stu_id as id, 
+			t.t_name as division, 
+			U_STU_EMAIL as email, 
+			U_STU_ENTERDATE as enterDate, 
+			U_STU_GRADE as grade,
+			U_STU_ID as id, 
+			U_STU_NAME as name, 
+			U_STU_PHONE as phone, 
+			c.c_name as register,
+			d.d_reason as reason,
+			d.d_disdate as disDate
+		from 
+			U_STUDENT u, T_SITEMAP t, C_CODEREGISTER c, d_disenrollment d
+		where
+			u.u_stu_division = t.t_code
+		and 
+			u.u_stu_register = c.c_code
+		and 
+			u.u_stu_no = d.stu_no
+		and 
+			u.u_stu_register = 'DM1000'
+	</select>
+</mapper>

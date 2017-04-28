@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -9,6 +11,16 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <title></title>
+<style type="text/css">
+   th { 
+   	  text-align: center !important;
+      vertical-align: middle !important;
+      }
+   td{
+   	  text-align: center !important;
+      vertical-align: middle !important;
+   }
+</style>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/navi/adminnavi.jsp" %>
@@ -18,22 +30,10 @@
 			홈 > 학적관리 > 입학관리 > 신입학 조회 
 		</div>
 		<div class="row">
-			<h4><span class="glyphicon glyphicon-th-list"></span> Q&amp;A 게시판</h4>
+			<h4><span class="glyphicon glyphicon-th-list"></span> 강의 Q&amp;A게시판</h4>
 			<hr style="border:solid 0.5px #2C7BB5;">
 		</div>
 		<div style="margin-top: 20px;"></div>
-		<div class="row well">
-			<form class="form-inline">
-				<label style="width: 200px;">검색</label>
-				<select name="searchType" class="form-control input-sm">
-					<option value="title" ${search.searchType eq 'title' ? 'selected=selected' : '' }>제목</option>
-					<option value="name" ${search.searchType eq 'name' ? 'selected=selected' : '' }>이름</option>
-					<option value="contents" ${search.searchType eq 'contents' ? 'selected=selected' : '' }>내용</option>
-				</select>
-				<input value="${param.keyword }" style="width: 400px;" type="text" name="keyword" class="form-control input-sm" />
-				<a id="search-btn" href="javascript:;" type="submit" class="btn btn-primary btn-sm">검색</a>
-			</form>
-		</div>
 		<div class="row text-center">
 			<table class="table table-striped">
 			<colgroup>
@@ -55,15 +55,23 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
+					<c:forEach var="board" items="${boardList }">
+						<tr>
+							<td>
+								<input type="checkbox" id="deleteCheck-${board.no }">
+							</td>
+							<td>${board.no }</td>
+							<td><a href="profqnadetail?bno=${board.no }">${board.title }</a></td>
+							<td>${board.writer }</td>
+							<td><fmt:formatDate value="${board.regdate }"/> </td>
+							<td>${board.countView }</td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
+			<div class="text-center">
+				<%@ include file="/WEB-INF/views/board/nav.jsp" %>
+			</div>
 		</div>
 	</div>
 <%@ include file="/WEB-INF/views/footer/footer.jsp" %>

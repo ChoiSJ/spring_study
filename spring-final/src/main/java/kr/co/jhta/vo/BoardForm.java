@@ -13,16 +13,16 @@ public class BoardForm {
 	
 	private String fileName;
 	
-	private String subjectSelect;
+	private int subjectSelect;
 	
 	private MultipartFile attachFile;
 	
 	
 	
-	public String getSubjectSelect() {
+	public int getSubjectSelect() {
 		return subjectSelect;
 	}
-	public void setSubjectSelect(String subjectSelect) {
+	public void setSubjectSelect(int subjectSelect) {
 		this.subjectSelect = subjectSelect;
 	}
 	public String getFileName() {

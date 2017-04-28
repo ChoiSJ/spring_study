@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.jhta.vo.LoginForm;
 import kr.co.jhta.vo.Professor;
+import kr.co.jhta.vo.stu.Regisubject;
 
 @Transactional
 public interface ProfessorService {

@@ -13,7 +13,7 @@
 <script type="text/javascript">
 $(function() {
 	$(".form-inline").submit(function() {
-		if ($("#select-major").val() == 0 || !$(":radio:checked").length || !$(":text").text().trim()) {
+		if ($("#select-major").val() == 0 || !$(":radio:checked").length || !$(":text").val().trim()) {
 			alert("검색 값을 입력하세요.");
 			$(":text").focus();
 			return false;
@@ -24,7 +24,7 @@ $(function() {
 </head>
 <body>
 <%@ include file="/WEB-INF/views/navi/adminnavi.jsp" %>
-<%@ include file="/WEB-INF/views/navi/sidebarsubject.jsp" %>
+<%@ include file="/WEB-INF/views/collegeregister/sidebar-hakjuk.jsp" %>
 <div class="container" style="margin-left: 250px; padding-top: 25px;">
 	<form method="post" action="adminregstudent" class="form-inline">
 	<div class="row">
@@ -101,7 +101,7 @@ $(function() {
 						<td>${stu.DIVISION }</td>
 						<td>${stu.SUBJECTNAME }</td>
 						<td>${stu.SEMESELECT }</td>
-						<td>${stu.division.no }</td>
+						<td>${stu.SUBDIVISION }</td>
 						<td>${stu.SUBGRADE }</td>
 						<td>${stu.ISPASSED }</td>
 						<td class="text-center">

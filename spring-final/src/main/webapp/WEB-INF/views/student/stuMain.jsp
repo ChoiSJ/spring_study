@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -9,6 +11,16 @@
   <script src="../resources/fullcalendar/lib/moment.min.js"></script>
   <script src="../resources/fullcalendar/lib/jquery.min.js"></script>
   <script src="../resources/fullcalendar/fullcalendar.min.js"></script>
+  <style type="text/css">
+   th { 
+   	  text-align: center !important;
+      vertical-align: middle !important;
+      }
+   td{
+   	  text-align: center !important;
+      vertical-align: middle !important;
+   }
+</style>
 <script type="text/javascript">
 $(function() {
 	
@@ -26,7 +38,7 @@ $(function() {
 		var hour = now.getHours();
 		
 		$("#event-form-modal #event-title").val("");
-		$("#event-form-modal #event-description").val("");
+		$("#event-form-modal #event-location").val("");
 		$("#event-form-modal #event-start-date").val(yyyymmdd);
 		$("#event-form-modal #event-end-date").val(yyyymmdd);
 		$("#event-form-modal #event-start-hour").val(hour);
@@ -39,7 +51,7 @@ $(function() {
 	function createEventData() {
 		var eventData = {};
 		eventData["title"] = $("#event-title").val();
-		eventData["description"] = $("#event-description").val();
+		eventData["location"] = $("#event-location").val();
 		eventData["startDate"] = $('#event-start-date').val();
 		eventData["startHour"] = $('#event-start-hour').val();
 		eventData["startMinute"] = $('#event-start-minute').val();
@@ -64,16 +76,15 @@ $(function() {
 		var endDateBefore = new Date($('#event-end-date').val());
 		var startDateAfter = startDateBefore.getTime() + $('#event-start-hour').val() + $('#event-start-minute').val() ;
 		var endDateAfter = endDateBefore.getTime() + $('#event-end-hour').val() + $('#event-end-minute').val();
-		
 		if($("#event-title").val()== "") {
 			alert("제목을 입력하세요");
 			$("#event-title").focus();
 			return false;
 		}
 
-		if($("#event-description").val()== "") {
-			alert("내용을 입력하세요");
-			$("#event-description").focus();
+		if($("#event-location").val()== "") {
+			alert("장소를 입력하세요");
+			$("#event-location").focus();
 			return false;
 		}
 
@@ -91,8 +102,10 @@ $(function() {
 					$("#event-form-modal").modal("hide");
 					// 캘린더를 갱신한다.
 					$("#calendar-box").fullCalendar( 'refetchEvents' );
+					
 				}
 			});		
+		
 		}
 	});
 	
@@ -108,11 +121,13 @@ $(function() {
 				$("#calendar-box").fullCalendar( 'refetchEvents' );
 			}
 		});
+	
 	});
 	
 /* 	$("#edit-event-btn").click(function() {
 		
 	}); */
+	
 	
 	// 캘린더를 초기화한다.
 	$("#calendar-box").fullCalendar({
@@ -127,7 +142,7 @@ $(function() {
 				dataType:"json",
 				success:function(data) {
 					// data에는 해당 사용자의 일정정보들이 들어있다.
-					// data -> [{"id":1,"title":"테스트","start":1490857200000,"end":1490860800000,"description":"테스트"}]
+					// data -> [{"id":1,"title":"테스트","start":1490857200000,"end":1490860800000,"location":"테스트"}]
 					// 서버로부터 전달받은 데이터의 시작일/종료일이 time값이다.
 					
 					// 일정들을 하나씩 순회하면서 start값과 end값을 날짜형식으로 변환한다.
@@ -156,7 +171,7 @@ $(function() {
 				dataType:"json",
 				success:function(data) {
 					$("#event-title-detail").val(data.title);
-					$("#event-description-detail").val(data.description);
+					$("#event-location-detail").val(data.location);
 					$("#event-no-detail").val(data.no);
 					$("#event-start-date-detail").val(timeToString(data.start).substring(0, 10));
 					$("#event-start-hour-detail").val(timeToString(data.start).substring(11, 13));
@@ -177,6 +192,19 @@ $(function() {
 			$("#event-form-modal").modal("show");
 		}
 	});
+
+	/* $("#completed-btn").click(function() {
+		
+		$.ajax({
+			url:"",
+			dataType:"json",
+			success:function(data) {
+				console.log(data);
+			}
+			
+		});
+		
+	}); */
 	
 })
 </script>
@@ -193,26 +221,82 @@ $(function() {
          <hr style="border:solid 0.5px #2C7BB5;">
       </div>
       <div class="row">
-	      <div class="col-xs-6">
+	      <div class="col-xs-5">
 	      	<div class="panel panel-default">
 		      	<div class="panel-heading">
-					<strong>최근 공지사항</strong><span style="padding-left: 5px;"><a href="" class="btn-default btn-xs">more</a></span>
+					<strong>최근 공지사항</strong>
 		        </div> 
 		       	<div class="panel-body">
-		
+					<table class="table table-default">
+						<colgroup>
+							<col width="13%">
+							<col width="*">
+							<col width="14%">
+							<col width="18%">
+							<col width="14%">
+						</colgroup>
+						<thead>
+							<tr>
+								<th>번호</th>
+								<th>제목</th>
+								<th>작성자</th>
+								<th>작성일</th>
+								<th>조회수</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="board" items="${boardList }">
+								<tr>
+									<td>${board.no }</td>
+									<td><a href="stuNoticeBoarddetail?bno=${board.no }">${board.title }</a></td>
+									<td>${board.writer }</td>
+									<td><fmt:formatDate value="${board.regdate }"/></td>
+									<td>${board.countView }</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
 		        </div>
 	      	</div>
 	      	<div class="panel panel-default">
 		      	<div class="panel-heading">
-					<strong>Q&amp;A</strong><span style="padding-left: 5px;"><a href="" class="btn-default btn-xs">more</a></span>
+					<strong>학과 게시판</strong><div class="pull-right"><span style="padding-left: 5px;"><a href="studeptboard" class="btn-default btn-xs">more</a></span></div>
 		        </div> 
 		       	<div class="panel-body">
-		
+					<table class="table table-default">
+						<colgroup>
+							<col width="13%">
+							<col width="*">
+							<col width="14%">
+							<col width="18%">
+							<col width="14%">
+						</colgroup>
+						<thead>
+							<tr>
+								<th>번호</th>
+								<th>제목</th>
+								<th>작성자</th>
+								<th>작성일</th>
+								<th>조회수</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="board" items="${deptList }">
+								<tr>
+									<td>${board.no }</td>
+									<td><a href="stuDeptBoarddetail?bno=${board.no }">${board.title }</a></td>
+									<td>${board.writer }</td>
+									<td><fmt:formatDate value="${board.regdate }"/> </td>
+									<td>${board.countView }</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
 		        </div>
 	      	</div>
 	      </div>
 	      
-	      <div class="col-xs-6">
+	      <div class="col-xs-7">
 	      	<div class="panel panel-default">
 		      	<div class="panel-heading">
 					<strong>일정</strong>
@@ -221,48 +305,47 @@ $(function() {
 					<div id="calendar-box"></div>
 		        </div>
       		</div>
-	      	<div class="panel panel-default">
-		      	<div class="panel-heading">
-					<strong>추가</strong><span style="padding-left: 5px;"><a href="" class="btn-default btn-xs">more</a></span>
-		        </div> 
-		       	<div class="panel-body">
-		
-		        </div>
-      		</div>
 	      </div>
-	      <div class="row">
+	      <div class="row text-center">
 	      	<div class="col-xs-1"></div>
+	      	<hr />
 	      	<div class="col-xs-10">
 		      	<table class="table table-bordered">
 		      		<colgroup>
-		      			<col width="10%" />
-		      			<col width="10%" />
+		      			<col width="15%" />
+		      			<col width="15%" />
 		      			<col width="*" />
-		      			<col width="10%" />
-		      			<col width="10%" />
+		      			<col width="15%" />
+		      			<col width="15%" />
+		      			<col width="15%" />
 		      			<col width="10%" />
 		      		</colgroup>
 		      		<thead>
 		      			<tr>
-		      				<th>학기</th>
-		      				<th>강좌구분</th>
-		      				<th>교과목명</th>
-		      				<th>교수</th>
-		      				<th>조회</th>
+		      				<th>학과</th>
+		      				<th>이수구분</th>
+		      				<th>과목명</th>
+		      				<th>담당교수</th>
+		      				<th>강의시간</th>
+		      				<th>강의요일</th>
+		      				<th>학점</th>
 		      			</tr>
 		      		</thead>
 		      		<tbody>
-		      			<tr>
-		      				<th></th>
-		      				<th></th>
-		      				<th></th>
-		      				<th></th>
-		      				<th></th>
-		      			</tr>
+		      			<c:forEach var="regisub" items="${regisubList }">
+			      			<tr>
+			      				<th>${regisub.subject.siteCode.name}</th>
+			      				<th>${regisub.subject.passed.passedName }</th>
+			      				<th>${regisub.subject.subjectName }</th>
+			      				<th>${regisub.subject.professor.name }</th>
+			      				<th>${regisub.enroll.enrollTime }</th>
+			      				<th>${regisub.enroll.enrollDay }</th>
+			      				<th>${regisub.subject.score }</th>
+			      			</tr>
+		      			</c:forEach>
 		      		</tbody>
 		      	</table>
 	      	</div>
-	      	<div class="col-xs-1"></div>
 	      </div>
       </div>
    </div>
@@ -273,20 +356,20 @@ $(function() {
     		<div class="modal-content">
       			<div class="modal-header">
         			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        			<h4 class="modal-title" id="gridSystemModalLabel">새 일정 등록폼</h4>
+        			<h4 class="modal-title" id="gridSystemModalLabel">새 일정 등록</h4>
       			</div>
       			<div class="modal-body">
       				<form class="form-horizontal well">
   						<div class="form-group">
-    						<label for="title" class="col-sm-2 control-label">제목</label>
+    						<label for="title" class="col-sm-2 control-label">내용</label>
     						<div class="col-sm-10">
-      							<input type="text" class="form-control" id="event-title" name="title" placeholder="제목을 입력하세요">
+      							<textarea rows="3" class="form-control" id="event-title" name="title" placeholder="내용을 입력하세요" ></textarea>
     						</div>
   						</div>
   						<div class="form-group">
-    						<label for="description" class="col-sm-2 control-label">내용</label>
+    						<label for="location" class="col-sm-2 control-label">장소</label>
     						<div class="col-sm-10">
-      							<textarea rows="3" class="form-control" id="event-description" name="description" placeholder="내용을 입력하세요" ></textarea>
+      							<input type="text" class="form-control" id="event-location" name="location" placeholder="장소을 입력하세요">
     						</div>
   						</div>
   						<div class="form-group">
@@ -317,12 +400,6 @@ $(function() {
     						</div>
     						<label for="end-minute" class="col-sm-1 control-label">분</label>
   						</div>
-  						<div class="form-group">
-    						<label for="title" class="col-sm-2 control-label">하루 종일</label>
-    						<div class="col-sm-1">
-    							<input type="checkbox" class="form-control" id="event-all-day" name="allDay">
-    						</div>
-  						</div>
 					</form>
       			</div>
       			<div class="modal-footer">
@@ -345,15 +422,15 @@ $(function() {
       			<div class="modal-body">
       				<form class="form-horizontal well">
   						<div class="form-group">
-    						<label for="title" class="col-sm-2 control-label">제목</label>
+    						<label for="title" class="col-sm-2 control-label">내용</label>
     						<div class="col-sm-10">
-      							<input type="text" class="form-control" id="event-title-detail" name="title" placeholder="제목을 입력하세요">
+      							<textarea rows="3" class="form-control" id="event-title-detail" name="title" placeholder="내용을 입력하세요" ></textarea>
     						</div>
   						</div>
   						<div class="form-group">
-    						<label for="description" class="col-sm-2 control-label">내용</label>
+    						<label for="location" class="col-sm-2 control-label">장소</label>
     						<div class="col-sm-10">
-      							<textarea rows="3" class="form-control" id="event-description-detail" name="description" placeholder="내용을 입력하세요" ></textarea>
+      							<input type="text" class="form-control" id="event-location-detail" name="location" placeholder="장소를 입력하세요">
     						</div>
   						</div>
   						<div class="form-group">

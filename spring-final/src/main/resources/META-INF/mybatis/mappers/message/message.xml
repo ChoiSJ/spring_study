@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.jhta.dao.message.MessageDao">
 	
-	<select id="getAddressByStuName" parameterType="string" resultType="Student">
+	<select id="getAddressByStuName" parameterType="string" resultType="student">
 		select
 			u_stu_no as no,
 			u_stu_addr1 as addr1,
@@ -29,31 +29,213 @@
 		from
 			u_student
 		where
-			u_stu_name = #{searchWord}
+			u_stu_name = #{stuName}
 	</select>
 	
 	<select id="getAddressByProName" parameterType="string" resultType="Professor">
 		select
 			u_prof_no as no,
-			u_prof_addr as addr,
 			u_prof_email as email,
 			u_prof_grade as grade,
 			u_prof_ssn as ssn,
 			u_prof_forei as forei,
 			u_prof_entrydate as entrydate,
 			u_prof_leavedate as leavedate,
+			u_prof_division as division,
 			u_prof_id as id,
 			u_prof_name as name,
 			u_prof_gender as gender,
 			u_prof_code as code,
-			u_prof_division as division,
 			u_prof_pwd as pwd,
 			u_prof_register as register,
-			u_prof_phone as phone
+			u_prof_phone as phone,
+			u_prof_addr as addr
 		from
 			u_professor
 		where
-			u_prof_name = #{searchWord}
+			u_prof_name = #{proName}
 	</select>
+	
+	<select id="getDivisionByName" parameterType="string" resultType="sitemap">
+		select
+			t_no as no,
+			t_code as code,
+			t_name as name,
+			t_precode as precode
+		from
+			t_sitemap
+		where
+			t_name like '%' || #{divisionName} || '%'
+			and t_precode is not null
+	</select>
+	
+	<select id="getStudentByCode" parameterType="string" resultType="student">
+		select
+			u_stu_no as no,
+			u_stu_addr1 as addr1,
+			u_stu_email as email,
+			u_stu_grade as grade,
+			u_stu_ssn as ssn,
+			u_stu_enterdate as enterDate,
+			u_stu_leavedate as leaveDate,
+			u_stu_parentname as parentName,
+			u_stu_professor as professor,
+			u_stu_parentphone as parentPhone,
+			u_stu_addr2 as addr2,
+			u_stu_id as id,
+			u_stu_remainleave as remainLeave,
+			u_stu_maxonescore as maxOneScore,
+			u_stu_nowscore as nowScore,
+			u_stu_name as name,
+			u_stu_gender as gender,
+			u_stu_division as division,
+			u_stu_pwd as pwd,
+			u_stu_register as register,
+			u_stu_score as score,
+			u_stu_phone as phone
+		from
+			u_student
+		where
+			u_stu_division = #{code}	
+	</select>
+	
+	<select id="getSubjectByName" parameterType="string" resultType="subject">
+		select
+			j_no as no,
+			j_limit_stu as limitStu,
+			j_subject_name as subjectName,
+			j_sub_prof as "professor.name",
+			j_semester as "selectNo.no",
+			j_grade as grade,
+			j_is_passed as "passed.code",
+			j_t_code as "siteCode.code",
+			j_score as score,
+			j_division as division
+		from
+			j_subject
+		where
+			j_subject_name like '%' || #{subjectName} || '%'
+		order by
+			j_t_code asc
+	</select>
+	
+	<select id="getStudentByNo" parameterType="string" resultType="map">
+		select
+			r.r_regi_no as regiNo,
+			r.j_no as jno,
+			r.u_stu_no as stuNo,
+			r.e_no as eno,
+			j_limit_stu as limitStu,
+			j_subject_name as subjectName,
+			j_sub_prof as "professor.name",
+			j_semester as "selectNo.no",
+			j_grade as grade,
+			j_is_passed as "passed.code",
+			j_t_code as "siteCode.code",
+			j_score as score,
+			j_division as division,
+			s1.u_stu_name as stuName,
+			s1.u_stu_id as stuId
+		from
+			r_regisubject r, j_subject s, u_student s1
+		where
+			r.j_no = #{subjectNo}
+			and r.j_no = s.j_no
+			and s1.u_stu_no = r.u_stu_no
+	</select>
+	
+	<insert id="addMessage" parameterType="kr.co.jhta.vo.Message">
+		insert into
+			p_message (p_no, p_title, p_writer, p_writername, p_receiver, p_filename, p_contents, p_sendtime)
+		values
+			(p_message_seq.nextval, #{title}, #{writer}, #{writerName}, #{receiver}, #{filename, jdbcType=VARCHAR}, #{contents}, sysdate)
+	</insert>
+	
+	<update id="deleteSendMessage" parameterType="int">
+		update
+			p_message
+		set
+			p_isdeletedbysender = 'Y'
+		where
+			p_no = #{dno}
+	</update>
+	
+	<update id="deleteReceiveMessage" parameterType="int">
+		update
+			p_message
+		set
+			p_isdeletedbyreceiver = 'Y'
+		where
+			p_no = #{dno}
+	</update>
+	
+	<select id="getReceiveMessageAdmin" parameterType="string" resultType="kr.co.jhta.vo.Message">
+		select
+			m.p_no as no,
+			m.p_title as title,
+			m.p_writer as writer,
+			m.p_writername as writerName,
+			m.p_receiver as receiver,
+			m.p_contents as contents,
+			m.p_ischeck as isCheck,
+			m.p_filename as filename,
+			m.p_sendtime as sendTime,
+			m.p_checktime as checkTime,
+			m.p_isdeletedbysender as isDeletedBySender,
+			m.p_isdeletedbyreceiver as isDeleteByReceiver,
+			p.u_prof_name as receiverName
+		from
+			p_message m, u_professor p
+		where
+			p_receiver = #{writer}
+			and p_isdeletedbysender != 'Y'
+			and m.p_receiver = p.u_prof_id
+		order by
+			p_sendtime desc
+	</select>
+	
+	<select id="getSendMessageAdmin" parameterType="string" resultType="kr.co.jhta.vo.Message">
+		select
+			m.p_no as no,
+			m.p_title as title,
+			m.p_writer as writer,
+			m.p_writername as writerName,
+			m.p_receiver as receiver,
+			m.p_contents as contents,
+			m.p_ischeck as isCheck,
+			m.p_filename as filename,
+			m.p_sendtime as sendTime,
+			m.p_checktime as checkTime,
+			m.p_isdeletedbysender as isDeletedBySender,
+			m.p_isdeletedbyreceiver as isDeleteByReceiver,
+			p.u_prof_name as receiverName
+		from
+			p_message m, u_professor p
+		where
+			m.p_writer = #{writer}
+			and m.p_isdeletedbyreceiver != 'Y'
+			and m.p_receiver = p.u_prof_id
+		order by
+			m.p_sendtime desc
+	</select>
+	
+	<select id="getFilenameByNo" parameterType="int" resultType="string">
+		select
+			p_filename
+		from
+			p_message
+		where
+			p_no = #{no}
+	</select>
+	
+	<update id="addMessageCheck"  parameterType="int">
+		update
+			p_message
+		set
+			p_checktime = sysdate
+		where
+			p_no = #{messageNo}
+			and p_checktime is null
+	</update>
 	
 </mapper>

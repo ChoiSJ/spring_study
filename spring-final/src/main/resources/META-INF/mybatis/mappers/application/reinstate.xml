@@ -3,4 +3,10 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.jhta.dao.appli.ReinstatementDao">
+
+	<insert id="addNewReinByLeave" parameterType="kr.co.jhta.vo.appli.Leave">
+		insert into R_REINSTATEMENT(R_NO, C_CODE, STU_NO, R_REINDATE, R_PASS, R_ENROLLDATE, R_LEAVENO)
+		values(R_REINSTATEMENT_SEQ.nextval,'RE1000',#{stuNo},#{reinDate},'false', sysdate, #{no})
+	</insert>
+
 </mapper>

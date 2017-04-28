@@ -118,6 +118,13 @@ $(function() {
 			return;
 		}
 	});
+	$('#leave-Enroll').click(function (event) {
+		//event.preventDefault();
+				
+		
+		
+	})
+	
 })
 </script>
 <style type="text/css">
@@ -152,7 +159,7 @@ $(function() {
 	           	<thead>
 	        		<tr>
 	        			<th>구분</th>
-	        			<td colspan="3">
+	        			<td colspan="3" id="register">
 	        				<c:out value="${student.cName }" />
 	        			</td>
 	        		</tr>
@@ -199,26 +206,10 @@ $(function() {
       </div>  
       
       <div class="row" style="padding: 20px;">
-      	<h4>휴학(연장) 신청 내역</h4>
+      	<h4>휴학 신청 내역</h4>
       	<table class="table table-bordered">
-      		<colgroup>
-      			<col width="5%" />
-      			<col width="8%" />
-      			<col width="5%" />
-      			<col width="12%" />
-      			<col width="5%" />
-      			<col width="10%" />
-      			<col width="*" />
-      			<col width="5%" />
-      			<col width="10%" />
-      			<col width="10%" />
-      			<col width="8%" />
-      			<col width="8%" />
-      			<col width="5%" />
-      		</colgroup>
 			<thead>
 				<tr>
-					<th>선택</th>
 					<th>학년도</th>
 					<th>학기</th>
 					<th>학과</th>
@@ -236,15 +227,12 @@ $(function() {
 			<tbody>
 				<c:if test="${empty leaveList}">
 					<tr>
-						<th colspan="12">신청 내역이 없습니다.</th>
+						<th colspan="13">신청 내역이 없습니다.</th>
 					</tr>
 				</c:if>
 				<c:forEach var="leave" items="${leaveList}">
 					<input type="hidden" value="${leave.enrollDate}" id="leaveEnrollDate" />
 					<tr>
-						<th><input type="checkbox" id="checkbox-leave" name="checkboxTrue" value="true"/>
-							<input type="hidden" name="checkboxTrue" value="false"/>
-						</th>
 						<th>${leave.year }</th>
 						<th>${leave.period }</th>
 						<th>${student.tName }</th>
@@ -263,6 +251,10 @@ $(function() {
 									<input type="hidden" id="leave-Pass" value="false" />
 									<font color="red"><strong>미승인</strong></font>
 								</c:when>
+								<c:when test="${leave.pass eq 'not' }">
+									<input type="hidden" id="leave-Pass" value="not" />
+									<font color="red"><strong>거절</strong></font>
+								</c:when>
 								<c:otherwise>
 									<font color="blue"><strong>승인</strong></font>
 								</c:otherwise>
@@ -272,7 +264,7 @@ $(function() {
 						</th>	
 						<th>
 							<c:choose>
-								<c:when test="${leave.pass eq 'true' }">
+								<c:when test="${leave.pass != 'false' }">
 									<font color="red">취소 불가</font>
 								</c:when>
 								<c:otherwise>
@@ -286,7 +278,7 @@ $(function() {
       	</table>
       </div>
       <div class="row" style="padding: 20px;">
-      	<h4>휴학 (연장)신청</h4>
+      	<h4>휴학 신청</h4>
       	<form action="enrollLeave" method="POST" id="formActionRoot">
       	<input type="hidden" name="checkboxTrue" id="checkbox-leaveHidden" />
 	   		<table class="table table-bordered">
@@ -351,7 +343,6 @@ $(function() {
 	   							<!-- 성적이 취득되어있지 않으면 disabled-->
 	   						</label> 
 	   					</th>
-	   						
 	   					<th>휴학학기 수</th>
 	   					<th>
    							<select name="selectSemeter" id="select-Semester" class="form-control">

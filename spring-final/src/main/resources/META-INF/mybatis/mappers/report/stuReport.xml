@@ -2,6 +2,206 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.jhta.dao.">
+<mapper namespace="kr.co.jhta.dao.report.StuReportDao">
 
+	<!-- StuReport -->
+	<select id="getAttchFileName" parameterType="int" resultType="string">
+		SELECT DISTINCT P_REPORTCONTENT.P_FILE
+		FROM P_REPORTCONTENT
+		WHERE P_REPORTCONTENT.P_CNO = #{cno}
+	</select>	
+	
+	<select id="getProfReportByPno" parameterType="int" resultType="kr.co.jhta.vo.Preport">
+		SELECT p.P_NO as no,
+			   p.P_TITLE as title,
+			   p.P_CONTENT as content,
+			   p.P_E_NO as "enroll.no",
+			   p.P_PROF_NO as "professor.no",
+			   p.P_REPORT_ST as prost,
+			   p.P_REPORT_END as proend,
+			   p.P_UPFILE as upfile,
+			   	e.E_ENROLLDAY as "enroll.enrollDay",
+				e.E_ENROLLTIME as "enroll.enrollTime",
+				 u.U_PROF_NAME as "professor.name",
+				 u.U_PROF_EMAIL as "professor.email",
+				 u.U_PROF_CODE as "professor.code",
+				 u.U_PROF_ID as "professor.id",
+				 u.U_PROF_PHONE as "professor.phone",
+				 j.J_SUBJECT_NAME as "enroll.subject.subjectName"
+		FROM P_REPORT p, E_ENROLLMENT e, U_PROFESSOR u, J_SUBJECT j 
+		WHERE p.P_E_NO = e.E_NO 
+		AND p.P_PROF_NO = u.U_PROF_NO
+		AND e.E_J_SUBJECT_NO = j.J_NO  
+		AND p.P_NO = #{pno}
+	</select>
+		
+	<select id="getAllProfReport" parameterType="int" resultType="kr.co.jhta.vo.Preport">
+		SELECT r.P_NO as no, 
+			   r.P_TITLE as title, 
+			   r.P_CONTENT as content,
+			   r.P_E_NO as "enroll.no",
+			   r.P_PROF_NO as "professor.no",
+			   r.P_REPORT_ST as prost,
+			   r.P_REPORT_END as proend,
+			   r.P_UPFILE as upfile,
+				e.E_ENROLLDAY as "enroll.enrollDay",
+				e.E_ENROLLTIME as "enroll.enrollTime",
+				e.E_J_SUBJECT_NO as "subject.no",
+				u.U_PROF_NAME as "professor.name",
+				u.U_PROF_EMAIL as "professor.email",
+				u.U_PROF_CODE as "professor.code",
+				u.U_PROF_ID as "professor.id",
+				u.U_PROF_PHONE as "professor.phone"
+		FROM P_REPORT r, E_ENROLLMENT e, U_PROFESSOR u 
+		WHERE r.P_E_NO = e.E_NO 
+		AND r.P_PROF_NO = u.U_PROF_NO
+		AND e.E_NO = #{eno}
+	</select>
+	
+	<update id="deleteFilename" parameterType="map">
+		UPDATE P_REPORTCONTENT 
+		SET P_FILE = null
+		WHERE P_CNO = #{cno}
+	</update>	
+	
+	<update id="updateStuReport" parameterType="StuReport">
+		UPDATE P_REPORTCONTENT 
+		SET P_TITLE = #{title}, P_CONTENT =  #{content}, P_ENROLLDATE = sysdate, P_FILE = #{filename, jdbcType=VARCHAR}
+		WHERE P_CNO = #{no}
+	</update>
+	
+	<update id="updateStuReportNotFile" parameterType="StuReport">
+		UPDATE P_REPORTCONTENT 
+		SET P_TITLE = #{title}, P_CONTENT =  #{content}, P_ENROLLDATE = sysdate
+		WHERE P_CNO = #{no}	
+	</update>
+	
+	<delete id="deleteReportByCno" parameterType="map">
+		DELETE FROM P_REPORTCONTENT 
+		WHERE P_CNO = #{cno} 
+		AND P_S_NO = #{stuNo}
+	</delete>
+	
+	<select id="getStuAllReportByEno" parameterType="int" resultType="StuReport">
+		SELECT p.P_CNO as no,
+			   p.P_TITLE as title,
+			   p.P_CONTENT as content,
+			   p.P_ENROLLDATE as enrollDate,
+			   p.P_FILE as filename,
+			   p.P_SHOW as show,
+			   p.P_P_NO as "report.professor.no",
+			   p.P_S_NO as "student.no",
+			   p.P_E_NO as "enroll.no",
+				e.E_ENROLLDAY as "enroll.enrollDay",
+				e.E_ENROLLTIME as "enroll.enrollTime",
+				e.E_J_SUBJECT_NO as "subject.no",
+				 s.U_STU_NAME as "student.name",
+				 s.U_STU_EMAIL as "student.email",
+				 s.U_STU_PHONE as "student.phone"
+		FROM P_REPORTCONTENT p, E_ENROLLMENT e, U_STUDENT s 
+		WHERE e.E_NO = p.P_E_NO
+		AND p.P_S_NO = s.U_STU_NO
+		AND p.P_E_NO = #{eno}
+	</select>
+	<select id="getStuAllReportByEno1" parameterType="int" resultType="StuReport">
+		SELECT
+		A.J_SUBJECT_NAME as "report.subject.subjectName",
+		B.U_PROF_NAME as "report.professor.name",
+		C.E_ENROLLDAY as "enroll.enrollDay",
+		C.E_ENROLLTIME as "enroll.enrollTime",
+		G.P_REPORT_END as "report.proend",
+		D.P_TITLE as title,
+		D.P_CONTENT as content,
+		D.P_FILE as filename,
+		B.U_PROF_NO as "report.professor.no",
+		D.P_CNO as "no",
+		D.P_S_NO as "student.no",
+		C.E_NO as "enroll.no"
+	FROM
+		J_SUBJECT A, U_PROFESSOR B, E_ENROLLMENT C, P_REPORTCONTENT D, P_REPORT G
+	where
+		D.P_E_NO = C.E_NO
+	AND
+		C.E_J_SUBJECT_NO = A.J_NO
+	and
+		A.J_SUB_PROF = B.U_PROF_ID
+	and
+		G.P_NO = D.P_P_NO
+	and
+		D.P_CNO = #{value}
+	</select>
+
+	<select id="getStuReportByCno" parameterType="int" resultType="StuReport">
+		select s.P_CNO 			as no, 
+			   s.P_S_NO 		as "student.no",
+			   s.P_TITLE 		as title,
+			   s.P_CONTENT 		as content,
+			   s.P_FILE 		as filename,
+			   s.P_SHOW			as show,
+			   s.P_P_NO       	as "report.professor.no",
+			   s.P_ENROLLDATE 	as enrollDate,
+			   s.P_E_NO 		as "enroll.no",
+			   	p.P_TITLE 		as "report.title",
+				p.P_CONTENT		as "report.content",
+				p.P_REPORT_END	as "report.proend"
+		FROM P_REPORTCONTENT s, P_REPORT p, E_ENROLLMENT e, J_SUBJECT j 
+		WHERE s.P_P_NO = p.P_NO 
+		AND s.P_E_NO = e.E_NO
+		AND e.E_J_SUBJECT_NO = j.J_NO
+		AND s.P_CNO = #{cno}
+	</select>
+	
+	<select id="getStuReportByStuNo" parameterType="int" resultType="StuReport">
+		select P_CNO 		as no, 
+			   P_S_NO 		as "student.no",
+			   P_TITLE 		as title,
+			   P_CONTENT 	as content,
+			   P_FILE 		as filename,
+			   P_SHOW		as show,
+			   P_P_NO       as "report.professor.no",
+			   P_ENROLLDATE as enrollDate,
+			   P_E_NO 		as "enroll.no"
+		FROM P_REPORTCONTENT
+		WHERE P_S_NO = #{stuNo}
+	</select>
+	
+	<insert id="addNewReport" parameterType="StuReport">
+		INSERT INTO P_REPORTCONTENT 
+				(P_CNO, 
+				 P_P_NO, 
+				 P_S_NO, 
+				 P_TITLE, 
+				 P_CONTENT,
+				 P_FILE,
+				 P_E_NO) 
+		VALUES
+				(P_REPORTCONTENT_SEQ.nextval, 
+				 #{report.no}, 
+				 #{student.no}, 
+				 #{title}, 
+				 #{content},
+				 #{filename, jdbcType=VARCHAR},
+				 #{enroll.no})
+	</insert>
+	
+	<insert id="addNewReportPlusShow" parameterType="StuReport">
+		INSERT INTO P_REPORTCONTENT 
+				(P_CNO, 
+				 P_P_NO, 
+				 P_S_NO, 
+				 P_TITLE, 
+				 P_CONTENT,
+				 P_SHOW,
+				 P_FILE,
+				 P_E_NO) 
+		VALUES
+				(P_REPORTCONTENT_SEQ.nextval, 
+				 #{report.professor.no}, 
+				 #{student.no}, 
+				 #{title}, 
+				 #{content},
+				 true,
+				 #{filename , jdbcType=VARCHAR},
+				 #{enroll.no})
+	</insert>
 </mapper>

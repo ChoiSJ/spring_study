@@ -29,6 +29,20 @@
 				L_LEAVE.L_REINDATE as reinDate
 		FROM L_LEAVE WHERE STU_NO = #{stuNo}
 	</select>
+	<select id="getLeaveOneBystuNo" parameterType="int" resultType="Leave">
+		SELECT L_LEAVE.L_NO as no,
+				L_LEAVE.STU_NO as stuNo, 
+				L_LEAVE.C_CODE as code,
+				L_LEAVE.L_ENROLLDATE as enrollDate,
+				L_LEAVE.L_PASS as pass,
+				L_LEAVE.L_OKAYDATE as okayDate,
+				L_LEAVE.L_REINDATE as reinDate
+		FROM L_LEAVE 
+		WHERE 
+			STU_NO = #{stuNo}
+		and 
+			L_PASS = 'ok'
+	</select>
 
 	<delete id="deleteEnrollByNo" parameterType="map">
 		DELETE FROM L_LEAVE 
@@ -37,10 +51,9 @@
 	</delete>
 	
 	<select id="getCnameByCcode" parameterType="string" resultType="string">
-		SELECT c.C_NAME 
-		FROM C_CODEREGISTER c,L_LEAVE l
-		WHERE c.C_CODE = l.C_CODE
-		AND c.C_CODE = #{cCode}
+		SELECT c.C_NAME
+		FROM C_CODEREGISTER c
+		WHERE c.C_CODE = #{cCode}
 	</select>
 	
 	<update id="updateLeave" parameterType="map">

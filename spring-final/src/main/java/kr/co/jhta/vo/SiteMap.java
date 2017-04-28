@@ -43,4 +43,11 @@ public class SiteMap {
 		this.preCode = preCode;
 	}
 
+	@Override
+	public String toString() {
+		return "SiteMap [no=" + no + ", code=" + code + ", name=" + name + ", preCode=" + preCode + "]";
+	}
+	
+	
+
 }

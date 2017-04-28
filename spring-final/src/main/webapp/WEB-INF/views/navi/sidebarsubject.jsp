@@ -59,8 +59,8 @@
                         </ul>
                     </li>
                     <li>
-                        <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-7">
-                            <span class="sidebar-icon"></i></span><span class="sidebar-title">제적 관리</span>
+                        <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-8">
+                            <span class="sidebar-icon"></span><span class="sidebar-title">제적 관리</span>
                             <b class="caret"></b>
                         </a>
                         <ul id="submenu-7" class="panel-collapse collapse panel-switch" role="menu">
@@ -70,7 +70,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-8">
+                        <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-9">
                             <span class="sidebar-icon"></span><span class="sidebar-title">자퇴 관리</span>
                             <b class="caret"></b>
                         </a>

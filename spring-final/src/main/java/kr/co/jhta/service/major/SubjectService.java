@@ -27,4 +27,5 @@ public interface SubjectService {
 	String getPassCodeByNo(int sno);
 	void editSubjectByNo (SubjectEditForm editform);
 	List<Subject> getallenroll();
+	Subject getByENoList(int no);
 }

@@ -8,7 +8,6 @@ import kr.co.jhta.dao.appli.ChangeMajorDao;
 @Service
 public class ChangeMajorServiceImpl implements ChangeMajorService{
 	
-	@Autowired
-	ChangeMajorDao changMDao;
+	
 	
 }

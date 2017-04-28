@@ -63,7 +63,7 @@ public class SubjectServiceImpl implements SubjectService{
 	
 	@Override
 	public Subject getSubByNo(int sno) {
-		return subjectDao.getByNoList(sno);
+		return subjectDao.getSubByNo(sno);
 	}
 	
 	@Override
@@ -79,5 +79,9 @@ public class SubjectServiceImpl implements SubjectService{
 	@Override
 	public List<Subject> getallenroll() {
 		return subjectDao.getallenroll();
+	}
+	@Override
+	public Subject getByENoList(int no) {
+		return subjectDao.getByENoList(no);
 	}
 }

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.jhta.dao.score.AttendanceDao;
-import kr.co.jhta.dao.score.ReportDao;
 import kr.co.jhta.dao.score.ScoreDao;
 import kr.co.jhta.vo.Score;
 import kr.co.jhta.vo.Semester;
@@ -26,9 +25,6 @@ public class ScoreServiceImpl implements ScoreService{
 	@Autowired
 	private AttendanceDao attDao;
 	
-	@Autowired
-	private ReportDao repDao;
-
 	@Override
 	public Student getStudentInfoByNo(int stuNo) {
 		return scoreDao.getStudentInfoByNo(stuNo);
@@ -55,10 +51,9 @@ public class ScoreServiceImpl implements ScoreService{
 	}
 
 	@Override
-	public void addScore() {
-		scoreDao.addScore();
+	public void addScore(int pno) {
+		scoreDao.addScore(pno);
 		attDao.addAttendance();
-		repDao.addReport();
 		
 	}
 	
@@ -71,7 +66,6 @@ public class ScoreServiceImpl implements ScoreService{
 	public void delScore(int rno) {
 		int sno = scoreDao.getScoreNoByRno(rno);
 		attDao.delAttendance(sno);
-		repDao.delReport(sno);
 		scoreDao.delScore(rno);
 	}
 
@@ -129,6 +123,30 @@ public class ScoreServiceImpl implements ScoreService{
 	public int getScoreCount() {
 		return scoreDao.getScoreCount();
 	}
-	
+
+	@Override
+	public List<Regisubject> getAllScorelistByProfID(String pid) {
+		return scoreDao.getAllScorelistByProfID(pid);
+	}
+
+	@Override
+	public int getProfNoByEno(int eno) {
+		return scoreDao.getProfNoByEno(eno);
+	}
+
+	@Override
+	public List<String> getSemeNameByStuNo(int stno) {
+		return scoreDao.getSemeNameByStuNo(stno);
+	}
+
+	@Override
+	public List<Subject> getsubjectlistByProfId(int pid) {
+		return scoreDao.getsubjectlistByProfId(pid);
+	}
+
+	@Override
+	public List<Regisubject> getSearchScorelistByhash(HashMap<String, Object> searchcode) {
+		return scoreDao.getSearchScorelistByhash(searchcode);
+	}	
 	
 }

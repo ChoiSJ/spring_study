@@ -22,7 +22,7 @@ public class ProfessorServiceImpl implements ProfessorService {
 	@Override
 	public Professor loginByProfessor(LoginForm loginForm) {
 
-		Professor prof = professordao.getProfessorById(loginForm.getUserId());
+		Professor prof = professordao.getLoginUserById(loginForm.getUserId());
 		System.out.println(prof);
 		if(prof == null){
 			return null;
@@ -51,6 +51,6 @@ public class ProfessorServiceImpl implements ProfessorService {
 	@Override
 	public void updateProfessorPwd(Professor professor) {
 		professordao.updateProfessorPwd(professor);
-		
 	}
+	
 }

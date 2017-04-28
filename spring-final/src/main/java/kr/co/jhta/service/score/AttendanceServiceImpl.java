@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.jhta.dao.score.AttendanceDao;
 import kr.co.jhta.vo.Attendance;
+import kr.co.jhta.vo.Scorelist;
 
 @Service
 public class AttendanceServiceImpl implements AttendanceService{
@@ -32,4 +33,20 @@ public class AttendanceServiceImpl implements AttendanceService{
 	public void delAttendance(int sno) {
 		attendanceDao.delAttendance(sno);
 	}
+
+	@Override
+	public List<Scorelist> getAttInfolistByStuNo(int stuno) {
+		return attendanceDao.getAttInfolistByStuNo(stuno);
+	}
+
+	@Override
+	public void updateAttendanceByAttno(Attendance week) {
+		attendanceDao.updateAttendanceByAttno(week);
+	}
+
+	@Override
+	public void updateAttScoreByScoreNo(Attendance week) {
+		attendanceDao.updateAttScoreByScoreNo(week);
+	}
+	
 }

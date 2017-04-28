@@ -43,13 +43,13 @@ public class SchduleEventServiceImpl implements SchduleEventService{
 	}
 	
 	@Override // 보여주기
-	public void updateIsShowTrueService(ScheduleEvent schedule) {
-		schDao.updateIsShowTrue(schedule);
+	public void updateCompletedTrueService(ScheduleEvent schedule) {
+		schDao.updateCompletedTrue(schedule);
 	}
 
 	@Override // 숨기기
-	public void updateIsShowFalseService(ScheduleEvent schedule) {
-		schDao.updateIsShowFalse(schedule);
+	public void updateCompletedFalseService(ScheduleEvent schedule) {
+		schDao.updateCompletedFalse(schedule);
 	}
 
 	@Override
@@ -58,6 +58,11 @@ public class SchduleEventServiceImpl implements SchduleEventService{
 		map.put("studNo", studNo);
 		map.put("schNo", schNo);
 		schDao.deleteSchEvent(map);
+	}
+
+	@Override
+	public List<ScheduleEvent> getTodaySchEventService(int stuNo) {
+		return schDao.getTodaySchEvent(stuNo);
 	}
 	
 }

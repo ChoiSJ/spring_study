@@ -10,25 +10,12 @@ public class ScheduleEvent {
 	private String title;
 	private Date start;
 	private Date end;
-	private String description;
-	private String isShow;
+	private String location;
+	private String completed;
 	private Student student;
 	
 	public ScheduleEvent() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public ScheduleEvent(int no, String title, Date start, Date end, String description, String isShow,
-			Student student) {
-		super();
-		this.no = no;
-		this.title = title;
-		this.start = start;
-		this.end = end;
-		this.description = description;
-		this.isShow = isShow;
-		this.student = student;
+		
 	}
 
 	public int getNo() {
@@ -62,21 +49,22 @@ public class ScheduleEvent {
 	public void setEnd(Date end) {
 		this.end = end;
 	}
-
-	public String getDescription() {
-		return description;
+	
+	public String getLocation() {
+		return location;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	
+
+	public String getCompleted() {
+		return completed;
 	}
 
-	public String getIsShow() {
-		return isShow;
-	}
-
-	public void setIsShow(String isShow) {
-		this.isShow = isShow;
+	public void setCompleted(String completed) {
+		this.completed = completed;
 	}
 
 	public Student getStudent() {
@@ -86,11 +74,5 @@ public class ScheduleEvent {
 	public void setStudent(Student student) {
 		this.student = student;
 	}
-
-	@Override
-	public String toString() {
-		return "ScheduleEvent [no=" + no + ", title=" + title + ", start=" + start + ", end=" + end + ", description="
-				+ description + ", isShow=" + isShow + ", student=" + student + "]";
-	}	
 	
 }

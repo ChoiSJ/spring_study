@@ -24,6 +24,15 @@ public class ProfessorOpenLecture {
 	private String subjectName;
 	
 	
+	
+	@Override
+	public String toString() {
+		return "ProfessorOpenLecture [no=" + no + ", id=" + id + ", name=" + name + ", gender=" + gender + ", code="
+				+ code + ", division=" + division + ", pwd=" + pwd + ", register=" + register + ", phone=" + phone
+				+ ", addr=" + addr + ", email=" + email + ", grade=" + grade + ", ssn=" + ssn + ", forei=" + forei
+				+ ", entrydate=" + entrydate + ", leavedate=" + leavedate + ", subjectNo=" + subjectNo
+				+ ", subjectName=" + subjectName + "]";
+	}
 	public int getNo() {
 		return no;
 	}

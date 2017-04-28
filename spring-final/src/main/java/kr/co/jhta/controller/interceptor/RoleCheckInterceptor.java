@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import kr.co.jhta.vo.Sessioncheck;
+import kr.co.jhta.vo.stu.Student;
 public class RoleCheckInterceptor extends HandlerInterceptorAdapter{
 		
 	@Override
@@ -14,7 +15,6 @@ public class RoleCheckInterceptor extends HandlerInterceptorAdapter{
 		String url = request.getRequestURI().replaceFirst(request.getContextPath(), "");
 		System.out.println("role = "+url);
 		Sessioncheck sc = (Sessioncheck) request.getSession(true).getAttribute("SESSION_CHECK");
-		
 		if(sc.getCheck().equals(url.split("/")[1])){
 			System.out.println("접속이 인가된 사용자입니다.");
 			return true;

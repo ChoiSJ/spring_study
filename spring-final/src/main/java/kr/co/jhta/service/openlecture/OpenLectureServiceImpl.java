@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import kr.co.jhta.dao.openlecture.OpenLectureDao;
 import kr.co.jhta.vo.InvestGationAttribute;
 import kr.co.jhta.vo.LectureEvaluationSheet;
+import kr.co.jhta.vo.LectureRatingSave;
 import kr.co.jhta.vo.ProfessorOpenLecture;
 import kr.co.jhta.vo.ProfessorSubject;
 
@@ -57,4 +58,43 @@ public class OpenLectureServiceImpl implements OpenLectureService {
 		
 		return openLecturedao.subjectInquiries(id) ;
 	}
+	
+	@Override
+	public List<LectureEvaluationSheet> getInvestListDeatil(int subjectNo) {
+		
+		return openLecturedao.getInvestListDeatil(subjectNo);
+	}
+	
+	@Override
+	public LectureEvaluationSheet getInvestListRegister(int subjectNo) {
+		
+		return openLecturedao.getInvestListRegister(subjectNo);
+	}
+	
+	@Override
+	public void insertLectureRating(LectureRatingSave lectureRating) {
+		
+		openLecturedao.insertLectureRating(lectureRating);
+	}
+	
+	@Override
+	public void updateLectureRatingRegister(LectureRatingSave lectureRatingRegister) {
+		
+		openLecturedao.updateLectureRatingRegister(lectureRatingRegister);
+	}
+	
+	@Override
+	public void updateLectureRatingRegisterEnrollTable(int subjectNo) {
+		
+		openLecturedao.updateLectureRatingRegisterEnrollTable(subjectNo);
+	}
+	
+	
+	//openinquiries.do 테이블 전체 조회
+	@Override
+	public List<ProfessorSubject> subjectRatingInquiriesAll() {
+		
+		return openLecturedao.subjectRatingInquiriesAll();
+	}
+	
 }

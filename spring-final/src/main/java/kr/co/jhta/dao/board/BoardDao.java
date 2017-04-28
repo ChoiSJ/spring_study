@@ -38,4 +38,16 @@ public interface BoardDao {
 
 	void addStuQnaBoard(Board board);
 
+	void addFreeBoard(Board board);
+
+	void addDeptBoard(Board board);
+
+	List<Board> getProfQnaBoard(String id);
+
+	int countProfBoard(String id);
+
+	List<Board> searchNoticeBoardByCount(String BOARDTYPE);
+
+	List<Board> searchDeptBoardByCount(SearchForm searchForm);
+
 }

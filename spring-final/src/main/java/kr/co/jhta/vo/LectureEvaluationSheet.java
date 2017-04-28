@@ -6,8 +6,17 @@ public class LectureEvaluationSheet {
 	private String contents;
 	private int subjectNo;
 	private String register;
+	private int index = 1;
 	
 	
+	
+	
+	public int getIndex() {
+		return index;
+	}
+	public void setIndex(int index) {
+		this.index = index;
+	}
 	public String getRegister() {
 		return register;
 	}

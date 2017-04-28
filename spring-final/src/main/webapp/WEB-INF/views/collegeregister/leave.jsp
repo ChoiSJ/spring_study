@@ -130,7 +130,7 @@ $(function () {
 							</select>	
 						</div>
 						<div class="col-md-6 text-right">
-							<p>조회된 학생 수 : 3명</p>
+							<p>조회된 학생 수 : ${rows }명</p>
 						</div>
 					</div>
 					<div class="row">
@@ -153,14 +153,14 @@ $(function () {
 									</tr>
 								</c:if>
 								<c:forEach var="leave" items="${leaveList }" varStatus="status">
-									<tr onclick="location.href='leaveinfo?id=${leave.student.id}'" style="cursor: pointer;">
+									<tr>
 										<td>${status.count }</td>
 										<td>${leave.code }</td>
 										<td>${leave.student.id }</td>
 										<td>${leave.student.name }</td>
 										<td>${leave.student.division }</td>
 										<td><fmt:formatDate value="${leave.enrollDate }" pattern="yyyy-MM-dd"/></td>
-										<td class="text-center"><a class="btn btn-primary btn-xs" href="?id=${leave.student.id }">내역 확인</a></td>	
+										<td class="text-center"><a class="btn btn-primary btn-xs" href="leaveinfo?id=${leave.student.id }">내역 확인</a></td>	
 									</tr>
 								</c:forEach>
 							</tbody>

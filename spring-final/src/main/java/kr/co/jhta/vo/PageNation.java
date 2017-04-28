@@ -19,6 +19,9 @@ public class PageNation {
 	}
 	
 	// 전체 페이지 갯수 계산: ceil(107/10) -> 11
+	public int getTotalRows() {
+		return totalRows;
+	}
 	public int getTotalPages() {
 		return (int) Math.ceil((double) totalRows/rowsPerPage);
 	}
@@ -29,7 +32,13 @@ public class PageNation {
 		return (currentPage - 1) * rowsPerPage + 1;
 	}
 	public int getEndIndex() {
-		return currentPage * rowsPerPage;
+		int endIndex = currentPage * rowsPerPage;
+		
+		if (endIndex > totalRows) {
+			endIndex = totalRows;
+		}
+		
+		return endIndex;
 	}
 	
 	public int getTotalBlocks() {
@@ -63,6 +72,4 @@ public class PageNation {
 		return "PageNation [pagesPerBlock=" + pagesPerBlock + ", rowsPerPage=" + rowsPerPage + ", totalRows="
 				+ totalRows + ", currentPage=" + currentPage + "]";
 	}
-	
-	
 }

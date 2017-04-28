@@ -18,6 +18,11 @@ public class StudentServiceImpl implements StudentService{
 	StudentDao stuDao;
 	
 	@Override
+	public Student getStudentALLByIdService(String id) {
+		return stuDao.getStudentALLById(id);
+	}
+	
+	@Override
 	public List<Student> getAllStudentService() {
 		List<Student> stuList = stuDao.getAllStudent();
 		return stuList;
@@ -60,11 +65,6 @@ public class StudentServiceImpl implements StudentService{
 		stuDao.updateStudentProfessor(profName);
 	}
 
-
-	
-	
-
-
 	@Override
 	public String getCnameByRegisterService(String register) {
 		String cName = stuDao.getCnameByRegister(register);
@@ -79,6 +79,29 @@ public class StudentServiceImpl implements StudentService{
 		map.put("tCode", tCode);
 		String tName = stuDao.getTnameByTcode(map);
 		return tName;
+	}
+
+
+	@Override
+	public void updateAddScoreService(int score, int stuNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("score", score);
+		map.put("stuNo", stuNo);
+		stuDao.updateAddScore(map);
+	}
+
+	@Override
+	public void updateMinusScoreService(int score, int stuNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("score", score);
+		map.put("stuNo", stuNo);
+		stuDao.updateMinusScore(map);
+	}
+
+
+	@Override
+	public int getNowScoreService(int stuNo) {
+		return stuDao.getNowScore(stuNo);
 	}
 	
 }

@@ -80,7 +80,7 @@ $(function() {
 </head>
 <body>
 <%@ include file="/WEB-INF/views/navi/adminnavi.jsp" %>
-<%@ include file="/WEB-INF/views/navi/sidebarsubject.jsp" %>
+<%@ include file="/WEB-INF/views/collegeregister/sidebar-hakjuk.jsp" %>
 <div class="container" style="margin-left: 250px; padding-top: 25px;">
 	<form method="post" action="adminregsubject" class="form-inline">
 		<div class="row">
@@ -176,7 +176,7 @@ $(function() {
 							 	<fmt:formatDate value="${sub.SEMEND }" pattern="yyyy/MM/dd"/>
 							</td>
 							<td>${sub.SCORE }</td>
-							<td>${sub.LIMITNUMBER }</td>
+							<td>${sub.LIMITSTU }</td>
 							<td>${sub.ENROLLNUM }</td>
 							<td>
 							<c:choose>

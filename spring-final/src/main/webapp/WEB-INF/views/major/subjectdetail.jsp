@@ -65,6 +65,7 @@
          					<td>
          						<select name="professor.id" id="select-prof">
          							<c:forEach var="prof" items="${prolistbytcode }">
+         							
          							<option value="${prof.id }" ${subjectbyno.professor.id eq prof.id ? 'selected=selected' : '' }>${prof.name }</option>
          							</c:forEach>
          						</select>

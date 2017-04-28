@@ -7,7 +7,7 @@ public class SearchForm {
 	private String keyword;
 	private String searchBoardType;
 	private String department;
-	private String subjectNo;
+	private int subjectNo;
 	private int beginIndex;
 	private int endIndex;
 	private int display;
@@ -20,10 +20,10 @@ public class SearchForm {
 	public void setDepartment(String department) {
 		this.department = department;
 	}
-	public String getSubjectNo() {
+	public int getSubjectNo() {
 		return subjectNo;
 	}
-	public void setSubjectNo(String subjectNo) {
+	public void setSubjectNo(int subjectNo) {
 		this.subjectNo = subjectNo;
 	}
 	public String getSearchBoardType() {

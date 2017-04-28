@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.jhta.vo.Attendance;
+import kr.co.jhta.vo.Scorelist;
 @Transactional
 @Service
 public interface AttendanceService {
@@ -13,4 +14,7 @@ public interface AttendanceService {
 	Attendance getAttendanceListByScoreNo(int sno);
 	void addAttendance();
 	void delAttendance(int sno);
+	List<Scorelist> getAttInfolistByStuNo(int stuno);
+	void updateAttendanceByAttno(Attendance week);
+	void updateAttScoreByScoreNo(Attendance week);
 }

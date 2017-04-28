@@ -2,11 +2,9 @@ package kr.co.jhta.dao.user;
 
 import java.util.List;
 
-import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.jhta.vo.stu.Enroll;
 
-@Transactional
 public interface EnrollDao {
 	List<Enroll> getAllEnroll();
 	Enroll getEnrollByENo(int no);
@@ -17,4 +15,8 @@ public interface EnrollDao {
 	List<Enroll> getAllEnrollByTcode(String siteCode);
 	void addEnroll(Enroll enroll);
 	List<Enroll> getEnrollById(String id);
+	List<Enroll> getProfEnroll(String id);
+	void updateEnroll(Enroll enroll);
+	void deleteEnroll(int no);
+	List<Enroll> enrollAllList(int no);
 }

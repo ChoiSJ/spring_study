@@ -44,7 +44,7 @@ $(function() {
 </script>
 </head>
 <body>
-<%@ include file="/WEB-INF/views/navi/adminnavi.jsp" %>
+<%@ include file="/WEB-INF/views/navi/profnavi.jsp" %>
 <%@ include file="/WEB-INF/views/navi/sidebarprof.jsp" %>
    <div class="container" style="margin-left: 250px; padding-top:25px; ">
    <input type="hidden" value="${confirm }" id="pwdConfirm"/>

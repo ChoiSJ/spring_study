@@ -11,17 +11,14 @@
 <script type="text/javascript">
 $(function() {
 	
-	$("form").submit(function() {
-		if($("#textarea-description").empty()) {
-			alert("신청사유는 필수입력입니다.");
-			$("#textarea-description").focus();
+	$("form").submit(function(event) {
+		if($('[name=selectLeave]:checked').val() == null) {
+			alert("복학 하고자 하는 휴학을 선택하세요.");
 			return false;
 		}
+		$('[name=leaveNo]').val($('[name=selectLeave]:checked').val());
 		return true;
 	});
-	
-	
-	
 })
 </script>
 <style type="text/css">
@@ -37,7 +34,7 @@ $(function() {
          홈
       </div>
       <div class="row">
-         <h4><span class="glyphicon glyphicon-th-list"></span> 휴학 신청</h4>
+         <h4><span class="glyphicon glyphicon-th-list"></span> 복학 신청</h4>
          <hr style="border:solid 0.5px #2C7BB5;">
       </div>
       <div class="row">
@@ -57,7 +54,7 @@ $(function() {
 	        		<tr>
 	        			<th>구분</th>
 	        			<td colspan="3">
-	        				<c:out value="${cName }" />
+	        				<c:out value="${student.cName }" />
 	        			</td>
 	        		</tr>
 	        		<tr>
@@ -79,7 +76,7 @@ $(function() {
 	        		</tr>
 	        		<tr>
 	        			<th>전공</th>
-	        			<td><c:out value="${tName}"/></td>
+	        			<td><c:out value="${student.tName}"/></td>
 	        			<th>학년</th>
 	        			<td><c:out value="${student.grade }"/></td>
 	        		</tr>
@@ -101,20 +98,12 @@ $(function() {
 	        </table>
         </div>
       </div>  
-      
       <div class="row" style="padding: 20px;">
-      	<h4>재입학 신청</h4>
+      	<h4>휴학 신청 내역</h4>
       	<table class="table table-bordered">
-      		<colgroup>
-      			<col width="" />
-      			<col width="" />
-      			<col width="" />
-      			<col width="" />
-      			<col width="" />
-      			<col width="" />
-      		</colgroup>
 			<thead>
 				<tr>
+					<th>선택</th>
 					<th>학년도</th>
 					<th>학기</th>
 					<th>학과</th>
@@ -123,75 +112,61 @@ $(function() {
 					<th>성명</th>
 					<th>학적변동</th>
 					<th>변동일자</th>
+					<th>복학일자</th>
 					<th>결재상태</th>
-					<th>비고</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<th colspan="10">신청 내역이 없습니다.</th>
-				</tr>
-				<!-- forEach 반복문 -->
-				<tr>
-					
-				</tr>
+				<c:if test="${empty leaveList}">
+					<tr>
+						<th colspan="13">신청 내역이 없습니다.</th>
+					</tr>
+				</c:if>
+				<c:forEach var="leave" items="${leaveList}">
+					<tr>
+						<th>
+							<input type="radio" name="selectLeave" value="${leave.no }"/>
+						</th>
+						<th>${leave.year }</th>
+						<th>${leave.period }</th>
+						<th>${student.tName }</th>
+						<th>${student.grade }</th>
+						<th>${student.id }</th>
+						<th>${student.name }</th>
+						<th>${student.cName }</th>
+						<th>
+							<fmt:formatDate value="${leave.enrollDate }" pattern="YYYY-MM-dd"/></th>
+
+						<th>
+							<fmt:formatDate value="${leave.reinDate }" pattern="YYYY-MM-dd"/></th>
+						<th>
+							<c:choose>
+								<c:when test="${leave.pass eq 'false' }">
+									<input type="hidden" id="leave-Pass" value="false" />
+									<font color="red"><strong>미승인</strong></font>
+								</c:when>
+								<c:when test="${leave.pass eq 'not' }">
+									<input type="hidden" id="leave-Pass" value="not" />
+									<font color="red"><strong>거절</strong></font>
+								</c:when>
+								<c:otherwise>
+									<font color="blue"><strong>승인</strong></font>
+								</c:otherwise>
+							</c:choose>
+						</th>										
+					</tr>
+				</c:forEach>
 			</tbody>      	
       	</table>
       </div>
-      
-      <div class="row" style="padding: 20px;">
-      	<h4>재입학 신청</h4>
-      	<form action="">
-	   		<table class="table table-bordered">
-	   			<colgroup>
-	   				<col width="16%" />
-	   				<col width="17%" />
-	   				<col width="17%" />
-	   				<col width="16%" />
-	   				<col width="17%" />
-	   			</colgroup>
-	   			<thead>
-	   				<tr>
-	   					<th>재입학 학년</th>
-	   					<th>
-	   						<div class="form-group">
-	   							<select name="reGrade" id="select-reGrade" class="form-control">
-
-		   								<option value="1">1</option>
-		   								<option value="2">2</option>
-		   								<option value="3">3</option>
-		   								<option value="4">4</option>
-	   							</select>
-	   						</div>
-	   					</th>
-	   					<th>재입학 학기</th>
-	   					<th>
-	   						<div class="form-group">
-	   							<select name="" id="" class="form-control">
-	   								<option value="">1학기</option>
-	   								<option value="">2학기</option>
-	   							</select>
-	   						</div>
-	   					</th>
-	   					<th>신청 결과</th>
-	   					<th>
-	   						<!-- 승인 전 / 후 -->
-	   						승인 전
-	   					</th>
-	   				</tr>
-	   				<tr>
-	   					<th style="color: red;">신청사유*</th>
-	   					<th colspan="5">
-	   						<div class="form-group">
-	   							<textarea name="" id="textarea-description" cols="30" rows="10" class="form-control" placeholder="필수 입력입니다."></textarea>
-	   						</div>
-	   					</th>
-	   				</tr>
-	   			</thead>
-	   		</table>
+      <div class="row">
+      	<p style="color: red; padding-left: 20px;">▶ 복학 하고자 하는 휴학을 선택하세요.</p>
+      	<form action="reinstate" method="post">
 	   		<div class="form-group text-center">
-	   			<button class="btn btn-default">신청</button>
-	   			<a class="btn btn-default" href="#">취소</a>
+	   			<input type="hidden" name="stuNo" value="${student.no }">
+	   			<input type="hidden" name="leaveNo">
+	   			<button class="btn btn-default" id="">신청</button>
+	   			<a class="btn btn-default" href="" onclick="window.history.back();">취소</a>
 	   			<input type="hidden" id="inputChangeBackYear" name="changeBackYear"/>
 	   		</div>
    		</form>

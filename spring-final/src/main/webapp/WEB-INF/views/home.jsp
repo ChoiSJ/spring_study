@@ -44,7 +44,7 @@ $(document).ready(function() {
       <div class="row">
 	      <div class="col-xs-6">
 	      	<div class="panel panel-default">
-		      	<div class="panel-heading">
+		      	<div class="panel-heading form-inline">
 					<strong>최근 공지사항</strong><span style="padding-left: 5px;"><a href="" class="btn-default btn-xs">more</a></span>
 		        </div> 
 		       	<div class="panel-body">

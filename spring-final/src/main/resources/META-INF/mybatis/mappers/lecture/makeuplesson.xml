@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="kr.co.jhta.dao.makeupLesson.MakeupLessonDao">
+ <!-- 전체 휴강신청 조회 -->
+ <select id="getAllSupplementLecture" resultType="kr.co.jhta.vo.MakeupLessonAll">
+ 	select
+ 		S_MAKEUPLESSONREGISTER 			AS makeupLessonRegister,
+ 		S_SUPPLEMENTLECTURE_NUMBER  	AS supplementLectureNo,
+ 		S_MAJOR_SCORE 					AS majorScore,
+ 		S_SUPPLEMENTLECTURE_TIME 		AS subjectTime,
+ 		S_SUPPLEMENTLECTURE_DAY 		AS subjectDate,
+ 		S_SUPPLEMENTLECTURE_Y_OR_N 		AS supplementLectureCheck,
+ 		S_SUPPLEMENTLECTURE_PRO_NO 		AS professorNumber,
+ 		S_SUPPLEMENTLECTURE_SUBJECT 	AS subjectNo,
+ 		S_SUPPLEMENTLECTURE_PRO_ID 		AS professorId,
+ 		S_MAJOR_CODE 					AS majorCode,
+ 		S_SUBJECT_NAME 					AS subjectName,
+ 		S_SUBJECT_PROFESSOR_NAME 		AS professorName,
+ 		S_MAJOR_OPTION 					AS majorOption	
+ 	from
+ 		S_SUPPLEMENTLECTURE	
+ </select>
+ 
+ <!-- 학과 가져오기 -->
+ <select id="makeupLessonGetCollege" parameterType="string" resultType="kr.co.jhta.vo.SupplementLectureVo">
+ select
+ 		T_NO 			AS collegeNo,
+ 		T_CODE 			AS collegeCode,
+ 		T_NAME 			AS collegeName,
+ 		T_PRECODE 		AS majorCode
+ 	from
+ 		T_SITEMAP
+ 	where 
+ 		T_PRECODE = #{linkCode}	
+ </select>
+ 
+ <!-- 학과로 테이블 가져오기 -->
+ <select id="makeupLessonGetTable" parameterType="string" resultType="kr.co.jhta.vo.MakeupLessonAll">
+ 	select
+ 		S_MAKEUPLESSONREGISTER 			AS makeupLessonRegister,
+ 		S_SUPPLEMENTLECTURE_NUMBER  	AS supplementLectureNo,
+ 		S_MAJOR_SCORE 					AS majorScore,
+ 		S_SUPPLEMENTLECTURE_TIME 		AS subjectTime,
+ 		S_SUPPLEMENTLECTURE_DAY 		AS subjectDate,
+ 		S_SUPPLEMENTLECTURE_Y_OR_N 		AS supplementLectureCheck,
+ 		S_SUPPLEMENTLECTURE_PRO_NO 		AS professorNumber,
+ 		S_SUPPLEMENTLECTURE_SUBJECT 	AS subjectNo,
+ 		S_SUPPLEMENTLECTURE_PRO_ID 		AS professorId,
+ 		S_MAJOR_CODE 					AS majorCode,
+ 		S_SUBJECT_NAME 					AS subjectName,
+ 		S_SUBJECT_PROFESSOR_NAME 		AS professorName,
+ 		S_MAJOR_OPTION 					AS majorOption
+ 	from
+ 		S_SUPPLEMENTLECTURE
+ 	where
+ 		S_MAJOR_CODE = #{majorCode}		
+ </select>
+ 
+ <!-- 테이블  모달 조회 -->
+ <select id="makeupLessonGetTableModal" parameterType="int" resultType="kr.co.jhta.vo.MakeupLessonAll">
+ select
+ 		S_MAKEUPLESSONREGISTER 			AS makeupLessonRegister,
+ 		S_SUPPLEMENTLECTURE_NUMBER  	AS supplementLectureNo,
+ 		S_MAJOR_SCORE 					AS majorScore,
+ 		S_SUPPLEMENTLECTURE_TIME 		AS subjectTime,
+ 		S_SUPPLEMENTLECTURE_DAY 		AS subjectDate,
+ 		S_SUPPLEMENTLECTURE_Y_OR_N 		AS supplementLectureCheck,
+ 		S_SUPPLEMENTLECTURE_PRO_NO 		AS professorNumber,
+ 		S_SUPPLEMENTLECTURE_SUBJECT 	AS subjectNo,
+ 		S_SUPPLEMENTLECTURE_PRO_ID 		AS professorId,
+ 		S_MAJOR_CODE 					AS majorCode,
+ 		S_SUBJECT_NAME 					AS subjectName,
+ 		S_SUBJECT_PROFESSOR_NAME 		AS professorName,
+ 		S_MAJOR_OPTION 					AS majorOption
+ 	from
+ 		S_SUPPLEMENTLECTURE
+ 	where
+ 		S_SUPPLEMENTLECTURE_SUBJECT = #{subjectNo}
+ </select>
+ <!-- 보강 신청 하기 -->
+ <insert id="insertMakeupLessonRegister" parameterType="kr.co.jhta.vo.MakeupLessonAll">
+ insert into M_MAKEUPLESSON(
+ 	M_MAKEUPLESSON_NO,
+ 	M_MAKEUPLESSON_REGISTER,
+ 	M_MAKEUPLESSON_SUBJECTNO,
+ 	M_SUBJECTLESSON_PROFESSOR )
+ 	values(investgation_seq.nextval,#{makeupLessonRegister},#{subjectNo},#{professorId})	
+ </insert>
+ 
+ <!-- 보강 삭제 하기 -->
+ <delete id="deleteMakeupLessonCancle" parameterType="int">
+ delete from 
+ 		M_MAKEUPLESSON
+ where 		
+ 		M_MAKEUPLESSON_SUBJECTNO = #{subjectNo}
+ </delete>
+ </mapper>

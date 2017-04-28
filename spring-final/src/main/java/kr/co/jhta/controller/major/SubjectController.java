@@ -53,7 +53,7 @@ public class SubjectController {
 	}
 	
 	
-	@RequestMapping(value="searchsubject", method=RequestMethod.POST)
+	@RequestMapping(value="/searchsubject", method=RequestMethod.POST)
 	public String searchSubject(SubjectSearchForm subjectsearchform, Model model) {
 		
 		
@@ -113,9 +113,11 @@ public class SubjectController {
 	public String detailsubject(@RequestParam("sno") int sno, Model model) {
 		
 		Subject subject = subjectService.getSubByNo(sno);
+		System.out.println(subject);
 		
 		String code = subjectService.getPassCodeByNo(sno);
 		String tcode = subject.getSiteCode().getCode();
+		System.out.println("------------------------" + tcode);
 		
 		subject.getPassed().setCode(code);
 		List<Professor> proListByTcode = professorService.getProListByTCode(tcode);

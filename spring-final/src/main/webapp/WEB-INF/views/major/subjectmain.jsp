@@ -69,13 +69,7 @@ $(function () {
       			</table>
       		</form>
     	
-    		<div class="row text-left pull-left">
-    			<select name="rows" >
-    				<option value="10" ${searchsubject eq 10? 'selected=selected' : '' }>10건씩 정렬</option>
-    				<option value="50" ${searchsubject eq 50? 'selected=selected' : '' }>50건씩 정렬</option>
-    				<option value="100" ${searchsubject eq 100? 'selected=selected' : '' }>100건씩 정렬</option>
-    			</select>
-    		</div>
+    		
       		<a href="addsubject" class="btn btn-primary btn-sm pull-right">교과등록</a>
       	
       	</div>
@@ -87,7 +81,6 @@ $(function () {
       					<th>시행학과</th>
       					<th>과목명</th>
       					<th>교수명</th>
-      					<th>분반수</th>
       					<th>이수구분</th>
       					<th>학점</th>
       					<th>학년</th>
@@ -97,10 +90,9 @@ $(function () {
       			<c:forEach var="subject" items="${resultList }">
       				<tr>
       					<td>${subject.selectNo.semeSelect }</td>
-      					<td><a href="detailsubject?sno=${subject.no }">${subject.siteCode.name }</a></td>
-      					<td>${subject.subjectName }</td>
+      					<td>${subject.siteCode.name }</td>
+      					<td><a href="detailsubject?sno=${subject.no }">${subject.subjectName }</a></td>
       					<td>${subject.professor.name }</td>
-      					<td>${subject.division }</td>
       					<td>${subject.passed.passedName }</td>
       					<td>${subject.score }</td>
       					<td>${subject.grade }</td>

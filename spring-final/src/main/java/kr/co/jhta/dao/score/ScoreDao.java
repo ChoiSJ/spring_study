@@ -19,7 +19,7 @@ public interface ScoreDao {
 	Semester getSemesterByNo(int no);
 	Score getScoreByNo(int no);
 	void updateScoreByNo(Score score);
-	void addScore();
+	void addScore(int pno);
 	void delScore(int rno);
 	Regisubject getRegisInfoByEno(int enrollNo);
 	int getScoreNoByRno(int rno);
@@ -34,4 +34,9 @@ public interface ScoreDao {
 	List<SemesterAvg> getSemesterAvgBySno(int sno);
 	SemesterAvg getSemesterAvgTotalBySno(int sno);
 	int getScoreCount();
+	List<Regisubject> getAllScorelistByProfID (String pid);
+	int getProfNoByEno(int eno);
+	List<String> getSemeNameByStuNo(int stno);
+	List<Subject> getsubjectlistByProfId(int pid);
+	List<Regisubject> getSearchScorelistByhash(HashMap<String, Object> searchcode);
 }

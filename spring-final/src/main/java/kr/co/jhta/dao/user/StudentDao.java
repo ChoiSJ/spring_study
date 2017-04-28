@@ -3,12 +3,12 @@ package kr.co.jhta.dao.user;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import kr.co.jhta.vo.stu.Student;
 
-@Transactional
 public interface StudentDao {
+	
+	Student getStudentALLById(String id);
+	
 	void addNewStudent(Student stud);
 	List<Student> getAllStudent();
 	Student getStudentById(String id);
@@ -19,4 +19,9 @@ public interface StudentDao {
 	
 	String getTnameByTcode(Map<String, Object> map);
 	String getCnameByRegister(String register);
+	
+	void updateAddScore(Map<String, Object> map); 
+	void updateMinusScore(Map<String, Object> map);
+	
+	int getNowScore(int stuNo);
 }

@@ -4,6 +4,50 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.jhta.dao.board.BoardDao">
 	
+	<select id="searchNoticeBoardByCount" parameterType="string" resultType="Board">
+		select 
+			b_no as no,
+			b_title as title,
+			b_contents as contents,
+			b_writer as writer,
+			b_regdate as regdate,
+			b_count as countView,
+			b_category as category,
+			b_file as fileName,
+			b_department as department
+		from 
+			b_board
+		where 
+			B_CATEGORY = #{value}
+		and 
+			rownum &lt;= 5
+		order by b_no desc
+	</select>
+	
+	<select id="searchDeptBoardByCount" parameterType="SearchForm" resultType="Board">
+		
+		select 
+			b_no as no,
+			b_title as title,
+			b_contents as contents,
+			b_writer as writer,
+			b_regdate as regdate,
+			b_count as countView,
+			b_category as category,
+			b_file as fileName,
+			b_department as department
+		from 
+			b_board
+		where 
+			B_CATEGORY = #{searchBoardType}
+		and 
+			b_department = #{department}
+		and 
+			rownum &lt;= 5
+		order by b_no desc
+	
+	</select>
+	
 	<delete id="deleteView" parameterType="int">
 		delete 
 		FROM 
@@ -29,7 +73,26 @@
 			b_category = #{category}
 			
 	</select>
+	<insert id="addDeptBoard" parameterType="Board">
+		insert into
+				B_BOARD(
+						B_NO,
+						B_TITLE,
+						B_CONTENTS,
+						B_WRITER,
+						B_DEPARTMENT,
+						B_CATEGORY
+						)
+				VALUES(
+						B_BOARD_SEQ.NEXTVAL,
+						#{title},
+						#{contents},
+						#{writer},
+						#{department},
+						#{category}
+					  )
 	
+	</insert>
 	<insert id="addProfBoard" parameterType="Board">
 		insert into
 				B_BOARD (
@@ -40,7 +103,8 @@
 						<if test="fileName != null">
 						B_FILE,
 						</if> 
-						B_DEPARTMENT
+						B_DEPARTMENT,
+						B_CATEGORY
 						) 
 		values 
 				(
@@ -51,7 +115,8 @@
 				<if test="fileName != null">
 				#{fileName},
 				</if>
-				#{department}
+				#{department},
+				#{category}
 				)
 	</insert>
 	<insert id="addStuQnaBoard" parameterType="Board">
@@ -76,6 +141,25 @@
 				#{subjectNo}
 				)
 	
+	</insert>
+	
+	<insert id="addFreeBoard" parameterType="Board">
+		insert into
+			B_BOARD (
+					B_NO,
+					B_TITLE,
+					B_CONTENTS,
+					B_WRITER,
+					B_CATEGORY
+					)
+			values 
+				(
+				B_BOARD_SEQ.NEXTVAL,
+				#{title},
+				#{contents},
+				#{writer},
+				#{category}
+				)
 	</insert>
 	
 	
@@ -127,11 +211,42 @@
 			<if test="department != null">
 				and B_DEPARTMENT = #{department}
 			</if>
-			<if test="subjectNo != null">
+			<if test="subjectNo != 0">
 				and B_SUBJECTNO = #{subjectNo}
 			</if>
 		</where>
 	</select>
+	
+	<select id="getProfQnaBoard" parameterType="string" resultType="Board">
+		select 
+			A.B_NO as no,
+			A.B_SUBJECTNO as subjectNo,
+			A.B_TITLE as title,
+			A.B_CONTENTS as contents,
+			A.B_WRITER as writer,
+			A.B_REGDATE as regdate,
+			A.B_CATEGORY as category,
+			A.B_COUNT as countView,
+			A.B_DEPARTMENT as department,
+			A.B_FILE as fileName
+		from 
+			b_board A, j_subject B
+		where 
+			A.B_SUBJECTNO = B.J_NO
+		and 
+			B.J_SUB_PROF = #{value}
+	</select>
+	
+	<select id="countProfBoard" parameterType="string" resultType="int">
+		select count(*)
+		from 
+			b_board A, j_subject B
+		where 
+			A.B_SUBJECTNO = B.J_NO
+		and 
+			B.J_SUB_PROF = #{value}
+	</select>
+	
 	
 	<delete id="deleteBoardByNo" parameterType="int">
 		delete 
@@ -253,10 +368,16 @@
 					<if test="department != null">
 						and b_department = #{department}
 					</if>
-					<if test="subjectNo != null">
+					<if test="subjectNo != 0">
 						and b_subjectno = #{subjectNo}
 					</if>
 				</where>)
 		where rn >= #{beginIndex} and rn &lt;= #{endIndex}
 	</select>
+	
+	<select id="getSubjectNo" >
+		
+	</select>
+	
+	
 </mapper>

@@ -4,10 +4,66 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.jhta.dao.user.StudentDao">
 
+	<select id="getNowScore" parameterType="int" resultType="int">
+		SELECT U_STU_NOWSCORE 
+		FROM U_STUDENT 
+		WHERE U_STU_NO = #{stuNo}
+	</select>
+	
+	<update id="updateAddScore" parameterType="map">
+		UPDATE U_STUDENT 
+		SET U_STU_NOWSCORE = U_STU_NOWSCORE + #{score}
+		WHERE U_STU_NO = #{stuNo}
+	</update>
+	
+	<update id="updateMinusScore" parameterType="map">
+		UPDATE U_STUDENT 
+		SET U_STU_NOWSCORE = U_STU_NOWSCORE - #{score}
+		WHERE U_STU_NO = #{stuNo}
+	</update>
+	<select id="getStudentALLById" parameterType="string" resultType="Student">
+		select U_STU_NO as no, 
+				U_STU_ADDR1 as addr1, 
+				U_STU_ADDR2 as addr2,
+				U_STU_DIVISION as division,
+				U_STU_EMAIL as email, 
+				U_STU_ENTERDATE as enterDate, 
+				U_STU_GENDER as gender, 
+				U_STU_GRADE as grade,
+				U_STU_ID as id, 
+				U_STU_LEAVEDATE as leaveDate, 
+				U_STU_NAME as name, 
+				U_STU_NO as no, 
+				U_STU_PARENTNAME as parentName, 
+				U_STU_PARENTPHONE as parentPhone, 
+				U_STU_PHONE as phone, 
+				U_PROF_NAME as professor, 
+				U_STU_PWD as pwd, 
+				U_STU_REGISTER as register, 
+				U_STU_SCORE as score, 
+				U_STU_SSN as ssn,
+				U_STU_REMAINLEAVE as remainLeave,
+				U_STU_MAXONESCORE as maxOneScore,
+				U_STU_NOWSCORE as nowScore,
+				c_name as cName,
+				t_name as tName
+		from U_STUDENT a, t_sitemap b, c_coderegister c, u_professor d
+		where U_STU_ID = #{id}
+		and
+			a.u_stu_division = b.t_code
+		and
+			a.u_stu_register = c.c_code 
+		and
+			a.u_stu_professor = d.u_prof_id
+	</select>
+
+
 	<select id="getAllStudent" resultType="Student">
 		select U_STU_NO as no, 
 				U_STU_ADDR1 as addr1, 
 				U_STU_ADDR2 as addr2,
+				U_STU_ADDR3 as addr3,
+				U_STU_ZIPCODE as zipcode,
 				U_STU_DIVISION as division, 
 				U_STU_EMAIL as email, 
 				U_STU_ENTERDATE as enterDate, 
@@ -25,11 +81,13 @@
 				U_STU_REGISTER as register, 
 				U_STU_SCORE as score, 
 				U_STU_SSN as ssn,
-				U_STU_REMAINLEAVE as remainLeave
+				U_STU_REMAINLEAVE as remainLeave,
+				U_STU_MAXONESCORE as maxOneScore,
+				U_STU_NOWSCORE as nowScore
 		from U_STUDENT
 	</select>
 	
-	<insert id="addNewStudent">
+	<insert id="addNewStudent" parameterType="kr.co.jhta.vo.stu.AddStudentForm">
 		insert INTO U_STUDENT (U_STU_NO, U_STU_ID, U_STU_NAME, U_STU_GENDER, U_STU_DIVISION, U_STU_PWD, U_STU_REGISTER, U_STU_SCORE, U_STU_PHONE, U_STU_ADDR1, U_STU_ADDR2, U_STU_EMAIL, U_STU_GRADE, U_STU_SSN, U_STU_ENTERDATE, U_STU_PARENTNAME, U_STU_PROFESSOR, U_STU_PARENTPHONE) 
 		VALUES(U_STUDENT_SEQ.nextval, #{id}, #{name}, #{gender}, #{division}, #{pwd}, #{register}, #{score}, #{phone}, #{addr1}, #{addr2}, #{email}, #{grade}, #{ssn}, sysdate, #{parentName}, #{professor}, #{parentPhone})
 	</insert>
@@ -38,8 +96,10 @@
 		select U_STU_NO as no, 
 				U_STU_ADDR1 as addr1, 
 				U_STU_ADDR2 as addr2,
+				U_STU_ADDR3 as addr3,
+				U_STU_ZIPCODE as zipcode,
 				U_STU_DIVISION as division,
-				 U_STU_EMAIL as email, 
+				U_STU_EMAIL as email, 
 				U_STU_ENTERDATE as enterDate, 
 				U_STU_GENDER as gender, 
 				U_STU_GRADE as grade,
@@ -55,19 +115,23 @@
 				U_STU_REGISTER as register, 
 				U_STU_SCORE as score, 
 				U_STU_SSN as ssn,
-				U_STU_REMAINLEAVE as remainLeave
+				U_STU_REMAINLEAVE as remainLeave,
+				U_STU_MAXONESCORE as maxOneScore,
+				U_STU_NOWSCORE as nowScore
 		from U_STUDENT
 		where U_STU_ID = #{id}
 	</select>
 	
 	<update id="updateStudentInfo" parameterType="Student">
 		UPDATE U_STUDENT 
-		SET
-		U_STU_PARENTPHON = #{parentPhone},
-		U_STU_PHONE = #{phone},
-		U_STU_EMAIL = #{email},
-		U_STU_ADDR2 = #{addr2}
-		WHERE U_STU_ID = #{id}
+		SET		U_STU_PARENTPHONE = #{parentPhone, jdbcType=VARCHAR},
+				U_STU_PHONE = #{phone, jdbcType=VARCHAR},
+				U_STU_EMAIL = #{email, jdbcType=VARCHAR},
+				U_STU_ZIPCODE = #{zipcode},
+				U_STU_ADDR1 = #{addr1, jdbcType=VARCHAR},
+				U_STU_ADDR2 = #{addr2, jdbcType=VARCHAR},
+				U_STU_ADDR3 = #{addr3, jdbcType=VARCHAR}
+		WHERE U_STU_NO = #{no}
 	</update>
 	
 	<update id="updateStudentPwd" parameterType="Student">
@@ -82,7 +146,7 @@
 	</update>
 	
 	<select id="getTnameByTcode" parameterType="map" resultType="string">
-		select t.T_NAME as tName
+		select DISTINCT t.T_NAME as tName
 		from U_STUDENT s, T_SITEMAP t
 		where s.U_STU_DIVISION = t.T_CODE
 		and s.U_STU_DIVISION = #{tCode}
@@ -90,7 +154,7 @@
 	</select>
 	
 	<select id="getCnameByRegister" parameterType="string" resultType="string">
-		select c.C_NAME 
+		select DISTINCT c.C_NAME as cName
 		from U_STUDENT u, C_CODEREGISTER c 
 		WHERE c.C_CODE = u.U_STU_REGISTER
 		AND u.U_STU_REGISTER = #{register}

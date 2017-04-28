@@ -17,22 +17,25 @@ $(function() {
 		var rep = $("#reportBox").val() * 0.1;
 		var mid = $("#midBox").val() * 0.3;
 		var end = $("#endBox").val() * 0.3;
+		var pass =$("#pasco").val();
+		
 		var total  = att+rep+mid+end;
+		
 		alert(total);
 		if(total >= 90){
-			$("#creditBox").val(3);
+			$("#creditBox").val(pass);
 			$("#gradeBox").val('A');
 		}
 		if(90>total && total>= 80){
-			$("#creditBox").val(2);
+			$("#creditBox").val(pass);
 			$("#gradeBox").val('B');
 		}
 		if(80>total && total>= 70){
-			$("#creditBox").val(1);
+			$("#creditBox").val(pass);
 			$("#gradeBox").val('C');
 		}
 		if(70>total && total>= 60){
-			$("#creditBox").val(1);
+			$("#creditBox").val(pass);
 			$("#gradeBox").val('D');
 		}
 		if(60 > total){
@@ -45,11 +48,12 @@ $(function() {
 </head>
 <body>
 <%@ include file="/WEB-INF/views/navi/adminnavi.jsp" %>
-<%@ include file="/WEB-INF/views/navi/sidebarscore.jsp" %>
+<%@ include file="/WEB-INF/views/collegeregister/sidebar-hakjuk.jsp" %>
 	<div class="container" style="margin-left: 250px; padding-top: 25px;">
 	<h3>성적 수정</h3>
 	<hr style="border:solid 0.5px #2C7BB5;">
 		<div class="row">
+			<input type="hidden" value=${psco } id="pasco">
 			<form:form class="form-group" action="scoreform.do" method="post" modelAttribute="scoreupdate">
 				<form:input path="no" cssClass="form-control" value="${score.no }" type="hidden"/>
 				<div class="form-group">
