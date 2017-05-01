@@ -6,6 +6,7 @@ import java.util.Date;
 public class ScheduleEventForm {
 	
 	private static final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	private int no;
 	private String title;
 	private String location;
 	private String startDate;
@@ -20,6 +21,13 @@ public class ScheduleEventForm {
 		super();
 	}
 
+	public int getNo() {
+		return no;
+	}
+
+	public void setNo(int no) {
+		this.no = no;
+	}
 
 	public String getTitle() {
 		return title;
@@ -91,6 +99,13 @@ public class ScheduleEventForm {
 		} catch (Exception e) {
 			throw new RuntimeException("날짜형식 오류");
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "ScheduleEventForm [title=" + title + ", location=" + location + ", startDate=" + startDate
+				+ ", startHour=" + startHour + ", startMinute=" + startMinute + ", endDate=" + endDate + ", endHour="
+				+ endHour + ", endMinute=" + endMinute + ", allDay=" + allDay + "]";
 	}
 	
 }

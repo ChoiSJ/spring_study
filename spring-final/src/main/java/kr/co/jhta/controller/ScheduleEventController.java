@@ -30,7 +30,18 @@ public class ScheduleEventController {
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 	}
 	
-	
+	@RequestMapping("/updateSch")
+	public ScheduleEvent updateSchdule(ScheduleEventForm eventForm, 
+									Student student) {
+		ScheduleEvent schedule = new ScheduleEvent();
+		schedule.setNo(eventForm.getNo());
+		schedule.setTitle(eventForm.getTitle());
+		schedule.setLocation(eventForm.getLocation());
+		schedule.setStart(eventForm.getStart());
+		schedule.setEnd(eventForm.getEnd());
+		schedule.setStudent(student);		
+		return  scheduleService.editeSchduleByNoService(schedule);
+	}
 	
 	@RequestMapping("/addevent.do")
 	public ScheduleEvent addEvent(ScheduleEventForm eventForm, Student student) {
@@ -46,8 +57,7 @@ public class ScheduleEventController {
 	
 	@RequestMapping("/eventDetail.do")
 	public ScheduleEvent getEvent(@RequestParam("schNo") int schNo, Student student) {
-		ScheduleEvent schEvent = scheduleService.getSchEventBySchNoService(schNo); 
-		return schEvent;
+		return scheduleService.getSchEventBySchNoService(schNo); 
 	}
 	
 	

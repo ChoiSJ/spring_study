@@ -98,10 +98,22 @@ public class StudentServiceImpl implements StudentService{
 		stuDao.updateMinusScore(map);
 	}
 
-
 	@Override
 	public int getNowScoreService(int stuNo) {
 		return stuDao.getNowScore(stuNo);
+	}
+
+	@Override
+	public String getStuPwdByEmailAndIdService(String stuId, String stuEmail) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("stuId", stuId);
+		map.put("stuEmail", stuEmail);
+		return stuDao.getStuPwdByEmailAndId(map);
+	}
+
+	@Override
+	public String getStuIdByEmailService(String email) {		
+		return stuDao.getStuIdByEmail(email);
 	}
 	
 }

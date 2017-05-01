@@ -41,7 +41,7 @@ public class HakjukController {
 	
 	@RequestMapping(value = "/home",method=RequestMethod.GET)
 	public String home(Model model){
-		return "redirect:/admin/searchstud";
+		return "home";
 	}
 	
 	

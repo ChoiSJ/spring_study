@@ -125,6 +125,7 @@ public class HakjukServiceImpl implements HakjukService{
 	public void updateLeaveByOkService(int no) {
 		hakjukDao.updateLeaveByOk(no);
 		Leave leave = hakjukDao.getLeaveByNo(no);
+		leave.setCode("LV0000");
 		hakjukDao.updateStudentRegister(leave);
 	}
 	@Override

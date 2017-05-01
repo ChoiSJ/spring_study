@@ -28,6 +28,11 @@ $(function() {
 			}
 		});
 	});
+	
+	// 깜빡이 이벤트
+	setInterval(function(){
+	    $(".blinkEle").toggle();
+	  }, 1000);
 })
 </script>
 <style type="text/css">
@@ -40,39 +45,14 @@ $(function() {
 <%@ include file="/WEB-INF/views/navi/sidebarstud.jsp" %>
    <div class="container" style="margin-left: 250px; padding-top:25px; ">
     <div class="row text-right">
-         	수강 과목
+         	홈 > 과제 관리
       </div>
       <div class="row">
-         <h4><span class="glyphicon glyphicon-th-list"></span> 수강 과목</h4>
+         <h4><span class="glyphicon glyphicon-th-list"></span> 과제 관리</h4>
          <hr style="border:solid 0.5px #2C7BB5;">
-      </div>
-      <div class="row">
-		<div style="padding-top: 20px;" class="text-center form-group">
-			<form method="post" action="enrollMain" >
-				<select class="w3-select w3-border" name="option1" style="width: 8%; height: 37px;">
-					<option value="gradeAll">전체</option>
-					<option value="grade1">1 학년</option>
-					<option value="grade2">2 학년</option>
-					<option value="grade3">3 학년</option>
-					<option value="grade4">4 학년</option>
-				</select>
-				<select class="w3-select w3-border" name="dept" id="select-dept" style="width: 16%; height: 37px;">
-					<option value="">학부</option>
-					<c:forEach items="${deptList }" var="dept">
-						<option value="${dept.code }">${dept.name }</option>
-					</c:forEach>
-				</select>
-				<select class="w3-select w3-border" name="select-major" id="select-major" style="width: 16%; height: 37px;">
-					<option value="siteAll">전공</option>
-				</select>
-				<input type="text" name="searchInput" style="width: 30%; height: 37px;"/>
-				<button type="submit" class="" style="background-color: gray; height:30px; width:70px;">검색</button>	
-			</form>
-		</div>
       </div>
       <hr />
          <div class="row">
-	      <!-- <form action="enrollCancle" method="POST"> -->
 	      	<table class="table table-bordered">
 	      		<colgroup>
 	      			<col width="13%" />
@@ -97,7 +77,7 @@ $(function() {
 	      				<th>강의요일</th>
 	      				<th>학점</th>
 	      				<th>과제 확인</th>
-	      				<th>강의 계획서</th>
+	      				<th>제출 여부</th>
 	      			</tr>
 	      		</thead>
 	      		<tbody id="enrolled">
@@ -117,17 +97,29 @@ $(function() {
 	      					<th>${regisub.enroll.enrollDay }</th>	<!-- 강의 요일-->
 	      					<th>${regisub.subject.score }</th>	<!-- 학점 -->
 	      					<th>
-	      						<a href="ReportHome?eno=${regisub.enroll.no}">확 인</a>
+	      						<c:choose>
+	      							<c:when test="${regisub.isNewReport eq ('true') || regisub.show eq ('true')}">
+			      						<a href="ReportHome?eno=${regisub.enroll.no}"><font color="red"><span class="blinkEle">New</span></font></a>
+	      							</c:when>
+	      							<c:otherwise>
+	      								예정
+	      							</c:otherwise>
+	      						</c:choose>
 	      					</th>
-	      					<th><a href="" class="btn btn-default">출 력</a></th>
+	      					<th>
+	      						<c:choose>
+	      							<c:when test="${regisub.show eq ('true') }">
+	      								<font color="blue">제출</font>
+	      							</c:when>
+	      							<c:otherwise>
+	      								<font color="red">미제출</font>
+	      							</c:otherwise>
+	      						</c:choose>
+	      					</th>
 	      				</tr>
 	      			</c:forEach>
 	      		</tbody>
 	      	</table>
-	    <!-- </form> -->
-      	<div class="row text-center">
-      		<p><font size="4;"><span id="applyScore">${applyScore}</span> / <span id="maxOneScore">${student.maxOneScore}</span></font></p>
-      	</div>
       </div>
     </div>
 </body>

@@ -96,6 +96,7 @@ public class MessageController {
 		}
 		
 		MultipartFile file = messageForm.getFile();
+		messageForm.setContents(messageForm.getContents().replaceAll("\n", "<br>"));
 		
 		if (option.equals("name")) {
 			for (String receiver : receiverList) {

@@ -225,7 +225,7 @@ $(function() {
 					<th>${student.grade }</th>
 					<th>${student.id }</th>
 					<th>${student.name }</th>
-					<th>${student.register }</th>
+					<th>휴학</th>
 					<th>
 						<fmt:formatDate value="${leaves.enrollDate }" pattern="YYYY-MM-dd"/></th>
 					<th>
@@ -282,7 +282,7 @@ $(function() {
 					<th>${student.grade }</th>
 					<th>${student.id }</th>
 					<th>${student.name }</th>
-					<th>${rein.code}</th>
+					<th>재학</th>
 					<th>
 						<fmt:formatDate value="${rein.enrollDate }" pattern="YYYY-MM-dd"/></th>
 					<th>

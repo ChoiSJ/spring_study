@@ -10,14 +10,27 @@ public class Regisubject {
 	private Student student;
 	private Score score;
 	private Enroll enroll;
+	private String show;
+	private String isNewReport;
 	
 	public Regisubject() {
-		super();
-		// TODO Auto-generated constructor stub
+
+	}
+	
+	
+	
+	public String getIsNewReport() {
+		return isNewReport;
 	}
 
-	
-	
+
+
+	public void setIsNewReport(String isNewReport) {
+		this.isNewReport = isNewReport;
+	}
+
+
+
 	public void setScore(Score score) {
 		this.score = score;
 	}
@@ -58,5 +71,15 @@ public class Regisubject {
 	public void setEnroll(Enroll enroll) {
 		this.enroll = enroll;
 	}
+
+	public String getShow() {
+		return show;
+	}
+
+	public void setShow(String show) {
+		this.show = show;
+	}
+	
+	
 	
 }

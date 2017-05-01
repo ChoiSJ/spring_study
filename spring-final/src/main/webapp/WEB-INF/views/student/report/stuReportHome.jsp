@@ -26,10 +26,10 @@ $(function() {
 <div class="container" style="margin-left: 250px; padding-top:25px; ">
 <input type="hidden" id="isSame" value="${param.isSamePerson}" />
 	<div class="row text-right">
-         	과제 게시판
+         	홈 > 과제 게시판
       </div>
       <div class="row">
-         <h4><span class="glyphicon glyphicon-th-list"></span> 수강 과목</h4>
+         <h4><span class="glyphicon glyphicon-th-list"></span> 과제 게시판</h4>
          <hr style="border:solid 0.5px #2C7BB5;">
       </div>
       <div class="row">
@@ -76,7 +76,7 @@ $(function() {
 			     			<td><a href="showProfReport?pno=${profReport.no}&eno=${param.eno}">${profReport.title }</a></td>
 			     			<td>${profReport.professor.name } 교수</td>
 			     			<td></td>
-			     			<td>과제 등록일</td>
+			     			<td>2014-04-01</td>
 			     		</tr>
 		     		</c:forEach>
 	     		</c:if>

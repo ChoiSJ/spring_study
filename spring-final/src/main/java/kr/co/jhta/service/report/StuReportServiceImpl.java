@@ -28,8 +28,11 @@ public class StuReportServiceImpl implements StuReportService{
 	}
 
 	@Override
-	public PreportContent getStuReportByStuNoService(int stuNo) {
-		return stuRepDao.getStuReportByStuNo(stuNo);
+	public PreportContent getStuReportByStuNoService(int stuNo, int eNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("stuNo", stuNo);
+		map.put("eNo", eNo);
+		return stuRepDao.getStuReportByStuNo(map);
 	}
 
 	@Override
@@ -83,6 +86,14 @@ public class StuReportServiceImpl implements StuReportService{
 	@Override
 	public void updateStuReportNotFileService(PreportContent preportContent) {
 		stuRepDao.updateStuReportNotFile(preportContent);
+	}
+
+	@Override
+	public List<Preport> isNewEnollCheckService(int profNo, int eNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("profNo", profNo);
+		map.put("eNo", eNo);
+		return stuRepDao.isNewEnollCheck(map);
 	}
 	
 }

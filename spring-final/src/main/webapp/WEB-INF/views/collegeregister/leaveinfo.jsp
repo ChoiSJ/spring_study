@@ -201,7 +201,7 @@ $(function() {
       </div>  
       
       <div class="row" style="padding: 20px;">
-      	<h4><strong>휴학(연장) 신청 내역</strong></h4>
+      	<h4><strong>휴학 신청 내역</strong></h4>
       	<table class="table table-bordered">
 			<thead>
 				<tr>
@@ -233,7 +233,7 @@ $(function() {
 						<th>${student.grade }</th>
 						<th>${student.id }</th>
 						<th>${student.name }</th>
-						<th>${student.register }</th>
+						<th>휴학</th>
 						<th>
 							<fmt:formatDate value="${leave.enrollDate }" pattern="YYYY-MM-dd"/></th>
 						<th>

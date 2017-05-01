@@ -1,6 +1,6 @@
 package kr.co.jhta.service.user;
 
-import java.util.List;
+import java.util.*;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,4 +27,7 @@ public interface StudentService {
 	void updateMinusScoreService(int score, int stuNo);
 	
 	int getNowScoreService(int stuNo);
+	
+	String getStuPwdByEmailAndIdService(String stuId, String stuEmail);
+	String getStuIdByEmailService(String email);
 }

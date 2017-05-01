@@ -69,26 +69,6 @@
                         </ul>
                     </li>
                     <li>
-                        <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-8">
-                            <span class="sidebar-icon"></span><span class="sidebar-title">검색</span>
-                            <b class="caret"></b>
-                        </a>
-                        <ul id="submenu-8" class="panel-collapse collapse panel-switch" role="menu">
-                            <li><a href="#"><i class="fa fa-caret-right"></i>논문 검색</a></li>
-                            <li><a href="#"><i class="fa fa-caret-right"></i>도서 검색</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-8">
-                            <span class="sidebar-icon"></span><span class="sidebar-title">기타 관리</span>
-                            <b class="caret"></b>
-                        </a>
-                        <ul id="submenu-8" class="panel-collapse collapse panel-switch" role="menu">
-                            <li><a href="#"><i class="fa fa-caret-right"></i>기타1</a></li>
-                            <li><a href="#"><i class="fa fa-caret-right"></i>기타2</a></li>
-                        </ul>
-                    </li>
-                    <li>
 					     <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-9">
 					         <span class="sidebar-icon"></span><span class="sidebar-title">커뮤니티 관리</span>
 					         <b class="caret"></b>

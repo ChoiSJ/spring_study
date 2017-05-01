@@ -67,7 +67,7 @@
 	      					<th>${regisub.enroll.enrollDay }</th>	<!-- 강의 요일-->
 	      					<th>X</th>	<!-- 재수강 여부 -->
 	      					<th>${regisub.subject.score }</th>	<!-- 학점 -->
-	      					<th><a href="" class="btn btn-default">출 력</a></th>
+	      					<th><a href="downloadPDF.do?subNo=${regisub.subject.no}" class="btn btn-default">출 력</a></th>
 	      				</tr>
 	      			</c:forEach>
 	      		</tbody>

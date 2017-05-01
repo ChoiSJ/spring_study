@@ -72,7 +72,10 @@ public class StuReportFileController {
 		int eno = preportContentForm.getEno();
 		int cno = preportContentForm.getNo();
 		PreportContent stuReport = stuRepService.getStuReportByCnoService(cno);
-
+		String tName = stuService.getTnameByTcodeService(student.getNo(), student.getDivision());
+	    String cName = stuService.getCnameByRegisterService(student.getRegister());
+	    student.setcName(cName);
+	    student.settName(tName);
 		if(errors.hasErrors()) {
 			return "redirect:/stud/ReportHome?eno="+eno;
 		}
@@ -92,7 +95,6 @@ public class StuReportFileController {
 		}
 		
 		parseFileToDb(preportContentForm.getFile(), preportContentForm);
-		
 		BeanUtils.copyProperties(preportContent, preportContentForm);
 		preportContent.setStudent(student);
 		model.addAttribute("preportContent", stuReport);
@@ -108,8 +110,6 @@ public class StuReportFileController {
 		PreportContent stuReport = stuRepService.getStuReportByCnoService(cno);
 				
 		PreportContentForm preportContentForm = new PreportContentForm();
-		preportContentForm.setStudent(student);
-		
 		model.addAttribute("preportContentForm", preportContentForm);
 		model.addAttribute("preportContent", stuReport);
 		model.addAttribute("student", student);
@@ -122,12 +122,14 @@ public class StuReportFileController {
 	public String editReportFilePost(@Valid @ModelAttribute("preportContentForm") PreportContentForm preportContentForm,
 									Errors errors, Model model, Student student) throws Exception{
 		
-		
 		int eno = preportContentForm.getEno();
 		int cno = preportContentForm.getNo();
 		PreportContent stuReport = stuRepService.getStuReportByCnoService(cno);
-		System.out.println(stuReport.getFilename());
 		PreportContent preportContent = new PreportContent();	
+		String tName = stuService.getTnameByTcodeService(student.getNo(), student.getDivision());
+	    String cName = stuService.getCnameByRegisterService(student.getRegister());
+	    student.setcName(cName);
+	    student.settName(tName);
 		if(stuReport.getFilename() == null) {
 			
 			if(preportContentForm.getFile() != null) {
@@ -196,7 +198,10 @@ public class StuReportFileController {
 		
 		PreportContent preportContent = new PreportContent();
 		parseFileToDb(preportContentForm.getFile(), preportContentForm);
-		
+		String tName = stuService.getTnameByTcodeService(student.getNo(), student.getDivision());
+	    String cName = stuService.getCnameByRegisterService(student.getRegister());
+	    student.setcName(cName);
+	    student.settName(tName);
 		model.addAttribute("student", student);
 		Preport profReport = stuRepService.getProfReportByPnoService(rno);
 		model.addAttribute("profReport", profReport);
@@ -223,6 +228,10 @@ public class StuReportFileController {
 		Preport profReport = stuRepService.getProfReportByPnoService(rno);
 		model.addAttribute("profReport", profReport);
 		model.addAttribute("student", student);
+		String tName = stuService.getTnameByTcodeService(student.getNo(), student.getDivision());
+	    String cName = stuService.getCnameByRegisterService(student.getRegister());
+	    student.setcName(cName);
+	    student.settName(tName);
 		PreportContentForm preportContentForm = new PreportContentForm();
 		preportContentForm.setStudent(student);
 		model.addAttribute("preportContentForm", preportContentForm);

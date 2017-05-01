@@ -10,11 +10,10 @@ public interface ScheduleEventDao {
 	void addNewSchEvent(ScheduleEvent schedule);
 	ScheduleEvent getSchEventBySchNo(int schNo);
 	List<ScheduleEvent> getSchEventByDate(Map<String, Object> map);
-	
-	void updateSchEvent(ScheduleEvent schedule);
 	void updateCompletedTrue(ScheduleEvent schedule);
 	void updateCompletedFalse(ScheduleEvent schedule);
 	void deleteSchEvent(Map<String, Integer> map);
 	
 	List<ScheduleEvent> getTodaySchEvent(int stuNo);
+	void editeSchduleByNo(ScheduleEvent schedule);
 }

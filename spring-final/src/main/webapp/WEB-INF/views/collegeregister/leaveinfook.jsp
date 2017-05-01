@@ -132,10 +132,10 @@ $(function() {
 <%@ include file="sidebar-hakjuk.jsp" %>
    <div class="container" style="margin-left: 250px; padding-top:25px; ">
     	<div class="row text-right">
-			홈 > 학적관리 > 휴학관리 > <strong>휴학 신청 목록</strong> 
+			홈 > 학적관리 > 휴학관리 > <strong>휴학 승인 목록</strong> 
 		</div>
 		<div class="row" style="margin: 0px; padding: 0px;">
-			<h4><span class="glyphicon glyphicon-list-alt"></span> 휴학 신청 내역</h4>
+			<h4><span class="glyphicon glyphicon-list-alt"></span> 휴학 승인 내역</h4>
 			<hr style="border:solid 0.5px #2C7BB5;">
 		</div>
       <div class="row">
@@ -201,7 +201,7 @@ $(function() {
       </div>  
       
       <div class="row" style="padding: 20px;">
-      	<h4><strong>휴학(연장) 신청 내역</strong></h4>
+      	<h4><strong>휴학 신청 내역</strong></h4>
       	<table class="table table-bordered">
 			<thead>
 				<tr>
@@ -214,6 +214,7 @@ $(function() {
 					<th>학적변동</th>
 					<th>신청일자</th>
 					<th>복학일자</th>
+					<th>처리일자</th>
 					<th>결재상태</th>
 				</tr>
 			</thead>
@@ -232,11 +233,20 @@ $(function() {
 						<th>${student.grade }</th>
 						<th>${student.id }</th>
 						<th>${student.name }</th>
-						<th>${student.register }</th>
+						<th>
+							<c:if test="${leave.pass eq 'ok' }">
+								휴학
+							</c:if>
+							<c:if test="${leave.pass eq 'not' }">
+								없음
+							</c:if>
+						</th>
 						<th>
 							<fmt:formatDate value="${leave.enrollDate }" pattern="YYYY-MM-dd"/></th>
 						<th>
 							<fmt:formatDate value="${leave.reinDate }" pattern="YYYY-MM-dd"/></th>
+						<th>
+							<fmt:formatDate value="${leave.okayDate }" pattern="YYYY-MM-dd"/></th>
 						<th>
 							<c:choose>
 								<c:when test="${leave.pass eq 'false' }">

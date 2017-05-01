@@ -4,6 +4,19 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.jhta.dao.user.StudentDao">
 
+	<select id="getStuIdByEmail" parameterType="string" resultType="string">
+		SELECT U_STU_ID as id 
+		FROM U_STUDENT
+		WHERE U_STUDENT.U_STU_EMAIL = #{stuEmail}
+	</select>
+	
+	<select id="getStuPwdByEmailAndId" parameterType="map" resultType="string">
+		Select U_STUDENT.U_STU_PWD as pwd
+		FROM U_STUDENT
+		WHERE U_STUDENT.U_STU_ID = #{stuId}
+		AND U_STUDENT.U_STU_EMAIL = #{stuEmail}
+	</select>
+
 	<select id="getNowScore" parameterType="int" resultType="int">
 		SELECT U_STU_NOWSCORE 
 		FROM U_STUDENT 

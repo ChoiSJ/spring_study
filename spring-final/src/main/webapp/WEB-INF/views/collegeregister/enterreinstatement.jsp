@@ -106,14 +106,7 @@ $(function () {
 				</div>
 				<div class="panel-body">
 					<div class="row">
-						<div class="col-md-6">
-							<select class="">
-								<option>10개 씩 보기</option>
-								<option>25개 씩 보기</option>
-								<option>50개 씩 보기</option>
-							</select>	
-						</div>
-						<div class="col-md-6 text-right">
+						<div class="col-md-12 text-right">
 							<p>조회된 학생 수 : ${rows }명</p>
 						</div>
 					</div>

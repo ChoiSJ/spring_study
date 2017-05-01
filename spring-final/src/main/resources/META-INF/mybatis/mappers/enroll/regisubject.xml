@@ -3,6 +3,86 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.jhta.dao.user.RegisubjectDao">
+	
+	<select id="getRegisByStuNoENo" parameterType="map" resultType="Regisubject">
+		select   r.R_REGI_NO as "no",
+		  	 r.U_STU_NO as "student.no",			   
+				e.E_NO as "enroll.no", 
+				e.E_ENROLLTIME as "enroll.enrollTime", 
+				e.E_ENROLLDAY as "enroll.enrollDay",
+				e.E_ENROLLNUM as "enroll.enrollNum",
+				 j.is_passed as "subject.passed.passedName",
+				 s.J_NO as "subject.no",
+				 s.J_T_CODE as "subject.siteCode.code",
+				 s.J_GRADE as "subject.grade", 
+				 s.J_SUBJECT_NAME as "subject.subjectName", 
+				 s.J_SCORE as "subject.score",
+				 s.J_LIMIT_STU as "subject.limitStu",
+				   t.T_NO as "subject.siteCode.no",
+				   t.T_CODE as "subject.siteCode.code",
+				   t.T_NAME as "subject.siteCode.name",
+				   t.T_PRECODE as "subject.siteCode.preCode",
+				   	u.U_PROF_NAME as "subject.professor.name",
+				   	u.U_PROF_NO as "subject.professor.no"
+		from E_ENROLLMENT e,
+			J_IS_PASSED j, 
+			 J_SUBJECT s,
+			 T_SITEMAP t,
+			 R_REGISUBJECT r,
+			 U_PROFESSOR u
+		where e.E_J_SUBJECT_NO = s.J_NO
+		and t.T_CODE = s.J_T_CODE
+		and	r.E_NO = e.E_NO
+		and s.J_IS_PASSED = j.PASS_CODE
+		and u.U_PROF_ID = s.J_SUB_PROF
+		and r.U_STU_NO = #{stuNo}
+		and e.E_NO = #{eNo}
+	</select>
+	
+	<select id="getSyllabusBySubjectNo" parameterType="int" resultType="Syllabus">
+		SELECT
+			S_NO as no,
+			S_COURSENO as "subect.no",
+			S_SUBNAME as subname,
+			s_midtrum as midtrum,
+			s_final as final1,
+			s_atlen as atlen,
+			s_project as project,
+			s_distri as distri,
+			s_outline as outline,
+			s_goals as goals,
+			s_method as method,
+			s_profname as name,
+			s_profemail as email,
+			s_profphone as phone,
+			s_book as book,
+			S_MIDTURMST as midst,
+			S_MIDTURMEND as midend,
+			s_finalst as finalst,
+			s_finalend as finalend,
+			s_projectst as prost,
+			s_projectend as proend,
+			s_projectcontent as procontent,
+			s_week1 as week1,
+			s_week2 as week2,
+			s_week3 as week3,
+			s_week4 as week4,
+			s_week5 as week5,
+			s_week6 as week6,
+			s_week7 as week7,
+			s_week8 as week8,
+			s_week9 as week9,
+			s_week10 as week10,
+			s_week11 as week11,
+			s_week12 as week12,
+			s_week13 as week13,
+			s_week14 as week14,
+			s_week15 as week15
+		from
+			s_syllabus
+		where
+			S_COURSENO = #{subNo}		
+	</select>
 
 	<select id="getAllRegisInfo" resultType="Regisubject">
 		select  r.R_REGI_NO as "no",
@@ -50,7 +130,8 @@
 				   t.T_CODE as "subject.siteCode.code",
 				   t.T_NAME as "subject.siteCode.name",
 				   t.T_PRECODE as "subject.siteCode.preCode",
-				   	u.U_PROF_NAME as "subject.professor.name"
+				   	u.U_PROF_NAME as "subject.professor.name",
+				   	u.U_PROF_NO as "subject.professor.no"
 		from E_ENROLLMENT e,
 			J_IS_PASSED j, 
 			 J_SUBJECT s,

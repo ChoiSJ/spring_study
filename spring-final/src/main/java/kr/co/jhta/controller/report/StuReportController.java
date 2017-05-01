@@ -15,9 +15,7 @@ import kr.co.jhta.service.user.RegisubjectService;
 import kr.co.jhta.service.user.StudentService;
 import kr.co.jhta.vo.Preport;
 import kr.co.jhta.vo.PreportContent;
-import kr.co.jhta.vo.SiteMap;
-import kr.co.jhta.vo.stu.Regisubject;
-import kr.co.jhta.vo.stu.Student;
+import kr.co.jhta.vo.stu.*;
 
 @Controller
 @RequestMapping("/stud")
@@ -96,17 +94,27 @@ public class StuReportController {
 	@RequestMapping(value="/stuReport", method=RequestMethod.GET)
 	public String stuReportForm(Model model, Student student) {
 		
-		model.addAttribute("student", student);
-		List<SiteMap> deptList = sitemapService.getAllSitemapPreService();
-		model.addAttribute("deptList", deptList);
-		
 		nowScore = stuService.getNowScoreService(student.getNo());
 		model.addAttribute("applyScore", nowScore);
 		
+		// 과제 제출 여부 확인
 		List<Regisubject> regisubList = regisubjectService.getRegisByUserNoService(student.getNo());
 		if(!regisubList.isEmpty()) {
+			for(int i=0; i<regisubList.size() ; i++) {
+				Regisubject regisub = regisubjectService.getRegisByStuNoENoService(student.getNo(), regisubList.get(i).getEnroll().getNo());
+				if(regisub != null) {
+					List<Preport> preportList = stuRepService.isNewEnollCheckService(regisub.getSubject().getProfessor().getNo(), regisub.getEnroll().getNo());
+					if(!preportList.isEmpty()) {
+						regisubList.get(i).setIsNewReport("true");							
+					}
+					PreportContent stuReport = stuRepService.getStuReportByStuNoService(student.getNo(), regisub.getEnroll().getNo());
+					if(stuReport != null) {		
+						regisubList.get(i).setShow("true");
+					} 
+				}
+			}
 			model.addAttribute("regisubList" , regisubList);
-		}
+		}	
 		
 		return "student/report/stuReportForm";
 	}

@@ -45,7 +45,7 @@ $(function() {
 </head>
 <body>
 <body>
-	<%@ include file="/WEB-INF/views/navi/adminnavi.jsp"%>
+	<%@ include file="/WEB-INF/views/navi/profnavi.jsp" %>
 	<%@ include file="/WEB-INF/views/navi/sidebarprof.jsp"%>
 	<!-- 성적/과제/출결 현황 리스트 -->
 	<div class="container" style="margin-left: 250px; padding-top: 25px;">

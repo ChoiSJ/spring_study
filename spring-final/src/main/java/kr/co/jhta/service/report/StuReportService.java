@@ -1,6 +1,6 @@
 package kr.co.jhta.service.report;
 
-import java.util.List;
+import java.util.*;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,7 +13,7 @@ public interface StuReportService {
 	void addNewReportService(PreportContent stuReport);
 	void addNewReportPlusShowService(PreportContent stuReport);
 	
-	PreportContent getStuReportByStuNoService(int stuNo);
+	PreportContent getStuReportByStuNoService(int stuNo, int eNo);
 	List<PreportContent> getStuAllReportByEnoService(int eno);
 	List<Preport> getAllProfReportService(int eno);
 	
@@ -31,4 +31,5 @@ public interface StuReportService {
 	PreportContent getStuAllReportByEno1(int no);
 	
 	void deleteFilenameService(int cno);
+	List<Preport> isNewEnollCheckService(int profNo, int eNo);
 }

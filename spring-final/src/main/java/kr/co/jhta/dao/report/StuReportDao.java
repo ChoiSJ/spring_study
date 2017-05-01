@@ -11,7 +11,7 @@ public interface StuReportDao {
 	void addNewReport(PreportContent stuReport);
 	void addNewReportPlusShow(PreportContent stuReport);
 	
-	PreportContent getStuReportByStuNo(int stuNo);
+	PreportContent getStuReportByStuNo(Map<String, Object> map);
 	List<PreportContent> getStuAllReportByEno(int eno);
 	List<Preport> getAllProfReport(int eno);
 
@@ -25,4 +25,5 @@ public interface StuReportDao {
 	
 	String getAttchFileName(int cno);
 	void deleteFilename(int cno);
+	List<Preport> isNewEnollCheck(Map<String, Object> map);
 }

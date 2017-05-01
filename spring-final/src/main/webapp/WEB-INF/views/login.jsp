@@ -41,6 +41,27 @@
 				$('[name="userId"]').attr('placeholder','교번을 입력하세요.');
 			}			
 		});
+		
+		$("#emailSend-btn").click(function() {
+			if($("#emailSend").val() == "") {
+				alert("이메일을 입력해주세요.");
+				$("#emailSend").focus();
+				return false;
+			} 			
+		});
+		
+		$("#pwdSend-btn").click(function() {
+			if($("#pwdSend").val() == "") {
+				alert("학번을 입력해주세요.");
+				$("#pwdSend").focus();
+				return false;
+			}			
+			if($("#pwdEmailSend").val() == "") {
+				alert("이메일을 입력해주세요.");
+				$("#pwdEmailSend").focus();
+				return false;
+			}
+		});
 	});
 </script>
 </head>
@@ -86,10 +107,11 @@
 						</div>
 						<div class="panel-footer">
 							<div class="row">
-								<div class="col-md-6">
+								<div class="col-md-6" style="padding-left: 30px; padding-right: 30px;">
+									<a href="" data-toggle="modal" data-target="#id-modal" style="text-decoration: none;">학번을 잊어버리셨나요?</a> 
 								</div>
 								<div class="col-md-6" style="padding-left: 30px; padding-right: 30px;">
-									<a href="" data-toggle="modal" data-target="#pwd-modal" style="text-decoration: none;">학번을 잊어버리셨나요?</a>
+									<a href="" data-toggle="modal" data-target="#pwd-modal" style="text-decoration: none;">비밀번호를 잊어버리셨나요?</a>
 								</div>
 							</div>
 						</div>
@@ -98,21 +120,47 @@
 			</form>
 		</div>
 	</div>
-	<div class="modal fade" id="pwd-modal" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">여기다는 뭘 쓰지???</h4>
-				</div>
-				<div class="modal-body">
-					<input name="user-email" placeholder="이메일 주소" type="email" style="width: 100%;">
-				</div>
-				<div class="modal-footer">
-					<a href="" class="btn btn-success" data-dismiss="modal">확인</a>
+	<div class="modal fade" id="id-modal" role="dialog">
+		<form action="sendId" method="post">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">가입시 입력한 이메일 주소를 입력해주세요</h4>
+					</div>
+					<div class="modal-body">
+						<input name="email" id="emailSend" placeholder="이메일 주소" type="email" style="width: 100%;">
+					</div>
+					<div class="modal-footer">
+						<button type="submit" id="emailSend-btn" class="btn btn-default">확인</button>
+						<button class="btn btn-default"  type="button" data-dismiss="modal">취소</button>
+					</div>
 				</div>
 			</div>
-		</div>
+		</form>
+	</div>
+	<div class="modal fade" id="pwd-modal" role="dialog">
+		<form action="sendPwd" method="post">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">학번과 이메일을 입력해주세요</h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<input name="id" id="pwdSend" class="form-control" placeholder="학번" type="number" style="width: 100%;">				
+						</div>
+						<div class="form-group">
+							<input name="email" id="pwdEmailSend" class="form-control" placeholder="이메일" type="email" style="width: 100%;">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" id="pwdSend-btn" class="btn btn-default">확인</button>
+						<button class="btn btn-default"  type="button" data-dismiss="modal">취소</button>
+					</div>
+				</div>
+			</div>
+		</form>
 	</div>
 </body>
 </html>

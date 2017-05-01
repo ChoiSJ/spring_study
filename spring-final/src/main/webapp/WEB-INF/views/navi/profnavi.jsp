@@ -155,6 +155,7 @@
                             <ul class="nav navbar-nav">
 						      <li><a href="/jhta/prof/subinfo" style="color: white;">수업 관리</a></li>
 						      <li><a href="/jhta/prof/report/reportinfo" style="color: white;">성적 관리</a></li>
+						      <li><a href="/jhta/prof/profscorelist" style="color: white;">성적 관리</a></li>
     						</ul>
                     </div>
                     

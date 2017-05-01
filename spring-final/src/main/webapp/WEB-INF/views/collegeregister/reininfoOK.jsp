@@ -228,7 +228,7 @@ $(function() {
 					<td>${student.grade }</td>
 					<td>${student.id }</td>
 					<td>${student.name }</td>
-					<td>${rein.code}</td>
+					<td>재학</td>
 					<td><fmt:formatDate value="${rein.enrollDate }" pattern="YYYY-MM-dd"/></td>
 					<td><fmt:formatDate value="${rein.reinDate }" pattern = "yyyy-MM-dd" /></td>	
 					<td><fmt:formatDate value="${rein.passDate }" pattern="yyyy-MM-dd"/></td>

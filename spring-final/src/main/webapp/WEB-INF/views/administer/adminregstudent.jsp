@@ -29,7 +29,10 @@ $(function() {
 	<form method="post" action="adminregstudent" class="form-inline">
 	<div class="row">
 		<div class="col-sm-12">
-			<h4>학생별 수강신청관리</h4><hr>
+			<div class="row">
+				<h4><span class="glyphicon glyphicon-th-list"></span> 수업 관리</h4>
+				<hr style="border:solid 0.5px #2C7BB5;">
+			</div>
 			<table class="table table-bordered">
 				<colgroup>
 					<col width="20%">

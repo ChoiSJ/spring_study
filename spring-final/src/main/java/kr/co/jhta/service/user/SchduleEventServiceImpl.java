@@ -36,11 +36,6 @@ public class SchduleEventServiceImpl implements SchduleEventService{
 		map.put("end", end);
 		return schDao.getSchEventByDate(map);
 	}
-
-	@Override
-	public void updateSchEventService(ScheduleEvent schedule) {
-		schDao.updateSchEvent(schedule);
-	}
 	
 	@Override // 보여주기
 	public void updateCompletedTrueService(ScheduleEvent schedule) {
@@ -61,8 +56,11 @@ public class SchduleEventServiceImpl implements SchduleEventService{
 	}
 
 	@Override
-	public List<ScheduleEvent> getTodaySchEventService(int stuNo) {
-		return schDao.getTodaySchEvent(stuNo);
+	public ScheduleEvent editeSchduleByNoService(ScheduleEvent schedule) {
+		schDao.editeSchduleByNo(schedule);
+		return new ScheduleEvent();
 	}
+
+
 	
 }

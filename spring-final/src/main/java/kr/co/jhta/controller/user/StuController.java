@@ -17,10 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.co.jhta.service.board.BoardService;
 import kr.co.jhta.service.sitemap.SitemapService;
 import kr.co.jhta.service.user.RegisubjectService;
-import kr.co.jhta.service.user.SchduleEventService;
 import kr.co.jhta.service.user.StudentService;
 import kr.co.jhta.vo.Board;
-import kr.co.jhta.vo.ScheduleEvent;
 import kr.co.jhta.vo.SearchForm;
 import kr.co.jhta.vo.SiteMap;
 import kr.co.jhta.vo.stu.Regisubject;
@@ -41,9 +39,6 @@ public class StuController {
 	private SitemapService sitemapService;
 	
 	@Autowired
-	private SchduleEventService schduleService;
-	
-	@Autowired
 	private RegisubjectService regisubjectService;
 	
 	@RequestMapping("/home")
@@ -60,15 +55,7 @@ public class StuController {
 		List<Board> deptList = boardService.searchDeptBoardByCount(searchForm);
 		
 		model.addAttribute("deptList", deptList);
-		
-		// 일정 표시
-		System.out.println(student.getNo());
-		List<ScheduleEvent> todaySchduleList =  schduleService.getTodaySchEventService(student.getNo());
-		System.out.println(todaySchduleList);
-		if(!todaySchduleList.isEmpty()) {
-			model.addAttribute("todaySchduleList", todaySchduleList);					
-		}
-		
+				
 		// 현재 수강 과목 표시
 		List<Regisubject> regisubList = regisubjectService.getRegisByUserNoService(student.getNo());
 		if(!regisubList.isEmpty()) {

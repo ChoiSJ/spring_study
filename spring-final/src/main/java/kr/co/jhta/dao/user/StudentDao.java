@@ -24,4 +24,7 @@ public interface StudentDao {
 	void updateMinusScore(Map<String, Object> map);
 	
 	int getNowScore(int stuNo);
+	
+	String getStuPwdByEmailAndId(Map<String, Object> map);
+	String getStuIdByEmail(String email);
 }

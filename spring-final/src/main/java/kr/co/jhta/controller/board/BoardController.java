@@ -228,8 +228,7 @@ public class BoardController {
 		}
 		
 		board.setWriter(professor.getName());
-		board.setDepartment(professor.getDivision());
-		
+		board.setDepartment(professor.getRegister());
 		boardService.addNoticeBoard(board);
 		
 		return "redirect:/admin/board";

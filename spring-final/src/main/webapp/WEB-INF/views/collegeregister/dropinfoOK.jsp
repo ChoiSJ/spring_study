@@ -214,6 +214,7 @@ $(function() {
 					<th>성명</th>
 					<th>학적변동</th>
 					<th>신청일자</th>
+					<th>처리일자</th>
 					<th>결재상태</th>
 				</tr>
 			</thead>
@@ -238,17 +239,25 @@ $(function() {
 					<th>${student.grade }</th>
 					<th>${student.id }</th>
 					<th>${student.name }</th>
-					<th>${drop.code }</th>
+					<th>
+						<c:if test="${drop.pass eq 'ok' }">
+							자퇴
+						</c:if>
+						<c:if test="${drop.pass eq 'not' }">
+							없음
+						</c:if>
+					</th>
 					<th>
 						<fmt:formatDate value="${drop.enrollDate }" pattern="YYYY-MM-dd"/></th>
 					<th>
+						<fmt:formatDate value="${drop.passDate }" pattern="YYYY-MM-dd"/></th>
+					</th>
+					<th>
 						<c:choose>
 							<c:when test="${drop.pass eq 'false' }">
-								<input type="hidden" id="leave-Pass" value="false" />
 								<font color="red"><strong>미승인</strong></font>
 							</c:when>
 							<c:when test="${drop.pass eq 'ok' }">
-								<input type="hidden" id="leave-Pass" value="false" />
 								<font color="blue"><strong>승인</strong></font>
 							</c:when>
 							<c:otherwise>

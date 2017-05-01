@@ -85,7 +85,10 @@ $(function() {
 	<form method="post" action="adminregsubject" class="form-inline">
 		<div class="row">
 			<div class="col-sm-12">
-				<h4>수강신청관리</h4><hr>
+				<div class="row">
+					<h4><span class="glyphicon glyphicon-th-list"></span> 수강 관리</h4>
+					<hr style="border:solid 0.5px #2C7BB5;">
+				</div>
 				<table class="table table-bordered">
 					<colgroup>
 						<col width="20%">
@@ -142,7 +145,7 @@ $(function() {
 				<table class="table table-bordered">
 					<colgroup>
 						<col width="10%">
-						<col width="10%">
+						<col width="13%">
 						<col width="*">
 						<col width="5%">
 						<col width="20%">
