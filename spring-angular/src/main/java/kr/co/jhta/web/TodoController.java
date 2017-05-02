@@ -34,17 +34,17 @@ public class TodoController {
 		return todoService.getAllTodos();
 	}
 	
-	@RequestMapping(value="/todos/${id}", method=RequestMethod.GET)
+	@RequestMapping(value="/todos/{id}", method=RequestMethod.GET)
 	public @ResponseBody Todo getTodo(@PathVariable("id") Integer id) {
 		return todoService.getTodo(id);
 	}
 	
-	@RequestMapping(value="/todos/${id}", method=RequestMethod.DELETE)
+	@RequestMapping(value="/todos/{id}", method=RequestMethod.DELETE)
 	public @ResponseBody Todo deleteTodo(@PathVariable("id") Integer id) {
 		return todoService.deleteTodo(id);
 	}
 	
-	@RequestMapping(value="/todos/${id}", method=RequestMethod.PUT)
+	@RequestMapping(value="/todos/{id}", method=RequestMethod.PUT)
 	public @ResponseBody Todo updateTodo(@RequestBody Todo todo) {
 		todoService.updateTodo(todo);
 		return todo;
