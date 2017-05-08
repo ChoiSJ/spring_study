@@ -37,10 +37,6 @@ $(function() {
 		
 		var no = $(this).attr("id").replace("btn-", "");
 		$("#modal-" + no).modal("show");
-		
-		$.get("addmessagecheck", {messageNo: no}, function(data) {
-			console.log(data);
-		}, "json")
 	});
 })
 </script>
@@ -85,7 +81,7 @@ $(function() {
 				<table class="table table-bordered">
 					<colgroup>
 						<col width="5%">
-						<col width="10%">
+						<col width="15%">
 						<col width="*">
 						<col width="15%">
 						<col width="15%">

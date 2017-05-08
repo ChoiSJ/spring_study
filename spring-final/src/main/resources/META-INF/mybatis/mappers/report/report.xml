@@ -140,9 +140,9 @@
   			 p_no = #{no}
 	</delete>
 	<select id="getAttchFileName" parameterType="int" resultType="string">
-		SELECT p_upfile
-		FROM P_REPORt
-		WHERE P_NO = #{value}
+		SELECT p_file
+		FROM P_REPORtcontent
+		WHERE P_cNO = #{value}
 	</select>	
 	<select id="getByEnoOne" parameterType="map" resultType="Preport">
 		SELECT

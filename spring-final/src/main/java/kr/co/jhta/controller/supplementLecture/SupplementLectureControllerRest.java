@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.co.jhta.service.makeuplesson.MakeupLessonService;
 import kr.co.jhta.service.supplementLecture.SupplementLectureService;
 import kr.co.jhta.vo.SupplementLectureTableVo;
 import kr.co.jhta.vo.SupplementLectureVo;
@@ -22,6 +23,9 @@ public class SupplementLectureControllerRest {
 
 	@Autowired
 	private SupplementLectureService supplementLectureService;
+	
+	@Autowired
+	private MakeupLessonService makeuplessonservice;
 	
 	
 	//대학 세분학과 가져오기 
@@ -39,6 +43,10 @@ public class SupplementLectureControllerRest {
 	public @ResponseBody List<SupplementLectureTableVo> getMajorTableList(@PathVariable("majorCode")String majorCode){
 		
 		List<SupplementLectureTableVo> majorTableList = supplementLectureService.getTableList(majorCode);
+		
+		System.out.println("값값값값값:"+majorTableList);
+		
+		
 		
 		return majorTableList;
 	}
@@ -72,9 +80,6 @@ public class SupplementLectureControllerRest {
 	@PostMapping(path="userInformaiton/")
 	public @ResponseBody SupplementLectureTableVo addSupplementLectureInformation(@RequestBody SupplementLectureTableVo supplementLecture){
 		
-		System.out.println("값:"+supplementLecture);
-		System.out.println("code:"+supplementLecture.getMajorCode());
-		
 		//insert
 		supplementLectureService.supplementLectureApplication(supplementLecture);
 		
@@ -92,6 +97,9 @@ public class SupplementLectureControllerRest {
 		
 		//update
 		supplementLectureService.updateSelectLecturecheckedUpdateCancle(subjectNo);
+		
+		//보강 삭제
+		makeuplessonservice.deleteMakeupLessonCancle(subjectNo);
 		
 		//반환
 		return supplementLectureService.getTableModal(subjectNo);

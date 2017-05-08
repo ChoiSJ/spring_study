@@ -33,4 +33,7 @@ public interface SupplementLectureService {
 	
 	//휴강 삭제 업데이트
 	void updateSelectLecturecheckedUpdateCancle(int subjectNo);
+	
+
+	
 }

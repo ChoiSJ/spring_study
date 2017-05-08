@@ -23,12 +23,14 @@ public class SupplementLectureTableVo {
 	
 	@Override
 	public String toString() {
+		
 		return "SupplementLectureTableVo [professorId=" + professorId + ", subjectNo=" + subjectNo + ", majorCode="
 				+ majorCode + ", subjectName=" + subjectName + ", professorName=" + professorName
 				+ ", supplementLectureCheck=" + supplementLectureCheck + ", professorNumber=" + professorNumber
 				+ ", majorOption=" + majorOption + ", majorScore=" + majorScore + ", subjectLectureNumber="
 				+ subjectLectureNumber + ", subjectDate=" + subjectDate + ", subjectTime=" + subjectTime + "]";
 	}
+	
 	public String getSubjectDate() {
 		return subjectDate;
 	}

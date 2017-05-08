@@ -24,4 +24,5 @@ public interface MessageService {
 	List<Map<String, Object>> getStudentByNo(String subjectNo);
 	String getFilenameByNo(int messageNo);
 	void addMessageCheck(int messageNo);
+	String getReceiverNameById(String id);
 }

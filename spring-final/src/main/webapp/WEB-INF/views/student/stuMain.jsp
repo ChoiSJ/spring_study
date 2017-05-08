@@ -20,6 +20,16 @@
    	  text-align: center !important;
       vertical-align: middle !important;
    }
+   	a{text-decoration:none; color:white}
+	.pull-right{float:right}
+	.main_popup{width:500px; height:500px; border:3px solid #3E4156;background-color: white;}
+	.popup_bottom{
+	    background-color: black;
+	    color: white;
+	    height: 25px;
+	    padding: 2px 5px 3px 5px;
+	    width: 495px;
+	}
 </style>
 <script type="text/javascript">
 $(function() {
@@ -217,8 +227,51 @@ $(function() {
 		}		
 		
 	});
-
+	
+	// PopupScript
+	if(getCookie("notToday")!="Y"){
+		$("#main_popup").show('fade');
+	}
+	
+	
 })
+function closePopupNotToday(){	             
+		setCookie('notToday','Y', 1);
+		$("#main_popup").hide('fade');
+}
+function setCookie(name, value, expiredays) {
+	var today = new Date();
+	    today.setDate(today.getDate() + expiredays);
+
+	    document.cookie = name + '=' + escape(value) + '; path=/; expires=' + today.toGMTString() + ';'
+}
+
+function getCookie(name) 
+{ 
+    var cName = name + "="; 
+    var x = 0; 
+    while ( x <= document.cookie.length ) 
+    { 
+        var y = (x+cName.length); 
+        if ( document.cookie.substring( x, y ) == cName ) 
+        { 
+            if ( (endOfCookie=document.cookie.indexOf( ";", y )) == -1 ) 
+                endOfCookie = document.cookie.length;
+            return unescape( document.cookie.substring( y, endOfCookie ) ); 
+        } 
+        x = document.cookie.indexOf( " ", x ) + 1; 
+        if ( x == 0 ) 
+            break; 
+    } 
+    return ""; 
+}
+function closeMainPopup(){
+	$("#main_popup").hide('fade');
+}
+
+function closePopup(){
+	$("#main_popup").hide('fade');
+} 
 </script>
 </head>
 <body>
@@ -483,6 +536,15 @@ $(function() {
       			</div>
     		</div>
   		</div>
+	</div>
+	
+	<!-- Popup -->
+	<div id="main_popup" class="main_popup" style="position: absolute; z-index:10000; top:0px; left:50%; display: none;">
+		<a href="stuNoticeBoarddetail?bno=458" ><img src="../resources/images/student/popup/PopupNoticeImg.png" style="width:100%;height:100%;"/></a>
+		<div class="popup_bottom">
+			<a href="javascript:closePopupNotToday()" class="white">오늘하루 그만보기</a>
+			<a class="pull-right white" href="javascript:closePopup();">닫기</a>
+		</div>
 	</div>
 </body>
 </html>

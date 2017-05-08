@@ -53,8 +53,8 @@
                             <b class="caret"></b>
                         </a>
                         <ul id="submenu-6" class="panel-collapse collapse panel-switch" role="menu">
-                            <li><a href="#"><i class="fa fa-caret-right"></i>강의 평가 등록</a></li>
-                            <li><a href="#"><i class="fa fa-caret-right"></i>강의 평가 조회</a></li>
+                            <li><a href="/jhta/prof/openratingregister.do"><i class="fa fa-caret-right"></i>강의 평가 등록</a></li>
+                            <li><a href="/jhta/prof/openLectureTableAll.do"><i class="fa fa-caret-right"></i>강의 평가 조회</a></li>
                         </ul>
                     </li>
                     <li>

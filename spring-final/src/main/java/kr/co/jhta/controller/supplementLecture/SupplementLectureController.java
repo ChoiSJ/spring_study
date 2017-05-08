@@ -34,6 +34,7 @@ public class SupplementLectureController {
 		
 		List<SupplementLectureTableVo> totalData = supplementLectureService.TotalTableList();
 		
+		
 		model.addAttribute("totalDataList",totalData);
 		
 		return"supplementarylecture/supplementLecture";
@@ -43,7 +44,7 @@ public class SupplementLectureController {
 	@RequestMapping("/pageRedirect.do")
 	public String resetSupplementLecture(){
 		
-		return"redirect:/supplementLecture.do";
+		return"redirect:/admin/supplementLecture.do";
 	}
 	
 	

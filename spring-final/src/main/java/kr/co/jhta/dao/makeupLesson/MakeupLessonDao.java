@@ -24,4 +24,13 @@ public interface MakeupLessonDao {
 	
 	//신청 삭제
 	void deleteMakeupLessonCancle(int subjectNo);
+	
+	//보강등록 업데이트
+	void updateMakeupLessonRegister(MakeupLessonAll makeuplesson);
+	
+	//모달 상세 조회 cancle
+	MakeupLessonAll makeupLessonGetTableModalCancle(int sujectNo);
+	
+	//취소 업데이트
+	void updateMakeupLesson(int subjectNo);
 }

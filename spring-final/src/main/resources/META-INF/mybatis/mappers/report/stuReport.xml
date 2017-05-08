@@ -5,6 +5,12 @@
 <mapper namespace="kr.co.jhta.dao.report.StuReportDao">
 
 	<!-- StuReport -->
+	<select id="getAttchFileNameByProf" parameterType="int" resultType="string">
+		SELECT P_REPORT.P_UPFILE
+		FROM P_REPORT
+		WHERE P_REPORT.P_NO = #{rno}
+	</select>	
+	
 	<select id="getAttchFileName" parameterType="int" resultType="string">
 		SELECT DISTINCT P_REPORTCONTENT.P_FILE
 		FROM P_REPORTCONTENT

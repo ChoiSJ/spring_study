@@ -26,4 +26,6 @@ public interface StuReportDao {
 	String getAttchFileName(int cno);
 	void deleteFilename(int cno);
 	List<Preport> isNewEnollCheck(Map<String, Object> map);
+	String getAttchFileNameByProf(int rno);
+	
 }

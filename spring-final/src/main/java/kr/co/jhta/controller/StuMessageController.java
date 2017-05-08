@@ -67,7 +67,7 @@ public class StuMessageController {
 	@RequestMapping("/stud/sturecmessagebox")
 	public String proRecieveEmailBox(Model model, Student stud, @RequestParam(name="pno", defaultValue="1") int pno) {
 		List<Message> messageAllList = messageService.getReceiveMessageAdmin(stud.getId());
-		System.out.println(stud.getId());
+		
 		int totalRows = messageAllList.size();
 		PageNation pagination = new PageNation(10, pno, totalRows);
 		model.addAttribute("pagination", pagination);
@@ -104,6 +104,12 @@ public class StuMessageController {
 				message.setWriterName(stud.getName());
 				message.setReceiver(receiver);
 				
+				if (receiver.equals("admin")) {
+					message.setReceiverName("관리자");
+				} else {
+					message.setReceiverName(messageService.getReceiverNameById(receiver));
+				}
+				
 				if (!file.isEmpty()) {
 					IOUtils.copy(file.getInputStream(), new FileOutputStream(new File(directory, file.getOriginalFilename())));
 					message.setFilename(file.getOriginalFilename());
@@ -121,6 +127,7 @@ public class StuMessageController {
 					message.setWriter(stud.getId());
 					message.setWriterName(stud.getName());
 					message.setReceiver(stu.getId());
+					message.setReceiverName(messageService.getReceiverNameById(stu.getId()));
 					
 					if (!file.isEmpty()) {
 						IOUtils.copy(file.getInputStream(), new FileOutputStream(new File(directory, file.getOriginalFilename())));
@@ -140,6 +147,7 @@ public class StuMessageController {
 					message.setWriter(stud.getId());
 					message.setWriterName(stud.getName());
 					message.setReceiver((String) stu.get("STUID"));
+					message.setReceiverName(messageService.getReceiverNameById((String) stu.get("STUID")));
 					
 					if (!file.isEmpty()) {
 						IOUtils.copy(file.getInputStream(), new FileOutputStream(new File(directory, file.getOriginalFilename())));

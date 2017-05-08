@@ -20,6 +20,7 @@ import kr.co.jhta.vo.Subject;
 import kr.co.jhta.vo.stu.Enroll;
 import kr.co.jhta.vo.stu.Regisubject;
 import kr.co.jhta.vo.stu.Student;
+import kr.co.jhta.webSocket.EnrollWebSocketHandler;
 
 @Controller
 @RequestMapping("/stud")
@@ -42,6 +43,9 @@ public class StuEnrollController {
 	
 	@Autowired
 	LectureService lectureService;
+	
+	@Autowired
+	EnrollWebSocketHandler noticeWebSocketHandler;
 	
 	private int nowScore = 0; 
 			
@@ -90,7 +94,7 @@ public class StuEnrollController {
 	
 	@RequestMapping(value="/enrollSend", method=RequestMethod.GET)
 	public String stuEnrollSending(@RequestParam(value="enrollNo") int enrollNo, Student student,
-			@RequestParam(value="plusScore") int plusScore, Model model) {
+			@RequestParam(value="plusScore") int plusScore, Model model) throws Exception {
 		
 		nowScore = stuService.getNowScoreService(student.getNo());
 		int maxScore = student.getMaxOneScore();
@@ -110,6 +114,7 @@ public class StuEnrollController {
 			enroll.setStudent(student);
 			enrollService.updatePlusNowNumService(enrollNo);
 			enrollService.addRegisubService(enroll);
+			noticeWebSocketHandler.sendMessage("up"+":"+student.getNo()+":"+enrollNo+":"+enroll.getEnrollNum());
 		} else {			
 			return "redirect:/stud/enrollMain?access=deny";
 		}
@@ -126,15 +131,19 @@ public class StuEnrollController {
 	
 	
 	@RequestMapping(value="/enrollCancle", method=RequestMethod.GET)
-	public String stuEnrollCancel(@RequestParam("cancleNo") int cancleNo, Student student
-			, @RequestParam(value="minusScore") int minusScore, Model model) {
-		regisubjectService.deleteRegisubByENoService(cancleNo);
+	public String stuEnrollCancel(@RequestParam("cancleNo") int cancleNo, Student student, @RequestParam("eno") int eno,
+			@RequestParam(value="minusScore") int minusScore, Model model) throws Exception{
+			
+		regisubjectService.deleteRegisubByENoService(cancleNo, student.getNo());
 		enrollService.updateMinusNowNumService(cancleNo);
 		if(minusScore != 0) {			
 			stuService.updateMinusScoreService(minusScore, student.getNo());
 			nowScore = stuService.getNowScoreService(student.getNo());
-			model.addAttribute("applyScore", nowScore);
 			
+			// enroll 정보 가져요기
+			Enroll enroll = enrollService.getEnrollByENoService(eno);
+			noticeWebSocketHandler.sendMessage("down"+":"+student.getNo()+":"+eno+":"+enroll.getEnrollNum());
+			model.addAttribute("applyScore", nowScore);			
 		}
 		
 		return "redirect:/stud/enrollMain";

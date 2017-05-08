@@ -97,4 +97,10 @@ public class OpenLectureServiceImpl implements OpenLectureService {
 		return openLecturedao.subjectRatingInquiriesAll();
 	}
 	
+	//강의평가 취소
+	@Override
+	public void udateLectureRationgRegisterEnrollTableCancle(int subjectNo) {
+		
+		openLecturedao.udateLectureRationgRegisterEnrollTableCancle(subjectNo);	
+	}
 }

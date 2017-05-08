@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -9,12 +10,30 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
+<script src="../resources/html2canvas.js"></script>
 <script type="text/javascript">
 $(function () {
 	$("#scoreprint").click(function (e) {
 		window.open('data:application/vnd.ms-excel, Score_Info' + encodeURIComponent($('#modal_excel').html()), '_blank');
-		e.preventDefault(); 
+		e.preventDefault();
 	});
+	
+	$("#scoreprintpdf").click(function() {
+		var pdf = new jsPDF('p', 'pt', 'letter');
+        source = $('#modal_excel')[0];
+        html2canvas(source, {
+        	onrendered: function(canvas){
+				var img = canvas.toDataURL("image/png");
+				console.log(img);
+				var width = pdf.internal.pageSize.width;
+				var height = pdf.internal.pageSize.height;
+				pdf.addImage(img,'PNG', 0, 0, width, height);
+		        pdf.save('score.pdf'); 
+			}
+        });
+	});
+	
 });
 </script>
 <style type="text/css">
@@ -170,6 +189,7 @@ th{
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-success" data-dismiss="modal" id="scoreprint">엑셀</button>
+			        <button type="button" class="btn btn-danger" data-dismiss="modal" id="scoreprintpdf">PDF</button>
 			        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 			      </div>
 			    </div>
@@ -278,7 +298,7 @@ th{
 							<td>${savg.semename }</td>
 							<td>${savg.credit1 }</td>
 							<td>${savg.credit2 }</td>
-							<td>${savg.credit3 }</td>
+							<td><fmt:formatNumber value="${savg.credit3 }" pattern="#.##"></fmt:formatNumber></td>
 							<td>${savg.credit4 }</td>
 							<c:choose>
 								<c:when test="${savg.grade gt 2}">
@@ -305,7 +325,7 @@ th{
 			<div class="text-right">
 				<a href="scorelist.do" class="btn btn-info">메인</a>
 				<a href="attinfolist.do?stuno=${stuinfo.no }" class="btn btn-primary">출석</a>
-				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">엑셀</button>
+				<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal">성적표</button>
 			</div>
 		</div>
 	</div>

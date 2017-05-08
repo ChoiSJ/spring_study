@@ -86,21 +86,13 @@ public class PreportController {
 		return "/report/reportform";
 	}
 	@RequestMapping(value="/reportform", method=RequestMethod.POST)
-	public String reportadd(@Valid @ModelAttribute("reportform")PreportForm reportform,Errors errors,Model model){
+	public String reportadd(@Valid @ModelAttribute("reportform")PreportForm reportform,Errors errors,Model model)throws Exception{
 		if(errors.hasErrors()){
 			System.out.println(errors.getAllErrors());
 			return "/prof/report/reportform";
 		}
-		List<Preport> report = preportService.reportAllList(); 
-		Preport preport = new Preport();
-		Enroll enroll = new Enroll();
-		enroll.setNo(reportform.getEnrollno());
-		preport.setEnroll(enroll);
-		Professor prof1 = new Professor();
-		prof1.setNo(reportform.getProfno());
-		preport.setProfessor(prof1);
-		System.out.println(reportform);
 		boolean reportPass = false;
+		List<Preport> report = preportService.reportAllList(); 
 		for(Preport pre : report){
 			if(pre.getEnroll().getNo() == reportform.getEnrollno()){
 				reportPass = true;
@@ -110,6 +102,15 @@ public class PreportController {
 			}
 		}
 		
+		Preport preport = new Preport();
+		Enroll enroll = new Enroll();
+		enroll.setNo(reportform.getEnrollno());
+		preport.setEnroll(enroll);
+		Professor prof1 = new Professor();
+		prof1.setNo(reportform.getProfno());
+		preport.setProfessor(prof1);
+		System.out.println(reportform);
+		parseFileToDb(reportform.getFile(), reportform);
 		BeanUtils.copyProperties(reportform, preport);
 		preportService.addreport(preport);
 		return "redirect:/prof/report/reportinfo";
@@ -140,6 +141,7 @@ public class PreportController {
 		
 		return "redirect:/prof/report/reportinfo";
 	}
+	
 	@RequestMapping(value="/reporttodetail")
 	public String reporttodetail(@RequestParam("no")int no, Model model){
 			PreportContent profReport = stureportService.getStuAllReportByEno1(no);
@@ -147,18 +149,21 @@ public class PreportController {
 			model.addAttribute("profReport", profReport);
 			Preport port = preportService.getByEnoOne(profReport.getEnroll().getNo(), profReport.getStudent().getNo());
 			System.out.println(profReport.getEnroll().getNo()+"."+profReport.getStudent().getNo());
-			System.out.println(port);
+			System.out.println(port.getScore().getNo()+"."+port.getSubject().getScore());
 			model.addAttribute("port", port);
 	
 		return "/report/reporttodetail";
 	}
+	
 	public void parseFileToDb(MultipartFile upfile, PreportForm preportForm) throws Exception {
 		if(!upfile.isEmpty()) {
 			String filename = upfile.getOriginalFilename();
 			preportForm.setUpfile(filename);
+			System.out.println(filename);
 			IOUtils.copy(upfile.getInputStream(), new FileOutputStream(new File(directory, filename)));
 		}
 	}
+	
 	@RequestMapping(value="/fileDownload") 
 	public ModelAndView reportFileDownload(@RequestParam(value="no") int no, Model model) {
 		

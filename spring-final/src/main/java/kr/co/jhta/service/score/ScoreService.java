@@ -26,6 +26,7 @@ public interface ScoreService {
 	Semester getSemesterByNo(int no);
 	Score getScoreByNo(int no);
 	Regisubject getRegisInfoByEno(int enrollNo);
+	Regisubject getRegisInfoByEnoService(int eNo, int stuNo);
 	void updateScoreByNo(Score score);
 	SiteMap getSitemapByCode(String code);
 	
@@ -46,4 +47,6 @@ public interface ScoreService {
 	List<String> getSemeNameByStuNo(int stno);
 	List<Subject> getsubjectlistByProfId(int pid);
 	List<Regisubject> getSearchScorelistByhash(HashMap<String, Object> searchcode);
+	
+	Regisubject getRegisInfoByEnoAndStuNo (HashMap<String, Object> enrolls); 
 }

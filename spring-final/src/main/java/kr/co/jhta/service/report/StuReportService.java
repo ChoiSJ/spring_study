@@ -32,4 +32,6 @@ public interface StuReportService {
 	
 	void deleteFilenameService(int cno);
 	List<Preport> isNewEnollCheckService(int profNo, int eNo);
+	
+	String getAttchFileNameByProfService(int rno);
 }

@@ -14,7 +14,7 @@
 <%@ include file="/WEB-INF/views/navi/profnavi.jsp" %>
 <%@ include file="/WEB-INF/views/navi/sidebarprof.jsp" %>
 <div class="container">
-	<h1>강의조회</h1>
+	<h1>과제조회</h1>
 		<hr class="one">
 		<table class="table table-condensed">
 			<colgroup>

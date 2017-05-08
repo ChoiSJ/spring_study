@@ -45,6 +45,17 @@ where
 	E_J_SUBJECT_NO = #{subjectNo}	
 
 </update>
+
+<!-- 강의평가 취소 -->
+<update id="udateLectureRationgRegisterEnrollTableCancle" parameterType="int">
+update 
+	E_ENROLLMENT
+set
+	E_LECTURE_RATING = 'n'
+where
+	E_J_SUBJECT_NO = #{subjectNo}
+</update>
+
 <!-- 강의 평가 테이블 상세 조회 -->
 <select id="getInformationProfessor" parameterType="string" resultType="kr.co.jhta.vo.ProfessorOpenLecture">
 	select distinct

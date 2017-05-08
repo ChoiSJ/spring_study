@@ -59,4 +59,24 @@ public class MakeupLessonServiceImpl implements MakeupLessonService {
 		
 		makeuplessondao.deleteMakeupLessonCancle(subjectNo);
 	}
+	
+	//보강등록 업데이트
+	@Override
+	public void updateMakeupLessonRegister(MakeupLessonAll makeuplesson) {
+		
+		makeuplessondao.updateMakeupLessonRegister(makeuplesson);
+	}
+	
+	//모달상세조회 cancle
+	@Override
+	public MakeupLessonAll makeupLessonGetTableModalCancle(int sujectNo) {
+		
+		return makeuplessondao.makeupLessonGetTableModalCancle(sujectNo);
+	}
+	
+	@Override
+	public void updateMakeupLesson(int subjectNo) {
+		
+		makeuplessondao.updateMakeupLesson(subjectNo);
+	}
 }

@@ -79,5 +79,5 @@ public class SupplementLectureServiceImpl implements SupplementLectureService {
 		
 		supplementlecturedao.updateSelectLecturecheckedUpdateCancle(subjectNo);
 	}
-	
+
 }

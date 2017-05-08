@@ -241,13 +241,11 @@ public class HakjukController {
 	 */
 	@RequestMapping(value="/addstud", method=RequestMethod.POST)
 	public String addstudent(String studemail,String studemailaddr,AddStudentForm addstud){
-		
 		String email = studemail+"@"+studemailaddr;
-		System.out.println(addstud);
 		Student stud = new Student();
+		BeanUtils.copyProperties(addstud, stud);
 		stud.setEmail(email);
 		stud.setPwd(addstud.getSsn().split("-")[0]);
-		BeanUtils.copyProperties(addstud, stud);
 		stud.setProfessor(addstud.getProfessor());
 		hakjukService.admissionsStud(stud,stud.getRegister());
 		return "redirect:/admin/admissionstud";

@@ -249,6 +249,17 @@ public class StuReportFileController {
 		return mav;
 	}
 	
+	@RequestMapping(value="/fileDownloadRe.do") 
+	public ModelAndView profReportFileDownload(@RequestParam(value="rno") int rno, Model model) {
+		
+		String filename = stuRepService.getAttchFileNameByProfService(rno);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("directory", attchmentDirectory);
+		mav.addObject("filename", filename);
+		mav.setView(filedownloadView);		
+		return mav;
+	}
+	
 	public void parseFileToDb(MultipartFile upfile, PreportContentForm preportContentForm) throws Exception {
 		if(!upfile.isEmpty()) {
 			String filename = upfile.getOriginalFilename();

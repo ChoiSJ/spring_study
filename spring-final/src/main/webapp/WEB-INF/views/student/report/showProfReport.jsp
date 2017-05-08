@@ -16,10 +16,9 @@ $(function() {
 		$("#submit-btn").removeAttr("disabled", "disabled");
 	}
 
-	$("form").submit(function() {	
+	$("#submit-btn").click(function() {	
 		if(parseNowDate > endDate) {
-			alert("과제 제출 기한이 지났습니다.");
-			return false;
+			$("#submit-btn").css("display", "none");
 		}
 	});
 	
@@ -84,7 +83,7 @@ $(function() {
 					<td colspan="3">
 						<c:choose>
 							<c:when test="${profReport.upfile ne null}">
-								<a href="#">${profReport.upfile}</a>
+								<a href="fileDownloadRe.do?rno=${profReport.no}">${profReport.upfile}</a>
 							</c:when>
 							<c:otherwise>
 							</c:otherwise>
@@ -94,7 +93,7 @@ $(function() {
 			</thead>	
 		</table>
 		<div class="form-group text-center">      
-      		<a href="stuReportAfter?rno=${profReport.no}&eno=${param.eno}" type="submit" class="btn btn-default" id="submit-btn" disabled="disabled">과제 등록</a>
+      		<a href="stuReportAfter?rno=${profReport.no}&eno=${param.eno}" type="submit" class="btn btn-default" id="submit-btn">과제 등록</a>
       		<a href="ReportHome?eno=${param.eno}" class="btn btn-default">뒤로가기</a>
       	</div>
 	</div>

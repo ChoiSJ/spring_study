@@ -2,6 +2,8 @@ package kr.co.jhta.service.score;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -147,6 +149,21 @@ public class ScoreServiceImpl implements ScoreService{
 	@Override
 	public List<Regisubject> getSearchScorelistByhash(HashMap<String, Object> searchcode) {
 		return scoreDao.getSearchScorelistByhash(searchcode);
+	}
+
+	@Override
+	public Regisubject getRegisInfoByEnoService(int eNo, int stuNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("eNo", eNo);
+		map.put("stuNo", stuNo);
+		return scoreDao.getRegisInfoByEnoAndStuNo(map);
+	}
+
+	@Override
+	public Regisubject getRegisInfoByEnoAndStuNo(HashMap<String, Object> enrolls) {
+		return scoreDao.getRegisInfoByEnoAndStuNo(enrolls);
 	}	
+	
+	
 	
 }

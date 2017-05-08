@@ -7,12 +7,14 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="viewport" content="width=device-width, initial-scale=1">
-<link type="text/css" rel="stylesheet" href="/jhta/resources/bootstrap/css/bootstrap.css">
-<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css" />
+<meta http-equiv="viewport"
+	content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<script type="text/javascript" src="/jhta/resources/jquery/jquery-3.2.0.min.js"></script>
-<script type="text/javascript" src="/jhta/resources/bootstrap/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript">
    $(function() {
 
@@ -50,7 +52,7 @@
                    var $modalApplecation = $("#modalApplecation").empty();
 
                    var html = '<div class="modal-header">';
-                   html += '<h4 class="modal-title" id="gridSystemModalLabel">휴강 신청</h4>';
+                   html += '<h4 class="modal-title" id="gridSystemModalLabel">보강 신청</h4>';
                    html += '</div>';
                    html += '<div class="modal-body">';
                    html += '<div class="container">';
@@ -164,13 +166,13 @@
                    html += '</div>';
                    html += '<div class="modal-footer">';
                    html += '<input hidden="hidden" name="makeupLessonRegister" value="' + makeupLessonRegister + '">';
-                   html += '<button id="supplementLectureApplicationAdd-' + subjectNo + '"type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>';
-                   html += '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+                   html += '<button id="supplementLectureApplicationAdd-' + subjectNo + '"type="button" class="mdl-button mdl-js-button mdl-button--raised" data-dismiss="modal">등록</button>';
+                   html += '<button type="button" class="mdl-button mdl-js-button mdl-button--raised" data-dismiss="modal">취소</button>';
                    html += '</div>';
 
                    $modalApplecation.append(html);
 
-                   //휴강 신청 버튼 처리
+                   //보강 신청 버튼 처리
                    $("button[id^='supplementLectureApplicationAdd-']").on("click", function() {
 
                        var register = $(":input[name='supplementLectureCheck']").val()
@@ -271,7 +273,181 @@
            });
        });
 
+     //보강 전체 취소  조회
+       $("button[id^='lectureCancle-']").on("click", function() {
 
+           var $modalApplecation = $("#modalApplecation").empty();
+
+           var subjectNo = $(this).attr("id").replace("lectureCancle-", "");
+
+
+           $.ajax({
+               type: "GET",
+               url: "makeupLessonCancle/" + subjectNo,
+               dataType: "json",
+               success: function(data) {
+
+                   var professorId = data.professorId;
+                   var subjectNo = data.subjectNo;
+                   var majorCode = data.majorCode;
+                   var subjectName = data.subjectName;
+                   var professorName = data.professorName;
+                   var supplementLectureCheck = data.supplementLectureCheck;
+                   var professorNumber = data.professorNumber;
+                   var majorOption = data.majorOption;
+                   var majorScore = data.majorScore;
+                   var subjectLectureNumber = data.subjectLectureNumber;
+                   var applicationStartDate = data.applicationDate;
+                   console.log(applicationStartDate);
+                   var applicationEndDate = data.applicationDateEnd;
+                   console.log(applicationEndDate);
+
+                   var $modalApplecation = $("#modalApplecation").empty();
+
+                   var html = '<div class="modal-header">';
+                   html += '<h4 class="modal-title" id="gridSystemModalLabel">보강 취소</h4>';
+                   html += '</div>';
+                   html += '<div class="modal-body">';
+                   html += '<div class="container">';
+                   html += '<form class="form-horizontal">';
+                   html += '<div class="col-sm-5">';
+                   html += '<div class="form-group">';
+                   html += '<div class="col-sm-3">';
+                   html += '<label class="pull-right" style="color: black">교수 ID:</label>';
+                   html += '</div>';
+                   html += '<div class="col-sm-6">';
+                   html += '<input id="code" class="mdl-textfield__input" type="text"style="width: 200px" name="information" value="' + professorId + '" disabled="disabled" />';
+                   html += '</div>';
+                   html += '<div class="col-sm-3"></div>';
+                   html += '</div>';
+
+                   html += '<div class="form-group">';
+                   html += '<div class="col-sm-3">';
+                   html += '<label class="pull-right" style="color: black">교수 번호:</label>';
+                   html += '</div>';
+                   html += '<div class="col-sm-6">';
+                   html += '<input id="code" class="mdl-textfield__input" type="text"style="width: 200px" name="information" value="' + professorNumber + '" disabled="disabled" />';
+                   html += '</div>';
+                   html += '<div class="col-sm-3"></div>';
+                   html += '</div>';
+
+                   html += '<div class="form-group">';
+                   html += '<div class="col-sm-3">';
+                   html += '<label class="pull-right" style="color: black">학과 번호:</label>';
+                   html += '</div>';
+                   html += '<div class="col-sm-6">';
+                   html += '<input id="code" class="mdl-textfield__input" type="text"style="width: 200px" name="information" value="' + majorCode + '" disabled="disabled" />';
+                   html += '</div>';
+                   html += '<div class="col-sm-3"></div>';
+                   html += '</div>';
+
+                   html += '<div class="form-group">';
+                   html += '<div class="col-sm-3">';
+                   html += '<label class="pull-right" style="color: black">과목 번호:</label>';
+                   html += '</div>';
+                   html += '<div class="col-sm-6">';
+                   html += '<input id="code" class="mdl-textfield__input" type="text"style="width: 200px" name="information" value="' + subjectNo + '" disabled="disabled" />';
+                   html += '</div>';
+                   html += '<div class="col-sm-3"></div>';
+                   html += '</div>';
+
+                   html += '<div class="form-group">';
+                   html += '<div class="col-sm-3">';
+                   html += '<label class="pull-right" style="color: black">과목 이름:</label>';
+                   html += '</div>';
+                   html += '<div class="col-sm-6">';
+                   html += '<input id="code" class="mdl-textfield__input" type="text"style="width: 200px" name="information" value="' + subjectName + '" disabled="disabled" />';
+                   html += '</div>';
+                   html += '<div class="col-sm-3"></div>';
+                   html += '</div>';
+                   html += '</div>';
+
+                   html += '<div class="col-sm-7">';
+                   html += '<div class="form-group">';
+                   html += '<div class="col-sm-3">';
+                   html += '<label class="pull-right" style="color: black">과목 학점:</label>';
+                   html += '</div>';
+                   html += '<div class="col-sm-6">';
+                   html += '<input id="code" class="mdl-textfield__input" type="text"style="width: 200px" name="information" value="' + majorScore + '" disabled="disabled" />';
+                   html += '</div>';
+                   html += '<div class="col-sm-3"></div>';
+                   html += '</div>';
+
+                   html += '<div class="form-group">';
+                   html += '<div class="col-sm-3">';
+                   html += '<label class="pull-right" style="color: black">교수 이름:</label>';
+                   html += '</div>';
+                   html += '<div class="col-sm-6">';
+                   html += '<input id="code" class="mdl-textfield__input" type="text"style="width: 200px" name="information" value="' + professorName + '" disabled="disabled" />';
+                   html += '</div>';
+                   html += '<div class="col-sm-3"></div>';
+                   html += '</div>';
+
+                   html += '<div class="form-group">';
+                   html += '<div class="col-sm-3">';
+                   html += '<label class="pull-right" style="color: black">전공 옵션:</label>';
+                   html += '</div>';
+                   html += '<div class="col-sm-6">';
+                   html += '<input id="code" class="mdl-textfield__input" type="text"style="width: 200px" name="information" value="' + majorOption + '" disabled="disabled" />';
+                   html += '</div>';
+                   html += '<div class="col-sm-3"></div>';
+                   html += '</div>';
+
+                   html += '<div class="form-group">';
+                   html += '<div class="col-sm-3">';
+                   html += '<label class="pull-right" style="color: black">보강 신청일:</label>';
+                   html += '</div>';
+                   html += '<div class="col-sm-6">';
+                   html += '<input id="code" class="mdl-textfield__input" type="text"style="width: 200px" name="information" value="' + applicationStartDate + '" disabled="disabled" />';
+                   html += '</div>';
+                   html += '<div class="col-sm-3"></div>';
+                   html += '</div>';
+
+                   html += '<div class="form-group">';
+                   html += '<div class="col-sm-3">';
+                   html += '<label class="pull-right" style="color: black">보강 종료일:</label>';
+                   html += '</div>';
+                   html += '<div class="col-sm-6">';
+                   html += '<input id="code" class="mdl-textfield__input" type="text"style="width: 200px" name="information" value="' + applicationEndDate + '" disabled="disabled" />';
+                   html += '</div>';
+                   html += '<div class="col-sm-3"></div>';
+                   html += '</div>';
+
+
+                   html += '</div>';
+                   html += '</div>';
+                   html += '</div>';
+                   html += '</div>';
+                   html += '<div class="modal-footer">';
+                   html += '<input hidden="hidden" name="supplementLectureCheck" value="' + supplementLectureCheck + '">';
+                   html += '<button id="supplementLectureApplicationCancle-' + subjectNo + '"type="button" class="mdl-button mdl-js-button mdl-button--raised" data-dismiss="modal">등록</button>';
+                   html += '<button type="button" class="mdl-button mdl-js-button mdl-button--raised" data-dismiss="modal">취소</button>';
+                   html += '</div>';
+
+                   $modalApplecation.append(html);
+
+                   //취소 처리
+                   $("button[id^=supplementLectureApplicationCancle-]").on("click", function() {
+
+                       var subjectNo = $(this).attr("id").replace("supplementLectureApplicationCancle-", "");
+                       console.log("sdfsdfsdfsdfsf:" + subjectNo)
+
+                       $.ajax({
+                           type: "DELETE",
+                           url: "makeupCancle/" + subjectNo,
+                           dataType: 'json',
+                           success: function(data) {
+
+                               var dataNo = data.subjectNo;
+
+                               $("td:contains(" + dataNo + ")").parents("tr").hide();
+
+                           }
+                       });
+                   });
+               }
+           });
+       });
 
 
        //college 조회
@@ -320,7 +496,7 @@
                        $.ajax({
                            type: "GET",
                            url: "makeupLessonSearchTable/" + majorCode,
-                           datatype: "json",
+                           dataType: "json",
                            success: function(data) {
 
 
@@ -417,7 +593,7 @@
                                            var $modalApplecation = $("#modalApplecation").empty();
 
                                            var html = '<div class="modal-header">';
-                                           html += '<h4 class="modal-title" id="gridSystemModalLabel">휴강 신청</h4>';
+                                           html += '<h4 class="modal-title" id="gridSystemModalLabel">보강 신청</h4>';
                                            html += '</div>';
                                            html += '<div class="modal-body">';
                                            html += '<div class="container">';
@@ -531,13 +707,13 @@
                                            html += '</div>';
                                            html += '<div class="modal-footer">';
                                            html += '<input hidden="hidden" name="makeupLessonRegister" value="' + makeupLessonRegister + '">';
-                                           html += '<button id="supplementLectureApplicationAdd-' + subjectNo + '"type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>';
-                                           html += '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+                                           html += '<button id="supplementLectureApplicationAdd-' + subjectNo + '"type="button" class="mdl-button mdl-js-button mdl-button--raised" data-dismiss="modal">등록</button>';
+                                           html += '<button type="button" class="mdl-button mdl-js-button mdl-button--raised" data-dismiss="modal">취소</button>';
                                            html += '</div>';
 
                                            $modalApplecation.append(html);
 
-                                           //휴강 신청 버튼 처리
+                                           //보강 신청 버튼 처리
                                            $("button[id^='supplementLectureApplicationAdd-']").on("click", function() {
 
                                                var register = $(":input[name='supplementLectureCheck']").val()
@@ -873,17 +1049,20 @@
 	<%@ include file="/WEB-INF/views/navi/adminnavi.jsp"%>
 	<%@ include file="/WEB-INF/views/navi/sidebarsupplementmakeuplesson.jsp"%>
 	<!-- 보강신청, 취소 모달 -->
-	<div class="container">
+	<div class="container" style="margin-left: 250px; padding-top: 25px;">
+	<div class="row text-right">
+			홈 > 보강 관리  > 보강 등록
+		</div>
 		<div class="modal fade bs-example-modal-lg" tabindex="-1"
 			role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content" id="modalApplecation"></div>
 			</div>
 		</div>
-		<h3>보강 관리</h3>
-		<hr />
+		<h4><span class="glyphicon glyphicon-th-list"></span>&nbsp;보강 관리</h4>
+		<hr style="border: solid 0.5px #2C7BB5;">
 		<div class="row">
-			<h4>&nbsp;&nbsp;&nbsp;보강 신청</h4>
+			<h5>&nbsp;&nbsp;&nbsp;보강 신청</h5>
 			<div class="col-sm-1">
 				<a href="makeuplecturereset.do"><i class="material-icons" style="color: black">restore_page</i></a>
 			</div>
@@ -1007,7 +1186,7 @@
 		<hr />
 		<div class="row" style="height: 30px"></div>
 		<div class="row">
-			<h4>&nbsp;&nbsp;&nbsp;최근 신청한 강의</h4>
+			<h5>&nbsp;&nbsp;&nbsp;최근 신청한 강의</h5>
 			<div class="wrap_table">
 				<div align="center">
 					<table>
@@ -1034,7 +1213,7 @@
 			</div>
 		</div>
 		<hr />
-		<h4>보강 신청 메세지 보내기</h4>
+		<h5>보강 신청 메세지 보내기</h5>
 		<div class="row" style="margin-bottom: 15px;">
 			<div class="col-sm-12">
 				<div class="btn-group">

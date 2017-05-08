@@ -313,10 +313,10 @@ public class ProfController {
 	@RequestMapping(value="/profinfo", method=RequestMethod.GET)
 	public String profinfo(@Valid @ModelAttribute("professorForm")ProfessorForm professorForm,Model model, HttpSession session){
 		Professor prof = (Professor) session.getAttribute("LOGIN_USER");
+		Professor prof1 = professorService.getProfessorById(prof.getId());
 		System.out.println("prof 찍기 전 db작업전");
-		professorService.getProfessorById(prof.getId());
-		System.out.println(prof);
-		model.addAttribute("prof", prof);
+		System.out.println(prof1);
+		model.addAttribute("prof", prof1);
 		return "/prof/profInfo";
 	}
 	

@@ -13,6 +13,52 @@
 <script type="text/javascript">
 $(function() {
 	
+	var isApplicantCheck = $("#isApplicantCheck").val();
+	
+	var isApplicant = false;
+	
+	var webSocket = new WebSocket("ws://jhta.sc/jhta/stud/notice");
+		
+	webSocket.onmessage = function(event) {
+		if(!isApplicant) {
+			var limitApplicant = $("#sub-limitNumber").val();
+			var regiEnrollNo = $("#regi-EnrollNumber").val();
+			
+			var data = event.data.split(":");
+			if(data[1] === isApplicantCheck) {
+				isApplicant = true;
+			} else {
+				isApplicant = false;
+			}
+			
+			// 수강 신청 잇때
+			if(data[0] == "up") {
+		
+				$("#applicant-box-" + data[2]).empty();							
+				if(data[3] == limitApplicant) {
+					$("#applicant-box-" + data[2]).text("<strong><font color='red'>마감</font></strong>");
+				} else {
+					$("#applicant-box-" + data[2]).text(data[3] + " / " + limitApplicant);
+				}
+				
+			}
+			
+			// 수강 취소 일때
+			if(data[0] == "down") {
+				$("#applicant-box-" + data[2]).empty();
+				$("#applicant-box-" + data[2]).text(data[3] + " / " + limitApplicant);
+			}
+			
+			
+			
+			if(data[1]) {
+				$("#applicant-box-" + data[0]).text(data[1]);				
+			}
+			console.log(data);
+		}
+		isApplicant = false;
+	}
+	
 	if($("#add-False").val() == "true" ) {
 		alert("최대 학점이상 신청할 수 없습니다.");
 		return;
@@ -59,8 +105,8 @@ $(function() {
 <%@ include file="/WEB-INF/views/navi/stunavi.jsp" %>
 <%@ include file="/WEB-INF/views/navi/sidebarstud.jsp" %>
    <div class="container" style="margin-left: 250px; padding-top:25px; ">
-   <c:if test="${addFals != '' }">
-		<input type="hidden" value="${addFalse}" id="add-False">   
+   <c:if test="${param.addFalse != '' }">
+		<input type="hidden" value="${param.addFalse}" id="add-False">   
    </c:if>
     <div class="row text-right">
          	홈 > 수강 신청
@@ -134,7 +180,8 @@ $(function() {
 	      					<th>${subject.enroll.enrollDay }</th>	<!-- 강의 요일-->
 	      					<th>${subject.enroll.enrollTime }</th>	<!-- 강의 시간 -->
 	      					<th>${subject.score }</th>	<!-- 학점 -->
-	      					<th>
+	      					<th id="applicant-box-${subject.enroll.no }">
+	      					<input type="hidden" id="sub-limitNumber" value="${subject.limitStu}"/>
 	      						<c:choose>
 	      							<c:when test="${subject.enroll.enrollNum eq subject.limitStu}">
 	      								<strong><font color="red">마감</font></strong>
@@ -204,6 +251,7 @@ $(function() {
 	      			</tr>
 	      		</thead>
 	      		<tbody id="enrolled">
+	      			
 	      			<c:forEach var="regisub" items="${regisubList }">
 	      				<c:if test="${empty regisubList }">
 	      					<tr>
@@ -219,7 +267,8 @@ $(function() {
 	      					<th>${regisub.enroll.enrollTime }</th>	<!-- 강의 시간 -->
 	      					<th>${regisub.enroll.enrollDay }</th>	<!-- 강의 요일-->
 	      					<th>${regisub.subject.score }</th>	<!-- 학점 -->
-							<th>
+							<th>								
+								<input type="hidden" id="regi-EnrollNumber" value="${regisub.enroll.no }"/>
 	      						<c:choose>
 	      							<c:when test="${regisub.enroll.enrollNum eq regisub.subject.limitStu}">
 	      								<strong><font color="red">마감</font></strong>
@@ -230,12 +279,13 @@ $(function() {
 	      						</c:choose>	  
 	      					</th>
 	      					<th>
-	      						<a href="enrollCancle?cancleNo=${regisub.enroll.no }&minusScore=${regisub.subject.score}" class="btn btn-default">취소</a>
+	      						<a href="enrollCancle?cancleNo=${regisub.enroll.no }&minusScore=${regisub.subject.score}&eno=${regisub.enroll.no}" class="btn btn-default">취소</a>
 	      					</th>
 	      				</tr>
 	      			</c:forEach>
 	      		</tbody>
 	      	</table>
+	      	<input type="hidden" id="isApplicantCheck" value="${student.no }" />
       	<div class="row text-center" style="padding: 20px;">
 	      	<hr />
       		<p><font size="4;">현재 신청 학점 <span id="applyScore">${applyScore}</span> / 최대 신청 학점 <span id="maxOneScore">${student.maxOneScore}</span></font></p>

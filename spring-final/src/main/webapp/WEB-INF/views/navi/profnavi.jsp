@@ -154,8 +154,9 @@
                         <a class="navbar-brand" href="home" style="color: white;"><span class="glyphicon glyphicon-education"></span> JHTA 학사 관리 시스템</a>
                             <ul class="nav navbar-nav">
 						      <li><a href="/jhta/prof/subinfo" style="color: white;">수업 관리</a></li>
-						      <li><a href="/jhta/prof/report/reportinfo" style="color: white;">성적 관리</a></li>
+						      <li><a href="/jhta/prof/report/reportinfo" style="color: white;">과제 관리</a></li>
 						      <li><a href="/jhta/prof/profscorelist" style="color: white;">성적 관리</a></li>
+						      <li><a href="/jhta/prof/openLectureMain.do" style="color:white;">강의 평가 관리</a></li>
     						</ul>
                     </div>
                     

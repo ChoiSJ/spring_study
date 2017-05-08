@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -15,6 +16,44 @@ $(function () {
 		window.open('data:application/vnd.ms-excel, Score_Info' + encodeURIComponent($('#modal_excel').html()), '_blank');
 		e.preventDefault(); 
 	});
+	
+var $list_tbody = $("#score_td_box-2");
+	
+	var rowCount = $list_tbody.find("tr").length;
+	
+	var totalCredit1 = 0;
+	$("#score_td_box-2 td:nth-child(13n+2)").each(function(index, item) {
+		totalCredit1 += parseInt($(item).text());
+	});
+	var totalCredit2 = 0;
+	$("#score_td_box-2 td:nth-child(13n+3)").each(function(index, item) {
+		totalCredit2 += parseInt($(item).text());
+	});
+	var totalCredit3 = 0;
+	$("#score_td_box-2 td:nth-child(13n+4)").each(function(index, item) {
+		totalCredit3 += parseInt($(item).text());
+	});
+	var totalCredit4 = 0;
+	$("#score_td_box-2 td:nth-child(13n+5)").each(function(index, item) {
+		totalCredit4 += parseInt($(item).text());
+	});
+	
+	var t1= totalCredit1;
+	var t2= totalCredit2;
+	var t3= (totalCredit3/rowCount).toFixed(2);
+	var t4= (totalCredit4/rowCount).toFixed(2);
+	console.log(t1);
+	console.log(t2);
+	console.log(t3);
+	console.log(t4);
+	$("#t1").text(t1);
+	$("#t11").text(t1);
+	$("#t2").text(t2);
+	$("#t22").text(t2);
+	$("#t3").text(t3);
+	$("#t33").text(t3);
+	$("#t4").text(t4);
+	$("#t44").text(t4);
 });
 </script>
 </head>
@@ -67,7 +106,7 @@ $(function () {
 							<td>${savg.semename }</td>
 							<td>${savg.credit1 }</td>
 							<td>${savg.credit2 }</td>
-							<td>${savg.credit3 }</td>
+							<td><fmt:formatNumber value="${savg.credit3 }" pattern="#.##"/></td>
 							<td>${savg.credit4 }</td>
 							<c:choose>
 								<c:when test="${savg.grade gt 2}">
@@ -102,16 +141,16 @@ $(function () {
 			<thead>
 				<tr style="text-align: center;">
 					<th>
-						<label>전체 평점 평균</label>
+						<label>전체 신청 학점</label>
+					</th>
+					<th>
+						<label>전체 이수 학점</label>
+					</th>
+					<th>
+						<label>전체 평점</label>
 					</th>
 					<th>
 						<label>전체 백분율</label>
-					</th>
-					<th>
-						<label>전체 신청학점</label>
-					</th>
-					<th>
-						<label>전체 이수학점</label>
 					</th>
 				</tr>
 			</thead>
@@ -120,16 +159,16 @@ $(function () {
 				<c:choose>
 					<c:when test="${savgtotal.testcount eq 0 }">
 						<td>
-							<p><strong>${savgtotal.credit3 }</strong></p>
+							<p><strong id="t11"></strong></p>
 						</td>
 						<td>
-							<p><strong>${savgtotal.credit4 }</strong></p>
+							<p><strong id="t22"></strong></p>
 						</td>
 						<td>
-							<p><strong>${savgtotal.credit1 }</strong></p>
+							<p><strong id="t33"></strong></p>
 						</td>
 						<td>
-							<p><strong>${savgtotal.credit2 }</strong></p>
+							<p><strong id="t44"></strong></p>
 						</td>
 					</c:when>
 					<c:otherwise>
@@ -160,32 +199,32 @@ $(function () {
 						<thead>
 							<tr style="text-align: center;">
 								<th bgcolor="#f0fcff">
-									<label>전체 평점 평균</label>
+									<label>전체 신청 학점</label>
+								</th>
+								<th bgcolor="#f0fcff">
+									<label>전체 이수 학점</label>
+								</th>
+								<th bgcolor="#f0fcff">
+									<label>전체 평점</label>
 								</th>
 								<th bgcolor="#f0fcff">
 									<label>전체 백분율</label>
-								</th>
-								<th bgcolor="#f0fcff">
-									<label>전체 신청학점</label>
-								</th>
-								<th bgcolor="#f0fcff">
-									<label>전체 이수학점</label>
 								</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr style="text-align: center;">
 								<td>
-									<p><strong>${savgtotal.credit3 }</strong></p>
+									<p><strong id="t11"></strong></p>
 								</td>
 								<td>
-									<p><strong>${savgtotal.credit4 }</strong></p>
+									<p><strong id="t22"></strong></p>
 								</td>
 								<td>
-									<p><strong>${savgtotal.credit1 }</strong></p>
+									<p><strong id="t33"></strong></p>
 								</td>
 								<td>
-									<p><strong>${savgtotal.credit2 }</strong></p>
+									<p><strong id="t44"></strong></p>
 								</td>
 							</tr>
 						</tbody>
@@ -246,13 +285,13 @@ $(function () {
 								<th>학.기</th>
 							</tr>
 						</thead>
-						<tbody id="score_td_box">
+						<tbody id="score_td_box-2">
 							<c:forEach var="savg" items="${savg }">
 								<tr style="text-align: center;">
 									<td>${savg.semename }</td>
 									<td>${savg.credit1 }</td>
 									<td>${savg.credit2 }</td>
-									<td>${savg.credit3 }</td>
+									<td><fmt:formatNumber value="${savg.credit3 }" pattern="#.##"/></td>
 									<td>${savg.credit4 }</td>
 									<c:choose>
 										<c:when test="${savg.grade gt 2}">

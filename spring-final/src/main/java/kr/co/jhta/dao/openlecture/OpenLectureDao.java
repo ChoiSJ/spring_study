@@ -43,4 +43,7 @@ public interface OpenLectureDao {
 	
 	//openinquiries.do 테이블 전체 조회
 	List<ProfessorSubject> subjectRatingInquiriesAll();
+	
+	//강의평가 취소
+	void udateLectureRationgRegisterEnrollTableCancle(int subjectNo);
 }

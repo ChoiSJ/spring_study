@@ -83,4 +83,9 @@ public class MessageServiceImpl implements MessageService {
 	public void addMessageCheck(int messageNo) {
 		messageDao.addMessageCheck(messageNo);
 	}
+	
+	@Override
+	public String getReceiverNameById(String id) {
+		return messageDao.getReceiverNameById(id);
+	}
 }

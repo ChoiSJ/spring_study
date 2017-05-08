@@ -158,8 +158,8 @@
 						      <li><a href="adminregstudent" style="color: white;">수업 관리</a></li>
 						      <li><a href="adminregsubject" style="color: white;">수강 관리</a></li>
 						      <li><a href="scorelist.do" style="color: white;">성적 관리</a></li>
-						      <li><a href="supplementmakeuplesson.do" style="color: white;">휴학 보강</a></li>
-						      <li><a href="scorelist.do" style="color: white;">강의 평가 관리</a></li>
+						      <li><a href="supplementLecture.do" style="color: white;">휴강 관리</a></li>
+						      <li><a href="makeuplesson.do" style="color: white;">보강 관리</a></li>
     						</ul>
                     </div>
                     

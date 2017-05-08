@@ -3,15 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
-
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="viewport" content="width=device-width, initial-scale=1">
-<link type="text/css" rel="stylesheet" href="/jhta/resources/bootstrap/css/bootstrap.css">
+<meta http-equiv="viewport"
+	content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
 <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-<script type="text/javascript" src="/jhta/resources/jquery/jquery-3.2.0.min.js"></script>
-<script type="text/javascript" src="/jhta/resources/bootstrap/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <head>
 <script type="text/javascript">
@@ -162,8 +162,8 @@
                     html += '</div>';
                     html += '<div class="modal-footer">';
                     html += '<input hidden="hidden" name="supplementLectureCheck" value="' + supplementLectureCheck + '">';
-                    html += '<button id="supplementLectureApplicationAdd-' + subjectNo + '"type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>';
-                    html += '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+                    html += '<button id="supplementLectureApplicationAdd-' + subjectNo + '"type="button" class="mdl-button mdl-js-button mdl-button--raised" data-dismiss="modal">등록</button>';
+                    html += '<button type="button" class="mdl-button mdl-js-button mdl-button--raised" data-dismiss="modal">취소</button>';
                     html += '</div>';
 
                     $modalApplecation.append(html);
@@ -188,7 +188,7 @@
                         }
 
                         var buttonNo = $(":input[name='subjectNo']").val()
-                        console.log(subjectNo)
+                        console.log(buttonNo)
                         $.ajax({
                             type: "POST",
                             url: "userInformaiton/",
@@ -296,10 +296,10 @@
                     var majorScore = data.majorScore;
                     var subjectLectureNumber = data.subjectLectureNumber;
                     var applicationStartDate = data.applicationDate;
-                    console.log(applicationStartDate);
+                    
                     var applicationEndDate = data.applicationDateEnd;
-                    console.log(applicationEndDate);
-
+                    var subjectTime = data.subjectTime;
+					var subjectDate = data.subjectDate;
                     var $modalApplecation = $("#modalApplecation").empty();
 
                     var html = '<div class="modal-header">';
@@ -393,24 +393,23 @@
 
                     html += '<div class="form-group">';
                     html += '<div class="col-sm-3">';
-                    html += '<label class="pull-right" style="color: black">휴강 신청일:</label>';
+                    html += '<label class="pull-right" style="color: black">과목 시간:</label>';
                     html += '</div>';
                     html += '<div class="col-sm-6">';
-                    html += '<input id="code" class="mdl-textfield__input" type="text"style="width: 200px" name="information" value="' + applicationStartDate + '" disabled="disabled" />';
+                    html += '<input id="code" class="mdl-textfield__input" type="text"style="width: 200px" name="subjectTime" value="' + subjectTime + '" disabled="disabled"/>';
                     html += '</div>';
                     html += '<div class="col-sm-3"></div>';
                     html += '</div>';
 
                     html += '<div class="form-group">';
                     html += '<div class="col-sm-3">';
-                    html += '<label class="pull-right" style="color: black">휴강 종료일:</label>';
+                    html += '<label class="pull-right" style="color: black">과목 날짜:</label>';
                     html += '</div>';
                     html += '<div class="col-sm-6">';
-                    html += '<input id="code" class="mdl-textfield__input" type="text"style="width: 200px" name="information" value="' + applicationEndDate + '" disabled="disabled" />';
+                    html += '<input id="code" class="mdl-textfield__input" type="text"style="width: 200px" name="subjectDate" value="' + subjectDate + '" disabled="disabled"/>';
                     html += '</div>';
                     html += '<div class="col-sm-3"></div>';
                     html += '</div>';
-
 
                     html += '</div>';
                     html += '</div>';
@@ -418,8 +417,8 @@
                     html += '</div>';
                     html += '<div class="modal-footer">';
                     html += '<input hidden="hidden" name="supplementLectureCheck" value="' + supplementLectureCheck + '">';
-                    html += '<button id="supplementLectureApplicationCancle-' + subjectNo + '"type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>';
-                    html += '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+                    html += '<button id="supplementLectureApplicationCancle-' + subjectNo + '"type="button" class="mdl-button mdl-js-button mdl-button--raised" data-dismiss="modal">등록</button>';
+                    html += '<button type="button" class="mdl-button mdl-js-button mdl-button--raised" data-dismiss="modal">취소</button>';
                     html += '</div>';
 
                     $modalApplecation.append(html);
@@ -445,7 +444,6 @@
                     });
                 }
             });
-
         });
 
 
@@ -497,9 +495,8 @@
                         $.ajax({
                             type: "GET",
                             url: "searchSubjectTable/" + majorCode,
-                            datatype: "json",
+                            dataType: "json",
                             success: function(data) {
-
 
                                 if (!data.length == 0) {
 
@@ -517,6 +514,7 @@
                                         var majorOption = data[i].majorOption;
                                         var majorScore = data[i].majorScore;
                                         var subjectLectureNumber = data[i].subjectLectureNumber;
+
 
                                         var html = '<tr id="supplementLectureTr-' + subjectNo + '">';
                                         html += '<td style="width: 10%" id="id-' + professorId + '"><label>' + professorId + '</label></td>'
@@ -707,8 +705,8 @@
                                             html += '</div>';
                                             html += '<div class="modal-footer">';
                                             html += '<input hidden="hidden" name="supplementLectureCheck" value="' + supplementLectureCheck + '">';
-                                            html += '<button id="supplementLectureApplicationAdd-' + subjectNo + '"type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>';
-                                            html += '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+                                            html += '<button id="supplementLectureApplicationAdd-' + subjectNo + '"type="button" class="mdl-button mdl-js-button mdl-button--raised" data-dismiss="modal">등록</button>';
+                                            html += '<button type="button" class="mdl-button mdl-js-button mdl-button--raised" data-dismiss="modal">취소</button>';
                                             html += '</div>';
 
                                             $modalApplecation.append(html);
@@ -733,13 +731,14 @@
                                                 }
 
                                                 var buttonNo = $(":input[name='subjectNo']").val()
-                                                console.log(subjectNo)
+
 
                                                 $.ajax({
                                                     type: "POST",
                                                     url: "userInformaiton/",
                                                     contentType: "application/json", //서버로 보내는 컨텐츠 형식 정의
                                                     data: JSON.stringify(userInformaiton),
+                                                    dataType: "json",
                                                     success: function(data) {
 
                                                         var subjectNo = data.subjectNo;
@@ -960,8 +959,8 @@
                                             html += '</div>';
                                             html += '<div class="modal-footer">';
                                             html += '<input hidden="hidden" name="supplementLectureCheck" value="' + supplementLectureCheck + '">';
-                                            html += '<button id="supplementLectureApplicationCancle-' + subjectNo + '"type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>';
-                                            html += '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+                                            html += '<button id="supplementLectureApplicationCancle-' + subjectNo + '"type="button" class="mdl-button mdl-js-button mdl-button--raised" data-dismiss="modal">등록</button>';
+                                            html += '<button type="button" class="mdl-button mdl-js-button mdl-button--raised" data-dismiss="modal">취소</button>';
                                             html += '</div>';
 
                                             $modalApplecation.append(html);
@@ -1155,7 +1154,7 @@
     .wrap_table {
         padding: 30px 0;
         position: relative;
-        width: 1170px;
+        width: 1180px;
     }
 
     .wrap_table>div {
@@ -1164,7 +1163,7 @@
     }
 
     .wrap_table table {
-        width: 1155px;
+        width: 1165px;
     }
 
     .wrap_table table caption {
@@ -1176,7 +1175,7 @@
     .wrap_table table tfoot {
         position: absolute;
         display: table;
-        width: 1155px;
+        width: 1165px;
         ;
         border-bottom: 1px solid #ccc;
     }
@@ -1210,24 +1209,28 @@
 <title>휴강 관리</title>
 </head>
 
-
 <body>
 	<%@ include file="/WEB-INF/views/navi/adminnavi.jsp"%>
-	<%@ include file="/WEB-INF/views/navi/sidebarsupplementmakeuplesson.jsp"%>
+	<%@ include
+		file="/WEB-INF/views/navi/sidebarsupplementmakeuplesson.jsp"%>
 	<!-- 휴강신청, 취소 모달 -->
-	<div class="container">
+	<div class="container" style="margin-left: 250px; padding-top: 25px;">
+		<div class="row text-right">홈 > 휴강 보강  > 휴강관리</div>
 		<div class="modal fade bs-example-modal-lg" tabindex="-1"
 			role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content" id="modalApplecation"></div>
 			</div>
 		</div>
-		<h4>휴강 관리</h4>
-		<hr/>
+		<h4>
+			<span class="glyphicon glyphicon-th-list"></span>&nbsp;휴강 관리
+		</h4>
+		<hr style="border: solid 0.5px #2C7BB5;">
 		<div class="row">
-			<h5>&nbsp;휴강 신청</h5>
+			<h5>&nbsp;&nbsp;&nbsp;휴강 신청</h5>
 			<div class="col-sm-1">
-				<a href="pageRedirect.do"><i class="material-icons" style="color: black">restore_page</i></a>
+				<a href="pageRedirect.do"><i class="material-icons"
+					style="color: black">restore_page</i></a>
 			</div>
 			<div class="col-sm-4"></div>
 			<div class="col-sm-3">
@@ -1275,7 +1278,7 @@
 									<td style="width: 15%" id="subjectNo-' + subjectNo + '"><label>${totalDataList.subjectNo}</label></td>
 									<td style="width: 15%" id="majorOption' + majorOption + '"><label>${totalDataList.majorOption}</label></td>
 									<td style="width: 15%" id="professorName-' + professorName + '"><label>${totalDataList.professorName}</label></td>
-									<td style="width: 25%" id="subjectName-' + subjectName + '"><label>${totalDataList.subjectName}</label></td>
+									<td style="width: 25%" id="subjectName-' + subjectName + '"><label>${totalDataList.subjectName}${totalDataList.supplementLectureCheck}</label></td>
 									<c:choose>
 										<c:when test="${totalDataList.supplementLectureCheck eq 'y'}">
 											<td style="width: 20%" id="cancleButton">
@@ -1343,9 +1346,9 @@
 			</form>
 		</div>
 		<hr />
-		<div class="row" style="height: 30px"></div>
+		<div class="row" style="height: 20px"></div>
 		<div class="row">
-			<h4>&nbsp;&nbsp;&nbsp;최근 신청한 강의</h4>
+			<h5>&nbsp;&nbsp;&nbsp;최근 신청한 강의</h5>
 			<div class="wrap_table">
 				<div align="center">
 					<table>
@@ -1372,13 +1375,17 @@
 			</div>
 		</div>
 		<hr />
-		<h4>휴강 신청 메세지 보내기</h4>
+		<div class="row" style="height: 20px"></div>
+		<h5>휴강 신청 메세지 보내기</h5>
 		<div class="row" style="margin-bottom: 15px;">
 			<div class="col-sm-12">
 				<div class="btn-group">
-					<a href="adminrecmessagebox" class="mdl-button mdl-js-button mdl-button--raised">받은쪽지</a> <a
-						href="adminsendmessagebox" class="mdl-button mdl-js-button mdl-button--raised">보낸쪽지</a> <a
-						href="adminmessageform" class="mdl-button mdl-js-button mdl-button--raised">쪽지쓰기</a>
+					<a href="adminrecmessagebox"
+						class="mdl-button mdl-js-button mdl-button--raised">받은쪽지</a> <a
+						href="adminsendmessagebox"
+						class="mdl-button mdl-js-button mdl-button--raised">보낸쪽지</a> <a
+						href="adminmessageform"
+						class="mdl-button mdl-js-button mdl-button--raised">쪽지쓰기</a>
 				</div>
 			</div>
 		</div>
@@ -1403,10 +1410,11 @@
 								<tr class="form-inline">
 									<td>받는사람</td>
 									<td><span id="receiver-box"></span>
-										<button type="button" class="btn btn-xs btn-default mdl-shadow--2dp"
+										<button type="button"
+											class="btn btn-xs btn-default mdl-shadow--2dp"
 											data-toggle="modal" data-target="#searchModal">사용자
 											검색</button>
-									
+
 										<div id="searchModal" class="modal fade" role="dialog">
 											<div class="modal-dialog">
 												<div class="modal-content">
@@ -1452,7 +1460,7 @@
 												</div>
 											</div>
 										</div></td>
-									
+
 								</tr>
 								<tr>
 									<td>제목</td>
@@ -1475,16 +1483,19 @@
 				</div>
 				<div class="row">
 					<div class="col-sm-12 text-center">
-						<button type="submit" class="mdl-button mdl-js-button mdl-button--raised" id="send-button" style="width: 100px">발송</button>
-						<button type="button" class="mdl-button mdl-js-button mdl-button--raised" style="width: 100px"
-							onclick="history.back()">취소</button>
+						<button type="submit"
+							class="mdl-button mdl-js-button mdl-button--raised"
+							id="send-button" style="width: 100px">발송</button>
+						<button type="button"
+							class="mdl-button mdl-js-button mdl-button--raised"
+							style="width: 100px" onclick="history.back()">취소</button>
 					</div>
 				</div>
 			</form>
 		</div>
 	</div>
 	<footer>
-		<div class="row" style="height: 80px"></div>	
+		<div class="row" style="height: 80px"></div>
 	</footer>
 </body>
 </html>

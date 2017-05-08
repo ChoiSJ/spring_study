@@ -146,9 +146,9 @@
 	
 	<insert id="addMessage" parameterType="kr.co.jhta.vo.Message">
 		insert into
-			p_message (p_no, p_title, p_writer, p_writername, p_receiver, p_filename, p_contents, p_sendtime)
+			p_message (p_no, p_title, p_writer, p_writername, p_receiver, p_receivername, p_filename, p_contents, p_sendtime)
 		values
-			(p_message_seq.nextval, #{title}, #{writer}, #{writerName}, #{receiver}, #{filename, jdbcType=VARCHAR}, #{contents}, sysdate)
+			(p_message_seq.nextval, #{title}, #{writer}, #{writerName}, #{receiver}, #{receiverName}, #{filename, jdbcType=VARCHAR}, #{contents}, sysdate)
 	</insert>
 	
 	<update id="deleteSendMessage" parameterType="int">
@@ -183,13 +183,12 @@
 			m.p_checktime as checkTime,
 			m.p_isdeletedbysender as isDeletedBySender,
 			m.p_isdeletedbyreceiver as isDeleteByReceiver,
-			p.u_prof_name as receiverName
+			m.p_receivername as receiverName
 		from
-			p_message m, u_professor p
+			p_message m
 		where
 			p_receiver = #{writer}
 			and p_isdeletedbysender != 'Y'
-			and m.p_receiver = p.u_prof_id
 		order by
 			p_sendtime desc
 	</select>
@@ -208,13 +207,12 @@
 			m.p_checktime as checkTime,
 			m.p_isdeletedbysender as isDeletedBySender,
 			m.p_isdeletedbyreceiver as isDeleteByReceiver,
-			p.u_prof_name as receiverName
+			m.p_receivername as receiverName
 		from
-			p_message m, u_professor p
+			p_message m
 		where
 			m.p_writer = #{writer}
 			and m.p_isdeletedbyreceiver != 'Y'
-			and m.p_receiver = p.u_prof_id
 		order by
 			m.p_sendtime desc
 	</select>
@@ -237,5 +235,18 @@
 			p_no = #{messageNo}
 			and p_checktime is null
 	</update>
+	
+	<select id="getReceiverNameById" parameterType="string" resultType="string">
+		<if test='_parameter.contains("P")'>
+			select u_prof_name
+			from u_professor
+			where u_prof_id = #{id}
+		</if>
+		<if test='!_parameter.contains("P")'>
+			select u_stu_name
+			from u_student
+			where u_stu_id = #{id}
+		</if>
+	</select>
 	
 </mapper>

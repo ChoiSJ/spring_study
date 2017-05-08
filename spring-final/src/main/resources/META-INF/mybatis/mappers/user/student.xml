@@ -102,7 +102,7 @@
 	
 	<insert id="addNewStudent" parameterType="kr.co.jhta.vo.stu.AddStudentForm">
 		insert INTO U_STUDENT (U_STU_NO, U_STU_ID, U_STU_NAME, U_STU_GENDER, U_STU_DIVISION, U_STU_PWD, U_STU_REGISTER, U_STU_SCORE, U_STU_PHONE, U_STU_ADDR1, U_STU_ADDR2, U_STU_EMAIL, U_STU_GRADE, U_STU_SSN, U_STU_ENTERDATE, U_STU_PARENTNAME, U_STU_PROFESSOR, U_STU_PARENTPHONE) 
-		VALUES(U_STUDENT_SEQ.nextval, #{id}, #{name}, #{gender}, #{division}, #{pwd}, #{register}, #{score}, #{phone}, #{addr1}, #{addr2}, #{email}, #{grade}, #{ssn}, sysdate, #{parentName}, #{professor}, #{parentPhone})
+		VALUES(U_STUDENT_SEQ.nextval, #{id}, #{name}, #{gender}, #{division}, #{pwd}, #{register}, #{score}, #{phone}, #{addr1}, #{addr2}, #{email, jdbcType=VARCHAR}, #{grade}, #{ssn}, sysdate, #{parentName}, #{professor}, #{parentPhone})
 	</insert>
 	
 	<select id="getStudentById" parameterType="string" resultType="Student">

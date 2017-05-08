@@ -23,7 +23,6 @@ public class PdfdownloadView {
     public ModelAndView downloadPdf(@RequestParam(value="subNo") int subNo) throws Exception{
     	ModelAndView mav = new ModelAndView();
     	mav.setView(pdfview);
-    	System.out.println(subNo);
     	Syllabus syllabus = regiService.getSyllabusBySubjectNoService(subNo);
     	mav.addObject("syllabus", syllabus);
     	return mav; 

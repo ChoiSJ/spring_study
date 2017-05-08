@@ -27,4 +27,5 @@ public interface MessageDao {
 	List<Map<String, Object>> getStudentByNo(String sno);
 	String getFilenameByNo(int no);
 	void addMessageCheck(int no);
+	String getReceiverNameById(String id);
 }

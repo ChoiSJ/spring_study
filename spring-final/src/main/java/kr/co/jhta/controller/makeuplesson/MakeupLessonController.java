@@ -32,7 +32,7 @@ public class MakeupLessonController {
 	@RequestMapping("/makeuplecturereset.do")
 	public String makeupLessonReset(){
 		
-		return "redirect:/makeuplesson.do";
+		return "redirect:/admin/makeuplesson.do";
 	}
 	
 	

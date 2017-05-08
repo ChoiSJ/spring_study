@@ -95,5 +95,12 @@ public class StuReportServiceImpl implements StuReportService{
 		map.put("eNo", eNo);
 		return stuRepDao.isNewEnollCheck(map);
 	}
+
+	@Override
+	public String getAttchFileNameByProfService(int rno) {
+		return stuRepDao.getAttchFileNameByProf(rno);
+	}
+
+
 	
 }

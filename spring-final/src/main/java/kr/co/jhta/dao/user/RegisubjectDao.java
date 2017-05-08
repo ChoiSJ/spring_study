@@ -9,7 +9,10 @@ public interface RegisubjectDao {
 
 	List<Regisubject> getAllRegisInfo();
 	List<Regisubject> getRegisByUserNo(int userNo);	
-	void deleteRegisubByENo(int enrollNo);
+	void deleteRegisubByENo(int eNo);
+	void deleteRegisubByENoAndStuNo(Map<String, Object> map);
 	Syllabus getSyllabusBySubjectNo(int subNo);
 	Regisubject getRegisByStuNoENo(Map<String, Object> map);
+	Regisubject getRegisByRegiNo(Map<String, Object> map);
+	
 }

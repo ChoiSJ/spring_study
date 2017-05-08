@@ -68,9 +68,8 @@ public class PreportForm {
 	@Override
 	public String toString() {
 		return "PreportForm [enrollno=" + enrollno + ", profno=" + profno + ", title=" + title + ", content=" + content
-				+ ", prost=" + prost + ", proend=" + proend + "]";
+				+ ", prost=" + prost + ", proend=" + proend + ", upfile=" + upfile + ", file=" + file + "]";
 	}
-	
 	
 	
 	

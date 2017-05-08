@@ -105,6 +105,7 @@ public class MessageController {
 				message.setWriter(prof.getId());
 				message.setWriterName(prof.getName());
 				message.setReceiver(receiver);
+				message.setReceiverName(messageService.getReceiverNameById(receiver));
 				
 				if (!file.isEmpty()) {
 					IOUtils.copy(file.getInputStream(), new FileOutputStream(new File(directory, file.getOriginalFilename())));
@@ -123,6 +124,7 @@ public class MessageController {
 					message.setWriter(prof.getId());
 					message.setWriterName(prof.getName());
 					message.setReceiver(stu.getId());
+					message.setReceiverName(messageService.getReceiverNameById(stu.getId()));
 					
 					if (!file.isEmpty()) {
 						IOUtils.copy(file.getInputStream(), new FileOutputStream(new File(directory, file.getOriginalFilename())));
@@ -142,6 +144,7 @@ public class MessageController {
 					message.setWriter(prof.getId());
 					message.setWriterName(prof.getName());
 					message.setReceiver((String) stu.get("STUID"));
+					message.setReceiverName(messageService.getReceiverNameById((String) stu.get("STUID")));
 					
 					if (!file.isEmpty()) {
 						IOUtils.copy(file.getInputStream(), new FileOutputStream(new File(directory, file.getOriginalFilename())));
