@@ -38,16 +38,6 @@
                         </ul>
                     </li>
                     <li>
-                        <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-5">
-                            <span class="sidebar-icon"></span><span class="sidebar-title">재학 관리</span>                            <b class="caret"></b>
-                        </a>
-                        <ul id="submenu-5" class="panel-collapse collapse panel-switch" role="menu">
-                            <li><a href="stuReport"><i class="fa fa-caret-right"></i>과제 관리</a></li>
-                            <li><a href="stuAttendance"><i class="fa fa-caret-right"></i>출결 관리</a></li>
-                            <li><a href="studenttime"><i class="fa fa-caret-right"></i>시간표</a></li>
-                        </ul>
-                    </li>
-                    <li>
                         <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-6">
                             <span class="sidebar-icon"></span><span class="sidebar-title">수강 신청</span>
                             <b class="caret"></b>
@@ -55,6 +45,16 @@
                         <ul id="submenu-6" class="panel-collapse collapse panel-switch" role="menu">
                             <li><a href="enrollMain"><i class="fa fa-caret-right"></i>수강 신청</a></li>
                             <li><a href="nowEnrollList"><i class="fa fa-caret-right"></i>수강 목록</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-5">
+                            <span class="sidebar-icon"></span><span class="sidebar-title">재학 관리</span>                            <b class="caret"></b>
+                        </a>
+                        <ul id="submenu-5" class="panel-collapse collapse panel-switch" role="menu">
+                            <li><a href="stuReport"><i class="fa fa-caret-right"></i>과제 관리</a></li>
+                            <li><a href="stuAttendance"><i class="fa fa-caret-right"></i>출결 관리</a></li>
+                            <li><a href="studenttime"><i class="fa fa-caret-right"></i>시간표</a></li>
                         </ul>
                     </li>
                     <li>

@@ -79,4 +79,11 @@ public class MakeupLessonServiceImpl implements MakeupLessonService {
 		
 		makeuplessondao.updateMakeupLesson(subjectNo);
 	}
+	
+	//최근 설정 조회
+	@Override
+	public MakeupLessonAll getMakeupLessonSelect(int subjectNo) {
+		
+		return makeuplessondao.getMakeupLessonSelect(subjectNo);
+	}
 }

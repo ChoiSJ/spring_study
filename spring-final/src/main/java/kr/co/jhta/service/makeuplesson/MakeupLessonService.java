@@ -35,4 +35,7 @@ public interface MakeupLessonService {
 	
 	//취소 업데이트
 	void updateMakeupLesson(int subjectNo);
+	
+	//최근 설정 조회
+	MakeupLessonAll getMakeupLessonSelect(int subjectNo);
 }

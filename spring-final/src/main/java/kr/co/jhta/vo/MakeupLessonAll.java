@@ -16,6 +16,7 @@ public class MakeupLessonAll {
 	private String subjectTime;
 	private int supplementLectureNo;
 	private String makeupLessonRegister;
+	private String makeupDate;
 	
 	@Override
 	public String toString() {
@@ -24,93 +25,132 @@ public class MakeupLessonAll {
 				+ supplementLectureCheck + ", professorNumber=" + professorNumber + ", majorOption=" + majorOption
 				+ ", majorScore=" + majorScore + ", subjectLectureNumber=" + subjectLectureNumber + ", subjectDate="
 				+ subjectDate + ", subjectTime=" + subjectTime + ", supplementLectureNo=" + supplementLectureNo
-				+ ", makeupLessonRegister=" + makeupLessonRegister + "]";
+				+ ", makeupLessonRegister=" + makeupLessonRegister + ", makeupDate=" + makeupDate + "]";
 	}
-	
+
 	public String getProfessorId() {
 		return professorId;
 	}
+
 	public void setProfessorId(String professorId) {
 		this.professorId = professorId;
 	}
+
 	public int getSubjectNo() {
 		return subjectNo;
 	}
+
 	public void setSubjectNo(int subjectNo) {
 		this.subjectNo = subjectNo;
 	}
+
 	public String getMajorCode() {
 		return majorCode;
 	}
+
 	public void setMajorCode(String majorCode) {
 		this.majorCode = majorCode;
 	}
+
 	public String getSubjectName() {
 		return subjectName;
 	}
+
 	public void setSubjectName(String subjectName) {
 		this.subjectName = subjectName;
 	}
+
 	public String getProfessorName() {
 		return professorName;
 	}
+
 	public void setProfessorName(String professorName) {
 		this.professorName = professorName;
 	}
+
 	public String getSupplementLectureCheck() {
 		return supplementLectureCheck;
 	}
+
 	public void setSupplementLectureCheck(String supplementLectureCheck) {
 		this.supplementLectureCheck = supplementLectureCheck;
 	}
+
 	public String getProfessorNumber() {
 		return professorNumber;
 	}
+
 	public void setProfessorNumber(String professorNumber) {
 		this.professorNumber = professorNumber;
 	}
+
 	public String getMajorOption() {
 		return majorOption;
 	}
+
 	public void setMajorOption(String majorOption) {
 		this.majorOption = majorOption;
 	}
+
 	public int getMajorScore() {
 		return majorScore;
 	}
+
 	public void setMajorScore(int majorScore) {
 		this.majorScore = majorScore;
 	}
+
 	public int getSubjectLectureNumber() {
 		return subjectLectureNumber;
 	}
+
 	public void setSubjectLectureNumber(int subjectLectureNumber) {
 		this.subjectLectureNumber = subjectLectureNumber;
 	}
+
 	public String getSubjectDate() {
 		return subjectDate;
 	}
+
 	public void setSubjectDate(String subjectDate) {
 		this.subjectDate = subjectDate;
 	}
+
 	public String getSubjectTime() {
 		return subjectTime;
 	}
+
 	public void setSubjectTime(String subjectTime) {
 		this.subjectTime = subjectTime;
 	}
+
 	public int getSupplementLectureNo() {
 		return supplementLectureNo;
 	}
+
 	public void setSupplementLectureNo(int supplementLectureNo) {
 		this.supplementLectureNo = supplementLectureNo;
 	}
+
 	public String getMakeupLessonRegister() {
 		return makeupLessonRegister;
 	}
+
 	public void setMakeupLessonRegister(String makeupLessonRegister) {
 		this.makeupLessonRegister = makeupLessonRegister;
 	}
+
+	public String getMakeupDate() {
+		return makeupDate;
+	}
+
+	public void setMakeupDate(String makeupDate) {
+		this.makeupDate = makeupDate;
+	}
+	
+	
+	
+	
 	
 	
 }

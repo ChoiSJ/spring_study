@@ -120,7 +120,11 @@ $(function() {
 	      			</c:forEach>
 	      		</tbody>
 	      	</table>
-      </div>
+	      </div>
+	    <div class="row text-center" style="padding: 20px;">
+	      	<hr />
+      		<p><font size="4;">현재  수강 학점 : <span id="applyScore">${applyScore}</span></font></p>
+    	</div>
     </div>
 </body>
 </html>

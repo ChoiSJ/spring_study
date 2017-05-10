@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.co.jhta.dao.user.EnrollDao;
-import kr.co.jhta.dao.user.RegisubjectDao;
 import kr.co.jhta.service.lecture.LectureService;
 import kr.co.jhta.service.sitemap.SitemapService;
+import kr.co.jhta.service.user.EnrollService;
+import kr.co.jhta.service.user.RegisubjectService;
 import kr.co.jhta.vo.Semester;
 import kr.co.jhta.vo.SiteMap;
 
@@ -29,10 +29,10 @@ public class AdminRegisterSubjectController {
 	private LectureService lectureService;
 	
 	@Autowired
-	private RegisubjectDao regiSubjectDao;
+	private RegisubjectService regisubjectService;
 	
 	@Autowired
-	private EnrollDao enrollDao;
+	private EnrollService enrollService;
 	
 	@RequestMapping(value="/admin/adminregsubject", method=RequestMethod.GET)
 	public String adminRegSubject(Model model) {
@@ -53,7 +53,7 @@ public class AdminRegisterSubjectController {
 	@RequestMapping(value="/admin/adminregsubjectmenu", method=RequestMethod.POST)
 	public @ResponseBody List<SiteMap> adminRegSubjectGetMajor(String dept) {
 		SiteMap siteMap = new SiteMap();
-		siteMap.setPreCode(dept);;
+		siteMap.setPreCode(dept);
 		
 		return sitemapService.getAllSitemapSecService(siteMap);
 	}
@@ -171,10 +171,10 @@ public class AdminRegisterSubjectController {
 		return "administer/adminregstudent";
 	}
 	
-	@RequestMapping("/adminstudelete")
-	public String adminStuDelete(int dno) {
-		regiSubjectDao.deleteRegisubByENo(dno);
-		enrollDao.updateMinusNowNum(dno);
+	@RequestMapping("admin/adminstudelete")
+	public String adminStuDelete(int dno, int stuNo) {
+		regisubjectService.deleteRegisubByENoAndStuNoService(dno, stuNo);
+		enrollService.updateMinusNowNumService(dno);
 		
 		return "redirect:/admin/adminregstudent";
 	}

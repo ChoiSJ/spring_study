@@ -400,11 +400,11 @@
 			sc.S_TEST as "score.test",
 			  s.J_NO as "subject.no",
 			  s.J_T_CODE as "subject.siteCode.code",
-			  s.J_IS_PASSED as "subject.passed.passedName", 
+			  ip.IS_PASSED as "subject.passed.passedName", 
 			  s.J_GRADE as "subject.grade", 
 			  s.J_SUBJECT_NAME as "subject.subjectName", 
 			  s.J_SCORE as "subject.score",
-			  s.J_SUB_PROF as "subject.professor.name",
+			  prof.U_PROF_NAME as "subject.professor.name",
 			  s.J_SEMESTER as "subject.selectNo.no",
 			  	sem.S_SEME_SELECT as "subject.selectNo.semeSelect",
 				 t.T_NO as "subject.siteCode.no",
@@ -416,14 +416,18 @@
 				R_REGISUBJECT r,
 				S_SCORE sc,
 				U_STUDENT u,
-				S_SEMESTER sem
+				S_SEMESTER sem,
+				U_PROFESSOR prof,
+				J_IS_PASSED ip
 		where 
 			t.T_CODE = s.J_T_CODE
 		and r.J_NO = s.J_NO
 		and sem.S_NO = s.J_SEMESTER
 		and sc.REGISTER = r.R_REGI_NO
 		and r.U_STU_NO = u.U_STU_NO
-		and r.U_STU_NO = #{sno }
+		and s.J_SUB_PROF = prof.U_PROF_ID
+		and ip.PASS_CODE = s.J_IS_PASSED
+		and r.U_STU_NO = #{sno}
 		order by r.R_REGI_NO
 	</select>
 	

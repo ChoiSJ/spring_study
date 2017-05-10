@@ -55,7 +55,7 @@
 <%@ include file="/WEB-INF/views/navi/profnavi.jsp" %>
 <%@ include file="/WEB-INF/views/navi/sidebarprof.jsp" %>
 <input type="text" value="${param.sylPass }" id="sylPass"/>
-	<div class="container">
+	<div class="container" style="margin-left:250px; padding-top:25px;">
 		<h1>새 강의계획서 등록하기</h1>
 		<hr class="one">
 		<div class="row well">

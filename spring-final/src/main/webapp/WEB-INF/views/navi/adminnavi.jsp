@@ -160,6 +160,7 @@
 						      <li><a href="scorelist.do" style="color: white;">성적 관리</a></li>
 						      <li><a href="supplementLecture.do" style="color: white;">휴강 관리</a></li>
 						      <li><a href="makeuplesson.do" style="color: white;">보강 관리</a></li>
+						      <li><a href="openLectureTableAll.do" style="color: white;">평가 관리</a></li>
     						</ul>
                     </div>
                     

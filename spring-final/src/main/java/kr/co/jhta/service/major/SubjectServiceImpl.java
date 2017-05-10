@@ -1,6 +1,8 @@
 package kr.co.jhta.service.major;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import kr.co.jhta.vo.Subject;
 import kr.co.jhta.vo.SubjectEditForm;
 import kr.co.jhta.vo.SubjectIsPassed;
 import kr.co.jhta.vo.SubjectSearchForm;
+import kr.co.jhta.vo.stu.EnrollSearchForm;
 
 @Service
 public class SubjectServiceImpl implements SubjectService{
@@ -83,5 +86,23 @@ public class SubjectServiceImpl implements SubjectService{
 	@Override
 	public Subject getByENoList(int no) {
 		return subjectDao.getByENoList(no);
+	}
+
+	@Override
+	public Subject getsubByEnrollNoService(int eno) {
+		return subjectDao.getsubByEnrollNo(eno);
+	}
+
+	@Override
+	public List<Subject> searchEnrollByOptionService(EnrollSearchForm enrollSerachForm) {
+		return subjectDao.searchEnrollByOption(enrollSerachForm);
+	}
+
+	@Override
+	public List<Subject> getEnrollListByTcodeService(int stuGrade, String stuTcode) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("stuGrade", stuGrade);
+		map.put("stuTcode", stuTcode);
+		return subjectDao.getEnrollListByTcode(map);
 	}
 }

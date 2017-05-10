@@ -108,7 +108,7 @@ $(function() {
 						<td>${stu.SUBGRADE }</td>
 						<td>${stu.ISPASSED }</td>
 						<td class="text-center">
-							<a href="adminstudelete?dno=${stu.enroll.no }" class="btn btn-xs btn-default">삭제</a>
+							<a href="adminstudelete?dno=${stu.enroll.no }&stuNo=${stu.NO }" class="btn btn-xs btn-default">삭제</a>
 						</td>
 					</tr>
 				</c:forEach>

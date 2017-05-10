@@ -88,8 +88,7 @@
 										<c:choose>
 												<c:when test="${regilistab.score.test eq 'N'}">
 													<td align="center" colspan="2">미평가</td>
-													<td align="center"><a href="../lecturerating.do?scoreNo=${regilistab.score.no }&subjectNo=${regilistab.subject.no}"><i class="material-icons" style="color: black">rate_review</i></a></td>
-											
+													<td align="center"><a href="lecturerating.do?scoreNo=${regilistab.score.no }&subjectNo=${regilistab.subject.no}"><i class="material-icons" style="color: black">rate_review</i></a></td>
 												</c:when>
 												<c:otherwise>
 													<td align="center">${regilistab.score.credit}</td>

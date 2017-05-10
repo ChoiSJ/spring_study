@@ -12,7 +12,6 @@ public interface RegisubjectService {
 
 	List<Regisubject> getAllRegisInfoService();
 	List<Regisubject> getRegisByUserNoService(int userNo);
-	void deleteRegisubByENoService(int eNo, int stuNo);
 	void deleteRegisubByENoAndStuNoService(int eNo, int stuNo);
 	Syllabus getSyllabusBySubjectNoService(int subNo);
 	Regisubject getRegisByStuNoENoService(int stuNo, int eNo);

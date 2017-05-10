@@ -3,7 +3,113 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.jhta.dao.major.SubjectDao">
+
+	<select id="getEnrollListByTcode" parameterType="map" resultType="subject">
+		select
+			A.E_NO as "enroll.no",
+			A.E_ENROLLNUM as "enroll.enrollNum",
+			A.E_ENROLLDAY as "enroll.enrollDay",
+			A.E_ENROLLTIME as "enroll.enrollTime",
+			B.J_T_CODE as "siteCode.code",
+			B.J_NO as no,
+			B.J_SUBJECT_NAME as subjectName,
+			B.J_GRADE as grade,
+			B.J_SCORE as score,
+			B.J_LIMIT_STU as limitStu,
+			C.U_prof_name as "professor.name",
+			D.S_SEME_SELECT as "selectNo.semeSelect",
+			E.IS_PASSED as "passed.passedName",
+			F.T_NAME as "siteCode.name"
+		FROM
+			E_ENROLLMENT A, J_SUBJECT B, U_PROFESSOR C, S_SEMESTER D,
+			 J_IS_PASSED E, T_SITEMAP F
+		WHERE
+			A.E_J_SUBJECT_NO = B.J_NO
+		AND
+			B.J_SUB_PROF = C.U_PROF_ID
+		AND
+			B.J_SEMESTER = D.S_NO
+		AND
+			B.J_IS_PASSED = E.PASS_CODE
+		AND
+			B.J_T_CODE = F.T_CODE
+		AND
+			B.J_GRADE = #{stuGrade}
+		AND
+			B.J_T_CODE = #{stuTcode}
+	</select>
 	
+	<select id="searchEnrollByOption" parameterType="kr.co.jhta.vo.stu.EnrollSearchForm" resultType="subject">
+		select
+			A.E_NO as "enroll.no",
+			A.E_ENROLLNUM as "enroll.enrollNum",
+			A.E_ENROLLDAY as "enroll.enrollDay",
+			A.E_ENROLLTIME as "enroll.enrollTime",
+			B.J_T_CODE as "siteCode.code",
+			B.J_NO as no,
+			B.J_SUBJECT_NAME as subjectName,
+			B.J_GRADE as grade,
+			B.J_SCORE as score,
+			B.J_LIMIT_STU as limitStu,
+			C.U_prof_name as "professor.name",
+			D.S_SEME_SELECT as "selectNo.semeSelect",
+			E.IS_PASSED as "passed.passedName",
+			F.T_NAME as "siteCode.name"
+		FROM
+			E_ENROLLMENT A, J_SUBJECT B, U_PROFESSOR C, S_SEMESTER D,
+			 J_IS_PASSED E, T_SITEMAP F
+		WHERE
+			A.E_J_SUBJECT_NO = B.J_NO
+		AND
+			B.J_SUB_PROF = C.U_PROF_ID
+		AND
+			B.J_SEMESTER = D.S_NO
+		AND
+			B.J_IS_PASSED = E.PASS_CODE
+		AND
+			B.J_T_CODE = F.T_CODE
+		<if test="selectMajor != null">
+			AND B.J_T_CODE = #{selectMajor}		
+		</if>
+		<if test="option1 != null">
+			AND	B.J_GRADE like '%'||#{option1}||'%'
+		</if>
+		<if test="searchInput != null ">	
+			AND B.J_SUBJECT_NAME like '%'||#{searchInput}||'%'
+		</if>
+	</select>
+	
+	<select id="getsubByEnrollNo" parameterType="int" resultType="subject">
+		select
+			A.j_no as no,
+			A.j_score as score,
+			A.j_limit_stu as limitStu,
+			A.j_subject_name as subjectName,
+			E.t_code as "siteCode.code",
+			C.u_prof_id as "professor.id",
+			C.u_prof_name as "professor.name",
+			D.s_seme_select as "selectNo.semeSelect",
+			A.j_grade as grade,
+			B.is_passed as "passed.passedName",
+			E.t_name as "siteCode.name",
+			F.E_No as "enroll.no",
+			F.E_enrollday as "ernoll.enrollDay",
+			F.E_enrolltime as "enroll.enrollTime"
+		from 
+			j_subject A, j_is_passed B, u_professor C, s_semester D, t_sitemap E, E_Enrollment F
+		where 
+			A.j_sub_prof = C.u_prof_id
+		and
+			A.j_semester = D.s_no
+		and
+			A.j_is_passed = B.pass_code
+		and
+			A.j_t_code = E.t_code
+		and
+			F.e_j_subject_no = A.j_no
+		and 
+			F.E_No = #{value}
+	</select>
 	
 	 <insert id="addSubject" parameterType="subject">
 		insert into j_subject
@@ -217,7 +323,7 @@
   		delete 
   			from J_subject
   		where
-  			 j_no = #{no}
+  			j_no = #{no}
 	</delete>
 	<update id="subupdate" parameterType="subject">
 		update j_subject

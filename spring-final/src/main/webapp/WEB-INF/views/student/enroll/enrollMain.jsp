@@ -13,6 +13,34 @@
 <script type="text/javascript">
 $(function() {
 	
+	$("#select-dept").change(function() {
+		var dept = $(this).val();
+		
+		if(dept=="") {
+			$("#select-major").empty();
+			return false;
+		}
+		
+		$.ajax({
+			type: "POST",
+			url: "stuSubjectmenu/" + dept,
+			dataType: "json",
+			success: function(data) {
+				$("#select-major").empty();					
+				
+				// data 가 없을 경우 data.length 가 0 이라서 실행되지 않는다.
+				for (var i=0; i<data.length; i++) {
+					$("#select-major").append("<option value="+data[i].code+">"+data[i].name+"</option>");	
+				}
+				
+				// data 가 없을 경우 학과선택을 표시하게 하는 코드
+				if (data.length == 0) {
+					$("#select-major").append("<option value='0'>학과선택</option>");	
+				}
+			}
+		});
+	});
+	
 	var isApplicantCheck = $("#isApplicantCheck").val();
 	
 	var isApplicant = false;
@@ -21,7 +49,6 @@ $(function() {
 		
 	webSocket.onmessage = function(event) {
 		if(!isApplicant) {
-			var limitApplicant = $("#sub-limitNumber").val();
 			var regiEnrollNo = $("#regi-EnrollNumber").val();
 			
 			var data = event.data.split(":");
@@ -34,11 +61,18 @@ $(function() {
 			// 수강 신청 잇때
 			if(data[0] == "up") {
 		
-				$("#applicant-box-" + data[2]).empty();							
-				if(data[3] == limitApplicant) {
-					$("#applicant-box-" + data[2]).text("<strong><font color='red'>마감</font></strong>");
+				$("#applicant-box-" + data[2]).empty();
+				$("#enroll-box-" + data[2]).empty();
+				if(data[3] == data[4]) {
+					var applicantContent = "<strong><font color='red'>마감</font></strong>"
+					$("#applicant-box-" + data[2]).append(applicantContent);
+					$("#enroll-box-" + data[2]).append(applicantContent);
+					return;
 				} else {
-					$("#applicant-box-" + data[2]).text(data[3] + " / " + limitApplicant);
+					var apllicantEnrollContent = "<a href='enrollSend?enrollNo="+data[2]+"&plusScore="+data[5]+"' class='btn btn-default'>신청</a>";
+					$("#applicant-box-" + data[2]).text(data[3] + " / " + data[4]);
+					$("#enroll-box-" + data[2]).append(apllicantEnrollContent);
+					return;
 				}
 				
 			}
@@ -46,13 +80,21 @@ $(function() {
 			// 수강 취소 일때
 			if(data[0] == "down") {
 				$("#applicant-box-" + data[2]).empty();
-				$("#applicant-box-" + data[2]).text(data[3] + " / " + limitApplicant);
-			}
-			
-			
-			
-			if(data[1]) {
-				$("#applicant-box-" + data[0]).text(data[1]);				
+				$("#enroll-box-" + data[2]).empty();
+				var data3 = parseInt(data[3]);
+				var data4 = parseInt(data[4]);
+				 var apllicantEnrollContent2 = "<a href='enrollSend?enrollNo="+data[2]+"&plusScore=+"+data[5]+"' class='btn btn-default'>신청</a>";
+				// 값 비교후 신청 버튼 활성화
+				if(data3 == (data4-1) ) {
+					$("#applicant-box-" + data[2]).text(data[3] + " / " + data[4]);
+					$("#enroll-box-" + data[2]).append(apllicantEnrollContent2);
+					return;
+				} else {
+					$("#applicant-box-" + data[2]).text(data[3] + " / " + data[4]);
+					$("#enroll-box-" + data[2]).append(apllicantEnrollContent2);
+					return;
+				}
+				
 			}
 			console.log(data);
 		}
@@ -61,6 +103,11 @@ $(function() {
 	
 	if($("#add-False").val() == "true" ) {
 		alert("최대 학점이상 신청할 수 없습니다.");
+		return;
+	}
+	
+	if($("#regi-False").val() == "true" ) {
+		alert("다른 과목과 시간이 겹칩니다.");
 		return;
 	}
 	
@@ -76,28 +123,6 @@ $(function() {
 		$("#enrollSend").css("disabled", "disabled");
 	}
 	
-	$("#select-dept").change(function() {
-		var dept = $(this).val();
-		
-		if(dept=="") {
-			$("#select-major").empty();
-			return false;
-		}
-		
-		$.ajax({
-			url: "enrollSubjectSearch?dept=" + dept,
-			dataType: "json",
-			type: "POST",
-			success: function(data) {
-				$("#select-major").empty();
-				
-				for (var i=0; i<data.length; i++) {
-					$("#select-major").append("<option value="+data[i].code+">"+data[i].name+"</option>");
-				}
-			}
-		});
-	});
-	
 })
 </script>
 </head>
@@ -107,6 +132,9 @@ $(function() {
    <div class="container" style="margin-left: 250px; padding-top:25px; ">
    <c:if test="${param.addFalse != '' }">
 		<input type="hidden" value="${param.addFalse}" id="add-False">   
+   </c:if>
+   <c:if test="${param.regiDayPass != '' }">
+   		<input type="hidden" value="${param.regiDayPass }" id="regi-False">
    </c:if>
     <div class="row text-right">
          	홈 > 수강 신청
@@ -120,10 +148,10 @@ $(function() {
 			<form method="post" action="enrollMain" >
 				<select class="w3-select w3-border" name="option1" style="width: 8%; height: 37px;">
 					<option value="gradeAll">전체</option>
-					<option value="grade1">1 학년</option>
-					<option value="grade2">2 학년</option>
-					<option value="grade3">3 학년</option>
-					<option value="grade4">4 학년</option>
+					<option value="1">1 학년</option>
+					<option value="2">2 학년</option>
+					<option value="3">3 학년</option>
+					<option value="4">4 학년</option>
 				</select>
 				<select class="w3-select w3-border" name="dept" id="select-dept" style="width: 16%; height: 37px;">
 					<option value="">학부</option>
@@ -131,7 +159,7 @@ $(function() {
 						<option value="${dept.code }">${dept.name }</option>
 					</c:forEach>
 				</select>
-				<select class="w3-select w3-border" name="select-major" id="select-major" style="width: 16%; height: 37px;">
+				<select class="w3-select w3-border" name="selectMajor" id="select-major" style="width: 16%; height: 37px;">
 					<option value="siteAll">전공</option>
 				</select>
 				<input type="text" name="searchInput" style="width: 30%; height: 37px;"/>
@@ -181,7 +209,6 @@ $(function() {
 	      					<th>${subject.enroll.enrollTime }</th>	<!-- 강의 시간 -->
 	      					<th>${subject.score }</th>	<!-- 학점 -->
 	      					<th id="applicant-box-${subject.enroll.no }">
-	      					<input type="hidden" id="sub-limitNumber" value="${subject.limitStu}"/>
 	      						<c:choose>
 	      							<c:when test="${subject.enroll.enrollNum eq subject.limitStu}">
 	      								<strong><font color="red">마감</font></strong>
@@ -191,7 +218,7 @@ $(function() {
 	      							</c:otherwise>
 	      						</c:choose>	  
 	      					</th>    					
-	      					<th>
+	      					<th id="enroll-box-${subject.enroll.no }">
 	      						<c:set var="isExist" value="false" /> 
       							<c:forEach var="regisub" items="${regisubList }">
     								<c:if test="${regisub.subject.no eq subject.no }">

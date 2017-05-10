@@ -48,7 +48,7 @@
 				contentType:"application/json; charset=UTF-8",
 				type:"json",
 				success:function(){
-					window.location.href="http://localhost:8051/jhta/admin/attinfolist.do?stuno="+stuno;
+					window.location.href="http://localhost/jhta/admin/attinfolist.do?stuno="+stuno;
 				}
 			});
 		});
@@ -81,10 +81,10 @@
 							<td>
 							<div class="radio" id="rbtn_${status.index }">
 									<label class="radio-inline">
-  										<input type="radio" name="in_${status.index }" id="inlineRadio1_${status.index }" value="Y" checked="checked"> 출석
+  										<input type="radio" name="in_${status.index }" id="inlineRadio1_${status.index }" value="Y"> 출석
 									</label>
 									<label class="radio-inline">
-  										<input type="radio" name="in_${status.index }" id="inlineRadio2_${status.index }" value="N" > 결석
+  										<input type="radio" name="in_${status.index }" id="inlineRadio2_${status.index }" value="N" checked="checked"> 결석
 									</label>
 									<label class="radio-inline">
   										<input type="radio" name="in_${status.index }" id="inlineRadio3_${status.index }" value="R" > 지각

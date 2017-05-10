@@ -104,6 +104,9 @@ $(function() {
 	     		</c:if>
 	     	</tbody>
 	     </table> 
+	     <div class="form-group text-right">
+	     	<a href="stuReport" class="btn btn-default">뒤로가기</a>
+	     </div>
 	</div>
 </div>
 </body>

@@ -26,9 +26,9 @@
 <body>
 <%@ include file="/WEB-INF/views/navi/profnavi.jsp" %>
 <%@ include file="/WEB-INF/views/navi/sidebarprof.jsp" %>
-<input type="text" value="${param.subPass }" id="subPass"/>
-<input type="text" value="${param.dayPass }" id="dayPass"/>
-	<div class="container">
+<input type="hidden" value="${param.subPass }" id="subPass"/>
+<input type="hidden" value="${param.dayPass }" id="dayPass"/>
+	<div class="container" style="margin-left:250px; padding-top:25px;">
 		<h1>새 강의등록하기</h1>
 		<hr class="one">
 		<div class="row well">

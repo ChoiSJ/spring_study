@@ -28,7 +28,9 @@ $(function () {
 				console.log(img);
 				var width = pdf.internal.pageSize.width;
 				var height = pdf.internal.pageSize.height;
-				pdf.addImage(img,'PNG', 0, 0, width, height);
+				pdf.setFontSize(30);
+				pdf.text(35, 25, 'Score');
+				pdf.addImage(img,'PNG', 15, 40, 575, 500);
 		        pdf.save('score.pdf'); 
 			}
         });

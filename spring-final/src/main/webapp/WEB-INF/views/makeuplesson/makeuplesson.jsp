@@ -52,7 +52,7 @@
                    var $modalApplecation = $("#modalApplecation").empty();
 
                    var html = '<div class="modal-header">';
-                   html += '<h4 class="modal-title" id="gridSystemModalLabel">보강 신청</h4>';
+                   html += '<h4 class="modal-title" id="gridSystemModalLabel">보강 신청 상세 정보</h4>';
                    html += '</div>';
                    html += '<div class="modal-body">';
                    html += '<div class="container">';
@@ -159,9 +159,21 @@
                    html += '</div>';
                    html += '<div class="col-sm-3"></div>';
                    html += '</div>';
-
+				   html += '</form>';
                    html += '</div>';
                    html += '</div>';
+                   
+                   html +='<hr>';
+                   html +='<h4>보강 일정 및 시간</h4>';
+                   html +='<div class="row">';
+                   html +='<div class="col-sm-1"></div>';
+                   html +='<div class="col-sm-1"><label>요&nbsp;&nbsp;&nbsp;&nbsp;일:</label></div>';
+                   html +='<div class="col-sm-8">';
+                   html +='<input class="form-control" name="makeupDate" type="date"/>';
+                   html +='</div>';
+                   html +='<div class="col-sm-2"></div>';
+                   html +='</div>';
+                   html +='<div class="row" style="height: 10px"></div>';   
                    html += '</div>';
                    html += '</div>';
                    html += '<div class="modal-footer">';
@@ -172,9 +184,14 @@
 
                    $modalApplecation.append(html);
 
+                	   
                    //보강 신청 버튼 처리
-                   $("button[id^='supplementLectureApplicationAdd-']").on("click", function() {
+                   $("button[id^='supplementLectureApplicationAdd-']").on("click", function(event) {
 
+                   if($(":input[name='makeupDate']").val() == ""){
+                	   event.preventDefault();
+                	   alert("보강 날짜를 선택하세요.");
+                   }else{
                        var register = $(":input[name='supplementLectureCheck']").val()
 
                        var userInformaiton = {
@@ -188,6 +205,7 @@
                            majorOption: $(":input[name='majorOption']").val(),
                            subjectTime: $(":input[name='subjectTime']").val(),
                            subjectDate: $(":input[name='subjectDate']").val(),
+                           makeupDate: $(":input[name='makeupDate']").val(),
                            makeupLessonRegister: $(":input[name='makeupLessonRegister']").attr("value").replace("n", "y")
                        }
 
@@ -206,7 +224,7 @@
                                //신청 번호 취소로 바꾸는 코딩
                                if (buttonNo == subjectNo) {
 
-                                   $("#supplementLectureTr-" + subjectNo + "").empty();
+                                   $("#supplementLectureTr-" + subjectNo + "").hide();
 
                                    var $table = $("#subjectListaddList");
 
@@ -220,15 +238,15 @@
                                    var majorOption = data.majorOption;
                                    var majorScore = data.majorScore;
                                    var subjectLectureNumber = data.subjectLectureNumber;
+                                   var makeupDate = data.makeupDate;
 
                                    var html = '<tr id="supplementLectureTr-' + subjectNo + '">';
-                                   html += '<td style="width: 10%" id="id-' + professorId + '"><label>' + professorId + '</label></td>'
-                                   html += '<td style="width: 10%" id="code-' + majorCode + '"><label>' + majorCode + '</label></td>';
-                                   html += '<td style="width: 15%" id="subjectNo-' + subjectNo + '"><label>' + subjectNo + '</label></td>';
-                                   html += '<td style="width: 15%" id="majorOption' + majorOption + '"><label>' + majorOption + '</label></td>';
-                                   html += '<td style="width: 15%" id="professorName-' + professorName + '"><label>' + professorName + '</label></td>';
-                                   html += '<td style="width: 25%" id="subjectName-' + subjectName + '"><label>' + subjectName + '</label></td>';
-                                   html += '<td style="width: 20%" id="cancleButton">';
+                                   html +='<td style="width: 10%" id="subjectNo-'+subjectNo+'"><label>'+subjectNo+'</label></td>';
+                                   html +='<td style="width: 15%" id="majorOption' + majorOption + '"><label>' + majorOption + '</label></td>';
+                                   html +='<td style="width: 15%" id="professorName-' + professorName + '"><label>' + professorName + '</label></td>';
+                                   html +='<td style="width: 25%" id="subjectName-' + subjectName + '"><label>' + subjectName + '</label></td>';
+                                   html +='<td style="width: 25%" id="subjectDate-'+makeupDate+'"><label>'+makeupDate+'</label></td>';
+                                   html += '<td style="width: 10%" id="cancleButton">';
                                    html += '<button id="supplementLectureCancle-' + subjectNo + '" class="mdl-button mdl-js-button mdl-button--accent">';
                                    html += '<i class="glyphicon glyphicon-remove-circle">취소</i>';
                                    html += '</button>';
@@ -237,7 +255,8 @@
 
                                    $table.append(html);
 
-
+                                   alert(subjectName+"을(를) 보강 신청 하였습니다.");
+									
                                }
 
                                //취소 처리
@@ -252,8 +271,11 @@
                                        success: function(data) {
 
                                            var dataNo = data.subjectNo;
-
+                                           var datasubjectName = data.subjectName;
+                                           
                                            $("td:contains(" + dataNo + ")").parents("tr").hide();
+                                           
+                                           $("#supplementLectureTr-" + subjectNo + "").show();
 
                                        }
                                    });
@@ -264,9 +286,10 @@
 
                            }
                        });
+                      }
                    });
 
-
+          
 
 
                }
@@ -392,28 +415,7 @@
                    html += '</div>';
                    html += '<div class="col-sm-3"></div>';
                    html += '</div>';
-
-                   html += '<div class="form-group">';
-                   html += '<div class="col-sm-3">';
-                   html += '<label class="pull-right" style="color: black">보강 신청일:</label>';
-                   html += '</div>';
-                   html += '<div class="col-sm-6">';
-                   html += '<input id="code" class="mdl-textfield__input" type="text"style="width: 200px" name="information" value="' + applicationStartDate + '" disabled="disabled" />';
-                   html += '</div>';
-                   html += '<div class="col-sm-3"></div>';
-                   html += '</div>';
-
-                   html += '<div class="form-group">';
-                   html += '<div class="col-sm-3">';
-                   html += '<label class="pull-right" style="color: black">보강 종료일:</label>';
-                   html += '</div>';
-                   html += '<div class="col-sm-6">';
-                   html += '<input id="code" class="mdl-textfield__input" type="text"style="width: 200px" name="information" value="' + applicationEndDate + '" disabled="disabled" />';
-                   html += '</div>';
-                   html += '<div class="col-sm-3"></div>';
-                   html += '</div>';
-
-
+				   
                    html += '</div>';
                    html += '</div>';
                    html += '</div>';
@@ -439,6 +441,9 @@
                            success: function(data) {
 
                                var dataNo = data.subjectNo;
+                               var datasubjectName = data.subjectName;
+                               
+                               alert(datasubjectName+"을(를) 보강신청을 취소하였습니다.");
 
                                $("td:contains(" + dataNo + ")").parents("tr").hide();
 
@@ -593,7 +598,7 @@
                                            var $modalApplecation = $("#modalApplecation").empty();
 
                                            var html = '<div class="modal-header">';
-                                           html += '<h4 class="modal-title" id="gridSystemModalLabel">보강 신청</h4>';
+                                           html += '<h4 class="modal-title" id="gridSystemModalLabel">보강 신청 상세 정보</h4>';
                                            html += '</div>';
                                            html += '<div class="modal-body">';
                                            html += '<div class="container">';
@@ -700,9 +705,21 @@
                                            html += '</div>';
                                            html += '<div class="col-sm-3"></div>';
                                            html += '</div>';
-
+                        				   html += '</form>';
                                            html += '</div>';
                                            html += '</div>';
+                                           
+                                           html +='<hr>';
+                                           html +='<h4>보강 일정 및 시간</h4>';
+                                           html +='<div class="row">';
+                                           html +='<div class="col-sm-1"></div>';
+                                           html +='<div class="col-sm-1"><label>요&nbsp;&nbsp;&nbsp;&nbsp;일:</label></div>';
+                                           html +='<div class="col-sm-8">';
+                                           html +='<input class="form-control" name="makeupDate" type="date"/>';
+                                           html +='</div>';
+                                           html +='<div class="col-sm-2"></div>';
+                                           html +='</div>';
+                                           html +='<div class="row" style="height: 10px"></div>';   
                                            html += '</div>';
                                            html += '</div>';
                                            html += '<div class="modal-footer">';
@@ -715,97 +732,108 @@
 
                                            //보강 신청 버튼 처리
                                            $("button[id^='supplementLectureApplicationAdd-']").on("click", function() {
+//////////////////////
+                                        	   if($(":input[name='makeupDate']").val() == ""){
+                                            	   event.preventDefault();
+                                            	   alert("보강 날짜를 선택하세요.");
+                                               }else{
+                                            	   
+                                                   var register = $(":input[name='supplementLectureCheck']").val()
 
-                                               var register = $(":input[name='supplementLectureCheck']").val()
+                                                   var userInformaiton = {
+                                                       professorId: $(":input[name='professorId']").val(),
+                                                       professorNumber: $(":input[name='professorNumber']").val(),
+                                                       majorCode: $(":input[name='majorCode']").val(),
+                                                       subjectNo: $(":input[name='subjectNo']").val(),
+                                                       subjectName: $(":input[name='subjectName']").val(),
+                                                       majorScore: $(":input[name='majorScore']").val(),
+                                                       professorName: $(":input[name='professorName']").val(),
+                                                       majorOption: $(":input[name='majorOption']").val(),
+                                                       subjectTime: $(":input[name='subjectTime']").val(),
+                                                       subjectDate: $(":input[name='subjectDate']").val(),
+                                                       makeupDate: $(":input[name='makeupDate']").val(),
+                                                       makeupLessonRegister: $(":input[name='makeupLessonRegister']").attr("value").replace("n", "y")
+                                                   }
 
-                                               var userInformaiton = {
-                                                   professorId: $(":input[name='professorId']").val(),
-                                                   professorNumber: $(":input[name='professorNumber']").val(),
-                                                   majorCode: $(":input[name='majorCode']").val(),
-                                                   subjectNo: $(":input[name='subjectNo']").val(),
-                                                   subjectName: $(":input[name='subjectName']").val(),
-                                                   majorScore: $(":input[name='majorScore']").val(),
-                                                   professorName: $(":input[name='professorName']").val(),
-                                                   majorOption: $(":input[name='majorOption']").val(),
-                                                   subjectTime: $(":input[name='subjectTime']").val(),
-                                                   subjectDate: $(":input[name='subjectDate']").val(),
-                                                   makeupLessonRegister: $(":input[name='makeupLessonRegister']").attr("value").replace("n", "y")
-                                               }
+                                                   var buttonNo = $(":input[name='subjectNo']").val()
+                                                   console.log(subjectNo)
 
-                                               var buttonNo = $(":input[name='subjectNo']").val()
-                                               console.log(subjectNo)
+                                                   $.ajax({
+                                                       type: "POST",
+                                                       url: "makeupLessonUser/",
+                                                       contentType: "application/json", //서버로 보내는 컨텐츠 형식 정의
+                                                       data: JSON.stringify(userInformaiton),
+                                                       success: function(data) {
 
-                                               $.ajax({
-                                                   type: "POST",
-                                                   url: "makeupLessonUser/",
-                                                   contentType: "application/json", //서버로 보내는 컨텐츠 형식 정의
-                                                   data: JSON.stringify(userInformaiton),
-                                                   success: function(data) {
-
-                                                       var subjectNo = data.subjectNo;
-                                                       console.log(subjectNo);
-                                                       //신청 번호 취소로 바꾸는 코딩
-                                                       if (buttonNo == subjectNo) {
-
-                                                           $("#supplementLectureTr-" + subjectNo + "").empty();
-
-                                                           var $table = $("#subjectListaddList");
-
-                                                           var professorId = data.professorId;
                                                            var subjectNo = data.subjectNo;
-                                                           var majorCode = data.majorCode;
-                                                           var subjectName = data.subjectName;
-                                                           var professorName = data.professorName;
-                                                           var makeupLessonRegister = data.makeupLessonRegister;
-                                                           var professorNumber = data.professorNumber;
-                                                           var majorOption = data.majorOption;
-                                                           var majorScore = data.majorScore;
-                                                           var subjectLectureNumber = data.subjectLectureNumber;
+                                                           console.log(subjectNo);
+                                                           //신청 번호 취소로 바꾸는 코딩
+                                                           if (buttonNo == subjectNo) {
 
-                                                           var html = '<tr id="supplementLectureTr-' + subjectNo + '">';
-                                                           html += '<td style="width: 10%" id="id-' + professorId + '"><label>' + professorId + '</label></td>'
-                                                           html += '<td style="width: 10%" id="code-' + majorCode + '"><label>' + majorCode + '</label></td>';
-                                                           html += '<td style="width: 15%" id="subjectNo-' + subjectNo + '"><label>' + subjectNo + '</label></td>';
-                                                           html += '<td style="width: 15%" id="majorOption' + majorOption + '"><label>' + majorOption + '</label></td>';
-                                                           html += '<td style="width: 15%" id="professorName-' + professorName + '"><label>' + professorName + '</label></td>';
-                                                           html += '<td style="width: 25%" id="subjectName-' + subjectName + '"><label>' + subjectName + '</label></td>';
-                                                           html += '<td style="width: 20%" id="cancleButton">';
-                                                           html += '<button id="supplementLectureCancle-' + subjectNo + '" class="mdl-button mdl-js-button mdl-button--accent">';
-                                                           html += '<i class="glyphicon glyphicon-remove-circle">취소</i>';
-                                                           html += '</button>';
-                                                           html += '</td>';
-                                                           html += '</tr>';
+                                                               $("#supplementLectureTr-" + subjectNo + "").hide();
 
-                                                           $table.append(html);
+                                                               var $table = $("#subjectListaddList");
+
+                                                               var professorId = data.professorId;
+                                                               var subjectNo = data.subjectNo;
+                                                               var majorCode = data.majorCode;
+                                                               var subjectName = data.subjectName;
+                                                               var professorName = data.professorName;
+                                                               var makeupLessonRegister = data.makeupLessonRegister;
+                                                               var professorNumber = data.professorNumber;
+                                                               var majorOption = data.majorOption;
+                                                               var majorScore = data.majorScore;
+                                                               var subjectLectureNumber = data.subjectLectureNumber;
+                                                               var makeupDate = data.makeupDate;
+
+                                                               var html = '<tr id="supplementLectureTr-' + subjectNo + '">';
+                                                               html +='<td style="width: 10%" id="subjectNo-'+subjectNo+'"><label>'+subjectNo+'</label></td>';
+                                                               html +='<td style="width: 15%" id="majorOption' + majorOption + '"><label>' + majorOption + '</label></td>';
+                                                               html +='<td style="width: 15%" id="professorName-' + professorName + '"><label>' + professorName + '</label></td>';
+                                                               html +='<td style="width: 25%" id="subjectName-' + subjectName + '"><label>' + subjectName + '</label></td>';
+                                                               html +='<td style="width: 25%" id="subjectDate-'+makeupDate+'"><label>'+makeupDate+'</label></td>';
+                                                               html += '<td style="width: 10%" id="cancleButton">';
+                                                               html += '<button id="supplementLectureCancle-' + subjectNo + '" class="mdl-button mdl-js-button mdl-button--accent">';
+                                                               html += '<i class="glyphicon glyphicon-remove-circle">취소</i>';
+                                                               html += '</button>';
+                                                               html += '</td>';
+                                                               html += '</tr>';
+
+                                                               $table.append(html);
+
+                                                               alert(subjectName+"을(를) 보강 신청 하였습니다.");
+                            									
+                                                           }
+
+                                                           //취소 처리
+                                                           $("button[id^=supplementLectureCancle-]").on("click", function() {
+
+                                                               var subjectNo = $(this).attr("id").replace("supplementLectureCancle-", "");
+
+                                                               $.ajax({
+                                                                   type: "DELETE",
+                                                                   url: "makeupCancle/" + subjectNo,
+                                                                   dataType: 'json',
+                                                                   success: function(data) {
+
+                                                                       var dataNo = data.subjectNo;
+                                                                       var datasubjectName = data.subjectName;
+                                                                       
+                                                                       $("td:contains(" + dataNo + ")").parents("tr").hide();
+                                                                       
+                                                                       $("#supplementLectureTr-" + subjectNo + "").show();
+
+                                                                   }
+                                                               });
+                                                           });
+
+
 
 
                                                        }
-
-                                                       //취소 처리
-                                                       $("button[id^=supplementLectureCancle-]").on("click", function() {
-
-                                                           var subjectNo = $(this).attr("id").replace("supplementLectureCancle-", "");
-
-                                                           $.ajax({
-                                                               type: "DELETE",
-                                                               url: "makeupCancle/" + subjectNo,
-                                                               dataType: 'json',
-                                                               success: function(data) {
-
-                                                                   var dataNo = data.subjectNo;
-
-                                                                   $("td:contains(" + dataNo + ")").parents("tr").hide();
-
-                                                               }
-                                                           });
-                                                       });
-
-
-
-
-                                                   }
+                                                   });
+                                                  }
                                                });
-                                           });
 
 
 
@@ -1193,13 +1221,12 @@
 						<caption></caption>
 						<thead class="mdl-shadow--2dp">
 							<tr>
-								<th style="width: 10%">교수 ID</th>
-								<th style="width: 10%">학과 번호</th>
-								<th style="width: 15%">과목 코드</th>
+								<th style="width: 10%">과목 코드</th>
 								<th style="width: 15%">전공 옵션</th>
 								<th style="width: 15%">담당 교수</th>
 								<th style="width: 25%">과목 이름</th>
-								<th style="width: 20%">신청</th>
+								<th style="width: 25%">보강 신청일</th>
+								<th style="width: 10%">신청</th>
 							</tr>
 						</thead>
 						<tbody id="subjectListaddList"></tbody>

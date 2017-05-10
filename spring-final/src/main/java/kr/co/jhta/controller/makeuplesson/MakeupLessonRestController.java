@@ -60,7 +60,7 @@ public class MakeupLessonRestController {
 		
 		makeuplessonservice.updateMakeupLessonRegister(makeuplesson);
 		
-		return makeuplessonservice.makeupLessonGetTableModal(makeuplesson.getSubjectNo());
+		return makeuplessonservice.getMakeupLessonSelect(makeuplesson.getSubjectNo());
 	}
 	
 	@DeleteMapping(path="makeupCancle/{subjectNo}")

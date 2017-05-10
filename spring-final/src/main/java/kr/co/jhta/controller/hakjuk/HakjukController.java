@@ -1,6 +1,9 @@
 package kr.co.jhta.controller.hakjuk;
 
+import java.io.PrintWriter;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -240,7 +243,7 @@ public class HakjukController {
 	 * @return
 	 */
 	@RequestMapping(value="/addstud", method=RequestMethod.POST)
-	public String addstudent(String studemail,String studemailaddr,AddStudentForm addstud){
+	public String addstudent(String studemail,String studemailaddr,AddStudentForm addstud,HttpServletResponse response) throws Exception{
 		String email = studemail+"@"+studemailaddr;
 		Student stud = new Student();
 		BeanUtils.copyProperties(addstud, stud);
@@ -248,7 +251,7 @@ public class HakjukController {
 		stud.setPwd(addstud.getSsn().split("-")[0]);
 		stud.setProfessor(addstud.getProfessor());
 		hakjukService.admissionsStud(stud,stud.getRegister());
-		return "redirect:/admin/admissionstud";
+		return "redirect:/admin/searchstud";
 	}
 	
 	/**
@@ -275,7 +278,7 @@ public class HakjukController {
 	 */
 	
 	@RequestMapping(value="/addprof", method=RequestMethod.POST)
-	public String addprofessor(String studemail,String studemailaddr,AddProfForm addprof){
+	public String addprofessor(String studemail,String studemailaddr,AddProfForm addprof,HttpServletResponse response) throws Exception{
 		
 		String email = studemail+"@"+studemailaddr;
 		addprof.setAddr(addprof.getAddr1()+addprof.getAddr2());

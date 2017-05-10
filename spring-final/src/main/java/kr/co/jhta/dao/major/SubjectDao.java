@@ -1,6 +1,7 @@
 package kr.co.jhta.dao.major;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -8,6 +9,7 @@ import kr.co.jhta.vo.Subject;
 import kr.co.jhta.vo.SubjectEditForm;
 import kr.co.jhta.vo.SubjectIsPassed;
 import kr.co.jhta.vo.SubjectSearchForm;
+import kr.co.jhta.vo.stu.EnrollSearchForm;
 
 @Transactional
 public interface SubjectDao {
@@ -39,4 +41,10 @@ List<Subject> getAllList();
 	List<Subject> getallenroll();
 	
 	Subject getByENoList(int no);
+	
+	Subject getsubByEnrollNo(int eno);
+	
+	List<Subject> searchEnrollByOption(EnrollSearchForm enrollSerachForm);
+	
+	List<Subject> getEnrollListByTcode(Map<String, Object> map);
 }

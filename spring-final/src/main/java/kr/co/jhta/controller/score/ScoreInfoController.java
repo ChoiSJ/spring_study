@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import kr.co.jhta.dao.score.ScoreDao;
 import kr.co.jhta.vo.SemesterAvg;
 import kr.co.jhta.vo.stu.Regisubject;
@@ -15,6 +16,7 @@ import kr.co.jhta.vo.stu.Student;
 public class ScoreInfoController {
 	@Autowired
 	private ScoreDao scoreDao;
+	
 	
 	@RequestMapping("/admin/scoreInfo.do")
 	public String scoreInfo(@RequestParam String stuno, Model model){
@@ -31,4 +33,5 @@ public class ScoreInfoController {
 		model.addAttribute("stuinfo", stuinfo);
 		return "score/scoreInfoList";
 	}
+	
 }

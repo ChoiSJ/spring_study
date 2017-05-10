@@ -126,7 +126,7 @@
 	        		</tr>
 	        		<tr>
 	        			<th>지도교수</th>
-	        			<td><c:out value="${student.professor }"/> 교수</td>
+	        			<td><c:out value="${student.professor }"/></td>
 	        			<th>입학 년도</th>
 	        			<td>
 	        				<fmt:formatDate value="${student.enterDate }" pattern="yyyy년 MM월 dd일"/>

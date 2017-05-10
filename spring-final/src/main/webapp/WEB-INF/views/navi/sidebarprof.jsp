@@ -48,16 +48,6 @@
                         </ul>
                     </li>
                     <li>
-                        <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-6">
-                            <span class="sidebar-icon"></span><span class="sidebar-title">평가 관리</span>
-                            <b class="caret"></b>
-                        </a>
-                        <ul id="submenu-6" class="panel-collapse collapse panel-switch" role="menu">
-                            <li><a href="/jhta/prof/openratingregister.do"><i class="fa fa-caret-right"></i>강의 평가 등록</a></li>
-                            <li><a href="/jhta/prof/openLectureTableAll.do"><i class="fa fa-caret-right"></i>강의 평가 조회</a></li>
-                        </ul>
-                    </li>
-                    <li>
                         <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-7">
                             <span class="sidebar-icon"></span><span class="sidebar-title">게시판</span>
                             <b class="caret"></b>

@@ -123,7 +123,7 @@
 				U_STU_PARENTNAME as parentName, 
 				U_STU_PARENTPHONE as parentPhone, 
 				U_STU_PHONE as phone, 
-				U_STU_PROFESSOR as professor, 
+				u_prof_name as professor, 
 				U_STU_PWD as pwd, 
 				U_STU_REGISTER as register, 
 				U_STU_SCORE as score, 
@@ -131,8 +131,9 @@
 				U_STU_REMAINLEAVE as remainLeave,
 				U_STU_MAXONESCORE as maxOneScore,
 				U_STU_NOWSCORE as nowScore
-		from U_STUDENT
+		from U_STUDENT a, u_professor b
 		where U_STU_ID = #{id}
+		and a.U_stu_professor = b.U_prof_id
 	</select>
 	
 	<update id="updateStudentInfo" parameterType="Student">

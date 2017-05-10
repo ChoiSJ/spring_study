@@ -81,6 +81,7 @@
             var register = $(item).attr('value');
             if (register == 'n') {
                 $(this).addClass('disabled', 'disabled');
+                
             }
         });
 
@@ -129,19 +130,9 @@
                     url: "deletesubject/" + deleteNo + "/" + deleteId,
                     dataType: "json",
                     success: function(data) {
-
-                        var subjectNo = data[i].subjectNo;
-
-                        for (i = 0; i < data.length; i++) {
-
-                            if ($button == subjectNo) {
-
-                                $()
-                            }
-
-
-                        }
-
+					
+                    	window.location.href="http://localhost/jhta/admin/openLectureTableAll.do";
+                    	
                     }
                 });
 
@@ -355,14 +346,14 @@
 </script>
 </head>
 <body>
-	<%@ include file="/WEB-INF/views/navi/profnavi.jsp" %>
-<%@ include file="/WEB-INF/views/navi/sidebarprof.jsp" %>
+	<%@ include file="/WEB-INF/views/navi/adminnavi.jsp"%>
+	<%@ include file="/WEB-INF/views/navi/openlecture.jsp"%>
 	<div class="container" style="margin-left: 250px; padding-top: 25px;">
 	<div class="row text-right">
 			홈 > 강의 평가 관리 > 강의평가 조회/삭제
 		</div>
 		<div class="modal fade bs-example-modal-lg" tabindex="-1"
-			role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content" id="modaldata"></div>
 			</div>
@@ -378,7 +369,7 @@
 						<div
 							class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
 							<label class="mdl-button mdl-js-button mdl-button--icon"
-								for="fixed-header-drawer-exp"> <i class="material-icons">search</i>
+								for="fixed-header-drawer-exp"><i class="material-icons">search</i>
 							</label>
 							<div id="search-text" class="mdl-textfield__expandable-holder">
 								<input class="mdl-textfield__input" type="text"
@@ -399,7 +390,7 @@
 							<th style="width: 15%">과목 코드</th>
 							<th style="width: 15%">과목 번호</th>
 							<th style="width: 30%">과목 이름</th>
-							<th style="width: 15%">전공 옵션</th>
+							<th style="width: 15%">전공 코드</th>
 							<th style="width: 15%">미리 보기</th>
 						</tr>
 					</thead>

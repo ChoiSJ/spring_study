@@ -17,6 +17,16 @@
 <title>openlecture register</title>
 <script type="text/javascript">
                 $(function() {
+                	
+                	$("#modal-button").on("click", function(){
+                		
+                		$.each(function(index, items){
+                			
+                			items.register
+                		})
+                		
+                	})
+                	
 
                     //정보를 화면에 표시하기
                     $("#add-infromation").on("click", function() {
@@ -91,15 +101,9 @@
 
                     });
                     
-                    
-
                 });
                 
-                
-              
-
-                
-                
+        
             </script>
 <style>
 button.delete {
@@ -176,8 +180,8 @@ select.menu {
 </head>
 
 <body>
-	<%@ include file="/WEB-INF/views/navi/profnavi.jsp" %>
-	<%@ include file="/WEB-INF/views/navi/sidebarprof.jsp" %>
+	<%@ include file="/WEB-INF/views/navi/adminnavi.jsp"%>
+	<%@ include file="/WEB-INF/views/navi/openlecture.jsp"%>
 	<div class="container" style="margin-left: 250px; padding-top: 25px;">
 	<div class="row text-right">
 			홈 > 강의 평가 관리 > 강의평가 등록
@@ -250,19 +254,23 @@ select.menu {
 													</thead>
 													<tbody id="professorinformationtbody">
 														<c:forEach var="professorList" items="${openlecturelist }">
-															<tr>
-																<td style="width: 15%"><input type="radio"
-																	id="option-${professorList.no }" name="options"
-																	value="${professorList.code }-${professorList.subjectNo }-${professorList.name }-${professorList.subjectName }-${professorList.id}">
-																</td>
-																<td style="width: 15%" id="code-${professorList.code }">${professorList.code }</td>
-																<td style="width: 20%" id="subjectno-${professorList.subjectNo }">${professorList.subjectNo }
-																</td>
-																<td style="width: 20%" id="professorName-${professorList.name }">${professorList.name }
-																</td>
-																<td style="width: 20%" id="subjectname-${professorList.subjectName }">${professorList.subjectName }
-																</td>
-															</tr>
+															<c:choose>
+																<c:when test="${professorList.register eq 'n' }">
+																	<tr>
+																		<td style="width: 15%"><input type="radio"
+																			id="option-${professorList.no }" name="options"
+																			value="${professorList.code }-${professorList.subjectNo }-${professorList.name }-${professorList.subjectName }-${professorList.id}">
+																		</td>
+																		<td style="width: 15%" id="code-${professorList.code }">${professorList.code }</td>
+																		<td style="width: 20%" id="subjectno-${professorList.subjectNo }">${professorList.subjectNo }
+																		</td>
+																		<td style="width: 20%" id="professorName-${professorList.name }">${professorList.name }
+																		</td>
+																		<td style="width: 20%" id="subjectname-${professorList.subjectName }">${professorList.subjectName }
+																		</td>
+																	</tr>
+																</c:when>
+															</c:choose>
 														</c:forEach>
 													</tbody>
 													<tfoot class="mdl-shadow--2dp">

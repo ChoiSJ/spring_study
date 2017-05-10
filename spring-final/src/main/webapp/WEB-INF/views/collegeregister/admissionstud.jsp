@@ -64,7 +64,7 @@
 <body>
 <%@ include file="/WEB-INF/views/navi/adminnavi.jsp" %>
 <%@ include file="sidebar-hakjuk.jsp" %>
-	<div class="container" style="margin-left: 250px; padding-top:25px; ">
+	<div class="container" style="margin-left: 250px; padding-top:25px;">
 		<div class="row text-right">
 			홈 > 학적관리 > 입학관리 > <strong>입학생 등록</strong> 
 		</div>

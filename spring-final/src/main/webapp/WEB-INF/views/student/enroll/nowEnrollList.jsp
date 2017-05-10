@@ -75,7 +75,7 @@
 	    <!-- </form> -->
       	<div class="row text-center" style="padding: 20px;">
       		<hr />
-      		<p><font size="4;">현재 신청 학점 <span id="applyScore">${applyScore}</span> / 최대 신청 학점 <span id="maxOneScore">${student.maxOneScore}</span></font></p>
+      		<p><font size="4;">현학기 수강 학점 : <span id="applyScore">${applyScore}</span></font></p>
       	</div>
       </div>
     </div>

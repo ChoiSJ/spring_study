@@ -80,14 +80,40 @@
  	where
  		S_SUPPLEMENTLECTURE_SUBJECT = #{subjectNo}
  </select>
+ <!-- 보강 조회하기 -->
+ <select id="getMakeupLessonSelect" parameterType="int" resultType="kr.co.jhta.vo.MakeupLessonAll">
+ 	 select
+ 		S.S_MAKEUPLESSONREGISTER 		AS makeupLessonRegister,
+ 		S.S_SUPPLEMENTLECTURE_NUMBER  	AS supplementLectureNo,
+ 		S.S_MAJOR_SCORE 				AS majorScore,
+ 		S.S_SUPPLEMENTLECTURE_TIME 		AS subjectTime,
+ 		S.S_SUPPLEMENTLECTURE_DAY 		AS subjectDate,
+ 		S.S_SUPPLEMENTLECTURE_Y_OR_N 	AS supplementLectureCheck,
+ 		S.S_SUPPLEMENTLECTURE_PRO_NO 	AS professorNumber,
+ 		S.S_SUPPLEMENTLECTURE_SUBJECT 	AS subjectNo,
+ 		S.S_SUPPLEMENTLECTURE_PRO_ID 	AS professorId,
+ 		S.S_MAJOR_CODE 					AS majorCode,
+ 		S.S_SUBJECT_NAME 				AS subjectName,
+ 		S.S_SUBJECT_PROFESSOR_NAME 		AS professorName,
+ 		S.S_MAJOR_OPTION 				AS majorOption,
+ 		M.M_MAKEUPLESSON_DATE           AS makeupDate
+ 	from
+ 		S_SUPPLEMENTLECTURE S,
+ 		M_MAKEUPLESSON M
+ 	where
+ 		M.M_MAKEUPLESSON_SUBJECTNO = S.S_SUPPLEMENTLECTURE_SUBJECT
+ 	and
+ 		S.S_SUPPLEMENTLECTURE_SUBJECT = #{subjectNo}
+ </select>
  <!-- 보강 신청 하기 -->
  <insert id="insertMakeupLessonRegister" parameterType="kr.co.jhta.vo.MakeupLessonAll">
  insert into M_MAKEUPLESSON(
  	M_MAKEUPLESSON_NO,
  	M_MAKEUPLESSON_REGISTER,
  	M_MAKEUPLESSON_SUBJECTNO,
- 	M_SUBJECTLESSON_PROFESSOR )
- 	values(investgation_seq.nextval,#{makeupLessonRegister},#{subjectNo},#{professorId})	
+ 	M_SUBJECTLESSON_PROFESSOR,
+ 	M_MAKEUPLESSON_DATE )
+ 	values(investgation_seq.nextval,#{makeupLessonRegister},#{subjectNo},#{professorId},#{makeupDate})	
  </insert>
  
  <!-- 보강 상세 취소페이지 -->

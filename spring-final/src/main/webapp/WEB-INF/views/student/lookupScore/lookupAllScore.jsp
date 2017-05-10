@@ -17,9 +17,11 @@ $(function () {
 		e.preventDefault(); 
 	});
 	
-var $list_tbody = $("#score_td_box-2");
+	var $list_tbody = $("#score_td_box-2");
 	
 	var rowCount = $list_tbody.find("tr").length;
+	
+	$('#popbtn').popover("animation");
 	
 	var totalCredit1 = 0;
 	$("#score_td_box-2 td:nth-child(13n+2)").each(function(index, item) {
@@ -106,7 +108,7 @@ var $list_tbody = $("#score_td_box-2");
 							<td>${savg.semename }</td>
 							<td>${savg.credit1 }</td>
 							<td>${savg.credit2 }</td>
-							<td><fmt:formatNumber value="${savg.credit3 }" pattern="#.##"/></td>
+							<td><fmt:formatNumber value="${savg.credit3 }" pattern="#.#"/></td>
 							<td>${savg.credit4 }</td>
 							<c:choose>
 								<c:when test="${savg.grade gt 2}">
@@ -159,16 +161,16 @@ var $list_tbody = $("#score_td_box-2");
 				<c:choose>
 					<c:when test="${savgtotal.testcount eq 0 }">
 						<td>
-							<p><strong id="t11"></strong></p>
+							<p><strong id="t1"></strong></p>
 						</td>
 						<td>
-							<p><strong id="t22"></strong></p>
+							<p><strong id="t2"></strong></p>
 						</td>
 						<td>
-							<p><strong id="t33"></strong></p>
+							<p><strong id="t3"></strong></p>
 						</td>
 						<td>
-							<p><strong id="t44"></strong></p>
+							<p><strong id="t4"></strong></p>
 						</td>
 					</c:when>
 					<c:otherwise>
@@ -179,7 +181,14 @@ var $list_tbody = $("#score_td_box-2");
 			</tbody>
 		</table>
 		<div class="text-right">
-			<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">성적표</button>
+		<c:choose>
+			<c:when test="${savgtotal.testcount eq 0 }">
+				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">성적표</button>
+			</c:when>
+			<c:otherwise>
+				<a tabindex="0" class="btn btn-danger" role="button" data-toggle="popover" data-trigger="focus" title="성적표 " data-content="강의평가를 모두 완료 후 열람 가능합니다." id="popbtn">성적표</a>
+			</c:otherwise>
+		</c:choose>
 		</div>
       </div>
   	  

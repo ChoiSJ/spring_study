@@ -25,14 +25,14 @@ import kr.co.jhta.vo.ProfessorOpenLecture;
 import kr.co.jhta.vo.ProfessorSubject;
 import kr.co.jhta.vo.stu.Student;
 
-@RequestMapping("/prof")
+@RequestMapping("/admin")
 @Controller
 public class OpenLecture {
 
 	@Autowired
 	private OpenLectureService lectureservice;
 		
-	@RequestMapping("/openLectureMain.do")
+	@RequestMapping("openLectureMain.do")
 	public String openLectureMain(){
 		
 		return "/openlecture/openlectureratingmain";
@@ -41,7 +41,7 @@ public class OpenLecture {
 	
 	
 	//openinquiries.do 테이블 전체 조회
-	@RequestMapping("/openLectureTableAll.do")
+	@RequestMapping("openLectureTableAll.do")
 	public String openlectureTableAlls(Model model){
 		
 		List<ProfessorSubject> professorListTable = lectureservice.subjectRatingInquiriesAll();
@@ -51,34 +51,10 @@ public class OpenLecture {
 	}
 	
 	
-	
-	
-	//성적 전에 보여주는 
-	//강의 평가 화면 보여 주기
-	//URL에 붙인 값 가져오기
-	@RequestMapping(value="/lecturerating.do", method=RequestMethod.GET)
-	public String lectureRating(@RequestParam int subjectNo, Model model){
-		
-		
-		LectureEvaluationSheet register = lectureservice.getInvestListRegister(subjectNo);
-		
-		if(register.getRegister().equals("y")){
-			
-			List<LectureEvaluationSheet> sheet = lectureservice.getInvestListDeatil(subjectNo);
-			
-			model.addAttribute("detailsheet",sheet);
-			
-			return "openlecture/rating";
-			
-		}else{
-			
-			return"openlecture/ratingerror";
-		}
-			
-	}
+
 	
 	//강의 테이블 뿌려주는 코딩
-	@RequestMapping("/openratingregister.do")
+	@RequestMapping("openratingregister.do")
 	public String openLectureRegister(Model model){
 	
 		List<ProfessorOpenLecture> openlecturelist = lectureservice.getInformationOfProfessorList();
@@ -92,19 +68,18 @@ public class OpenLecture {
 	}	
 	
 	//강의 평가 추가하기 등록
-	@RequestMapping("/investigating.do")
+	@RequestMapping("investigating.do")
 	public String addInvestingItems(InvestgationItems items, Errors errors)throws Exception{
 		
 		if(errors.hasErrors()){
 			
 			System.out.println(errors.getAllErrors());
-			return "redirect:/openratingregister.do";
+			return "redirect:/admin/openratingregister.do";
 			
 		}else{
 			
 			List<String> itemsList =  items.getContents();
 			String register = items.getRegister();
-			String id = items.getProfessorId();
 			int no =items.getSubjectNo();
 			String professorId = items.getProfessorId();
 			InvestGationAttribute item = new InvestGationAttribute();
@@ -121,64 +96,10 @@ public class OpenLecture {
 			
 			lectureservice.updateLectureRatingRegisterEnrollTable(items.getSubjectNo());
 			
-			return"redirect:/openratingregister.do";
+			return"redirect:/admin/openLectureTableAll.do";
 		}
 		
 		
-	}
-	
-	//강의 평가 점수 등록
-	@RequestMapping("/ratingInsert.do")
-	public String ratingInsert(int scoreNo, HttpServletRequest request, HttpSession session) {
-		
-		//로그인 유저 아이디 알아내기
-		Student student = (Student)session.getAttribute("LOGIN_USER");
-		
-		List<String> rating = new ArrayList<String>();
-		
-		System.out.println("값값:"+scoreNo);
-		
-		//라디오 버튼 value값 알아내기
-		Enumeration<String> parameterNames = request.getParameterNames();
-		
-		while (parameterNames.hasMoreElements()) {
-			
-			String ratingName = parameterNames.nextElement();
-			
-			if (ratingName.startsWith("appraise")) {
-				
-				String ratingValue = request.getParameter(ratingName);
-				rating.add(ratingValue);
-			}
-			
-		}
-		
-		for (String ratingScore : rating) {
-			
-			LectureRatingSave ratings = new LectureRatingSave();
-			ratings.setRatingScore(Integer.parseInt(ratingScore));
-			
-			ratings.setStudentId(student.getId());
-			ratings.setScoreNo(scoreNo);
-			int i = 1;
-			ratings.setInvestSubject(i);
-			
-			i= i++;
-			
-			lectureservice.insertLectureRating(ratings);
-			
-			lectureservice.updateLectureRatingRegister(ratings);
-			
-			
-		}
-	
-		return "redirect:/stud/lookupScore";
-	}
-	
-	@RequestMapping("/scoreerror.do")
-	public String startScore(){
-		
-		return "redirect:/stud/lookupScore";
 	}
 	
 }

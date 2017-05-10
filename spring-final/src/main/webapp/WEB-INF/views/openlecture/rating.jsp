@@ -4,19 +4,15 @@
 <!DOCTYPE html PUBLIC>
 <html>
 <head>
-<meta http-equiv="viewport"
-	content="width=device-width, initial-scale=1">
-<link type="text/css" rel="stylesheet"
-	href="resources/bootstrap/css/bootstrap.css" />
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet"
-	href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="viewport" content="width=device-width, initial-scale=1">
+<!-- 부트스트랩 설정 경로 지정  href에 부트스트랩이 저장되어있는 경로를 적는다.-->
+<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-<script type="text/javascript"
-	src="resources/jquery/jquery-3.2.0.min.js"></script>
-<script type="text/javascript"
-	src="resources/bootstrap/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <title>open lecture</title>
 </head>
 <body>

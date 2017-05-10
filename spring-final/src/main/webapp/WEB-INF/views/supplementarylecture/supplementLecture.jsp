@@ -6,12 +6,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="viewport"
 	content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet"
+	href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
 <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <head>
 <script type="text/javascript">
@@ -170,6 +175,7 @@
 
                     //휴강 신청 버튼 처리
                     $("button[id^='supplementLectureApplicationAdd-']").on("click", function() {
+                    	
 
                         var register = $(":input[name='supplementLectureCheck']").val()
 
@@ -187,8 +193,8 @@
                             supplementLectureCheck: $(":input[name='supplementLectureCheck']").attr("value").replace("n", "y")
                         }
 
-                        var buttonNo = $(":input[name='subjectNo']").val()
-                        console.log(buttonNo)
+                        var buttonNo = $(":input[name='subjectNo']").val();
+                        
                         $.ajax({
                             type: "POST",
                             url: "userInformaiton/",
@@ -197,12 +203,12 @@
                             success: function(data) {
 
                                 var subjectNo = data.subjectNo;
-                                console.log(subjectNo);
+                                
                                 //신청 번호 취소로 바꾸는 코딩
 
                                 if (buttonNo == subjectNo) {
 
-                                    $("#supplementLectureTr-" + subjectNo + "").empty();
+                                    $("#supplementLectureTr-" + subjectNo + "").hide();
 
                                     var $table = $("#subjectListaddList");
 
@@ -216,23 +222,25 @@
                                     var majorOption = data.majorOption;
                                     var majorScore = data.majorScore;
                                     var subjectLectureNumber = data.subjectLectureNumber;
-
+                                    var subjectDate = data.subjectDate;
+                                    var subjectTime = data.subjectTime;
+									
                                     var html = '<tr id="supplementLectureTr-' + subjectNo + '">';
-                                    html += '<td style="width: 10%" id="id-' + professorId + '"><label>' + professorId + '</label></td>'
-                                    html += '<td style="width: 10%" id="code-' + majorCode + '"><label>' + majorCode + '</label></td>';
-                                    html += '<td style="width: 15%" id="subjectNo-' + subjectNo + '"><label>' + subjectNo + '</label></td>';
-                                    html += '<td style="width: 15%" id="majorOption' + majorOption + '"><label>' + majorOption + '</label></td>';
-                                    html += '<td style="width: 15%" id="professorName-' + professorName + '"><label>' + professorName + '</label></td>';
-                                    html += '<td style="width: 25%" id="subjectName-' + subjectName + '"><label>' + subjectName + '</label></td>';
-                                    html += '<td style="width: 20%" id="cancleButton">';
+                                    html +='<td style="width: 10%" id="subjectNo-'+subjectNo+'"><label>'+subjectNo+'</label></td>';
+                                    html +='<td style="width: 15%" id="majorOption' + majorOption + '"><label>' + majorOption + '</label></td>';
+                                    html +='<td style="width: 15%" id="professorName-' + professorName + '"><label>' + professorName + '</label></td>';
+                                    html +='<td style="width: 25%" id="subjectName-' + subjectName + '"><label>' + subjectName + '</label></td>';
+                                    html +='<td style="width: 25%" id="subjectDate-'+subjectDate+'"><label>'+subjectDate+','+subjectTime+'</label></td>';
+                                    html += '<td style="width: 10%" id="cancleButton">';
                                     html += '<button id="supplementLectureCancle-' + subjectNo + '" class="mdl-button mdl-js-button mdl-button--accent">';
                                     html += '<i class="glyphicon glyphicon-remove-circle">취소</i>';
                                     html += '</button>';
                                     html += '</td>';
                                     html += '</tr>';
-
+                              
                                     $table.append(html);
-
+                                    
+                                    alert(subjectName+"을(를) 휴강 신청 하였습니다.");
                                 }
 
                                 //취소 처리
@@ -247,27 +255,27 @@
                                         success: function(data) {
 
                                             var dataNo = data.subjectNo;
+                                            var datasubjectName = data.subjectName;
+                                            
+                                           	console.log("과목 번호:"+dataNo);
+                                           	
+                                            
 
                                             $("td:contains(" + dataNo + ")").parents("tr").hide();
+                                            
+                                            $("#supplementLectureTr-" + subjectNo + "").show();
 
                                         }
                                     });
                                 });
-
-
-
 
                             }
                         });
 
                     });
 
-
-
-
                 }
             });
-
         });
 
 
@@ -422,6 +430,7 @@
                     html += '</div>';
 
                     $modalApplecation.append(html);
+                    
 
                     //취소 처리
                     $("button[id^=supplementLectureApplicationCancle-]").on("click", function() {
@@ -436,12 +445,16 @@
                             success: function(data) {
 
                                 var dataNo = data.subjectNo;
-
+                                	datasubjectName = data.subjectName;
+								
+                                alert(subjectName+"을(를)신청을 취소 하였습니다.");
+                                
                                 $("td:contains(" + dataNo + ")").parents("tr").hide();
-
+                                
                             }
                         });
                     });
+                    
                 }
             });
         });
@@ -746,7 +759,7 @@
                                                         //신청 번호 취소로 바꾸는 코딩
                                                         if (buttonNo == subjectNo) {
 
-                                                            $("#supplementLectureTr-" + subjectNo + "").empty();
+                                                            $("#supplementLectureTr-" + subjectNo + "").hide();
 
                                                             var $table = $("#subjectListaddList");
 
@@ -760,15 +773,16 @@
                                                             var majorOption = data.majorOption;
                                                             var majorScore = data.majorScore;
                                                             var subjectLectureNumber = data.subjectLectureNumber;
-
+                                                            var subjectDate = data.subjectDate;
+                                                            var subjectTime = data.subjectTime;
+                        									
                                                             var html = '<tr id="supplementLectureTr-' + subjectNo + '">';
-                                                            html += '<td style="width: 10%" id="id-' + professorId + '"><label>' + professorId + '</label></td>'
-                                                            html += '<td style="width: 10%" id="code-' + majorCode + '"><label>' + majorCode + '</label></td>';
-                                                            html += '<td style="width: 15%" id="subjectNo-' + subjectNo + '"><label>' + subjectNo + '</label></td>';
-                                                            html += '<td style="width: 15%" id="majorOption' + majorOption + '"><label>' + majorOption + '</label></td>';
-                                                            html += '<td style="width: 15%" id="professorName-' + professorName + '"><label>' + professorName + '</label></td>';
-                                                            html += '<td style="width: 25%" id="subjectName-' + subjectName + '"><label>' + subjectName + '</label></td>';
-                                                            html += '<td style="width: 20%" id="cancleButton">';
+                                                            html +='<td style="width: 10%" id="subjectNo-'+subjectNo+'"><label>'+subjectNo+'</label></td>';
+                                                            html +='<td style="width: 15%" id="majorOption' + majorOption + '"><label>' + majorOption + '</label></td>';
+                                                            html +='<td style="width: 15%" id="professorName-' + professorName + '"><label>' + professorName + '</label></td>';
+                                                            html +='<td style="width: 25%" id="subjectName-' + subjectName + '"><label>' + subjectName + '</label></td>';
+                                                            html +='<td style="width: 25%" id="subjectDate-'+subjectDate+'"><label>'+subjectDate+','+subjectTime+'</label></td>';
+                                                            html += '<td style="width: 10%" id="cancleButton">';
                                                             html += '<button id="supplementLectureCancle-' + subjectNo + '" class="mdl-button mdl-js-button mdl-button--accent">';
                                                             html += '<i class="glyphicon glyphicon-remove-circle">취소</i>';
                                                             html += '</button>';
@@ -776,6 +790,8 @@
                                                             html += '</tr>';
 
                                                             $table.append(html);
+                                                            
+                                                            alert(subjectName+"을(를) 휴강 신청 하였습니다.");
 
                                                         }
 
@@ -791,25 +807,23 @@
                                                                 success: function(data) {
 
                                                                     var dataNo = data.subjectNo;
-
+																	var datasubjectName = data.subjectName;
+                                                                    
+                                                                   
                                                                     $("td:contains(" + dataNo + ")").parents("tr").hide();
-
+                                                                    
+                                                                    $("#supplementLectureTr-" + subjectNo + "").show();
+																	
                                                                 }
                                                             });
                                                         });
 
-
-
-
                                                     }
                                                 });
-
                                             });
-
 
                                         }
                                     });
-
                                 });
 
                                 //휴강 취소	 조회
@@ -985,7 +999,6 @@
                                                 });
                                             });
 
-
                                         }
                                     });
 
@@ -993,8 +1006,8 @@
 
                             }
                         });
-
                     });
+                    
                 }
             });
         });
@@ -1022,21 +1035,29 @@
             var searchValue = $("#search-button-type").val();
             console.log("검색:" + searchText);
             console.log("타입:" + searchValue);
+			
+            if(searchText == ""){
+            	alert("검색조건에 맞는 내용을 입력하세요.")
 
-
-
-            if (searchValue == 'id') {
-                $("td:contains(" + searchText + ")").parents("tr").show();
-                if ($("td:contains(" + searchText + ")").length == 0) {
-
-                }
-
-            } else if (searchValue == 'name') {
-                $("td:contains(" + searchText + ")").parents("tr").show();
-
-            } else if (searchValue == 'subjectNo') {
-                $("td:contains(" + searchText + ")").parents("tr").show();
-
+            }else{
+            	
+	
+	            if (searchValue == 'id') {
+	                $("td:contains(" + searchText + ")").parents("tr").show();
+	                if ($("td:contains(" + searchText + ")").length == 0) {
+	
+	                }
+	
+	            } else if (searchValue == 'name') {
+	                $("td:contains(" + searchText + ")").parents("tr").show();
+	
+	            } else if (searchValue == 'subjectNo') {
+	                $("td:contains(" + searchText + ")").parents("tr").show();
+	
+	            } else if(searchValue == ""){
+	            	
+	            	alert("검색 조건을 선택하세요.");
+	            }
             }
         });
 
@@ -1151,71 +1172,67 @@
     });
 </script>
 <style>
-    .wrap_table {
-        padding: 30px 0;
-        position: relative;
-        width: 1180px;
-    }
+.wrap_table {
+	padding: 30px 0;
+	position: relative;
+	width: 1180px;
+}
 
-    .wrap_table>div {
-        overflow: auto;
-        height: 200px;
-    }
+.wrap_table>div {
+	overflow: auto;
+	height: 250px;
+}
 
-    .wrap_table table {
-        width: 1165px;
-    }
+.wrap_table table {
+	width: 1165px;
+}
 
-    .wrap_table table caption {
-        height: 0;
-        overflow: hidden;
-    }
+.wrap_table table caption {
+	height: 0;
+	overflow: hidden;
+}
 
-    .wrap_table table thead,
-    .wrap_table table tfoot {
-        position: absolute;
-        display: table;
-        width: 1165px;
-        ;
-        border-bottom: 1px solid #ccc;
-    }
+.wrap_table table thead, .wrap_table table tfoot {
+	position: absolute;
+	display: table;
+	width: 1165px;;
+	border-bottom: 1px solid #ccc;
+}
 
-    .wrap_table table thead {
-        top: 0;
-    }
+.wrap_table table thead {
+	top: 0;
+}
 
-    .wrap_table table tfoot {
-        bottom: 0;
-    }
+.wrap_table table tfoot {
+	bottom: 0;
+}
 
-    .wrap_table table th,
-    .wrap_table table td {
-        text-align: center;
-        border-right: 1px solid #ccc;
-        border-top: 1px solid #ccc;
-        height: 30px;
-        vertical-align: middle;
-    }
+.wrap_table table th, .wrap_table table td {
+	text-align: center;
+	border-right: 1px solid #ccc;
+	border-top: 1px solid #ccc;
+	height: 30px;
+	vertical-align: middle;
+}
 
-    .wrap_table table tr th:first-child,
-    .wrap_table table tr td:first-child {
-        border-left: 1px solid #ccc;
-    }
+.wrap_table table tr th:first-child, .wrap_table table tr td:first-child
+	{
+	border-left: 1px solid #ccc;
+}
 
-    .wrap_table table tbody tr:first-child td {
-        border-top: 0;
-    }
+.wrap_table table tbody tr:first-child td {
+	border-top: 0;
+}
 </style>
 <title>휴강 관리</title>
 </head>
-
 <body>
 	<%@ include file="/WEB-INF/views/navi/adminnavi.jsp"%>
 	<%@ include
 		file="/WEB-INF/views/navi/sidebarsupplementmakeuplesson.jsp"%>
 	<!-- 휴강신청, 취소 모달 -->
 	<div class="container" style="margin-left: 250px; padding-top: 25px;">
-		<div class="row text-right">홈 > 휴강 보강  > 휴강관리</div>
+		<div class="row text-right">홈 > 휴강 보강 > 휴강관리</div>
 		<div class="modal fade bs-example-modal-lg" tabindex="-1"
 			role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg">
@@ -1278,7 +1295,7 @@
 									<td style="width: 15%" id="subjectNo-' + subjectNo + '"><label>${totalDataList.subjectNo}</label></td>
 									<td style="width: 15%" id="majorOption' + majorOption + '"><label>${totalDataList.majorOption}</label></td>
 									<td style="width: 15%" id="professorName-' + professorName + '"><label>${totalDataList.professorName}</label></td>
-									<td style="width: 25%" id="subjectName-' + subjectName + '"><label>${totalDataList.subjectName}${totalDataList.supplementLectureCheck}</label></td>
+									<td style="width: 25%" id="subjectName-' + subjectName + '"><label>${totalDataList.subjectName}</label></td>
 									<c:choose>
 										<c:when test="${totalDataList.supplementLectureCheck eq 'y'}">
 											<td style="width: 20%" id="cancleButton">
@@ -1300,7 +1317,6 @@
 											</td>
 										</c:otherwise>
 									</c:choose>
-
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -1339,7 +1355,7 @@
 					<div class="col-sm-2">
 						<button value="" type="submit" class="mdl-button mdl-js-button"
 							id="search-button-type">
-							<i class="material-icons">search</i>
+							<i class="material-icons" id="searchIcon">search</i>
 						</button>
 					</div>
 				</div>
@@ -1355,13 +1371,12 @@
 						<caption></caption>
 						<thead class="mdl-shadow--2dp">
 							<tr>
-								<th style="width: 10%">교수 ID</th>
-								<th style="width: 10%">학과 번호</th>
-								<th style="width: 15%">과목 코드</th>
+								<th style="width: 10%">과목 코드</th>
 								<th style="width: 15%">전공 옵션</th>
 								<th style="width: 15%">담당 교수</th>
 								<th style="width: 25%">과목 이름</th>
-								<th style="width: 20%">신청</th>
+								<th style="width: 25%">날짜 시간</th>
+								<th style="width: 10%">신청</th>
 							</tr>
 						</thead>
 						<tbody id="subjectListaddList"></tbody>
@@ -1453,8 +1468,8 @@
 														</div>
 													</div>
 													<div class="modal-footer text-right">
-														<button class="btn btn-info" id="add-list">추가</button>
-														<button type="button" class="btn btn-default"
+														<button class="mdl-button mdl-js-button mdl-button--raised" id="add-list">추가</button>
+														<button type="button" class="mdl-button mdl-js-button mdl-button--raised"
 															data-dismiss="modal" id="close-modal">닫기</button>
 													</div>
 												</div>

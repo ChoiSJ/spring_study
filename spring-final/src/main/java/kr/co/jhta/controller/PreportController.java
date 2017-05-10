@@ -149,7 +149,6 @@ public class PreportController {
 			model.addAttribute("profReport", profReport);
 			Preport port = preportService.getByEnoOne(profReport.getEnroll().getNo(), profReport.getStudent().getNo());
 			System.out.println(profReport.getEnroll().getNo()+"."+profReport.getStudent().getNo());
-			System.out.println(port.getScore().getNo()+"."+port.getSubject().getScore());
 			model.addAttribute("port", port);
 	
 		return "/report/reporttodetail";
