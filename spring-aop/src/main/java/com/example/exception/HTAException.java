@@ -8,7 +8,6 @@ public class HTAException extends RuntimeException {
 		super(message);
 	}
 	
-	
 	public HTAException(String message, Throwable cause) {
 		super(message, cause);
 	}
